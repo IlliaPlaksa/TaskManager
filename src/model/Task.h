@@ -10,7 +10,7 @@
 
 class Task
 {
- public:
+ public: // internals
   enum class Priority
   {
     High,
@@ -23,8 +23,10 @@ class Task
                      const std::time_t &due_to_date,
                      const Priority &priority);
 
- public:
-  Task() = default;
+ public: // Getters
+  std::string GetTitle() const;
+  std::time_t GetDate() const;
+  Task::Priority GetPriority() const;
 
  private:
   Task(std::string title,
