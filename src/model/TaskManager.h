@@ -8,23 +8,21 @@
 #include <map>
 #include <vector>
 #include "Task.h"
-#include <set>
+#include "TaskId.h"
+#include "IdGenerator.h"
 
 class TaskManager
 {
-  // TODO change size_t id to custom TaskId
  public:
   void Create(const Task &task);
-  void Edit(size_t id, const Task &task);
-  void Delete(size_t id);
-  void Complete(size_t id);
-  std::vector<std::pair<size_t, Task>> Show();
+  void Edit(TaskId id, const Task &task);
+  void Delete(TaskId id);
+  void Complete(TaskId id);
+  std::vector<std::pair<TaskId, Task>> Show();
 
  private:
-  std::map<size_t, Task> tasks_;
-
- private:
-  static size_t id_counter_;
+  std::map<TaskId, Task> tasks_;
+  IdGenerator gen_;
 };
 
 #endif //TASKMANAGER_SRC_MODEL_TASKMANAGER_H_

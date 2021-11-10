@@ -26,12 +26,15 @@ int main()
                       std::time(nullptr),
                       Task::Priority::Medium);
 
-  task_manager.Edit(1, task);
+
+
+  task_manager.Edit(TaskId::Create(1), task);
 
   auto tasks = task_manager.Show();
 
-  task_manager.Complete(3);
-  task_manager.Delete(2);
+  task_manager.Complete(TaskId::Create(2));
+  task_manager.Delete(TaskId::Create(2));
+
 
   return 0;
 }

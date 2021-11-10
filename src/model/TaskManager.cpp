@@ -4,29 +4,28 @@
 
 #include "TaskManager.h"
 
-size_t TaskManager::id_counter_ = 0;
-
 void TaskManager::Create(const Task &task)
 {
+  TaskId new_id = this->gen_.GetNextId();
   this->tasks_.insert(
-      std::make_pair(++id_counter_, task)
+      std::make_pair(new_id, task)
   );
 }
 
-void TaskManager::Edit(size_t id, const Task &task)
+void TaskManager::Edit(TaskId id, const Task &task)
 {
   if (this->tasks_.find(id) != this->tasks_.end())
-    this->tasks_[id] = task;
+    this->tasks_.at(id) = task;
   else
     throw std::runtime_error("Invalid id passed");
 }
 
-void TaskManager::Delete(size_t id)
+void TaskManager::Delete(TaskId id)
 {
   this->tasks_.erase(id);
 }
 
-void TaskManager::Complete(size_t id)
+void TaskManager::Complete(TaskId id)
 {
   if (this->tasks_.find(id) != this->tasks_.end())
     this->tasks_.erase(id);
@@ -34,9 +33,9 @@ void TaskManager::Complete(size_t id)
     throw std::runtime_error("Invalid id passed");
 }
 
-std::vector<std::pair<size_t, Task>> TaskManager::Show()
+std::vector<std::pair<TaskId, Task>> TaskManager::Show()
 {
-  auto result = std::vector<std::pair<size_t, Task>>{};
+  auto result = std::vector<std::pair<TaskId, Task>>{};
   for (auto elem: this->tasks_)
     result.emplace_back(elem);
 
