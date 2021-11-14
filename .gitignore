@@ -33,7 +33,9 @@
 
 # Directories
 cmake-build-debug/*
+tests/cmake-build-debug/*
 .idea
+
 
 # Files
 .DS_Store
