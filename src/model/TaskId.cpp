@@ -18,3 +18,13 @@ bool TaskId::operator<(const TaskId &other) const
 {
   return this->value_ < other.value_;
 }
+bool TaskId::operator==(const TaskId &other) const
+{
+  return this->value_ == other.value_;
+}
+bool TaskId::operator!=(const TaskId &other) const
+{
+  return this->value_ != other.value_;
+}
+
+

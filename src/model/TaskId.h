@@ -11,11 +11,12 @@ class TaskId
   static TaskId Create(unsigned int value);
 
  public:
-  bool operator<(const TaskId& other) const;
+  bool operator<(const TaskId &other) const;
+  bool operator==(const TaskId &other) const;
+  bool operator!=(const TaskId &other) const;
 
  private: // private methods
   explicit TaskId(unsigned int);
-
 
  private: // data
   const unsigned int value_;
