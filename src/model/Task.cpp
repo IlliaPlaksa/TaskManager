@@ -19,6 +19,8 @@ Task Task::Create(std::string title,
 {
   if (!title.empty())
     return Task{std::move(title), due_to_date, priority};
+  else
+    throw std::runtime_error("Passed empty title");
 }
 
 std::string Task::GetTitle() const
