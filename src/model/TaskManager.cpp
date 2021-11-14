@@ -4,7 +4,7 @@
 
 #include "TaskManager.h"
 
-void TaskManager::Create(const Task &task)
+void TaskManager::Add(const Task &task)
 {
   TaskId new_id = this->gen_.GetNextId();
   this->tasks_.insert(
