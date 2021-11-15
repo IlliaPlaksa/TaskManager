@@ -9,11 +9,11 @@
 
 class IdGenerator
 {
- public:
-  TaskId GetNextId();
+public:
+    TaskId GetNextId();
 
- private:
-  unsigned id_counter_ = 0;
+private:
+    unsigned id_counter_ = 0;
 };
 
 #endif //TASKMANAGER_SRC_MODEL_IDGENERATOR_H_

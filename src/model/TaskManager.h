@@ -13,16 +13,16 @@
 
 class TaskManager
 {
- public:
-  TaskId Add(const Task &task);
-  void Edit(TaskId id, const Task &task);
-  void Delete(TaskId id);
-  void Complete(TaskId id);
-  std::vector<std::pair<TaskId, Task>> Show();
+public:
+    TaskId Add(const Task &task);
+    void Edit(TaskId id, const Task &task);
+    void Delete(TaskId id);
+    void Complete(TaskId id);
+    std::vector<std::pair<TaskId, Task>> Show();
 
- private:
-  std::map<TaskId, Task> tasks_;
-  IdGenerator gen_;
+private:
+    std::map<TaskId, Task> tasks_;
+    IdGenerator gen_;
 };
 
 #endif //TASKMANAGER_SRC_MODEL_TASKMANAGER_H_

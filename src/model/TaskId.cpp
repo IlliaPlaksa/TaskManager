@@ -6,7 +6,7 @@
 
 TaskId TaskId::Create(unsigned int value)
 {
-  return TaskId{value};
+    return TaskId{value};
 }
 
 TaskId::TaskId(unsigned int value)
@@ -16,15 +16,15 @@ TaskId::TaskId(unsigned int value)
 }
 bool TaskId::operator<(const TaskId &other) const
 {
-  return this->value_ < other.value_;
+    return this->value_ < other.value_;
 }
 bool TaskId::operator==(const TaskId &other) const
 {
-  return this->value_ == other.value_;
+    return this->value_ == other.value_;
 }
 bool TaskId::operator!=(const TaskId &other) const
 {
-  return this->value_ != other.value_;
+    return this->value_ != other.value_;
 }
 
 

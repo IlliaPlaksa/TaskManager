@@ -10,32 +10,33 @@
 
 class Task
 {
- public: // internals
-  enum class Priority {
-    High,
-    Medium,
-    Low
-  };
+public: // internals
+    enum class Priority
+    {
+        High,
+        Medium,
+        Low
+    };
 
- public:
-  static Task Create(const std::string& title,
-                     const std::time_t &due_to_date,
-                     const Priority &priority);
+public:
+    static Task Create(const std::string &title,
+                       const std::time_t &due_to_date,
+                       const Priority &priority);
 
- public: // Getters
-  std::string GetTitle() const;
-  std::time_t GetDate() const;
-  Task::Priority GetPriority() const;
+public: // Getters
+    std::string GetTitle() const;
+    std::time_t GetDate() const;
+    Task::Priority GetPriority() const;
 
- private:
-  Task(std::string title,
-       const std::time_t &due_to_date,
-       const Priority &priority);
+private:
+    Task(std::string title,
+         const std::time_t &due_to_date,
+         const Priority &priority);
 
- private:
-  std::string title_;
-  Priority priority_;
-  std::time_t due_to_date_;
+private:
+    std::string title_;
+    Priority priority_;
+    std::time_t due_to_date_;
 
 };
 

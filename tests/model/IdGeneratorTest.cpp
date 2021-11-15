@@ -6,13 +6,13 @@
 
 class IdGeneratorTest : public ::testing::Test
 {
-  virtual void SetUp() {}
-  virtual void TearDown() {}
+    virtual void SetUp() {}
+    virtual void TearDown() {}
 };
 
 TEST(IdGeneratorTest, mustReturnNewId)
 {
-  auto gen = IdGenerator {};
-  EXPECT_EQ(TaskId::Create(0), gen.GetNextId());
-  EXPECT_NE(TaskId::Create(0), gen.GetNextId());
+    auto gen = IdGenerator{};
+    EXPECT_EQ(TaskId::Create(0), gen.GetNextId());
+    EXPECT_NE(TaskId::Create(0), gen.GetNextId());
 }

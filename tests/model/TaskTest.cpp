@@ -7,30 +7,30 @@
 
 class TaskTest : public ::testing::Test
 {
-  virtual void SetUp() {}
-  virtual void TearDown() {}
+    virtual void SetUp() {}
+    virtual void TearDown() {}
 };
 
 TEST(TaskTest, Create)
 {
-  auto title = "Simple task name";
-  auto due_date = time(nullptr);
-  auto priority = Task::Priority::Medium;
+    auto title = "Simple task name";
+    auto due_date = time(nullptr);
+    auto priority = Task::Priority::Medium;
 
-  auto task = Task::Create(title,
-                           due_date,
-                           priority);
-  EXPECT_EQ(task.GetTitle(), title);
-  EXPECT_EQ(task.GetDate(), due_date);
-  EXPECT_EQ(task.GetPriority(), priority);
+    auto task = Task::Create(title,
+                             due_date,
+                             priority);
+    EXPECT_EQ(task.GetTitle(), title);
+    EXPECT_EQ(task.GetDate(), due_date);
+    EXPECT_EQ(task.GetPriority(), priority);
 }
 
 TEST(TaskTest, EmptyName)
 {
-  EXPECT_THROW(
-      Task::Create("", time(nullptr), Task::Priority::Medium),
-      std::runtime_error
-  );
+    EXPECT_THROW(
+        Task::Create("", time(nullptr), Task::Priority::Medium),
+        std::runtime_error
+    );
 }
 
 
