@@ -11,15 +11,14 @@
 class Task
 {
  public: // internals
-  enum class Priority
-  {
+  enum class Priority {
     High,
     Medium,
     Low
   };
 
  public:
-  static Task Create(std::string title,
+  static Task Create(const std::string& title,
                      const std::time_t &due_to_date,
                      const Priority &priority);
 

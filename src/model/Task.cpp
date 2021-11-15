@@ -13,12 +13,12 @@ Task::Task(
     due_to_date_(due_to_date),
     priority_(priority) {}
 
-Task Task::Create(std::string title,
+Task Task::Create(const std::string &title,
                   const std::time_t &due_to_date,
                   const Priority &priority)
 {
   if (!title.empty())
-    return Task{std::move(title), due_to_date, priority};
+    return Task{title, due_to_date, priority};
   else
     throw std::runtime_error("Passed empty title");
 }
