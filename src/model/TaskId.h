@@ -15,6 +15,9 @@ public:
     bool operator==(const TaskId &other) const;
     bool operator!=(const TaskId &other) const;
 
+public:
+    unsigned int value() const;
+
 private: // private methods
     explicit TaskId(unsigned int);
 

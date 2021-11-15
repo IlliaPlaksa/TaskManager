@@ -9,6 +9,11 @@ TaskId TaskId::Create(unsigned int value)
     return TaskId{value};
 }
 
+unsigned int TaskId::value() const
+{
+    return this->value_;
+}
+
 TaskId::TaskId(unsigned int value)
     :
     value_(value)
