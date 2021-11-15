@@ -5,11 +5,7 @@
 #include "gtest/gtest.h"
 #include "../../src/model/TaskId.h"
 
-class TaskIdTest : public ::testing::Test
-{
-  virtual void SetUp() {}
-  virtual void TearDown() {}
-};
+class TaskIdTest : public ::testing::Test {};
 
 TEST_F(TaskIdTest, TestName)
 {
