@@ -4,12 +4,14 @@
 
 #include "TaskManager.h"
 
-void TaskManager::Add(const Task &task)
+TaskId TaskManager::Add(const Task &task)
 {
   TaskId new_id = this->gen_.GetNextId();
   this->tasks_.insert(
       std::make_pair(new_id, task)
   );
+
+  return new_id;
 }
 
 void TaskManager::Edit(TaskId id, const Task &task)

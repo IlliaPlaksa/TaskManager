@@ -14,7 +14,7 @@
 class TaskManager
 {
  public:
-  void Add(const Task &task);
+  TaskId Add(const Task &task);
   void Edit(TaskId id, const Task &task);
   void Delete(TaskId id);
   void Complete(TaskId id);
