@@ -5,11 +5,7 @@
 #include "gtest/gtest.h"
 #include "../../src/model/Task.h"
 
-class TaskTest : public ::testing::Test
-{
-    virtual void SetUp() {}
-    virtual void TearDown() {}
-};
+class TaskTest : public ::testing::Test {};
 
 TEST(TaskTest, Create)
 {
@@ -25,7 +21,7 @@ TEST(TaskTest, Create)
     EXPECT_EQ(task.GetPriority(), priority);
 }
 
-TEST(TaskTest, EmptyName)
+TEST(TaskTest, EmptyNameException)
 {
     EXPECT_THROW(
         Task::Create("", time(nullptr), Task::Priority::Medium),

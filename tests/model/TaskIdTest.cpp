@@ -7,8 +7,10 @@
 
 class TaskIdTest : public ::testing::Test {};
 
-TEST_F(TaskIdTest, TestName)
+TEST(TaskIdTest, shouldCreate)
 {
-
+    auto excpected_value = -1234;
+    auto id = TaskId::Create(excpected_value);
+    EXPECT_EQ(excpected_value, id.value());
 }
 
