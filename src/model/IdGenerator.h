@@ -10,8 +10,8 @@
 class IdGenerator
 {
 public:
-    TaskId GetNextId();
-
+    virtual TaskId GetNextId();
+    virtual ~IdGenerator() = default;
 private:
     unsigned id_counter_ = 0;
 };
