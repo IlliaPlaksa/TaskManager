@@ -3,13 +3,21 @@
 //
 
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
+
 #include "../../src/model/TaskManager.h"
+
+class IdGeneratorMock : public IdGenerator
+{
+public:
+    MOCK_METHOD(TaskId, GetNextId, (), (override));
+};
 
 class TaskManagerTest : public ::testing::Test {};
 
 TEST(TaskManagerTest, shouldAddTask)
 {
-    auto manager = TaskManager{};
+    auto manager = TaskManager{std::make_unique<IdGenerator>()};
 
     auto task_title = "Task name";
     auto task_date = time(nullptr);
@@ -31,9 +39,30 @@ TEST(TaskManagerTest, shouldAddTask)
     EXPECT_EQ(task_priority, added_task.GetPriority());
 }
 
+TEST(TaskManagerTest, shouldAddMultiplyTasks)
+{
+    auto manager = TaskManager{std::make_unique<IdGenerator>()};
+
+    auto task_title = "Task name";
+    auto task_date = time(nullptr);
+    auto task_priority = Task::Priority::Low;
+
+    auto task = Task::Create(task_title,
+                             task_date,
+                             task_priority);
+
+    manager.Add(task);
+    manager.Add(task);
+    manager.Add(task);
+    manager.Add(task);
+
+    EXPECT_EQ(manager.Show().size(), 4);
+}
+
 TEST(TaskManagerTest, shouldThrowWrongIdException)
 {
-    auto manager = TaskManager{};
+    auto manager = TaskManager{std::make_unique<IdGenerator>()};
+
     auto task = Task::Create("Task name",
                              time(nullptr),
                              Task::Priority::High);
@@ -46,7 +75,7 @@ TEST(TaskManagerTest, shouldThrowWrongIdException)
 
 TEST(TaskManagerTest, shouldEditTask)
 {
-    auto manager = TaskManager{};
+    auto manager = TaskManager{std::make_unique<IdGenerator>()};
     auto task = Task::Create("Task name",
                              time(nullptr),
                              Task::Priority::High);
@@ -70,7 +99,7 @@ TEST(TaskManagerTest, shouldEditTask)
 
 TEST(TaskManagerTest, shouldDeleteTask)
 {
-    auto manager = TaskManager{};
+    auto manager = TaskManager{std::make_unique<IdGenerator>()};
     auto task = Task::Create("Task name",
                              time(nullptr),
                              Task::Priority::High);
@@ -79,7 +108,7 @@ TEST(TaskManagerTest, shouldDeleteTask)
 
     manager.Delete(task_id);
 
-    EXPECT_TRUE(manager.Show().empty());
+    ASSERT_TRUE(manager.Show().empty());
 
     EXPECT_THROW(manager.Edit(task_id, task),
                  std::runtime_error);
@@ -87,7 +116,7 @@ TEST(TaskManagerTest, shouldDeleteTask)
 
 TEST(TaskManagerTest, shouldCompleteTask)
 {
-    auto manager = TaskManager{};
+    auto manager = TaskManager{std::make_unique<IdGenerator>()};
     auto task = Task::Create("Task name",
                              time(nullptr),
                              Task::Priority::High);
@@ -100,4 +129,27 @@ TEST(TaskManagerTest, shouldCompleteTask)
 
     EXPECT_THROW(manager.Edit(task_id, task),
                  std::runtime_error);
+}
+
+using ::testing::Return;
+TEST(TaskManagerTest, shouldThrowBadGeneratorBehaviourException)
+{
+    auto generator = std::make_unique<IdGeneratorMock>();
+
+    EXPECT_CALL(*generator, GetNextId())                   // #4
+        .Times(2)
+        .WillRepeatedly(Return(TaskId::Create(1)));
+
+    TaskManager manager(std::move(generator));
+
+    auto task_title = "Task name";
+    auto task_date = time(nullptr);
+    auto task_priority = Task::Priority::Low;
+
+    auto task = Task::Create(task_title,
+                             task_date,
+                             task_priority);
+
+    manager.Add(task);
+    EXPECT_ANY_THROW(manager.Add(task));
 }

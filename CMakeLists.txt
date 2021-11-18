@@ -27,3 +27,4 @@ add_executable(TaskManager_TEST
         tests/model/IdGeneratorTest.cpp tests/model/TaskManagerTest.cpp)
 
 target_link_libraries(TaskManager_TEST GTest::GTest GTest::Main)
+target_link_libraries(TaskManager_TEST GTest::gtest GTest::gmock GTest::gmock_main)
