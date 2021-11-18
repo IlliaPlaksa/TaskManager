@@ -4,12 +4,18 @@
 
 #include "TaskManager.h"
 
+TaskManager::TaskManager(std::unique_ptr<IdGenerator> generator)
+    : gen_{std::move(generator)} {}
+
 TaskId TaskManager::Add(const Task &task)
 {
-    TaskId new_id = this->gen_.GetNextId();
-    this->tasks_.insert(
-        std::make_pair(new_id, task)
-    );
+    TaskId new_id = this->gen_->GetNextId();
+    if (!this->tasks_.count(new_id))
+        this->tasks_.insert(
+            std::make_pair(new_id, task)
+        );
+    else
+        throw std::runtime_error("Generator returns non-identical ID");
 
     return new_id;
 }

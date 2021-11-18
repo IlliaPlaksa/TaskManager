@@ -20,9 +20,12 @@ public:
     void Complete(TaskId id);
     std::vector<std::pair<TaskId, Task>> Show();
 
+public:
+    TaskManager(std::unique_ptr<IdGenerator> generator);
+
 private:
     std::map<TaskId, Task> tasks_;
-    IdGenerator gen_;
+    std::unique_ptr<IdGenerator> gen_;
 };
 
 #endif //TASKMANAGER_SRC_MODEL_TASKMANAGER_H_
