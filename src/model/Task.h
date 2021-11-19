@@ -21,22 +21,26 @@ public: // internals
 public:
     static Task Create(const std::string &title,
                        const std::time_t &due_to_date,
-                       const Priority &priority);
+                       const Priority &priority,
+                       const std::string &label = "");
 
 public: // Getters
     std::string GetTitle() const;
     std::time_t GetDate() const;
     Task::Priority GetPriority() const;
+    std::string GetLabel() const;
 
 private:
     Task(std::string title,
          const std::time_t &due_to_date,
-         const Priority &priority);
+         const Priority &priority,
+         std::string label = "");
 
 private:
     std::string title_;
     Priority priority_;
     std::time_t due_to_date_;
+    std::string label_;
 
 };
 

@@ -7,18 +7,22 @@
 
 class TaskTest : public ::testing::Test {};
 
-TEST(TaskTest, Create)
+TEST(TaskTest, shouldCreate)
 {
     auto title = "Simple task name";
     auto due_date = time(nullptr);
     auto priority = Task::Priority::Medium;
+    auto label = "Simple task label";
 
     auto task = Task::Create(title,
                              due_date,
-                             priority);
+                             priority,
+                             label);
+
     EXPECT_EQ(task.GetTitle(), title);
     EXPECT_EQ(task.GetDate(), due_date);
     EXPECT_EQ(task.GetPriority(), priority);
+    EXPECT_EQ(task.GetLabel(), label);
 }
 
 TEST(TaskTest, EmptyNameException)
