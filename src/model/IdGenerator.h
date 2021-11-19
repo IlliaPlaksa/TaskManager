@@ -13,7 +13,7 @@ public:
     virtual TaskId GetNextId();
     virtual ~IdGenerator() = default;
 private:
-    unsigned id_counter_ = 0;
+    unsigned id_counter_ = 1;
 };
 
 #endif //TASKMANAGER_SRC_MODEL_IDGENERATOR_H_

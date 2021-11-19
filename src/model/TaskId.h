@@ -9,6 +9,7 @@ class TaskId
 {
 public: // static interface
     static TaskId Create(unsigned int value);
+    static TaskId CreateDefault();
 
 public:
     bool operator<(const TaskId &other) const;
@@ -22,7 +23,7 @@ private: // private methods
     explicit TaskId(unsigned int);
 
 private: // data
-    const unsigned int value_;
+    unsigned int value_;
 };
 
 #endif //TASKMANAGER_SRC_MODEL_TASKID_H_

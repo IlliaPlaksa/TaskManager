@@ -31,5 +31,9 @@ bool TaskId::operator!=(const TaskId &other) const
 {
     return this->value_ != other.value_;
 }
+TaskId TaskId::CreateDefault()
+{
+    return TaskId(0);
+}
 
 
