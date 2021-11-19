@@ -27,7 +27,4 @@ TaskId FamilyTask::GetParentId() const
 FamilyTask::FamilyTask(const Task &task, TaskId parent_id)
     :
     Task(task),
-    parent_id_(parent_id)
-{
-
-}
+    parent_id_(parent_id) {}

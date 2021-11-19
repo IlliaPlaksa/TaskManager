@@ -23,10 +23,11 @@ add_executable(TaskManager_TEST
         src/model/TaskId.cpp src/model/TaskId.h
         src/model/IdGenerator.cpp src/model/IdGenerator.h
         src/model/TaskManager.cpp src/model/TaskManager.h
+        src/model/FamilyTask.h src/model/FamilyTask.cpp
 
         tests/model/TaskTest.cpp tests/model/TaskIdTest.cpp
         tests/model/IdGeneratorTest.cpp tests/model/TaskManagerTest.cpp
-        src/model/FamilyTask.h src/model/FamilyTask.cpp)
+        tests/model/FamilyTaskTest.cpp)
 
 target_link_libraries(TaskManager_TEST GTest::GTest GTest::Main)
 target_link_libraries(TaskManager_TEST GTest::gtest GTest::gmock GTest::gmock_main)
