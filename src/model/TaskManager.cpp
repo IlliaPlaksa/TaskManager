@@ -7,7 +7,7 @@
 TaskManager::TaskManager(std::unique_ptr<IdGenerator> generator)
     : gen_{std::move(generator)} {}
 
-TaskId TaskManager::Add(const Task &task)
+TaskId TaskManager::Add(const FamilyTask &task)
 {
     TaskId new_id = this->gen_->GetNextId();
     if (!this->tasks_.count(new_id))
@@ -20,7 +20,7 @@ TaskId TaskManager::Add(const Task &task)
     return new_id;
 }
 
-void TaskManager::Edit(TaskId id, const Task &task)
+void TaskManager::Edit(TaskId id, const FamilyTask &task)
 {
     if (this->tasks_.find(id) != this->tasks_.end())
         this->tasks_.at(id) = task;
@@ -41,9 +41,9 @@ void TaskManager::Complete(TaskId id)
         throw std::runtime_error("Invalid id passed");
 }
 
-std::vector<std::pair<TaskId, Task>> TaskManager::Show()
+std::vector<std::pair<TaskId, FamilyTask>> TaskManager::Show()
 {
-    auto result = std::vector<std::pair<TaskId, Task>>{};
+    auto result = std::vector<std::pair<TaskId, FamilyTask>>{};
     for (auto elem: this->tasks_)
         result.emplace_back(elem);
 

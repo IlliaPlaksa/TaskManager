@@ -21,9 +21,9 @@ TEST(TaskManagerTest, shouldAddTask)
 
     auto task_title = "Task name";
     auto task_date = time(nullptr);
-    auto task_priority = Task::Priority::Low;
+    auto task_priority = FamilyTask::Priority::Low;
 
-    auto task = Task::Create(task_title,
+    auto task = FamilyTask::Create(task_title,
                              task_date,
                              task_priority);
     auto task_id = manager.Add(task);
@@ -45,9 +45,9 @@ TEST(TaskManagerTest, shouldAddMultiplyTasks)
 
     auto task_title = "Task name";
     auto task_date = time(nullptr);
-    auto task_priority = Task::Priority::Low;
+    auto task_priority = FamilyTask::Priority::Low;
 
-    auto task = Task::Create(task_title,
+    auto task = FamilyTask::Create(task_title,
                              task_date,
                              task_priority);
 
@@ -63,9 +63,9 @@ TEST(TaskManagerTest, shouldThrowWrongIdException)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
 
-    auto task = Task::Create("Task name",
+    auto task = FamilyTask::Create("Task name",
                              time(nullptr),
-                             Task::Priority::High);
+                             FamilyTask::Priority::High);
 
     ASSERT_THROW(
         manager.Edit(TaskId::Create(123), task),
@@ -76,15 +76,15 @@ TEST(TaskManagerTest, shouldThrowWrongIdException)
 TEST(TaskManagerTest, shouldEditTask)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
-    auto task = Task::Create("Task name",
+    auto task = FamilyTask::Create("Task name",
                              time(nullptr),
-                             Task::Priority::High);
+                             FamilyTask::Priority::High);
     manager.Add(task);
 
     auto new_title = "New task name";
     auto new_date = time(nullptr);
-    auto new_priority = Task::Priority::Low;
-    auto new_task = Task::Create(new_title,
+    auto new_priority = FamilyTask::Priority::Low;
+    auto new_task = FamilyTask::Create(new_title,
                                  new_date,
                                  new_priority);
 
@@ -100,9 +100,9 @@ TEST(TaskManagerTest, shouldEditTask)
 TEST(TaskManagerTest, shouldDeleteTask)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
-    auto task = Task::Create("Task name",
+    auto task = FamilyTask::Create("Task name",
                              time(nullptr),
-                             Task::Priority::High);
+                             FamilyTask::Priority::High);
 
     auto task_id = manager.Add(task);
 
@@ -117,9 +117,9 @@ TEST(TaskManagerTest, shouldDeleteTask)
 TEST(TaskManagerTest, shouldCompleteTask)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
-    auto task = Task::Create("Task name",
+    auto task = FamilyTask::Create("Task name",
                              time(nullptr),
-                             Task::Priority::High);
+                             FamilyTask::Priority::High);
 
     auto task_id = manager.Add(task);
 
@@ -144,9 +144,9 @@ TEST(TaskManagerTest, shouldThrowBadGeneratorBehaviourException)
 
     auto task_title = "Task name";
     auto task_date = time(nullptr);
-    auto task_priority = Task::Priority::Low;
+    auto task_priority = FamilyTask::Priority::Low;
 
-    auto task = Task::Create(task_title,
+    auto task = FamilyTask::Create(task_title,
                              task_date,
                              task_priority);
 

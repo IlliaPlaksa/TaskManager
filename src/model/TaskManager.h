@@ -7,24 +7,24 @@
 
 #include <map>
 #include <vector>
-#include "Task.h"
+#include "FamilyTask.h"
 #include "TaskId.h"
 #include "IdGenerator.h"
 
 class TaskManager
 {
 public:
-    TaskId Add(const Task &task);
-    void Edit(TaskId id, const Task &task);
+    TaskId Add(const FamilyTask &task);
+    void Edit(TaskId id, const FamilyTask &task);
     void Delete(TaskId id);
     void Complete(TaskId id);
-    std::vector<std::pair<TaskId, Task>> Show();
+    std::vector<std::pair<TaskId, FamilyTask>> Show();
 
 public:
-    TaskManager(std::unique_ptr<IdGenerator> generator);
+    explicit TaskManager(std::unique_ptr<IdGenerator> generator);
 
 private:
-    std::map<TaskId, Task> tasks_;
+    std::map<TaskId, FamilyTask> tasks_;
     std::unique_ptr<IdGenerator> gen_;
 };
 
