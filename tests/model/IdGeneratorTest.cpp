@@ -13,6 +13,6 @@ class IdGeneratorTest : public ::testing::Test
 TEST(IdGeneratorTest, mustReturnNewId)
 {
     auto gen = IdGenerator{};
-    EXPECT_EQ(TaskId::Create(0), gen.GetNextId());
-    EXPECT_NE(TaskId::Create(0), gen.GetNextId());
+    EXPECT_EQ(TaskId::Create(1), gen.GetNextId());
+    EXPECT_NE(TaskId::Create(1), gen.GetNextId());
 }

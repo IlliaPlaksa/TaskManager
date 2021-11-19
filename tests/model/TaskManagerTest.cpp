@@ -88,7 +88,7 @@ TEST(TaskManagerTest, shouldEditTask)
                                  new_date,
                                  new_priority);
 
-    manager.Edit(TaskId::Create(0), new_task);
+    manager.Edit(TaskId::Create(1), new_task);
 
     auto edited_task = manager.Show().begin()->second;
 
