@@ -13,21 +13,18 @@ TEST(FamilyTaskTest, shouldCreate)
 {
     auto title = "Simple task name";
     auto due_date = time(nullptr);
-    auto priority = FamilyTask::Priority::Medium;
+    auto priority = Task::Priority::Medium;
     auto label = "Simple task label";
-    auto task_id = TaskId::Create(1234);
+    auto parent_id = TaskId::Create(1234);
 
-    auto task = FamilyTask::Create(title,
-                             due_date,
-                             priority,
-                             label,
-                             task_id);
+    auto simple_task = Task::Create(title, due_date, priority, label);
+    auto task = FamilyTask::Create(simple_task, parent_id);
 
     EXPECT_EQ(task.GetTitle(), title);
     EXPECT_EQ(task.GetDate(), due_date);
     EXPECT_EQ(task.GetPriority(), priority);
     EXPECT_EQ(task.GetLabel(), label);
-    EXPECT_EQ(task.GetParentId(), task_id);
+    EXPECT_EQ(task.GetParentId(), parent_id);
 }
 
 
