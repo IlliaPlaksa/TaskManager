@@ -18,7 +18,11 @@ public:
     void Edit(TaskId id, const FamilyTask &task);
     void Delete(TaskId id);
     void Complete(TaskId id);
+
     std::vector<std::pair<TaskId, FamilyTask>> Show();
+    // TODO add new Show methods for "Family" relation
+    std::vector<std::pair<TaskId, FamilyTask>> ShowParents();
+    std::vector<std::pair<TaskId, FamilyTask>> ShowChild(TaskId parent_id);
 
 public:
     explicit TaskManager(std::unique_ptr<IdGenerator> generator);

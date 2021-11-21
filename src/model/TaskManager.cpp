@@ -49,3 +49,23 @@ std::vector<std::pair<TaskId, FamilyTask>> TaskManager::Show()
 
     return result;
 }
+std::vector<std::pair<TaskId, FamilyTask>> TaskManager::ShowParents()
+{
+    auto result = std::vector<std::pair<TaskId, FamilyTask>>{};
+    for (auto elem: this->tasks_)
+    {
+        if(elem.second.GetParentId() == TaskId::CreateDefault())
+            result.emplace_back(elem);
+    }
+    return result;
+}
+std::vector<std::pair<TaskId, FamilyTask>> TaskManager::ShowChild(TaskId parent_id)
+{
+    auto result = std::vector<std::pair<TaskId, FamilyTask>>{};
+    for(auto elem : this->tasks_)
+    {
+        if(elem.second.GetParentId() == parent_id)
+            result.emplace_back(elem);
+    }
+    return result;
+}
