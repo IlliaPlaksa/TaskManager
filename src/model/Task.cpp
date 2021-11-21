@@ -5,26 +5,26 @@
 #include "Task.h"
 
 Task::Task(
-    std::string title,
+    const std::string &title,
     const std::time_t &due_to_date,
     const Priority &priority,
-    std::string label)
+    const std::string &label,
+    const Status &status)
     :
-    title_(std::move(title)),
+    title_(title),
     due_to_date_(due_to_date),
     priority_(priority),
-    label_(std::move(label)) {}
+    label_(label),
+    status_(status) {}
 
 Task Task::Create(const std::string &title,
                   const std::time_t &due_to_date,
                   const Priority &priority,
-                  const std::string &label)
+                  const std::string &label,
+                  const Status &status)
 {
     if (!title.empty())
-        return Task{title,
-                    due_to_date,
-                    priority,
-                    label};
+        return Task{title, due_to_date, priority, label, status};
     else
         throw std::runtime_error("Passed empty title");
 }
@@ -45,3 +45,12 @@ std::string Task::GetLabel() const
 {
     return this->label_;
 }
+Task::Status Task::GetStatus() const
+{
+    return this->status_;
+}
+void Task::Complete(Task &task)
+{
+    task.status_ = Status::kComplete;
+}
+
