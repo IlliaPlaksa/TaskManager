@@ -20,7 +20,6 @@ public:
     void Complete(TaskId id);
 
     std::vector<std::pair<TaskId, FamilyTask>> Show();
-    // TODO add new Show methods for "Family" relation
     std::vector<std::pair<TaskId, FamilyTask>> ShowParents();
     std::vector<std::pair<TaskId, FamilyTask>> ShowChild(TaskId parent_id);
 

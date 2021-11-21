@@ -103,7 +103,6 @@ TEST(TaskManagerTest, shouldDeleteTask)
     auto task = FamilyTask::Create(Task::Create("Task name",
                                                 time(nullptr),
                                                 FamilyTask::Priority::High));
-
     auto task_id = manager.Add(task);
 
     manager.Delete(task_id);
@@ -152,4 +151,46 @@ TEST(TaskManagerTest, shouldThrowBadGeneratorBehaviourException)
 
     manager.Add(task);
     EXPECT_ANY_THROW(manager.Add(task));
+}
+
+TEST(TaskManagerTest, shouldShowParentTasks)
+{
+    auto manager = TaskManager{std::make_unique<IdGenerator>()};
+    size_t size = 5;
+    for (int i = 0; i < size; ++i)
+    {
+        auto task = FamilyTask::Create(Task::Create("Title", time(nullptr), Task::Priority::Medium),
+                                       TaskId::CreateDefault());
+        manager.Add(task);
+    }
+    auto tasks = manager.ShowParents();
+    for (const auto &elem: tasks)
+        EXPECT_EQ(elem.second.GetParentId(), TaskId::CreateDefault());
+
+    EXPECT_EQ(tasks.size(), size);
+}
+
+TEST(TaskManagerTest, shouldReturnChildTasks)
+{
+    auto manager = TaskManager{std::make_unique<IdGenerator>()};
+
+    auto parent_task = FamilyTask::Create(Task::Create("Parent",
+                                                       time(nullptr),
+                                                       Task::Priority::High),
+                                          TaskId::CreateDefault());
+    auto parent_id = manager.Add(parent_task);
+    size_t size = 5;
+    for (int i = 0; i < size; ++i)
+    {
+        auto task = FamilyTask::Create(Task::Create("Title",
+                                                    time(nullptr),
+                                                    Task::Priority::Medium),
+                                       parent_id);
+        manager.Add(task);
+    }
+    auto tasks = manager.ShowChild(parent_id);
+    for (const auto &elem: tasks)
+        EXPECT_EQ(elem.second.GetParentId(), parent_id);
+
+    EXPECT_EQ(tasks.size(), size);
 }
