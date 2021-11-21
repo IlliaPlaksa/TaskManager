@@ -11,11 +11,7 @@
 class FamilyTask : public Task
 {
 public:
-    static FamilyTask Create(const Task &task, TaskId parent_id);
-    static FamilyTask Create(const std::string &title,
-                             const std::time_t &due_to_date,
-                             const Priority &priority,
-                             const std::string &label = "",
+    static FamilyTask Create(const Task &task,
                              TaskId parent_id = TaskId::CreateDefault());
 public:
     TaskId GetParentId() const;
