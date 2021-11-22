@@ -33,7 +33,8 @@ add_executable(TaskManager_CLI
         src/cli/main.cpp
         src/cli/StateMachine.h src/cli/StateMachine.cpp
         src/cli/Context.h src/cli/Context.cpp
-        src/cli/State.h src/cli/State.cpp)
+        src/cli/State.h
+        src/cli/MachineStates.h src/cli/MachineStates.cpp)
 
 target_link_libraries(TaskManager_TEST GTest::GTest GTest::Main)
 target_link_libraries(TaskManager_TEST GTest::gtest GTest::gmock GTest::gmock_main)

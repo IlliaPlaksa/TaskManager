@@ -3,6 +3,7 @@
 //
 
 #include "State.h"
+#include "MachineStates.h"
 #include "Context.h"
 
 const State *StartState::Execute(Context &context)
