@@ -16,7 +16,7 @@ const State *Context::Execute()
 }
 void Context::WriteLine(std::string message)
 {
-    std::cout << message;
+    std::cout << message << std::endl;
 
 }
 std::string Context::ReadLine(std::string message)
