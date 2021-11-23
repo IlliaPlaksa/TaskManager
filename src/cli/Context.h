@@ -13,11 +13,12 @@
 class Context
 {
 public:
-    void SetState(std::shared_ptr<State> p_state);
-    const State* Execute();
+    void SetState(const std::shared_ptr<State> &p_state);
+    State::Status Execute();
 
-    void WriteLine(std::string message);
-    std::string ReadLine(std::string message = "");
+    // TODO separate printing
+    void WriteLine(const std::string &message);
+    std::string ReadLine(const std::string &message = "");
 
 private:
     std::shared_ptr<State> p_current_;
