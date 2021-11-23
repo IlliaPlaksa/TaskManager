@@ -7,7 +7,7 @@
 
 #include "Context.h"
 #include "State.h"
-#include "MachineStates.h"
+#include "states/MachineStates.h"
 
 class StateMachine
 {

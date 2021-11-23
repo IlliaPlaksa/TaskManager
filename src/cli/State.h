@@ -13,7 +13,14 @@ class Context;
 class State
 {
 public:
-    virtual const State *Execute(Context &context) = 0;
+    enum class Status
+    {
+        kOk = 0,
+        kExit,
+        kError
+    };
+public:
+    virtual Status Execute(Context &context) = 0;
 };
 
 #endif //TASKMANAGER_SRC_CLI_STATE_H_

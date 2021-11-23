@@ -6,7 +6,8 @@
 void StateMachine::Start()
 {
     this->context_ = Context();
-    auto p_current_state = std::shared_ptr<State>{new StartState};
-    this->context_.SetState(p_current_state);
-    do {} while (this->context_.Execute());
+    auto initial_state = std::shared_ptr<State>{new StartState};
+    this->context_.SetState(initial_state);
+
+    while (this->context_.Execute());
 }
