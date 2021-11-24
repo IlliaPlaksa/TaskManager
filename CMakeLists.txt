@@ -42,7 +42,8 @@ add_executable(TaskManager_CLI
         src/cli/states/EditStep.cpp
         src/cli/states/CompleteStep.cpp
         src/cli/states/DeleteStep.cpp
-        src/cli/states/ShowStep.cpp)
+        src/cli/states/ShowStep.cpp
+        src/cli/StepFactory.h src/cli/StepFactory.cpp)
 
 target_link_libraries(TaskManager_TEST GTest::GTest GTest::Main)
 target_link_libraries(TaskManager_TEST GTest::gtest GTest::gmock GTest::gmock_main)
