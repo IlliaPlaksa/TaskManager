@@ -9,6 +9,7 @@
 #include <string>
 #include <iostream>
 #include "Step.h"
+#include "StepFactory.h"
 
 class Context
 {
@@ -21,7 +22,7 @@ public:
     std::string ReadLine(const std::string &message = "");
 
 private:
-    std::shared_ptr<Step> p_current_;
+    std::shared_ptr<Step> step_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_CONTEXT_H_

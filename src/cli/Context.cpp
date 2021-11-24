@@ -6,12 +6,12 @@
 
 void Context::SetStep(const std::shared_ptr<Step> &p_step)
 {
-    this->p_current_ = p_step;
+    this->step_ = p_step;
 }
 
 Step::Status Context::Execute()
 {
-    return p_current_->Execute(*this);
+    return step_->Execute(*this);
 }
 void Context::WriteLine(const std::string &message)
 {
