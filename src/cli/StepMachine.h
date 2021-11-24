@@ -7,7 +7,7 @@
 
 #include "Context.h"
 #include "Step.h"
-#include "states/MachineSteps.h"
+#include "MachineSteps.h"
 
 class StepMachine
 {

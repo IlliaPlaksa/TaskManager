@@ -31,10 +31,18 @@ add_executable(TaskManager_TEST
 
 add_executable(TaskManager_CLI
         src/cli/main.cpp
-        src/cli/StateMachine.h src/cli/StateMachine.cpp
+        src/cli/StepMachine.h src/cli/StepMachine.cpp
         src/cli/Context.h src/cli/Context.cpp
-        src/cli/State.h
-        src/cli/states/MachineStates.h src/cli/states/MachineStates.cpp)
+        src/cli/Step.h
+        src/cli/MachineSteps.h
+        src/cli/states/RootStep.cpp
+        src/cli/states/ExitStep.cpp
+        src/cli/states/HelpStep.cpp
+        src/cli/states/AddStep.cpp
+        src/cli/states/EditStep.cpp
+        src/cli/states/CompleteStep.cpp
+        src/cli/states/DeleteStep.cpp
+        src/cli/states/ShowStep.cpp)
 
 target_link_libraries(TaskManager_TEST GTest::GTest GTest::Main)
 target_link_libraries(TaskManager_TEST GTest::gtest GTest::gmock GTest::gmock_main)

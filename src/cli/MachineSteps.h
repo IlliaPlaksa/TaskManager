@@ -5,8 +5,9 @@
 #ifndef TASKMANAGER_SRC_CLI_MACHINESTATES_H_
 #define TASKMANAGER_SRC_CLI_MACHINESTATES_H_
 
-#include "../Step.h"
-#include "../StepFabric.h"
+#include "Step.h"
+#include "StepFabric.h"
+#include "Context.h"
 
 class RootStep : public Step
 {
