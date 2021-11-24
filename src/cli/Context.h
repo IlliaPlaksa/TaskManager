@@ -8,20 +8,20 @@
 #include <memory>
 #include <string>
 #include <iostream>
-#include "State.h"
+#include "Step.h"
 
 class Context
 {
 public:
-    void SetState(const std::shared_ptr<State> &p_state);
-    State::Status Execute();
+    void SetStep(const std::shared_ptr<Step> &p_state);
+    Step::Status Execute();
 
     // TODO separate printing
     void WriteLine(const std::string &message);
     std::string ReadLine(const std::string &message = "");
 
 private:
-    std::shared_ptr<State> p_current_;
+    std::shared_ptr<Step> p_current_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_CONTEXT_H_

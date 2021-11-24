@@ -5,47 +5,49 @@
 #ifndef TASKMANAGER_SRC_CLI_MACHINESTATES_H_
 #define TASKMANAGER_SRC_CLI_MACHINESTATES_H_
 
-#include "../State.h"
+#include "../Step.h"
+#include "../StepFabric.h"
 
-class StartState : public State
+class RootStep : public Step
+{
+public:
+    Status Execute(Context &context) override;
+private:
+};
+
+class HelpStep : public Step
 {
 public:
     Status Execute(Context &context) override;
 };
 
-class HelpState : public State
+class ExitStep : public Step
 {
 public:
     Status Execute(Context &context) override;
 };
 
-class ExitState : public State
-{
-public:
-    Status Execute(Context &context) override;
-};
-
-class AddState : public State
+class AddStep : public Step
 {
     Status Execute(Context &context) override;
 };
 
-class EditState : public State
+class EditStep : public Step
 {
     Status Execute(Context &context) override;
 };
 
-class CompleteState : public State
+class CompleteStep : public Step
 {
     Status Execute(Context &context) override;
 };
 
-class DeleteState : public State
+class DeleteStep : public Step
 {
     Status Execute(Context &context) override;
 };
 
-class ShowState : public State
+class ShowStep : public Step
 {
     Status Execute(Context &context) override;
 };

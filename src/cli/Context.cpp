@@ -4,12 +4,12 @@
 
 #include "Context.h"
 
-void Context::SetState(const std::shared_ptr<State> &p_state)
+void Context::SetStep(const std::shared_ptr<Step> &p_step)
 {
-    this->p_current_ = p_state;
+    this->p_current_ = p_step;
 }
 
-State::Status Context::Execute()
+Step::Status Context::Execute()
 {
     return p_current_->Execute(*this);
 }
