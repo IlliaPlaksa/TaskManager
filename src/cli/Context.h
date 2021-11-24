@@ -9,7 +9,6 @@
 #include <string>
 #include <iostream>
 #include "Step.h"
-#include "StepFactory.h"
 
 class Context
 {

@@ -3,6 +3,7 @@
 //
 
 #include "StepFactory.h"
+#include "MachineSteps.h"
 
 std::shared_ptr<Step> StepFactory::CreateStep(StepId step_id)
 {
