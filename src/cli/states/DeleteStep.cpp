@@ -6,6 +6,6 @@
 
 Step::Status DeleteStep::Execute(Context &context)
 {
-    context.SetStep(std::shared_ptr<Step>{new RootStep});
+    context.SetStep(StepFactory::CreateStep(StepId::kRoot));
     return Status::kOk;
 }

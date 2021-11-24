@@ -6,7 +6,7 @@
 
 Step::Status ExitStep::Execute(Context &context)
 {
-    context.SetStep(std::shared_ptr<Step>{nullptr});
+    context.SetStep(StepFactory::CreateStep(StepId::kRoot));
     return Status::kExit;
 }
 

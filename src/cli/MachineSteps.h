@@ -5,15 +5,19 @@
 #ifndef TASKMANAGER_SRC_CLI_MACHINESTATES_H_
 #define TASKMANAGER_SRC_CLI_MACHINESTATES_H_
 
+#include <map>
 #include "Step.h"
-#include "StepFabric.h"
+#include "StepFactory.h"
 #include "Context.h"
+
+enum class StepId;
 
 class RootStep : public Step
 {
 public:
     Status Execute(Context &context) override;
 private:
+    static StepId GetIdFromName(const std::string& name);
 };
 
 class HelpStep : public Step

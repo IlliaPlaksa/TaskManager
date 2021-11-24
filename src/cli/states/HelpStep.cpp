@@ -17,7 +17,6 @@ Step::Status HelpStep::Execute(Context &context)
            << "exit" << std::endl;
 
     context.WriteLine(output.str());
-    auto new_state = std::shared_ptr<Step>{new RootStep};
-    context.SetStep(new_state);
+    context.SetStep(StepFactory::CreateStep(StepId::kRoot));
     return Status::kOk;
 }

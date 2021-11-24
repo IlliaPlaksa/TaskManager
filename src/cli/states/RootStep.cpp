@@ -6,32 +6,42 @@
 
 Step::Status RootStep::Execute(Context &context)
 {
-    auto command = context.ReadLine();
     std::shared_ptr<Step> new_state;
 
-    if (command == "exit")
-        new_state = std::shared_ptr<Step>{new ExitStep};
-    else if (command == "help")
-        new_state = std::shared_ptr<Step>{new HelpStep};
-    else if (command == "add")
-        new_state = std::shared_ptr<Step>{new AddStep};
-    else if (command == "edit")
-        new_state = std::shared_ptr<Step>{new EditStep};
-    else if (command == "complete")
-        new_state = std::shared_ptr<Step>{new CompleteStep};
-    else if (command == "delete")
-        new_state = std::shared_ptr<Step>{new DeleteStep};
-    else if (command == "show")
-        new_state = std::shared_ptr<Step>{new ShowStep};
+    auto command = context.ReadLine();
+    auto step_id = GetIdFromName(command);
+
+    if (step_id != StepId::kNone)
+        new_state = StepFactory::CreateStep(step_id);
     else
     {
         context.WriteLine("No such command -> " + command);
         context.WriteLine("Use command [help]");
-        new_state = std::shared_ptr<Step>{new RootStep};
+        new_state = StepFactory::CreateStep(StepId::kRoot);
     }
+
     context.SetStep(new_state);
     if (new_state)
         return Status::kOk;
     else
         return Status::kError;
+}
+StepId RootStep::GetIdFromName(const std::string &name)
+{
+    if (name == "exit")
+        return StepId::kExit;
+    else if (name == "help")
+        return StepId::kHelp;
+    else if (name == "add")
+        return StepId::kAdd;
+    else if (name == "edit")
+        return StepId::kEdit;
+    else if (name == "complete")
+        return StepId::kComplete;
+    else if (name == "delete")
+        return StepId::kDelete;
+    else if (name == "show")
+        return StepId::kShow;
+    else
+        return StepId::kNone;
 }
