@@ -7,7 +7,7 @@
 void StepMachine::Run()
 {
     this->context_ = Context();
-    auto initial_step = StepFactory::CreateStep(StepId::kRoot);
+    auto initial_step = this->context_.GetFactory()->CreateStep(StepId::kRoot);
     this->context_.SetStep(initial_step);
 
     while (this->context_.Execute() == Step::Status::kOk);

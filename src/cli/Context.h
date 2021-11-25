@@ -7,7 +7,7 @@
 
 #include <memory>
 #include "Step.h"
-#include "ConsolePrinter.h"
+#include "StepFactory.h"
 
 class Context
 {
@@ -15,12 +15,14 @@ public:
     void SetStep(const std::shared_ptr<Step> &p_state);
     Step::Status Execute();
 
-    std::shared_ptr<ConsolePrinter> GetPrinter();
+public:
+    std::shared_ptr<StepFactory> GetFactory();
+
 public:
     Context();
 private:
     std::shared_ptr<Step> step_;
-    std::shared_ptr<ConsolePrinter> printer_;
+    std::shared_ptr<StepFactory> factory_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_CONTEXT_H_

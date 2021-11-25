@@ -6,6 +6,6 @@
 
 Step::Status ShowStep::Execute(Context &context)
 {
-    context.SetStep(StepFactory::CreateStep(StepId::kRoot));
+    context.SetStep(context.GetFactory()->CreateStep(StepId::kRoot));
     return Status::kOk;
 }

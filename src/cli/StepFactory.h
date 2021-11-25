@@ -23,7 +23,12 @@ enum class StepId
 class StepFactory
 {
 public:
-    static std::shared_ptr<Step> CreateStep(StepId step_id);
+    std::shared_ptr<Step> CreateStep(StepId step_id);
+
+public:
+    StepFactory();
+private:
+    std::shared_ptr<ConsoleManipulator> console_manipulator_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_STEPFACTORY_H_

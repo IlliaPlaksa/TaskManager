@@ -12,12 +12,12 @@ Step::Status RootStep::Execute(Context &context)
     auto step_id = GetIdFromName(command);
 
     if (step_id != StepId::kNone)
-        new_state = StepFactory::CreateStep(step_id);
+        new_state = context.GetFactory()->CreateStep(step_id);
     else
     {
         this->console_->WriteLine("No such command -> " + command);
         this->console_->WriteLine("Use command [help]");
-        new_state = StepFactory::CreateStep(StepId::kRoot);
+        new_state = context.GetFactory()->CreateStep(StepId::kRoot);
     }
 
     context.SetStep(new_state);
