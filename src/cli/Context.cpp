@@ -16,11 +16,7 @@ Step::Status Context::Execute()
     else
         throw std::runtime_error("Current step is not initialized");
 }
-std::shared_ptr<ConsolePrinter> Context::GetPrinter()
-{
-    return this->printer_;
-}
 Context::Context()
-{
-    this->printer_ = std::make_shared<ConsolePrinter>();
-}
+    : factory_(std::make_shared<StepFactory>()) {}
+
+std::shared_ptr<StepFactory> Context::GetFactory() { return this->factory_; }
