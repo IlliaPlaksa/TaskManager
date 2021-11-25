@@ -6,9 +6,8 @@
 #define TASKMANAGER_SRC_CLI_CONTEXT_H_
 
 #include <memory>
-#include <string>
-#include <iostream>
 #include "Step.h"
+#include "ConsolePrinter.h"
 
 class Context
 {
@@ -16,12 +15,12 @@ public:
     void SetStep(const std::shared_ptr<Step> &p_state);
     Step::Status Execute();
 
-    // TODO separate printing
-    void WriteLine(const std::string &message);
-    std::string ReadLine(const std::string &message = "");
-
+    std::shared_ptr<ConsolePrinter> GetPrinter();
+public:
+    Context();
 private:
     std::shared_ptr<Step> step_;
+    std::shared_ptr<ConsolePrinter> printer_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_CONTEXT_H_

@@ -13,15 +13,11 @@ Step::Status Context::Execute()
 {
     return step_->Execute(*this);
 }
-void Context::WriteLine(const std::string &message)
+std::shared_ptr<ConsolePrinter> Context::GetPrinter()
 {
-    std::cout << message << std::endl;
-
+    return this->printer_;
 }
-std::string Context::ReadLine(const std::string &message)
+Context::Context()
 {
-    std::cout << message << " > ";
-    std::string input;
-    std::cin >> input;
-    return input;
+    this->printer_ = std::make_shared<ConsolePrinter>();
 }
