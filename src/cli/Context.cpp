@@ -11,7 +11,10 @@ void Context::SetStep(const std::shared_ptr<Step> &p_step)
 
 Step::Status Context::Execute()
 {
-    return step_->Execute(*this);
+    if (this->step_)
+        return step_->Execute(*this);
+    else
+        throw std::runtime_error("Current step is not initialized");
 }
 std::shared_ptr<ConsolePrinter> Context::GetPrinter()
 {
