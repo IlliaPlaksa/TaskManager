@@ -8,15 +8,15 @@ Step::Status RootStep::Execute(Context &context)
 {
     std::shared_ptr<Step> new_state;
 
-    auto command = context.GetPrinter()->ReadLine();
+    auto command = this->console_->ReadLine();
     auto step_id = GetIdFromName(command);
 
     if (step_id != StepId::kNone)
         new_state = StepFactory::CreateStep(step_id);
     else
     {
-        context.GetPrinter()->WriteLine("No such command -> " + command);
-        context.GetPrinter()->WriteLine("Use command [help]");
+        this->console_->WriteLine("No such command -> " + command);
+        this->console_->WriteLine("Use command [help]");
         new_state = StepFactory::CreateStep(StepId::kRoot);
     }
 

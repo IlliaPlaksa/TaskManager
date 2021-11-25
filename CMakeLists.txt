@@ -33,7 +33,7 @@ add_executable(TaskManager_CLI
         src/cli/main.cpp
         src/cli/StepMachine.h src/cli/StepMachine.cpp
         src/cli/Context.h src/cli/Context.cpp
-        src/cli/Step.h
+        src/cli/Step.h src/cli/Step.cpp
         src/cli/MachineSteps.h
         src/cli/states/RootStep.cpp
         src/cli/states/ExitStep.cpp
@@ -44,7 +44,7 @@ add_executable(TaskManager_CLI
         src/cli/states/DeleteStep.cpp
         src/cli/states/ShowStep.cpp
         src/cli/StepFactory.h src/cli/StepFactory.cpp
-        src/cli/ConsolePrinter.h src/cli/ConsolePrinter.cpp)
+        src/cli/ConsoleManipulator.h src/cli/ConsoleManipulator.cpp)
 
 target_link_libraries(TaskManager_TEST GTest::GTest GTest::Main)
 target_link_libraries(TaskManager_TEST GTest::gtest GTest::gmock GTest::gmock_main)

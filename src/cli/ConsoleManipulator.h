@@ -2,13 +2,13 @@
 // Created by Illia Plaksa on 25.11.2021.
 //
 
-#ifndef TASKMANAGER_SRC_CLI_CONSOLEPRINTER_H_
-#define TASKMANAGER_SRC_CLI_CONSOLEPRINTER_H_
+#ifndef TASKMANAGER_SRC_CLI_CONSOLEMANIPULATOR_H_
+#define TASKMANAGER_SRC_CLI_CONSOLEMANIPULATOR_H_
 
 #include <string>
 #include <iostream>
 
-class ConsolePrinter
+class ConsoleManipulator
 {
 public:
     void WriteLine(const std::string &message);
@@ -19,4 +19,4 @@ private:
     std::string prefix_;
 };
 
-#endif //TASKMANAGER_SRC_CLI_CONSOLEPRINTER_H_
+#endif //TASKMANAGER_SRC_CLI_CONSOLEMANIPULATOR_H_

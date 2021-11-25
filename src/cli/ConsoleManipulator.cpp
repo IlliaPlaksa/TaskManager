@@ -2,13 +2,13 @@
 // Created by Illia Plaksa on 25.11.2021.
 //
 
-#include "ConsolePrinter.h"
+#include "ConsoleManipulator.h"
 
-void ConsolePrinter::WriteLine(const std::string &message)
+void ConsoleManipulator::WriteLine(const std::string &message)
 {
     std::cout << message << std::endl;
 }
-std::string ConsolePrinter::ReadLine(const std::string &message)
+std::string ConsoleManipulator::ReadLine(const std::string &message)
 {
     std::cout << this->prefix_ << message << " > ";
     std::string input;
@@ -16,7 +16,7 @@ std::string ConsolePrinter::ReadLine(const std::string &message)
     return input;
 }
 
-void ConsolePrinter::SetPrefix(const std::string &prefix)
+void ConsoleManipulator::SetPrefix(const std::string &prefix)
 {
     this->prefix_ = prefix;
 }

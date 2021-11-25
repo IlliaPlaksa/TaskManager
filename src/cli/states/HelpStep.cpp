@@ -16,7 +16,7 @@ Step::Status HelpStep::Execute(Context &context)
            << "show" << std::endl
            << "exit" << std::endl;
 
-    context.GetPrinter()->WriteLine(output.str());
+    this->console_->WriteLine(output.str());
     context.SetStep(StepFactory::CreateStep(StepId::kRoot));
     return Status::kOk;
 }
