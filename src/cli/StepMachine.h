@@ -12,9 +12,10 @@
 class StepMachine
 {
 public:
-    void Start();
+    void Run();
 private:
     Context context_;
+
 };
 
 #endif //TASKMANAGER_SRC_CLI_STEPMACHINE_H_
