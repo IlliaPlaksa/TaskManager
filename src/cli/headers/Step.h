@@ -25,8 +25,12 @@ public:
 
 public:
     explicit Step(const std::shared_ptr<ConsoleManipulator> &console_manipulator);
-protected:
-    std::shared_ptr<ConsoleManipulator> console_;
+
+public:
+    ConsoleManipulator &GetConsoleManipulator();
+
+private:
+    std::shared_ptr<ConsoleManipulator> console_manipulator_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_STEP_H_

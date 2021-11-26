@@ -6,17 +6,19 @@
 
 Step::Status RootStep::Execute(Context &context)
 {
+    auto console = this->GetConsoleManipulator();
+
     std::shared_ptr<Step> new_state;
 
-    auto command = this->console_->ReadLine();
+    auto command = console.ReadLine();
     auto step_id = GetIdFromName(command);
 
     if (step_id != StepId::kNone)
         new_state = context.GetFactory()->CreateStep(step_id);
     else
     {
-        this->console_->WriteLine("No such command -> " + command);
-        this->console_->WriteLine("Use command [help]");
+        console.WriteLine("No such command -> " + command);
+        console.WriteLine("Use command [help]");
         new_state = context.GetFactory()->CreateStep(StepId::kRoot);
     }
 

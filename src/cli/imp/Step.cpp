@@ -6,4 +6,9 @@
 
 Step::Step(const std::shared_ptr<ConsoleManipulator> &console_manipulator)
     :
-    console_(console_manipulator) {}
+    console_manipulator_(console_manipulator) {}
+
+ConsoleManipulator &Step::GetConsoleManipulator()
+{
+    return *this->console_manipulator_;
+}
