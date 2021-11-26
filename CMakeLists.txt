@@ -12,18 +12,18 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 add_executable(TaskManager
         src/model/main.cpp
-        src/model/Task.cpp src/model/Task.h
-        src/model/TaskManager.cpp src/model/TaskManager.h
-        src/model/TaskId.cpp src/model/TaskId.h
-        src/model/IdGenerator.cpp src/model/IdGenerator.h
-        src/model/FamilyTask.h src/model/FamilyTask.cpp)
+        src/model/imp/Task.cpp src/model/headers/Task.h
+        src/model/imp/TaskManager.cpp src/model/headers/TaskManager.h
+        src/model/imp/TaskId.cpp src/model/headers/TaskId.h
+        src/model/imp/IdGenerator.cpp src/model/headers/IdGenerator.h
+        src/model/headers/FamilyTask.h src/model/imp/FamilyTask.cpp)
 
 add_executable(TaskManager_TEST
-        src/model/Task.cpp src/model/Task.h
-        src/model/TaskId.cpp src/model/TaskId.h
-        src/model/IdGenerator.cpp src/model/IdGenerator.h
-        src/model/TaskManager.cpp src/model/TaskManager.h
-        src/model/FamilyTask.h src/model/FamilyTask.cpp
+        src/model/imp/Task.cpp src/model/headers/Task.h
+        src/model/imp/TaskId.cpp src/model/headers/TaskId.h
+        src/model/imp/IdGenerator.cpp src/model/headers/IdGenerator.h
+        src/model/imp/TaskManager.cpp src/model/headers/TaskManager.h
+        src/model/headers/FamilyTask.h src/model/imp/FamilyTask.cpp
 
         tests/model/TaskTest.cpp tests/model/TaskIdTest.cpp
         tests/model/IdGeneratorTest.cpp tests/model/TaskManagerTest.cpp
@@ -44,7 +44,9 @@ add_executable(TaskManager_CLI
         src/cli/imp/states/DeleteStep.cpp
         src/cli/imp/states/ShowStep.cpp
         src/cli/headers/StepFactory.h src/cli/imp/StepFactory.cpp
-        src/cli/headers/ConsoleManipulator.h src/cli/imp/ConsoleManipulator.cpp)
+        src/cli/headers/ConsoleManipulator.h src/cli/imp/ConsoleManipulator.cpp
+        src/cli/headers/TaskStruct.h src/cli/imp/TaskStruct.cpp
+        src/model/headers/Task.h src/model/imp/Task.cpp)
 
 target_link_libraries(TaskManager_TEST GTest::GTest GTest::Main)
 target_link_libraries(TaskManager_TEST GTest::gtest GTest::gmock GTest::gmock_main)

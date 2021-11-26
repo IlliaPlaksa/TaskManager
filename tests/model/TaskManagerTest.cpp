@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
-#include "../../src/model/TaskManager.h"
+#include "../../src/model/headers/TaskManager.h"
 
 class IdGeneratorMock : public IdGenerator
 {

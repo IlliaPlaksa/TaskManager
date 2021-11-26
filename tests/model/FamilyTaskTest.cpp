@@ -3,7 +3,7 @@
 //
 
 #include "gtest/gtest.h"
-#include "../../src/model/FamilyTask.h"
+#include "../../src/model/headers/FamilyTask.h"
 
 #include "gtest/gtest.h"
 

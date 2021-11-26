@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 08.11.2021.
 //
 
-#include "TaskManager.h"
+#include "../headers/TaskManager.h"
 
 TaskManager::TaskManager(std::unique_ptr<IdGenerator> generator)
     : gen_{std::move(generator)} {}

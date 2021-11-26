@@ -35,11 +35,11 @@ public:
 
     static void Complete(Task &task);
 public: // Getters
-    std::string     GetTitle() const;
-    std::time_t     GetDate() const;
-    Task::Priority  GetPriority() const;
-    std::string     GetLabel() const;
-    Status          GetStatus() const;
+    std::string GetTitle() const;
+    std::time_t GetDate() const;
+    Task::Priority GetPriority() const;
+    std::string GetLabel() const;
+    Status GetStatus() const;
 
 private:
     Task(const std::string &title,

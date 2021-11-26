@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 19.11.2021.
 //
 
-#include "FamilyTask.h"
+#include "../headers/FamilyTask.h"
 
 FamilyTask FamilyTask::Create(const Task &task, TaskId parent_id)
 {

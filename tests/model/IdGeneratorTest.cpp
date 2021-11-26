@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 14.11.2021.
 //
 #include "gtest/gtest.h"
-#include "../../src/model/IdGenerator.h"
+#include "../../src/model/headers/IdGenerator.h"
 
 class IdGeneratorTest : public ::testing::Test
 {
