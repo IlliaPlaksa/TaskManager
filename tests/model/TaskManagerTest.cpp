@@ -21,7 +21,7 @@ TEST(TaskManagerTest, shouldAddTask)
 
     auto task_title = "Task name";
     auto task_date = time(nullptr);
-    auto task_priority = FamilyTask::Priority::Low;
+    auto task_priority = FamilyTask::Priority::kLow;
 
     auto task = FamilyTask::Create(Task::Create(task_title,
                                                 task_date,
@@ -45,7 +45,7 @@ TEST(TaskManagerTest, shouldAddMultiplyTasks)
 
     auto task_title = "Task name";
     auto task_date = time(nullptr);
-    auto task_priority = FamilyTask::Priority::Low;
+    auto task_priority = FamilyTask::Priority::kLow;
 
     auto task = FamilyTask::Create(Task::Create(task_title,
                                                 task_date,
@@ -65,7 +65,7 @@ TEST(TaskManagerTest, shouldThrowWrongIdException)
 
     auto task = FamilyTask::Create(Task::Create("Task name",
                                                 time(nullptr),
-                                                FamilyTask::Priority::High));
+                                                FamilyTask::Priority::kHigh));
 
     ASSERT_THROW(
         manager.Edit(TaskId::Create(123), task),
@@ -78,12 +78,12 @@ TEST(TaskManagerTest, shouldEditTask)
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
     auto task = FamilyTask::Create(Task::Create("Task name",
                                                 time(nullptr),
-                                                FamilyTask::Priority::High));
+                                                FamilyTask::Priority::kHigh));
     manager.Add(task);
 
     auto new_title = "New task name";
     auto new_date = time(nullptr);
-    auto new_priority = FamilyTask::Priority::Low;
+    auto new_priority = FamilyTask::Priority::kLow;
     auto new_task = FamilyTask::Create(Task::Create(new_title,
                                                     new_date,
                                                     new_priority));
@@ -102,7 +102,7 @@ TEST(TaskManagerTest, shouldDeleteTask)
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
     auto task = FamilyTask::Create(Task::Create("Task name",
                                                 time(nullptr),
-                                                FamilyTask::Priority::High));
+                                                FamilyTask::Priority::kHigh));
     auto task_id = manager.Add(task);
 
     manager.Delete(task_id);
@@ -118,7 +118,7 @@ TEST(TaskManagerTest, shouldCompleteTask)
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
     auto task = FamilyTask::Create(Task::Create("Task name",
                                                 time(nullptr),
-                                                FamilyTask::Priority::High));
+                                                FamilyTask::Priority::kHigh));
 
     auto task_id = manager.Add(task);
 
@@ -143,7 +143,7 @@ TEST(TaskManagerTest, shouldThrowBadGeneratorBehaviourException)
 
     auto task_title = "Task name";
     auto task_date = time(nullptr);
-    auto task_priority = FamilyTask::Priority::Low;
+    auto task_priority = FamilyTask::Priority::kLow;
 
     auto task = FamilyTask::Create(Task::Create(task_title,
                                                 task_date,
@@ -159,7 +159,7 @@ TEST(TaskManagerTest, shouldShowParentTasks)
     size_t size = 5;
     for (int i = 0; i < size; ++i)
     {
-        auto task = FamilyTask::Create(Task::Create("Title", time(nullptr), Task::Priority::Medium),
+        auto task = FamilyTask::Create(Task::Create("Title", time(nullptr), Task::Priority::kMedium),
                                        TaskId::CreateDefault());
         manager.Add(task);
     }
@@ -176,7 +176,7 @@ TEST(TaskManagerTest, shouldReturnChildTasks)
 
     auto parent_task = FamilyTask::Create(Task::Create("Parent",
                                                        time(nullptr),
-                                                       Task::Priority::High),
+                                                       Task::Priority::kHigh),
                                           TaskId::CreateDefault());
     auto parent_id = manager.Add(parent_task);
     size_t size = 5;
@@ -184,7 +184,7 @@ TEST(TaskManagerTest, shouldReturnChildTasks)
     {
         auto task = FamilyTask::Create(Task::Create("Title",
                                                     time(nullptr),
-                                                    Task::Priority::Medium),
+                                                    Task::Priority::kMedium),
                                        parent_id);
         manager.Add(task);
     }

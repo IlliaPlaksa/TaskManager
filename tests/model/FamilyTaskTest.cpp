@@ -13,7 +13,7 @@ TEST(FamilyTaskTest, shouldCreate)
 {
     auto title = "Simple task name";
     auto due_date = time(nullptr);
-    auto priority = Task::Priority::Medium;
+    auto priority = Task::Priority::kMedium;
     auto label = "Simple task label";
     auto parent_id = TaskId::Create(1234);
 

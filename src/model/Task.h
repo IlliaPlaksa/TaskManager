@@ -13,13 +13,15 @@ class Task
 public: // internals
     enum class Priority
     {
-        High,
-        Medium,
-        Low
+        kNone,
+        kHigh,
+        kMedium,
+        kLow
     };
 
     enum class Status
     {
+        kNone,
         kComplete,
         kInProgress,
     };
@@ -31,13 +33,13 @@ public:
                        const std::string &label = "",
                        const Status &status = Status::kInProgress);
 
-    static void Complete(Task& task);
+    static void Complete(Task &task);
 public: // Getters
-    std::string GetTitle() const;
-    std::time_t GetDate() const;
-    Task::Priority GetPriority() const;
-    std::string GetLabel() const;
-    Status GetStatus() const;
+    std::string     GetTitle() const;
+    std::time_t     GetDate() const;
+    Task::Priority  GetPriority() const;
+    std::string     GetLabel() const;
+    Status          GetStatus() const;
 
 private:
     Task(const std::string &title,
@@ -52,7 +54,6 @@ private:
     std::time_t due_to_date_;
     std::string label_;
     Status status_;
-
 };
 
 #endif //TASKMANAGER_SRC_MODEL_TASK_H_

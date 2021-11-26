@@ -11,7 +11,7 @@ TEST(TaskTest, shouldCreate)
 {
     auto title = "Simple task name";
     auto due_date = time(nullptr);
-    auto priority = Task::Priority::Medium;
+    auto priority = Task::Priority::kMedium;
     auto label = "Simple task label";
     auto status = Task::Status::kInProgress;
 
@@ -32,7 +32,7 @@ TEST(TaskTest, shouldCompleteTask)
 {
     auto title = "Simple task name";
     auto due_date = time(nullptr);
-    auto priority = Task::Priority::Medium;
+    auto priority = Task::Priority::kMedium;
     auto label = "Simple task label";
     auto status = Task::Status::kInProgress;
 
@@ -49,7 +49,7 @@ TEST(TaskTest, shouldCompleteTask)
 TEST(TaskTest, EmptyNameException)
 {
     EXPECT_THROW(
-        Task::Create("", time(nullptr), Task::Priority::Medium),
+        Task::Create("", time(nullptr), Task::Priority::kMedium),
         std::runtime_error
     );
 }
