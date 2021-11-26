@@ -2,9 +2,9 @@
 // Created by Illia Plaksa on 24.11.2021.
 //
 
-#include "../MachineSteps.h"
+#include "../../headers/MachineSteps.h"
 
-Step::Status AddStep::Execute(Context &context)
+Step::Status CompleteStep::Execute(Context &context)
 {
     context.SetStep(context.GetFactory()->CreateStep(StepId::kRoot));
     return Status::kOk;

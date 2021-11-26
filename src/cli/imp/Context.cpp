@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 22.11.2021.
 //
 
-#include "Context.h"
+#include "../headers/Context.h"
 
 void Context::SetStep(const std::shared_ptr<Step> &p_step)
 {
