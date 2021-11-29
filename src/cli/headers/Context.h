@@ -8,7 +8,6 @@
 #include <memory>
 #include "Step.h"
 #include "StepFactory.h"
-#include "TaskStruct.h"
 
 class Context
 {
@@ -18,15 +17,12 @@ public:
 
 public:
     std::shared_ptr<StepFactory> GetFactory();
-    std::shared_ptr<TaskStruct> GetStruct();
 
 public:
     Context();
 private:
     std::shared_ptr<Step> step_;
     std::shared_ptr<StepFactory> factory_;
-
-    std::shared_ptr<TaskStruct> task_struct_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_CONTEXT_H_

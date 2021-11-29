@@ -46,7 +46,10 @@ add_executable(TaskManager_CLI
         src/cli/headers/StepFactory.h src/cli/imp/StepFactory.cpp
         src/cli/headers/ConsoleManipulator.h src/cli/imp/ConsoleManipulator.cpp
         src/cli/headers/TaskStruct.h src/cli/imp/TaskStruct.cpp
-        src/model/headers/Task.h src/model/imp/Task.cpp)
+        src/model/headers/Task.h src/model/imp/Task.cpp
+        src/cli/headers/contexts/TaskContext.h src/cli/imp/contexts/TaskContext.cpp
+        src/cli/headers/contexts/MainContext.h src/cli/imp/contexts/MainContext.cpp
+        )
 
 target_link_libraries(TaskManager_TEST GTest::GTest GTest::Main)
 target_link_libraries(TaskManager_TEST GTest::gtest GTest::gmock GTest::gmock_main)
