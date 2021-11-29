@@ -8,6 +8,7 @@
 #include <memory>
 #include <sstream>
 #include "ConsoleManipulator.h"
+#include "Readers.h"
 
 class Context;
 

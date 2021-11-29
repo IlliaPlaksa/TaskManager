@@ -15,8 +15,6 @@ class RootStep : public Step
 public:
     using Step::Step;
     Status Execute(Context &context) override;
-private:
-    static StepId GetIdFromName(const std::string &name);
 };
 
 class HelpStep : public Step
