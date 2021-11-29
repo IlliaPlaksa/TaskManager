@@ -12,8 +12,11 @@
 #include "Validators.h"
 #include "ConsoleManipulator.h"
 
+enum class StepId;
+
 namespace Read
 {
+    std::optional<StepId> Command(const ConsoleManipulator &console);
     std::optional<std::string> Title(const ConsoleManipulator &console);
     std::optional<TaskId> Id(const ConsoleManipulator &console);
     std::optional<Task::Priority> Priority(const ConsoleManipulator &console);

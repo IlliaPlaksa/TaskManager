@@ -4,6 +4,11 @@
 
 #include "../include/Readers.h"
 
+std::optional<StepId> Read::Command(const ConsoleManipulator &console)
+{
+    auto input = Validate::Command(console.ReadLine());
+    return input;
+}
 std::optional<std::string> Read::Title(const ConsoleManipulator &console)
 {
     auto input = Validate::Title(

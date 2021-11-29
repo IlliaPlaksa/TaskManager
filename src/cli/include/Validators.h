@@ -8,11 +8,14 @@
 #include <string>
 #include <optional>
 #include <ctime>
+#include "StepId.h"
 #include "../../model/include/TaskId.h"
 #include "../../model/include/Task.h"
 
+
 namespace Validate
 {
+    std::optional<StepId> Command(const std::string& command);
     std::optional<std::string> Title(const std::string &title);
     std::optional<TaskId> Id(const std::string &id);
     std::optional<Task::Priority> Priority(const std::string &id);

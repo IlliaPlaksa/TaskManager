@@ -4,6 +4,25 @@
 
 #include "../include/Validators.h"
 
+std::optional<StepId> Validate::Command(const std::string &command)
+{
+    if (command == "exit")
+        return StepId::kExit;
+    else if (command == "help")
+        return StepId::kHelp;
+    else if (command == "add")
+        return StepId::kAdd;
+    else if (command == "edit")
+        return StepId::kEdit;
+    else if (command == "complete")
+        return StepId::kComplete;
+    else if (command == "delete")
+        return StepId::kDelete;
+    else if (command == "show")
+        return StepId::kShow;
+    else
+        return std::nullopt;
+}
 std::optional<std::string> Validate::Title(const std::string &title)
 {
     return std::nullopt;
