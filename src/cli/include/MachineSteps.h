@@ -68,11 +68,4 @@ public:
     Status Execute(Context &context) override;
 };
 
-
-class ConfirmStep : public Step
-{
-public:
-    using Step::Step;
-    Status Execute(Context &context) override;
-};
 #endif //TASKMANAGER_SRC_CLI_MACHINESTATES_H_
