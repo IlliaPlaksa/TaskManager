@@ -2,8 +2,8 @@
 // Created by Illia Plaksa on 23.11.2021.
 //
 
-#include "../headers/StepFactory.h"
-#include "../headers/MachineSteps.h"
+#include "../include/StepFactory.h"
+#include "../include/MachineSteps.h"
 
 std::shared_ptr<Step> StepFactory::CreateStep(StepId step_id)
 {

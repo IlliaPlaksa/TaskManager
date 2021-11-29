@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 24.11.2021.
 //
 
-#include "../../headers/MachineSteps.h"
+#include "../../include/MachineSteps.h"
 
 Step::Status AddStep::Execute(Context &context)
 {

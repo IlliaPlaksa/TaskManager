@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 25.11.2021.
 //
 
-#include "../headers/Step.h"
+#include "../include/Step.h"
 
 Step::Step(const std::shared_ptr<ConsoleManipulator> &console_manipulator)
     :

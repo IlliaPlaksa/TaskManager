@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 08.11.2021.
 //
 
-#include "../headers/Task.h"
+#include "../include/Task.h"
 
 Task::Task(
     const std::string &title,

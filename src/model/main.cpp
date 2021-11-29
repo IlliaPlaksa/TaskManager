@@ -1,6 +1,6 @@
 #include <iostream>
-#include "headers/Task.h"
-#include "headers/TaskManager.h"
+#include "include/Task.h"
+#include "include/TaskManager.h"
 
 int main()
 {

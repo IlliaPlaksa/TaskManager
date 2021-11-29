@@ -5,7 +5,6 @@
 #ifndef TASKMANAGER_SRC_CLI_MACHINESTATES_H_
 #define TASKMANAGER_SRC_CLI_MACHINESTATES_H_
 
-#include <map>
 #include "Step.h"
 #include "Context.h"
 
@@ -63,6 +62,14 @@ public:
 };
 
 class ShowStep : public Step
+{
+public:
+    using Step::Step;
+    Status Execute(Context &context) override;
+};
+
+
+class ConfirmStep : public Step
 {
 public:
     using Step::Step;

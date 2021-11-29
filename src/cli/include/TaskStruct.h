@@ -5,7 +5,7 @@
 #ifndef TASKMANAGER_SRC_CLI_TASKSTRUCT_H_
 #define TASKMANAGER_SRC_CLI_TASKSTRUCT_H_
 
-#include "../../model/headers/Task.h"
+#include "../../model/include/Task.h"
 
 class TaskStruct
 {

@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 26.11.2021.
 //
 
-#include "../headers/TaskStruct.h"
+#include "../include/TaskStruct.h"
 
 Task TaskStruct::ConstructTask()
 {

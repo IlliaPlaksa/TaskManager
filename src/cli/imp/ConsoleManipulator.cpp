@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 25.11.2021.
 //
 
-#include "../headers/ConsoleManipulator.h"
+#include "../include/ConsoleManipulator.h"
 
 void ConsoleManipulator::WriteLine(const std::string &message)
 {
