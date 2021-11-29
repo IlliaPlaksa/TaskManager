@@ -6,19 +6,7 @@
 #define TASKMANAGER_SRC_CLI_STEPFACTORY_H_
 
 #include "Step.h"
-
-enum class StepId
-{
-    kNone,
-    kRoot,
-    kHelp,
-    kExit,
-    kAdd,
-    kEdit,
-    kComplete,
-    kDelete,
-    kShow,
-};
+#include "StepId.h"
 
 class StepFactory
 {
