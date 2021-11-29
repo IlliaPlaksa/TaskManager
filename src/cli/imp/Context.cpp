@@ -20,3 +20,4 @@ Context::Context()
     : factory_(std::make_shared<StepFactory>()) {}
 
 std::shared_ptr<StepFactory> Context::GetFactory() { return this->factory_; }
+std::shared_ptr<TaskStruct> Context::GetStruct() { return this->task_struct_; }
