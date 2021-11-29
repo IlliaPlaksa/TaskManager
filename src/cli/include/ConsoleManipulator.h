@@ -14,9 +14,9 @@ public:
     void WriteLine(const std::string &message);
     std::string ReadLine(const std::string &message = "");
 
-    void SetPrefix(const std::string &prefix);
+    void ResetPrompt(const std::string &prompt = "");
 private:
-    std::string prefix_;
+    std::string prompt_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_CONSOLEMANIPULATOR_H_

@@ -10,13 +10,13 @@ void ConsoleManipulator::WriteLine(const std::string &message)
 }
 std::string ConsoleManipulator::ReadLine(const std::string &message)
 {
-    std::cout << this->prefix_ << message << " > ";
+    std::cout << this->prompt_ << message << " > ";
     std::string input;
     std::cin >> input;
     return input;
 }
 
-void ConsoleManipulator::SetPrefix(const std::string &prefix)
+void ConsoleManipulator::ResetPrompt(const std::string &prompt)
 {
-    this->prefix_ = prefix;
+    this->prompt_ = prompt;
 }
