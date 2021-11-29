@@ -14,9 +14,12 @@
 
 namespace Read
 {
-    std::optional<std::string> Title(const std::shared_ptr<ConsoleManipulator>& console_manipulator);
-    std::optional<TaskId> Id(const std::shared_ptr<ConsoleManipulator>& console_manipulator);
-    std::optional<time_t> Date(const std::shared_ptr<ConsoleManipulator>& console_manipulator);
+    std::optional<std::string> Title(const ConsoleManipulator &console);
+    std::optional<TaskId> Id(const ConsoleManipulator &console);
+    std::optional<Task::Priority> Priority(const ConsoleManipulator &console);
+    std::optional<time_t> Date(const ConsoleManipulator &console);
+    std::optional<std::string> Label(const ConsoleManipulator &console);
+    std::optional<bool> Confirm(const ConsoleManipulator &console);
 }
 
 #endif //TASKMANAGER_SRC_CLI_INCLUDE_READERS_H_
