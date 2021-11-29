@@ -47,8 +47,6 @@ add_executable(TaskManager_CLI
         src/cli/include/ConsoleManipulator.h src/cli/imp/ConsoleManipulator.cpp
         src/cli/include/TaskStruct.h src/cli/imp/TaskStruct.cpp
         src/model/include/Task.h src/model/imp/Task.cpp
-        src/cli/include/contexts/TaskContext.h src/cli/imp/contexts/TaskContext.cpp
-        src/cli/include/contexts/MainContext.h src/cli/imp/contexts/MainContext.cpp
         )
 
 target_link_libraries(TaskManager_TEST GTest::GTest GTest::Main)
