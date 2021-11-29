@@ -4,11 +4,11 @@
 
 #include "../include/ConsoleManipulator.h"
 
-void ConsoleManipulator::WriteLine(const std::string &message)
+void ConsoleManipulator::WriteLine(const std::string &message) const
 {
     std::cout << message << std::endl;
 }
-std::string ConsoleManipulator::ReadLine(const std::string &message)
+std::string ConsoleManipulator::ReadLine(const std::string &message) const
 {
     std::cout << this->prompt_ << message << " > ";
     std::string input;
