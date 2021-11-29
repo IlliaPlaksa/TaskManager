@@ -35,14 +35,14 @@ add_executable(TaskManager_CLI
         src/cli/headers/Context.h src/cli/imp/Context.cpp
         src/cli/headers/Step.h src/cli/imp/Step.cpp
         src/cli/headers/MachineSteps.h
-        src/cli/imp/states/RootStep.cpp
-        src/cli/imp/states/ExitStep.cpp
-        src/cli/imp/states/HelpStep.cpp
-        src/cli/imp/states/AddStep.cpp
-        src/cli/imp/states/EditStep.cpp
-        src/cli/imp/states/CompleteStep.cpp
-        src/cli/imp/states/DeleteStep.cpp
-        src/cli/imp/states/ShowStep.cpp
+        src/cli/imp/steps/RootStep.cpp
+        src/cli/imp/steps/ExitStep.cpp
+        src/cli/imp/steps/HelpStep.cpp
+        src/cli/imp/steps/AddStep.cpp
+        src/cli/imp/steps/EditStep.cpp
+        src/cli/imp/steps/CompleteStep.cpp
+        src/cli/imp/steps/DeleteStep.cpp
+        src/cli/imp/steps/ShowStep.cpp
         src/cli/headers/StepFactory.h src/cli/imp/StepFactory.cpp
         src/cli/headers/ConsoleManipulator.h src/cli/imp/ConsoleManipulator.cpp
         src/cli/headers/TaskStruct.h src/cli/imp/TaskStruct.cpp
