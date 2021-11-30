@@ -49,6 +49,8 @@ add_executable(TaskManager_CLI
         src/cli/include/ConsoleManipulator.h src/cli/imp/ConsoleManipulator.cpp
         src/cli/include/TaskStruct.h src/cli/imp/TaskStruct.cpp
         src/model/include/Task.h src/model/imp/Task.cpp
+        src/model/include/TaskId.h src/model/imp/TaskId.cpp
+
         src/cli/include/Validators.h src/cli/imp/Validators.cpp
         src/cli/include/Readers.h src/cli/imp/Readers.cpp)
 
