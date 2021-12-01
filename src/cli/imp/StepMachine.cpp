@@ -7,8 +7,13 @@
 void StepMachine::Run()
 {
     this->context_ = Context();
-    auto initial_step = this->context_.GetFactory()->CreateStep(StepId::kRoot);
-    this->context_.SetStep(initial_step);
+    auto initial_step = factory_.CreateStep(StepId::kRoot);
+    this->SetNextStep(initial_step);
 
-    while (this->context_.Execute() == Step::Status::kOk);
+    while (current_step_)
+        this->SetNextStep(current_step_->Execute(context_, factory_));
+}
+void StepMachine::SetNextStep(const std::shared_ptr<Step> &step)
+{
+    this->current_step_ = step;
 }

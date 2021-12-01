@@ -11,8 +11,7 @@ std::shared_ptr<Step> StepFactory::CreateStep(StepId step_id)
 
     switch (step_id)
     {
-        case StepId::kRoot:
-            result = std::shared_ptr<Step>{new RootStep{this->console_manipulator_}};
+        case StepId::kRoot: result = std::shared_ptr<Step>{new RootStep{this->console_manipulator_}};
             break;
         case StepId::kAdd: result = std::shared_ptr<Step>{new AddStep{this->console_manipulator_}};
             break;

@@ -11,18 +11,12 @@
 #include "Readers.h"
 
 class Context;
+class StepFactory;
 
 class Step
 {
 public:
-    enum class Status
-    {
-        kOk = 0,
-        kExit,
-        kError
-    };
-public:
-    virtual Status Execute(Context &context) = 0;
+    virtual std::shared_ptr<Step> Execute(Context &context, StepFactory& factory) = 0;
 
 public:
     explicit Step(const std::shared_ptr<ConsoleManipulator> &console_manipulator);

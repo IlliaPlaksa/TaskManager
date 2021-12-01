@@ -13,9 +13,13 @@ class StepMachine
 {
 public:
     void Run();
+public:
+    void SetNextStep(const std::shared_ptr<Step> &step);
 private:
     Context context_;
+    StepFactory factory_;
 
+    std::shared_ptr<Step> current_step_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_STEPMACHINE_H_

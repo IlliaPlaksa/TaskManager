@@ -13,19 +13,12 @@
 class Context
 {
 public:
-    void SetStep(const std::shared_ptr<Step> &p_state);
-    Step::Status Execute();
-
-public:
-    std::shared_ptr<StepFactory> GetFactory();
     std::shared_ptr<TaskStruct> GetStruct();
 
 public:
     Context();
 
 private:
-    std::shared_ptr<Step> step_;
-    std::shared_ptr<StepFactory> factory_;
     std::shared_ptr<TaskStruct> task_struct_;
 };
 
