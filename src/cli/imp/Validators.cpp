@@ -2,6 +2,7 @@
 // Created by Illia Plaksa on 29.11.2021.
 //
 
+#include <regex>
 #include "../include/Validators.h"
 
 std::optional<StepId> Validate::Command(const std::string &command)
@@ -42,7 +43,7 @@ std::optional<TaskId> Validate::Id(const std::string &id)
         if (num < 0)
             throw std::runtime_error("Id is negative");
     }
-    catch (std::exception& e)
+    catch (std::exception &e)
     {
         return std::nullopt;
     }
@@ -50,7 +51,11 @@ std::optional<TaskId> Validate::Id(const std::string &id)
 }
 std::optional<time_t> Validate::Date(const std::string &date)
 {
-    static const std::string dateTimeFormat{"%d.%m.%Y"};
+    const std::string pattern = R"(\d{2}.\d{2}.\d{4})";
+    if (!std::regex_match(date, std::regex(pattern))) // Passed string doesn't match date pattern
+        return std::nullopt;
+
+    const std::string dateTimeFormat{"%d.%m.%Y"};
     std::istringstream ss{date};
 
     std::tm dt;
@@ -58,24 +63,10 @@ std::optional<time_t> Validate::Date(const std::string &date)
     if (ss.fail())
         return std::nullopt;
     else
-    {
-        auto time = std::mktime(&dt);
-        if(time == -1) // If date is incorrect
-            return std::nullopt;
-        else
-            return time;
-    }
-
+        return std::mktime(&dt);
 }
 std::optional<Task::Priority> Validate::Priority(const std::string &priority)
 {
-    std::string lower_case = priority;
-
-    for (size_t i = 0; i < lower_case.length(); i++)
-    {
-        lower_case[i] = std::tolower(lower_case[i]);
-    }
-
     if (priority == "high")
         return Task::Priority::kHigh;
     if (priority == "medium")
@@ -87,7 +78,7 @@ std::optional<Task::Priority> Validate::Priority(const std::string &priority)
 }
 std::optional<std::string> Validate::Label(const std::string &label)
 {
-        return label;
+    return label;
 }
 std::optional<bool> Validate::Confirm(const std::string &symbol)
 {
