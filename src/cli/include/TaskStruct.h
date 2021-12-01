@@ -15,8 +15,8 @@ public:
     bool IsReadyToConstruct();
 public:
     void SetTitle(const std::string &title);
-    void SetPriority(const std::time_t &date);
-    void SetDate(const Task::Priority &priority);
+    void SetPriority(const Task::Priority &priority);
+    void SetDate(const std::time_t &date);
     void SetLabel(const std::string &label);
     void SetStatus(const Task::Status &status);
 

@@ -30,13 +30,13 @@ void TaskStruct::SetTitle(const std::string &title)
 {
     this->title_ = title;
 }
-void TaskStruct::SetPriority(const time_t &date)
-{
-    this->due_to_date_ = date;
-}
-void TaskStruct::SetDate(const Task::Priority &priority)
+void TaskStruct::SetPriority(const Task::Priority &priority)
 {
     this->priority_ = priority;
+}
+void TaskStruct::SetDate(const time_t &date)
+{
+    this->due_to_date_ = date;
 }
 void TaskStruct::SetLabel(const std::string &label)
 {
