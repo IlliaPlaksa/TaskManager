@@ -4,9 +4,8 @@
 
 #include "../../include/MachineSteps.h"
 
-Step::Status ExitStep::Execute(Context &context)
+std::shared_ptr<Step> ExitStep::Execute(Context &context, StepFactory& factory)
 {
-    context.SetStep(context.GetFactory()->CreateStep(StepId::kRoot));
-    return Status::kExit;
+    return factory.CreateStep(StepId::kNone);
 }
 

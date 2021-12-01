@@ -4,7 +4,7 @@
 
 #include "../../include/MachineSteps.h"
 
-Step::Status AddStep::Execute(Context &context)
+std::shared_ptr<Step> AddStep::Execute(Context &context, StepFactory& factory)
 {
     auto console = this->GetConsoleManipulator();
     auto task_struct = context.GetStruct();
@@ -36,9 +36,7 @@ Step::Status AddStep::Execute(Context &context)
             console.WriteLine("Operation canceled");
 
     }
-
     console.ResetPrompt();
 
-    context.SetStep(context.GetFactory()->CreateStep(StepId::kRoot));
-    return Status::kOk;
+    return factory.CreateStep(StepId::kRoot);;
 }

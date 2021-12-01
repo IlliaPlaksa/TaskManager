@@ -4,8 +4,9 @@
 
 #include "../../include/MachineSteps.h"
 
-Step::Status HelpStep::Execute(Context &context)
+std::shared_ptr<Step> HelpStep::Execute(Context &context, StepFactory& factory)
 {
+    // TODO implement with reading file
     std::stringstream output;
     output << "Commands:" << std::endl
            << "help" << std::endl
@@ -17,6 +18,5 @@ Step::Status HelpStep::Execute(Context &context)
            << "exit" << std::endl;
 
     this->GetConsoleManipulator().WriteLine(output.str());
-    context.SetStep(context.GetFactory()->CreateStep(StepId::kRoot));
-    return Status::kOk;
+    return factory.CreateStep(StepId::kRoot);
 }

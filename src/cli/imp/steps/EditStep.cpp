@@ -4,8 +4,7 @@
 
 #include "../../include/MachineSteps.h"
 
-Step::Status EditStep::Execute(Context &context)
+std::shared_ptr<Step> EditStep::Execute(Context &context, StepFactory& factory)
 {
-    context.SetStep(context.GetFactory()->CreateStep(StepId::kRoot));
-    return Status::kOk;
+    return factory.CreateStep(StepId::kRoot);
 }
