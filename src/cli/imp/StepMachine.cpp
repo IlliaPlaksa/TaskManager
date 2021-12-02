@@ -17,3 +17,16 @@ void StepMachine::SetNextStep(const std::shared_ptr<Step> &step)
 {
     this->current_step_ = step;
 }
+std::optional<Task> StepMachine::GetTask()
+{
+    auto task_struct =  this->context_.GetStruct();
+
+    if (task_struct->IsReadyToConstruct())
+        return task_struct->ConstructTask();
+    else
+        return std::nullopt;
+}
+std::optional<TaskId> StepMachine::GetTaskId()
+{
+    return *this->context_.GetTaskId();
+}
