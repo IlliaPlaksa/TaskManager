@@ -10,9 +10,9 @@
 class TaskStruct
 {
 public:
-    Task ConstructTask();
+    Task ConstructTask() const;
     void Reset();
-    bool IsReadyToConstruct();
+    bool IsReadyToConstruct() const;
 public:
     void SetTitle(const std::string &title);
     void SetPriority(const Task::Priority &priority);

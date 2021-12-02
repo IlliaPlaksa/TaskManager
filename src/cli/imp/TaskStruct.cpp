@@ -4,7 +4,7 @@
 
 #include "../include/TaskStruct.h"
 
-Task TaskStruct::ConstructTask()
+Task TaskStruct::ConstructTask() const
 {
     return Task::Create(title_,
                         due_to_date_,
@@ -20,7 +20,7 @@ void TaskStruct::Reset()
     label_.clear();
     status_ = Task::Status::kNone;
 }
-bool TaskStruct::IsReadyToConstruct()
+bool TaskStruct::IsReadyToConstruct() const
 {
     return !title_.empty()
         and due_to_date_ >= 0
