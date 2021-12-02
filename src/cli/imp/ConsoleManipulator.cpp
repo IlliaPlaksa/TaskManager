@@ -10,10 +10,11 @@ void ConsoleManipulator::WriteLine(const std::string &message) const
 }
 std::string ConsoleManipulator::ReadLine(const std::string &message) const
 {
-    std::cout << this->prompt_ << " " << message << " > ";
+    std::cout << this->prompt_ << " " << message << "> ";
     std::string input;
     std::getline(std::cin, input);
-    return input;
+    
+    return trim(input);
 }
 
 void ConsoleManipulator::ResetPrompt(const std::string &prompt)

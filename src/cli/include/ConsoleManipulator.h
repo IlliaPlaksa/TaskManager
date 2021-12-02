@@ -16,6 +16,35 @@ public:
 
     void ResetPrompt(const std::string &prompt = "");
 private:
+    // trim from start
+    std::string ltrim(std::string s) const
+    {
+        s.erase(s.begin(), std::find_if(s.begin(), s.end(),
+                                        [](int c)
+                                        {
+                                            return !std::isspace(c);
+                                        }));
+        return s;
+    }
+
+// trim from end
+    std::string rtrim(std::string s) const
+    {
+        s.erase(std::find_if(s.rbegin(), s.rend(),
+                             [](unsigned char ch)
+                             {
+                                 return !std::isspace(ch);
+                             }).base(), s.end());
+        return s;
+    }
+
+// trim from both ends
+    std::string trim(std::string s) const
+    {
+        return ltrim(rtrim(s));
+    }
+
+private:
     std::string prompt_;
 };
 
