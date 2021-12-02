@@ -3,20 +3,21 @@
 //
 
 #include "../../include/MachineSteps.h"
+#include <fstream>
 
-std::shared_ptr<Step> HelpStep::Execute(Context &context, StepFactory& factory)
+std::shared_ptr<Step> HelpStep::Execute(Context &context, StepFactory &factory)
 {
     // TODO implement with reading file
-    std::stringstream output;
-    output << "Commands:" << std::endl
-           << "help" << std::endl
-           << "add" << std::endl
-           << "edit" << std::endl
-           << "complete" << std::endl
-           << "delete" << std::endl
-           << "show" << std::endl
-           << "exit" << std::endl;
+    std::string output;
 
-    this->GetConsoleManipulator().WriteLine(output.str());
+    std::ifstream file{"help.txt"};
+
+    if (file.is_open())
+    {
+        while(std::getline(file, output))
+            this->GetConsoleManipulator().WriteLine(output);
+    } else
+        this->GetConsoleManipulator().WriteLine("File help.txt is not found");
+
     return factory.CreateStep(StepId::kRoot);
 }
