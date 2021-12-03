@@ -21,6 +21,7 @@ add_executable(TaskManager
 add_executable(TaskManager_TEST
         src/model/imp/Task.cpp src/model/include/Task.h
         src/model/imp/TaskId.cpp src/model/include/TaskId.h
+        src/controller/include/IModel.h
         src/model/imp/IdGenerator.cpp src/model/include/IdGenerator.h
         src/model/imp/TaskManager.cpp src/model/include/TaskManager.h
         src/model/include/FamilyTask.h src/model/imp/FamilyTask.cpp
@@ -52,7 +53,15 @@ add_executable(TaskManager_CLI
         src/model/include/TaskId.h src/model/imp/TaskId.cpp
 
         src/cli/include/Validators.h src/cli/imp/Validators.cpp
-        src/cli/include/Readers.h src/cli/imp/Readers.cpp)
+        src/cli/include/Readers.h src/cli/imp/Readers.cpp
+
+        src/controller/include/Controller.h src/controller/imp/Controller.cpp
+        src/controller/include/OperationType.h)
+
+add_executable(TaskManager_Controller src/controller/main.cpp
+        src/controller/include/Controller.h src/controller/imp/Controller.cpp
+        src/controller/include/OperationType.h)
+
 
 target_link_libraries(TaskManager_TEST GTest::GTest GTest::Main)
 target_link_libraries(TaskManager_TEST GTest::gtest GTest::gmock GTest::gmock_main)
