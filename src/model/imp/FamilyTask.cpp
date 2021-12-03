@@ -13,8 +13,12 @@ TaskId FamilyTask::GetParentId() const
 {
     return this->parent_id_;
 }
-
-FamilyTask::FamilyTask(const Task &task, TaskId parent_id)
+Task FamilyTask::GetTask() const
+{
+    return this->task_;
+}
+FamilyTask::FamilyTask(const Task &task, const TaskId &parent_id)
     :
-    Task(task),
+    task_(task),
     parent_id_(parent_id) {}
+
