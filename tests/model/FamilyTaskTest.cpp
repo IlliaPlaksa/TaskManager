@@ -3,7 +3,7 @@
 //
 
 #include "gtest/gtest.h"
-#include "../../src/model/headers/FamilyTask.h"
+#include "../../src/model/include/FamilyTask.h"
 
 #include "gtest/gtest.h"
 
@@ -20,10 +20,10 @@ TEST(FamilyTaskTest, shouldCreate)
     auto simple_task = Task::Create(title, due_date, priority, label);
     auto task = FamilyTask::Create(simple_task, parent_id);
 
-    EXPECT_EQ(task.GetTitle(), title);
-    EXPECT_EQ(task.GetDate(), due_date);
-    EXPECT_EQ(task.GetPriority(), priority);
-    EXPECT_EQ(task.GetLabel(), label);
+    EXPECT_EQ(task.GetTask().GetTitle(), title);
+    EXPECT_EQ(task.GetTask().GetDate(), due_date);
+    EXPECT_EQ(task.GetTask().GetPriority(), priority);
+    EXPECT_EQ(task.GetTask().GetLabel(), label);
     EXPECT_EQ(task.GetParentId(), parent_id);
 }
 

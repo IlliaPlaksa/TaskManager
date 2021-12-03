@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
-#include "../../src/model/headers/TaskManager.h"
+#include "../../src/model/include/TaskManager.h"
 
 class IdGeneratorMock : public IdGenerator
 {
@@ -21,12 +21,12 @@ TEST(TaskManagerTest, shouldAddTask)
 
     auto task_title = "Task name";
     auto task_date = time(nullptr);
-    auto task_priority = FamilyTask::Priority::kLow;
+    auto task_priority = Task::Priority::kLow;
 
-    auto task = FamilyTask::Create(Task::Create(task_title,
+    auto task = Task::Create(task_title,
                                                 task_date,
-                                                task_priority));
-    auto task_id = manager.Add(task);
+                                                task_priority);
+    auto task_id = manager.Add(task, TaskId::CreateDefault());
 
     ASSERT_EQ(manager.Show().size(), 1);
 
@@ -45,16 +45,16 @@ TEST(TaskManagerTest, shouldAddMultiplyTasks)
 
     auto task_title = "Task name";
     auto task_date = time(nullptr);
-    auto task_priority = FamilyTask::Priority::kLow;
+    auto task_priority = Task::Priority::kLow;
 
-    auto task = FamilyTask::Create(Task::Create(task_title,
-                                                task_date,
-                                                task_priority));
+    auto task = Task::Create(task_title,
+                             task_date,
+                             task_priority);
 
-    manager.Add(task);
-    manager.Add(task);
-    manager.Add(task);
-    manager.Add(task);
+    manager.Add(task, TaskId::CreateDefault());
+    manager.Add(task, TaskId::CreateDefault());
+    manager.Add(task, TaskId::CreateDefault());
+    manager.Add(task, TaskId::CreateDefault());
 
     EXPECT_EQ(manager.Show().size(), 4);
 }
@@ -63,12 +63,12 @@ TEST(TaskManagerTest, shouldThrowWrongIdException)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
 
-    auto task = FamilyTask::Create(Task::Create("Task name",
-                                                time(nullptr),
-                                                FamilyTask::Priority::kHigh));
+    auto task = Task::Create("Task name",
+                             time(nullptr),
+                             Task::Priority::kHigh);
 
     ASSERT_THROW(
-        manager.Edit(TaskId::Create(123), task),
+        manager.Edit(TaskId::Create(123), task, TaskId::CreateDefault()),
         std::runtime_error
     );
 }
@@ -76,19 +76,19 @@ TEST(TaskManagerTest, shouldThrowWrongIdException)
 TEST(TaskManagerTest, shouldEditTask)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
-    auto task = FamilyTask::Create(Task::Create("Task name",
-                                                time(nullptr),
-                                                FamilyTask::Priority::kHigh));
-    manager.Add(task);
+    auto task = Task::Create("Task name",
+                             time(nullptr),
+                             Task::Priority::kHigh);
+    manager.Add(task, TaskId::CreateDefault());
 
     auto new_title = "New task name";
     auto new_date = time(nullptr);
-    auto new_priority = FamilyTask::Priority::kLow;
-    auto new_task = FamilyTask::Create(Task::Create(new_title,
-                                                    new_date,
-                                                    new_priority));
+    auto new_priority = Task::Priority::kLow;
+    auto new_task = Task::Create(new_title,
+                                 new_date,
+                                 new_priority);
 
-    manager.Edit(TaskId::Create(1), new_task);
+    manager.Edit(TaskId::Create(1), new_task, TaskId::CreateDefault());
 
     auto edited_task = manager.Show().begin()->second;
 
@@ -100,33 +100,33 @@ TEST(TaskManagerTest, shouldEditTask)
 TEST(TaskManagerTest, shouldDeleteTask)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
-    auto task = FamilyTask::Create(Task::Create("Task name",
-                                                time(nullptr),
-                                                FamilyTask::Priority::kHigh));
-    auto task_id = manager.Add(task);
+    auto task = Task::Create("Task name",
+                             time(nullptr),
+                             Task::Priority::kHigh);
+    auto task_id = manager.Add(task, TaskId::CreateDefault());
 
     manager.Delete(task_id);
 
     ASSERT_TRUE(manager.Show().empty());
 
-    EXPECT_THROW(manager.Edit(task_id, task),
+    EXPECT_THROW(manager.Edit(task_id, task, TaskId::CreateDefault()),
                  std::runtime_error);
 }
 
 TEST(TaskManagerTest, shouldCompleteTask)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
-    auto task = FamilyTask::Create(Task::Create("Task name",
-                                                time(nullptr),
-                                                FamilyTask::Priority::kHigh));
+    auto task = Task::Create("Task name",
+                             time(nullptr),
+                             Task::Priority::kHigh);
 
-    auto task_id = manager.Add(task);
+    auto task_id = manager.Add(task, TaskId::CreateDefault());
 
     manager.Complete(task_id);
 
     EXPECT_TRUE(manager.Show().empty());
 
-    EXPECT_THROW(manager.Edit(task_id, task),
+    EXPECT_THROW(manager.Edit(task_id, task, TaskId::CreateDefault()),
                  std::runtime_error);
 }
 
@@ -143,14 +143,14 @@ TEST(TaskManagerTest, shouldThrowBadGeneratorBehaviourException)
 
     auto task_title = "Task name";
     auto task_date = time(nullptr);
-    auto task_priority = FamilyTask::Priority::kLow;
+    auto task_priority = Task::Priority::kLow;
 
-    auto task = FamilyTask::Create(Task::Create(task_title,
-                                                task_date,
-                                                task_priority));
+    auto task = Task::Create(task_title,
+                             task_date,
+                             task_priority);
 
-    manager.Add(task);
-    EXPECT_ANY_THROW(manager.Add(task));
+    manager.Add(task, TaskId::CreateDefault());
+    EXPECT_ANY_THROW(manager.Add(task, TaskId::CreateDefault()));
 }
 
 TEST(TaskManagerTest, shouldShowParentTasks)
@@ -159,14 +159,10 @@ TEST(TaskManagerTest, shouldShowParentTasks)
     size_t size = 5;
     for (int i = 0; i < size; ++i)
     {
-        auto task = FamilyTask::Create(Task::Create("Title", time(nullptr), Task::Priority::kMedium),
-                                       TaskId::CreateDefault());
-        manager.Add(task);
+        auto task = Task::Create("Title", time(nullptr), Task::Priority::kMedium);
+        manager.Add(task, TaskId::CreateDefault());
     }
     auto tasks = manager.ShowParents();
-    for (const auto &elem: tasks)
-        EXPECT_EQ(elem.second.GetParentId(), TaskId::CreateDefault());
-
     EXPECT_EQ(tasks.size(), size);
 }
 
@@ -174,23 +170,20 @@ TEST(TaskManagerTest, shouldReturnChildTasks)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
 
-    auto parent_task = FamilyTask::Create(Task::Create("Parent",
-                                                       time(nullptr),
-                                                       Task::Priority::kHigh),
-                                          TaskId::CreateDefault());
-    auto parent_id = manager.Add(parent_task);
+    auto parent_task = FamilyTask::Create(
+        Task::Create("Parent",
+                     time(nullptr),
+                     Task::Priority::kHigh),
+        TaskId::CreateDefault());
+    auto parent_id = manager.Add(parent_task.GetTask(), TaskId::CreateDefault());
     size_t size = 5;
     for (int i = 0; i < size; ++i)
     {
-        auto task = FamilyTask::Create(Task::Create("Title",
-                                                    time(nullptr),
-                                                    Task::Priority::kMedium),
-                                       parent_id);
-        manager.Add(task);
+        auto task = Task::Create("Title",
+                                 time(nullptr),
+                                 Task::Priority::kMedium);
+        manager.Add(task, parent_id);
     }
     auto tasks = manager.ShowChild(parent_id);
-    for (const auto &elem: tasks)
-        EXPECT_EQ(elem.second.GetParentId(), parent_id);
-
     EXPECT_EQ(tasks.size(), size);
 }

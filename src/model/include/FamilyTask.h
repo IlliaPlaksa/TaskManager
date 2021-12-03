@@ -8,19 +8,21 @@
 #include "Task.h"
 #include "TaskId.h"
 
-class FamilyTask : public Task
+class FamilyTask
 {
 public:
     static FamilyTask Create(const Task &task,
                              TaskId parent_id = TaskId::CreateDefault());
 public:
     TaskId GetParentId() const;
+    Task GetTask() const;
 public:
     FamilyTask(const FamilyTask &task) = default;
 private:
-    FamilyTask(const Task &task, TaskId parent_id);
+    FamilyTask(const Task &task, const TaskId &parent_id);
 
 private:
+    Task task_;
     TaskId parent_id_;
 };
 

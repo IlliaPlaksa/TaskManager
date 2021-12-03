@@ -3,7 +3,7 @@
 //
 
 #include "gtest/gtest.h"
-#include "../../src/model/headers/Task.h"
+#include "../../src/model/include/Task.h"
 
 class TaskTest : public ::testing::Test {};
 

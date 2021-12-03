@@ -7,21 +7,25 @@
 
 #include <map>
 #include <vector>
+#include "../../controller/include/IModel.h"
 #include "FamilyTask.h"
 #include "TaskId.h"
 #include "IdGenerator.h"
 
-class TaskManager
+class TaskManager : public IModel
 {
 public:
-    TaskId Add(const FamilyTask &task);
-    void Edit(TaskId id, const FamilyTask &task);
-    void Delete(TaskId id);
-    void Complete(TaskId id);
+    TaskId Add(const Task &task,
+               const TaskId &parent_id) override;
+    void Edit(const TaskId &id,
+              const Task &task,
+              const TaskId &parent_id) override;
+    void Delete(const TaskId &id) override;
+    void Complete(const TaskId &id) override;
 
-    std::vector<std::pair<TaskId, FamilyTask>> Show();
-    std::vector<std::pair<TaskId, FamilyTask>> ShowParents();
-    std::vector<std::pair<TaskId, FamilyTask>> ShowChild(TaskId parent_id);
+    std::vector<std::pair<TaskId, Task>> Show() override;
+    std::vector<std::pair<TaskId, Task>> ShowParents() override;
+    std::vector<std::pair<TaskId, Task>> ShowChild(TaskId parent_id) override;
 
 public:
     explicit TaskManager(std::unique_ptr<IdGenerator> generator);
