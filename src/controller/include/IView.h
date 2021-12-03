@@ -14,9 +14,9 @@ class IView
 public:
     virtual void Run() = 0;
 public:
-    virtual std::optional<Task> GetTask() = 0;
-    virtual std::optional<TaskId> GetTaskId() = 0;
-    virtual std::optional<TaskId> GetParentTaskId() = 0;
+    virtual std::optional<Task> GetTask() const = 0;
+    virtual std::optional<TaskId> GetTaskId() const = 0;
+    virtual std::optional<TaskId> GetParentTaskId() const = 0;
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_INCLUDE_IVIEW_H_

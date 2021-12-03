@@ -10,58 +10,32 @@ enable_testing()
 
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
-add_executable(TaskManager
-        src/model/main.cpp
-        src/model/imp/Task.cpp src/model/include/Task.h
-        src/model/imp/TaskManager.cpp src/model/include/TaskManager.h
-        src/model/imp/TaskId.cpp src/model/include/TaskId.h
-        src/model/imp/IdGenerator.cpp src/model/include/IdGenerator.h
-        src/model/include/FamilyTask.h src/model/imp/FamilyTask.cpp)
+file(GLOB MODEL_INCLUDE src/model/include/*)
+file(GLOB CLI_INCLUDE src/ui/include/*)
+file(GLOB CONTROLLER_INCLUDE src/controller/include/*)
 
-add_executable(TaskManager_TEST
-        src/model/imp/Task.cpp src/model/include/Task.h
-        src/model/imp/TaskId.cpp src/model/include/TaskId.h
-        src/controller/include/IModel.h
-        src/model/imp/IdGenerator.cpp src/model/include/IdGenerator.h
-        src/model/imp/TaskManager.cpp src/model/include/TaskManager.h
-        src/model/include/FamilyTask.h src/model/imp/FamilyTask.cpp
+file(GLOB MODEL_IMP src/model/imp/*)
+file(GLOB CLI_IMP src/cli/imp/* src/cli/imp/steps/*)
+file(GLOB CONTROLLER_IMP src/controller/imp/*)
 
-        tests/model/TaskTest.cpp tests/model/TaskIdTest.cpp
-        tests/model/IdGeneratorTest.cpp tests/model/TaskManagerTest.cpp
-        tests/model/FamilyTaskTest.cpp)
+file(GLOB MODEL_TEST tests/model/*)
+add_executable(Model_TEST
+        ${Model_INCLUDE}
+        ${Model_IMP}
+        ${MODEL_TEST})
 
-add_executable(TaskManager_CLI
-        src/cli/main.cpp
-        src/cli/include/StepMachine.h src/cli/imp/StepMachine.cpp
-        src/cli/include/Context.h src/cli/imp/Context.cpp
-        src/cli/include/Step.h src/cli/imp/Step.cpp
+add_executable(TaskManager_Controller
+        src/controller/main.cpp
+        ${CONTROLLER_INCLUDE}
+        ${CONTROLLER_IMP}
 
-        src/cli/include/MachineSteps.h
-        src/cli/imp/steps/RootStep.cpp
-        src/cli/imp/steps/ExitStep.cpp
-        src/cli/imp/steps/HelpStep.cpp
-        src/cli/imp/steps/AddStep.cpp
-        src/cli/imp/steps/EditStep.cpp
-        src/cli/imp/steps/CompleteStep.cpp
-        src/cli/imp/steps/DeleteStep.cpp
-        src/cli/imp/steps/ShowStep.cpp
+        ${MODEL_INCLUDE}
+        ${MODEL_IMP}
 
-        src/cli/include/StepFactory.h src/cli/imp/StepFactory.cpp
-        src/cli/include/ConsoleManipulator.h src/cli/imp/ConsoleManipulator.cpp
-        src/cli/include/TaskStruct.h src/cli/imp/TaskStruct.cpp
-        src/model/include/Task.h src/model/imp/Task.cpp
-        src/model/include/TaskId.h src/model/imp/TaskId.cpp
-
-        src/cli/include/Validators.h src/cli/imp/Validators.cpp
-        src/cli/include/Readers.h src/cli/imp/Readers.cpp
-
-        src/controller/include/Controller.h src/controller/imp/Controller.cpp
-        src/controller/include/OperationType.h)
-
-add_executable(TaskManager_Controller src/controller/main.cpp
-        src/controller/include/Controller.h src/controller/imp/Controller.cpp
-        src/controller/include/OperationType.h)
+        ${CLI_INCLUDE}
+        ${CLI_IMP}
+        )
 
 
-target_link_libraries(TaskManager_TEST GTest::GTest GTest::Main)
-target_link_libraries(TaskManager_TEST GTest::gtest GTest::gmock GTest::gmock_main)
+target_link_libraries(Model_TEST GTest::GTest GTest::Main)
+target_link_libraries(Model_TEST GTest::gtest GTest::gmock GTest::gmock_main)

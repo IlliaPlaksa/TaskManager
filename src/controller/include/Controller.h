@@ -14,7 +14,7 @@
 class Controller
 {
 public:
-    void Action(const std::shared_ptr<IView> &view,
+    void Action(const IView &view,
                 const OperationType &operation);
 
     // TODO add Show methods

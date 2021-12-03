@@ -12,22 +12,21 @@
 #include "Step.h"
 #include "MachineSteps.h"
 
-class StepMachine : public IView, std::enable_shared_from_this<IView>
+class StepMachine : public IView
 {
 public:
     void Run() override;
 
 public:
-    std::optional<Task> GetTask() override;
-    std::optional<TaskId> GetTaskId() override;
-    std::optional<TaskId> GetParentTaskId() override;
+    std::optional<Task> GetTask() const override;
+    std::optional<TaskId> GetTaskId() const override;
+    std::optional<TaskId> GetParentTaskId() const override;
 
 public:
     explicit StepMachine(const std::shared_ptr<Controller> &controller);
 
 private:
     void SetNextStep(const std::shared_ptr<Step> &step);
-    std::shared_ptr<IView> getSharedFromThis();
 
 private:
     Context context_;

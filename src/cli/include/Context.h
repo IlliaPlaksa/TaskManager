@@ -14,9 +14,9 @@
 class Context
 {
 public:
-    std::shared_ptr<TaskStruct> GetStruct();
-    std::shared_ptr<TaskId> GetTaskId();
-    std::shared_ptr<TaskId> GetParentTaskId();
+    std::shared_ptr<TaskStruct> GetStruct() const;
+    std::shared_ptr<TaskId> GetTaskId() const;
+    std::shared_ptr<TaskId> GetParentTaskId() const;
 
 public:
     Context();
