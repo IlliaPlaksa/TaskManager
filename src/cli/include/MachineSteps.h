@@ -15,56 +15,56 @@ class RootStep : public Step
 public:
     using Step::Step;
 
-    std::shared_ptr<Step> Execute(Context &context, StepFactory& factory) override;
+    StepResult Execute(Context &context, StepFactory& factory) override;
 };
 
 class HelpStep : public Step
 {
 public:
     using Step::Step;
-    std::shared_ptr<Step> Execute(Context &context, StepFactory& factory) override;
+    StepResult Execute(Context &context, StepFactory& factory) override;
 };
 
 class ExitStep : public Step
 {
 public:
     using Step::Step;
-    std::shared_ptr<Step> Execute(Context &context, StepFactory& factory) override;
+    StepResult Execute(Context &context, StepFactory& factory) override;
 };
 
 class AddStep : public Step
 {
 public:
     using Step::Step;
-    std::shared_ptr<Step> Execute(Context &context, StepFactory& factory) override;
+    StepResult Execute(Context &context, StepFactory& factory) override;
 };
 
 class EditStep : public Step
 {
 public:
     using Step::Step;
-    std::shared_ptr<Step> Execute(Context &context, StepFactory& factory) override;
+    StepResult Execute(Context &context, StepFactory& factory) override;
 };
 
 class CompleteStep : public Step
 {
 public:
     using Step::Step;
-    std::shared_ptr<Step> Execute(Context &context, StepFactory& factory) override;
+    StepResult Execute(Context &context, StepFactory& factory) override;
 };
 
 class DeleteStep : public Step
 {
 public:
     using Step::Step;
-    std::shared_ptr<Step> Execute(Context &context, StepFactory& factory) override;
+    StepResult Execute(Context &context, StepFactory& factory) override;
 };
 
 class ShowStep : public Step
 {
 public:
     using Step::Step;
-    std::shared_ptr<Step> Execute(Context &context, StepFactory& factory) override;
+    StepResult Execute(Context &context, StepFactory& factory) override;
 };
 
 #endif //TASKMANAGER_SRC_CLI_MACHINESTATES_H_

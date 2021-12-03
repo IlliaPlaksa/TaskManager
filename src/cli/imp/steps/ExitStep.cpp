@@ -4,8 +4,11 @@
 
 #include "../../include/MachineSteps.h"
 
-std::shared_ptr<Step> ExitStep::Execute(Context &context, StepFactory& factory)
+StepResult ExitStep::Execute(Context &context, StepFactory& factory)
 {
-    return factory.CreateStep(StepId::kNone);
+    StepResult result;
+    result.next_step = factory.CreateStep(StepId::kNone);
+    result.operation = OperationType::kNone;
+    return result;
 }
 
