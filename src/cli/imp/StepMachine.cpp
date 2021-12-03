@@ -4,6 +4,9 @@
 
 #include "../include/StepMachine.h"
 
+StepMachine::StepMachine(const std::shared_ptr<Controller> &controller)
+    : controller_(controller) {}
+
 void StepMachine::Run()
 {
     this->context_ = Context();
@@ -11,15 +14,18 @@ void StepMachine::Run()
     this->SetNextStep(initial_step);
 
     while (current_step_)
-        this->SetNextStep(current_step_->Execute(context_, factory_));
+    {
+        auto result = current_step_->Execute(context_, factory_);
+
+        SetNextStep(result.next_step);
+        controller_->Action(getSharedFromThis(),
+                            result.operation);
+    }
 }
-void StepMachine::SetNextStep(const std::shared_ptr<Step> &step)
-{
-    this->current_step_ = step;
-}
+
 std::optional<Task> StepMachine::GetTask()
 {
-    auto task_struct =  this->context_.GetStruct();
+    auto task_struct = this->context_.GetStruct();
 
     if (task_struct->IsReadyToConstruct())
         return task_struct->ConstructTask();
@@ -28,5 +34,18 @@ std::optional<Task> StepMachine::GetTask()
 }
 std::optional<TaskId> StepMachine::GetTaskId()
 {
-    return *this->context_.GetTaskId();
+    return *context_.GetTaskId();
+}
+std::optional<TaskId> StepMachine::GetParentTaskId()
+{
+    return *context_.GetParentTaskId();
+}
+
+void StepMachine::SetNextStep(const std::shared_ptr<Step> &step)
+{
+    this->current_step_ = step;
+}
+std::shared_ptr<IView> StepMachine::getSharedFromThis()
+{
+    return shared_from_this();
 }
