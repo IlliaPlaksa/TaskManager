@@ -7,16 +7,24 @@
 
 #include <memory>
 #include <sstream>
+#include "../../controller/include/OperationType.h"
 #include "ConsoleManipulator.h"
 #include "Readers.h"
 
 class Context;
 class StepFactory;
+class Step;
+
+struct StepResult
+{
+    OperationType operation;
+    std::shared_ptr<Step> next_step;
+};
 
 class Step
 {
 public:
-    virtual std::shared_ptr<Step> Execute(Context &context, StepFactory& factory) = 0;
+    virtual StepResult Execute(Context &context, StepFactory& factory) = 0;
 
 public:
     explicit Step(const std::shared_ptr<ConsoleManipulator> &console_manipulator);
