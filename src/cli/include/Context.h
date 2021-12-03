@@ -16,6 +16,7 @@ class Context
 public:
     std::shared_ptr<TaskStruct> GetStruct();
     std::shared_ptr<TaskId> GetTaskId();
+    std::shared_ptr<TaskId> GetParentTaskId();
 
 public:
     Context();
@@ -23,6 +24,7 @@ public:
 private:
     std::shared_ptr<TaskStruct> task_struct_;
     std::shared_ptr<TaskId> task_id_;
+    std::shared_ptr<TaskId> parent_id_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_CONTEXT_H_
