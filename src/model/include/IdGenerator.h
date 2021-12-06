@@ -12,8 +12,11 @@ class IdGenerator
 public:
     virtual TaskId GetNextId();
     virtual ~IdGenerator() = default;
+
+public:
+    IdGenerator();
 private:
-    unsigned id_counter_ = 1;
+    int id_counter_;
 };
 
 #endif //TASKMANAGER_SRC_MODEL_IDGENERATOR_H_

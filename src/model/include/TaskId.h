@@ -5,10 +5,12 @@
 #ifndef TASKMANAGER_SRC_MODEL_TASKID_H_
 #define TASKMANAGER_SRC_MODEL_TASKID_H_
 
+#include <stdexcept>
+
 class TaskId
 {
 public: // static interface
-    static TaskId Create(unsigned int value);
+    static TaskId Create(int value);
     static TaskId CreateDefault();
 
 public:
@@ -17,13 +19,13 @@ public:
     bool operator!=(const TaskId &other) const;
 
 public:
-    unsigned int value() const;
+    int value() const;
 
 private: // private methods
-    explicit TaskId(unsigned int);
+    explicit TaskId(int);
 
 private: // data
-    unsigned int value_;
+    int value_;
 };
 
 #endif //TASKMANAGER_SRC_MODEL_TASKID_H_

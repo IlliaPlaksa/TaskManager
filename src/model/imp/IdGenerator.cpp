@@ -8,3 +8,7 @@ TaskId IdGenerator::GetNextId()
 {
     return TaskId::Create(this->id_counter_++);
 }
+IdGenerator::IdGenerator()
+    :
+    id_counter_(0) {}
+
