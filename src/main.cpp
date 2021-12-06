@@ -2,9 +2,9 @@
 // Created by Illia Plaksa on 03.12.2021.
 //
 
-#include "include/Controller.h"
-#include "../cli/include/StepMachine.h"
-#include "../model/include/TaskManager.h"
+#include "controller/include/Controller.h"
+#include "cli/include/StepMachine.h"
+#include "model/include/TaskManager.h"
 
 int main()
 {

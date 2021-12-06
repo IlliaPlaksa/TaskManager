@@ -10,30 +10,33 @@ enable_testing()
 
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
-file(GLOB MODEL_INCLUDE src/model/include/*)
-file(GLOB CLI_INCLUDE src/ui/include/*)
-file(GLOB CONTROLLER_INCLUDE src/controller/include/*)
+file(GLOB_RECURSE MODEL_SRC CONFIGURE_DEPENDS
+        "src/model/*.h"
+        "src/model/*.cpp"
+        )
+file(GLOB_RECURSE CLI_SRC CONFIGURE_DEPENDS
+        "src/cli/*.h"
+        "src/cli/*.cpp"
+        )
 
-file(GLOB MODEL_IMP src/model/imp/*)
-file(GLOB CLI_IMP src/cli/imp/* src/cli/imp/steps/*)
-file(GLOB CONTROLLER_IMP src/controller/imp/*)
+file(GLOB_RECURSE CONTROLLER_SRC CONFIGURE_DEPENDS
+        "src/controller/*.h"
+        "src/controller/*.cpp"
+        )
 
-file(GLOB MODEL_TEST tests/model/*)
+file(GLOB_RECURSE TaskManager_SRC CONFIGURE_DEPENDS
+        "src/*.h"
+        "src/*.cpp"
+        )
+
+file(GLOB MODEL_TEST_SRC tests/model/*)
+
 add_executable(Model_TEST
-        ${Model_INCLUDE}
-        ${Model_IMP}
-        ${MODEL_TEST})
+        ${MODEL_SRC}
+        ${MODEL_TEST_SRC})
 
 add_executable(TaskManager_Controller
-        src/controller/main.cpp
-        ${CONTROLLER_INCLUDE}
-        ${CONTROLLER_IMP}
-
-        ${MODEL_INCLUDE}
-        ${MODEL_IMP}
-
-        ${CLI_INCLUDE}
-        ${CLI_IMP}
+        ${TaskManager_SRC}
         )
 
 
