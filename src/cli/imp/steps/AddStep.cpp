@@ -9,36 +9,33 @@ StepResult AddStep::Execute(Context &context, StepFactory &factory)
     StepResult result;
 
     auto console = this->GetConsoleManipulator();
-    auto task_struct = context.GetStruct();
-    auto task_id = context.GetTaskId();
+    auto &task_struct = *context.GetStruct();
 
     console.ResetPrompt("add Task");
 
     // Filling structure
-    task_struct->SetTitle(Read::Title(console).value());
-    task_struct->SetDate(Read::Date(console).value());
-    task_struct->SetPriority(Read::Priority(console).value());
-    task_struct->SetLabel(Read::Label(console).value());
-    task_struct->SetStatus(Task::Status::kInProgress);
+    task_struct
+        .SetTitle(Read::Title(console))
+        .SetDate(Read::Date(console))
+        .SetPriority(Read::Priority(console))
+        .SetLabel(Read::Label(console))
+        .SetStatus(Task::Status::kInProgress);
 
     console.ResetPrompt("add Parent");
-    *context.GetParentTaskId() = Read::Id(console).value();
+    *context.GetParentTaskId() = Read::Id(console);
 
+    console.ResetPrompt();
     auto confirm = Read::Confirm(console);
+
     if (confirm)
     {
-        if (confirm.value())
-        {
-            result.operation = OperationType::kAdd;
-        } else
-        {
-            console.WriteLine("Operation was canceled");
-            task_struct->Reset();
-            result.operation = OperationType::kNone;
-        }
+        result.operation = OperationType::kAdd;
+    } else
+    {
+        console.WriteLine("Operation was canceled");
+        task_struct.Reset();
+        result.operation = OperationType::kNone;
     }
-    console.ResetPrompt();
-
     result.next_step = factory.CreateStep(StepId::kRoot);
     return result;
 }

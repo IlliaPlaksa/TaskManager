@@ -10,7 +10,7 @@ StepResult RootStep::Execute(Context &context, StepFactory& factory)
     auto step_id = Read::Command(console);
 
     StepResult result;
-    result.next_step = factory.CreateStep(step_id.value());
+    result.next_step = factory.CreateStep(step_id);
     result.operation = OperationType::kNone;
     return result;
 }
