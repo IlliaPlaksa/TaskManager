@@ -16,13 +16,13 @@ enum class StepId;
 
 namespace Read
 {
-    std::optional<StepId> Command(const ConsoleManipulator &console);
-    std::optional<std::string> Title(const ConsoleManipulator &console);
-    std::optional<TaskId> Id(const ConsoleManipulator &console);
-    std::optional<Task::Priority> Priority(const ConsoleManipulator &console);
-    std::optional<time_t> Date(const ConsoleManipulator &console);
-    std::optional<std::string> Label(const ConsoleManipulator &console);
-    std::optional<bool> Confirm(const ConsoleManipulator &console);
+    StepId Command(const ConsoleManipulator &console);
+    std::string Title(const ConsoleManipulator &console);
+    TaskId Id(const ConsoleManipulator &console);
+    Task::Priority Priority(const ConsoleManipulator &console);
+    time_t Date(const ConsoleManipulator &console);
+    std::string Label(const ConsoleManipulator &console);
+    bool Confirm(const ConsoleManipulator &console);
 }
 
 #endif //TASKMANAGER_SRC_CLI_INCLUDE_READERS_H_
