@@ -7,26 +7,48 @@ Controller::Controller(const std::shared_ptr<IModel> &model)
     :
     model_(model) {}
 
+// TODO change return value
 void Controller::Action(const IView &view,
                         const OperationType &operation)
 {
     switch (operation)
     {
         case OperationType::kAdd:
-            this->model_->Add(view.GetTask().value(),
-                              view.GetParentTaskId().value());
+        {
+            auto task = view.GetTask();
+            auto parent_id = view.GetParentTaskId();
+            this->model_->Add(task.value(),
+                              parent_id.value());
             break;
+        }
         case OperationType::kEdit:
-            this->model_->Edit(view.GetTaskId().value(),
-                               view.GetTask().value(),
-                               view.GetParentTaskId().value());
+        {
+            auto task = view.GetTask();
+            auto parent_id = view.GetParentTaskId();
+            auto id = view.GetTaskId();
+
+            if (task and parent_id and id)
+                this->model_->Edit(id.value(),
+                               task.value(),
+                               parent_id.value());
             break;
+        }
         case OperationType::kComplete:
-            this->model_->Complete(view.GetTaskId().value());
+        {
+            auto id = view.GetTaskId();
+
+            if (id)
+                this->model_->Complete(id.value());
             break;
+        }
         case OperationType::kDelete:
-            this->model_->Delete(view.GetTaskId().value());
+        {
+            auto id = view.GetTaskId();
+
+            if (id)
+                this->model_->Delete(id.value());
             break;
+        }
         case OperationType::kNone:
             break;
     }
