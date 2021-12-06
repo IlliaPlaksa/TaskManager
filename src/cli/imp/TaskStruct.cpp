@@ -26,31 +26,38 @@ bool TaskStruct::IsReadyToConstruct() const
         and due_to_date_ >= 0
         and priority_ != Task::Priority::kNone;
 }
-void TaskStruct::SetTitle(const std::string &title)
+TaskStruct &TaskStruct::SetTitle(const std::string &title)
 {
     this->title_ = title;
+    return *this;
 }
-void TaskStruct::SetPriority(const Task::Priority &priority)
+TaskStruct &TaskStruct::SetPriority(const Task::Priority &priority)
 {
     this->priority_ = priority;
+    return *this;
 }
-void TaskStruct::SetDate(const time_t &date)
+TaskStruct &TaskStruct::SetDate(const time_t &date)
 {
     this->due_to_date_ = date;
+    return *this;
 }
-void TaskStruct::SetLabel(const std::string &label)
+TaskStruct &TaskStruct::SetLabel(const std::string &label)
 {
     this->label_ = label;
+    return *this;
 }
-void TaskStruct::SetStatus(const Task::Status &status)
+TaskStruct &TaskStruct::SetStatus(const Task::Status &status)
 {
     this->status_ = status;
+    return *this;
 }
-void TaskStruct::SetFromTask(const Task &task)
+TaskStruct &TaskStruct::SetFromTask(const Task &task)
 {
     this->title_ = task.GetTitle();
     this->due_to_date_ = task.GetDate();
     this->priority_ = task.GetPriority();
     this->label_ = task.GetLabel();
     this->status_ = task.GetStatus();
+
+    return *this;
 }
