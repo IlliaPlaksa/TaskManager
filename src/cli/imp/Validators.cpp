@@ -58,12 +58,18 @@ std::optional<time_t> Validate::Date(const std::string &date)
     const std::string dateTimeFormat{"%d.%m.%Y"};
     std::istringstream ss{date};
 
-    std::tm dt;
+    std::tm dt{};
     ss >> std::get_time(&dt, dateTimeFormat.c_str());
     if (ss.fail())
         return std::nullopt;
     else
-        return std::mktime(&dt);
+    {
+        auto time = std::mktime(&dt);
+        if (time >= 0)
+            return time;
+        else
+            return std::nullopt;
+    }
 }
 std::optional<Task::Priority> Validate::Priority(const std::string &priority)
 {
