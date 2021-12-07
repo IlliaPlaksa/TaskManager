@@ -24,16 +24,19 @@ struct StepResult
 class Step
 {
 public:
-    virtual StepResult Execute(Context &context, StepFactory& factory) = 0;
+    virtual StepResult Execute(Context &context) = 0;
 
 public:
-    explicit Step(const std::shared_ptr<ConsoleManipulator> &console_manipulator);
+    explicit Step(const std::shared_ptr<StepFactory> &factory,
+                  const std::shared_ptr<ConsoleManipulator> &console_manipulator);
 
 public:
-    ConsoleManipulator &GetConsoleManipulator();
+    std::shared_ptr<ConsoleManipulator> &GetConsoleManipulator();
+    std::shared_ptr<StepFactory> &GetFactory();
 
 private:
     std::shared_ptr<ConsoleManipulator> console_manipulator_;
+    std::shared_ptr<StepFactory> factory_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_STEP_H_

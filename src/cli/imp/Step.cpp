@@ -4,11 +4,19 @@
 
 #include "../include/Step.h"
 
-Step::Step(const std::shared_ptr<ConsoleManipulator> &console_manipulator)
+Step::Step(const std::shared_ptr<StepFactory> &factory,
+           const std::shared_ptr<ConsoleManipulator> &console_manipulator)
     :
-    console_manipulator_(console_manipulator) {}
-
-ConsoleManipulator &Step::GetConsoleManipulator()
+    factory_(factory),
+    console_manipulator_(console_manipulator)
 {
-    return *this->console_manipulator_;
+}
+
+std::shared_ptr<ConsoleManipulator> &Step::GetConsoleManipulator()
+{
+    return this->console_manipulator_;
+}
+std::shared_ptr<StepFactory> &Step::GetFactory()
+{
+    return this->factory_;
 }
