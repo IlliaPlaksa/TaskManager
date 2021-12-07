@@ -23,14 +23,15 @@ public:
     std::optional<TaskId> GetParentTaskId() const override;
 
 public:
-    explicit StepMachine(const std::shared_ptr<Controller> &controller);
+    explicit StepMachine(const std::shared_ptr<StepFactory> &factory,
+                         const std::shared_ptr<Controller> &controller);
 
 private:
     void SetNextStep(const std::shared_ptr<Step> &step);
 
 private:
     Context context_;
-    StepFactory factory_;
+    std::shared_ptr<StepFactory> factory_;
     std::shared_ptr<Step> current_step_;
 
     std::shared_ptr<Controller> controller_;

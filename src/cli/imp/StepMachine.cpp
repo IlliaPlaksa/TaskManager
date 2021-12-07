@@ -4,18 +4,24 @@
 
 #include "../include/StepMachine.h"
 
-StepMachine::StepMachine(const std::shared_ptr<Controller> &controller)
-    : controller_(controller) {}
+StepMachine::StepMachine(const std::shared_ptr<StepFactory> &factory,
+                         const std::shared_ptr<Controller> &controller)
+    :
+    factory_(factory),
+    controller_(controller)
+{
+
+}
 
 void StepMachine::Run()
 {
     this->context_ = Context();
-    auto initial_step = factory_.CreateStep(StepId::kRoot);
+    auto initial_step = factory_->CreateStep(StepId::kRoot);
     this->SetNextStep(initial_step);
 
     while (current_step_)
     {
-        auto result = current_step_->Execute(context_, factory_);
+        auto result = current_step_->Execute(context_);
 
         SetNextStep(result.next_step);
         controller_->Action(*this, result.operation);
