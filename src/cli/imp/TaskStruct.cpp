@@ -19,6 +19,8 @@ void TaskStruct::Reset()
     priority_ = Task::Priority::kNone;
     label_.clear();
     status_ = Task::Status::kNone;
+    parent_id_ = TaskId::CreateDefault();
+    id_ = TaskId::CreateDefault();
 }
 bool TaskStruct::IsReadyToConstruct() const
 {
@@ -51,6 +53,16 @@ TaskStruct &TaskStruct::SetStatus(const Task::Status &status)
     this->status_ = status;
     return *this;
 }
+TaskStruct &TaskStruct::SetParent(const TaskId &parent_id)
+{
+    this->parent_id_ = parent_id;
+    return *this;
+}
+TaskStruct &TaskStruct::SetId(const TaskId &id)
+{
+    this->id_ = id;
+    return *this;
+}
 TaskStruct &TaskStruct::SetFromTask(const Task &task)
 {
     this->title_ = task.GetTitle();
@@ -61,3 +73,23 @@ TaskStruct &TaskStruct::SetFromTask(const Task &task)
 
     return *this;
 }
+TaskStruct::TaskStruct()
+    :
+    title_(std::string{}),
+    due_to_date_(0),
+    priority_(Task::Priority::kNone),
+    status_(Task::Status::kNone),
+    label_(std::string{}),
+    id_(TaskId::CreateDefault()),
+    parent_id_(TaskId::CreateDefault())
+{
+}
+TaskId TaskStruct::GetParent() const
+{
+    return this->parent_id_;
+}
+TaskId TaskStruct::GetId() const
+{
+    return this->id_;
+}
+
