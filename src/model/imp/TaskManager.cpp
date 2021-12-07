@@ -39,36 +39,41 @@ void TaskManager::Delete(const TaskId &id)
 void TaskManager::Complete(const TaskId &id)
 {
     if (this->tasks_.find(id) != this->tasks_.end())
-        this->tasks_.erase(id);
-    else
+    {
+        auto &task = this->tasks_.at(id);
+        task = FamilyTask::Create(Task::Complete(task.GetTask()), task.GetParentId());
+    } else
         throw std::runtime_error("Invalid id passed");
 }
 
 std::vector<std::pair<TaskId, Task>> TaskManager::Show()
 {
     auto result = std::vector<std::pair<TaskId, Task>>{};
-    for (auto elem: this->tasks_)
-        result.emplace_back(std::make_pair(elem.first, elem.second.GetTask()));
+    for (const auto &elem: this->tasks_)
+        result.emplace_back(std::make_pair(elem.first,
+                                           elem.second.GetTask()));
 
     return result;
 }
 std::vector<std::pair<TaskId, Task>> TaskManager::ShowParents()
 {
     auto result = std::vector<std::pair<TaskId, Task>>{};
-    for (auto elem: this->tasks_)
+    for (const auto &elem: this->tasks_)
     {
         if (elem.second.GetParentId() == TaskId::CreateDefault())
-            result.emplace_back(std::make_pair(elem.first, elem.second.GetTask()));
+            result.emplace_back(std::make_pair(elem.first,
+                                               elem.second.GetTask()));
     }
     return result;
 }
 std::vector<std::pair<TaskId, Task>> TaskManager::ShowChild(TaskId parent_id)
 {
     auto result = std::vector<std::pair<TaskId, Task>>{};
-    for (auto elem: this->tasks_)
+    for (const auto &elem: this->tasks_)
     {
         if (elem.second.GetParentId() == parent_id)
-            result.emplace_back(std::make_pair(elem.first, elem.second.GetTask()));
+            result.emplace_back(std::make_pair(elem.first,
+                                               elem.second.GetTask()));
     }
     return result;
 }
