@@ -19,10 +19,10 @@ StepResult AddStep::Execute(Context &context)
         .SetDate(Read::Date(console))
         .SetPriority(Read::Priority(console))
         .SetLabel(Read::Label(console))
-        .SetStatus(Task::Status::kInProgress);
+        .SetStatus(Task::Status::kInProgress)
+        .SetParent(Read::Id(console));
 
     console->ResetPrompt("add Parent");
-    *context.GetParentTaskId() = Read::Id(console);
 
     console->ResetPrompt();
     auto confirm = Read::Confirm(console);

@@ -7,9 +7,7 @@
 
 StepResult HelpStep::Execute(Context &context)
 {
-    // TODO implement with reading file
     std::string output;
-
     std::ifstream file{"help.txt"};
 
     if (file.is_open())
