@@ -8,15 +8,14 @@
 #include <optional>
 #include "../../model/include/Task.h"
 #include "../../model/include/TaskId.h"
+#include "../../cli/include/TaskStruct.h"
 
 class IView
 {
 public:
     virtual void Run() = 0;
 public:
-    virtual std::optional<Task> GetTask() const = 0;
-    virtual std::optional<TaskId> GetTaskId() const = 0;
-    virtual std::optional<TaskId> GetParentTaskId() const = 0;
+    virtual std::optional<TaskStruct> GetTaskStruct() const = 0;
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_INCLUDE_IVIEW_H_
