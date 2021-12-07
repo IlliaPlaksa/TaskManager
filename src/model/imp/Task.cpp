@@ -49,9 +49,13 @@ Task::Status Task::GetStatus() const
 {
     return this->status_;
 }
-void Task::Complete(Task &task)
+Task Task::Complete(const Task &task)
 {
-    task.status_ = Status::kComplete;
+    return Task::Create(task.GetTitle(),
+                        task.GetDate(),
+                        task.GetPriority(),
+                        task.GetLabel(),
+                        Task::Status::kCompleted);
 }
 std::string Task::ToString()
 {

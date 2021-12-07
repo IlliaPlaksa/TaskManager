@@ -35,7 +35,7 @@ public:
                        const std::string &label = "",
                        const Status &status = Status::kInProgress);
 
-    static void Complete(Task &task);
+    static Task Complete(const Task &task);
 public: // Getters
     std::string GetTitle() const;
     std::time_t GetDate() const;
