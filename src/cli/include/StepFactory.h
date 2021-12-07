@@ -8,13 +8,15 @@
 #include "Step.h"
 #include "StepId.h"
 
-class StepFactory
+class StepFactory : public std::enable_shared_from_this<StepFactory>
 {
 public:
     std::shared_ptr<Step> CreateStep(StepId step_id);
 
 public:
-    StepFactory();
+    std::shared_ptr<StepFactory> shared();
+public:
+    explicit StepFactory(const std::shared_ptr<ConsoleManipulator>& console_manipulator);
 private:
     std::shared_ptr<ConsoleManipulator> console_manipulator_;
 };
