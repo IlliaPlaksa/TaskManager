@@ -5,7 +5,7 @@
 #include "../../include/MachineSteps.h"
 #include <fstream>
 
-StepResult HelpStep::Execute(Context &context, StepFactory &factory)
+StepResult HelpStep::Execute(Context &context)
 {
     // TODO implement with reading file
     std::string output;
@@ -15,12 +15,12 @@ StepResult HelpStep::Execute(Context &context, StepFactory &factory)
     if (file.is_open())
     {
         while(std::getline(file, output))
-            this->GetConsoleManipulator().WriteLine(output);
+            this->GetConsoleManipulator()->WriteLine(output);
     } else
-        this->GetConsoleManipulator().WriteLine("File help.txt is not found");
+        this->GetConsoleManipulator()->WriteLine("File help.txt is not found");
 
     StepResult result;
-    result.next_step = factory.CreateStep(StepId::kRoot);
+    result.next_step = GetFactory()->CreateStep(StepId::kRoot);
     result.operation = OperationType::kNone;
     return result;
 }

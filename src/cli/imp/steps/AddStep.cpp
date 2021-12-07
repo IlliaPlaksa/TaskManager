@@ -4,14 +4,14 @@
 
 #include "../../include/MachineSteps.h"
 
-StepResult AddStep::Execute(Context &context, StepFactory &factory)
+StepResult AddStep::Execute(Context &context)
 {
     StepResult result;
 
     auto console = this->GetConsoleManipulator();
     auto &task_struct = *context.GetStruct();
 
-    console.ResetPrompt("add Task");
+    console->ResetPrompt("add Task");
 
     // Filling structure
     task_struct
@@ -21,10 +21,10 @@ StepResult AddStep::Execute(Context &context, StepFactory &factory)
         .SetLabel(Read::Label(console))
         .SetStatus(Task::Status::kInProgress);
 
-    console.ResetPrompt("add Parent");
+    console->ResetPrompt("add Parent");
     *context.GetParentTaskId() = Read::Id(console);
 
-    console.ResetPrompt();
+    console->ResetPrompt();
     auto confirm = Read::Confirm(console);
 
     if (confirm)
@@ -32,10 +32,10 @@ StepResult AddStep::Execute(Context &context, StepFactory &factory)
         result.operation = OperationType::kAdd;
     } else
     {
-        console.WriteLine("Operation was canceled");
+        console->WriteLine("Operation was canceled");
         task_struct.Reset();
         result.operation = OperationType::kNone;
     }
-    result.next_step = factory.CreateStep(StepId::kRoot);
+    result.next_step = GetFactory()->CreateStep(StepId::kRoot);
     return result;
 }

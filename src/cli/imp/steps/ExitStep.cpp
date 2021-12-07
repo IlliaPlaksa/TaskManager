@@ -4,10 +4,10 @@
 
 #include "../../include/MachineSteps.h"
 
-StepResult ExitStep::Execute(Context &context, StepFactory& factory)
+StepResult ExitStep::Execute(Context &context)
 {
     StepResult result;
-    result.next_step = factory.CreateStep(StepId::kNone);
+    result.next_step = GetFactory()->CreateStep(StepId::kNone);
     result.operation = OperationType::kNone;
     return result;
 }

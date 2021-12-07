@@ -4,13 +4,13 @@
 
 #include "../../include/MachineSteps.h"
 
-StepResult RootStep::Execute(Context &context, StepFactory& factory)
+StepResult RootStep::Execute(Context &context)
 {
     auto console = this->GetConsoleManipulator();
     auto step_id = Read::Command(console);
 
     StepResult result;
-    result.next_step = factory.CreateStep(step_id);
+    result.next_step = GetFactory()->CreateStep(step_id);
     result.operation = OperationType::kNone;
     return result;
 }
