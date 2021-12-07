@@ -15,16 +15,12 @@ class Context
 {
 public:
     std::shared_ptr<TaskStruct> GetStruct() const;
-    std::shared_ptr<TaskId> GetTaskId() const;
-    std::shared_ptr<TaskId> GetParentTaskId() const;
 
 public:
     Context();
 
 private:
     std::shared_ptr<TaskStruct> task_struct_;
-    std::shared_ptr<TaskId> task_id_;
-    std::shared_ptr<TaskId> parent_id_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_CONTEXT_H_
