@@ -6,7 +6,9 @@
 #define TASKMANAGER_SRC_MODEL_TASK_H_
 
 #include <string>
+#include <sstream>
 #include <ctime>
+#include <iomanip>
 
 class Task
 {
@@ -22,7 +24,7 @@ public: // internals
     enum class Status
     {
         kNone,
-        kComplete,
+        kCompleted,
         kInProgress,
     };
 
@@ -40,6 +42,11 @@ public: // Getters
     Task::Priority GetPriority() const;
     std::string GetLabel() const;
     Status GetStatus() const;
+
+public: // ToString methods
+    std::string ToString();
+    std::string PriorityToString(const Task::Priority &priority);
+    std::string StatusToString(const Task::Status &status);
 
 private:
     Task(const std::string &title,

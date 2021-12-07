@@ -53,4 +53,36 @@ void Task::Complete(Task &task)
 {
     task.status_ = Status::kComplete;
 }
+std::string Task::ToString()
+{
+    std::time_t date = this->GetDate();
+
+    std::stringstream output;
+    output
+        << "Title: " << this->GetTitle() << '\t'
+        << "Due date: " << std::put_time(std::localtime(&date), "%d.%m.%Y") << '\t'
+        << "Priority: " << PriorityToString(this->GetPriority()) << '\t'
+        << "Label: " << this->GetLabel() << '\t'
+        << "Status: " << StatusToString(this->GetStatus()) << '\t';
+    return output.str();
+}
+std::string Task::PriorityToString(const Task::Priority &priority)
+{
+    switch(priority)
+    {
+        case Task::Priority::kHigh: return "High";
+        case Task::Priority::kMedium: return "Medium";
+        case Task::Priority::kLow: return "Low";
+        default: return std::string{};
+    }
+}
+std::string Task::StatusToString(const Task::Status &status)
+{
+    switch(status)
+    {
+        case Task::Status::kInProgress: return "In progress";
+        case Task::Status::kCompleted: return "Completed";
+        default: return std::string{};
+    }
+}
 
