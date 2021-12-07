@@ -15,41 +15,44 @@ void Controller::Action(const IView &view,
     {
         case OperationType::kAdd:
         {
-            auto task = view.GetTask();
-            auto parent_id = view.GetParentTaskId();
-            this->model_->Add(task.value(),
-                              parent_id.value());
+            auto task_struct = view.GetTaskStruct();
+            if (task_struct)
+            {
+                this->model_->Add(task_struct->ConstructTask(),
+                                  task_struct->GetParent());
+            }
             break;
         }
         case OperationType::kEdit:
         {
-            auto task = view.GetTask();
-            auto parent_id = view.GetParentTaskId();
-            auto id = view.GetTaskId();
+            auto task_struct = view.GetTaskStruct();
 
-            if (task and parent_id and id)
-                this->model_->Edit(id.value(),
-                               task.value(),
-                               parent_id.value());
+            if (task_struct)
+            {
+                auto id = task_struct->GetId();
+                auto task = task_struct->ConstructTask();
+                auto parent_id = task_struct->GetParent();
+                this->model_->Edit(id,
+                                   task,
+                                   parent_id);
+            }
             break;
         }
         case OperationType::kComplete:
         {
-            auto id = view.GetTaskId();
-
-            if (id)
-                this->model_->Complete(id.value());
+            auto task_struct = view.GetTaskStruct();
+            if (task_struct)
+                this->model_->Complete(task_struct->GetId());
             break;
         }
         case OperationType::kDelete:
         {
-            auto id = view.GetTaskId();
+            auto task_struct = view.GetTaskStruct();
 
-            if (id)
-                this->model_->Delete(id.value());
+            if (task_struct)
+                this->model_->Delete(task_struct->GetId());
             break;
         }
-        case OperationType::kNone:
-            break;
+        case OperationType::kNone:break;
     }
 }
