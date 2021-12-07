@@ -28,22 +28,14 @@ void StepMachine::Run()
     }
 }
 
-std::optional<Task> StepMachine::GetTask() const
+std::optional<TaskStruct> StepMachine::GetTaskStruct() const
 {
     auto task_struct = this->context_.GetStruct();
 
     if (task_struct->IsReadyToConstruct())
-        return task_struct->ConstructTask();
+        return *task_struct;
     else
         return std::nullopt;
-}
-std::optional<TaskId> StepMachine::GetTaskId() const
-{
-    return *context_.GetTaskId();
-}
-std::optional<TaskId> StepMachine::GetParentTaskId() const
-{
-    return *context_.GetParentTaskId();
 }
 
 void StepMachine::SetNextStep(const std::shared_ptr<Step> &step)

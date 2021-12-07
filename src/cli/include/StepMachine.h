@@ -18,9 +18,7 @@ public:
     void Run() override;
 
 public:
-    std::optional<Task> GetTask() const override;
-    std::optional<TaskId> GetTaskId() const override;
-    std::optional<TaskId> GetParentTaskId() const override;
+    std::optional<TaskStruct> GetTaskStruct() const override;
 
 public:
     explicit StepMachine(const std::shared_ptr<StepFactory> &factory,
