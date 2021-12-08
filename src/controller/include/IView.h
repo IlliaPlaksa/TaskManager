@@ -8,7 +8,7 @@
 #include <optional>
 #include "../../model/include/Task.h"
 #include "../../model/include/TaskId.h"
-#include "../../cli/include/TaskStruct.h"
+#include "TaskStruct.h"
 
 class IView
 {

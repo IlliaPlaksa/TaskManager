@@ -8,7 +8,7 @@
 #include <memory>
 #include "Step.h"
 #include "StepFactory.h"
-#include "TaskStruct.h"
+#include "../../controller/include/TaskStruct.h"
 #include "../../model/include/TaskId.h"
 
 class Context
