@@ -10,7 +10,7 @@ void ConsoleManipulator::WriteLine(const std::string &message) const
 }
 std::string ConsoleManipulator::ReadLine(const std::string &message) const
 {
-    std::cout << this->prompt_ << " " << message << "> ";
+    std::cout << this->prompt_ << ' ' << message << "> ";
     std::string input;
     std::getline(std::cin, input);
     
@@ -20,4 +20,8 @@ std::string ConsoleManipulator::ReadLine(const std::string &message) const
 void ConsoleManipulator::ResetPrompt(const std::string &prompt)
 {
     this->prompt_ = prompt;
+}
+void ConsoleManipulator::WriteError(const std::string &message) const
+{
+    std::cout << "[Error]" << '\t' <<  message << std::endl;
 }

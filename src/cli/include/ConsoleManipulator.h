@@ -12,6 +12,7 @@ class ConsoleManipulator
 {
 public:
     void WriteLine(const std::string &message) const;
+    void WriteError(const std::string &message) const;
     std::string ReadLine(const std::string &message = "") const;
 
     void ResetPrompt(const std::string &prompt = "");
