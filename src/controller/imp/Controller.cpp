@@ -18,8 +18,8 @@ void Controller::Action(const IView &view,
             auto task_struct = view.GetTaskStruct();
             if (task_struct)
             {
-                this->model_->Add(task_struct->ConstructTask(),
-                                  task_struct->GetParent());
+                this->model_->AddSubTask(task_struct->ConstructTask(),
+                                         task_struct->GetParent());
             }
             break;
         }
