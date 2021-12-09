@@ -48,6 +48,19 @@ TaskId Read::Id(const std::shared_ptr<ConsoleManipulator> &console)
     }
     return input.value();
 }
+TaskId Read::ParentId(const std::shared_ptr<ConsoleManipulator> &console)
+{
+    const std::string message = "[Parent ID]";
+    std::optional<TaskId> input;
+    input = Validate::Id(
+        console->ReadLine(message)
+    );
+
+    if (!input)
+        return TaskId::CreateDefault();
+    else
+        return input.value();
+}
 time_t Read::Date(const std::shared_ptr<ConsoleManipulator> &console)
 {
     const std::string message = "[Date] DD.MM.YY";

@@ -19,6 +19,7 @@ namespace Read
     StepId Command(const std::shared_ptr<ConsoleManipulator> &console);
     std::string Title(const std::shared_ptr<ConsoleManipulator> &console);
     TaskId Id(const std::shared_ptr<ConsoleManipulator> &console);
+    TaskId ParentId(const std::shared_ptr<ConsoleManipulator> &console);
     Task::Priority Priority(const std::shared_ptr<ConsoleManipulator> &console);
     time_t Date(const std::shared_ptr<ConsoleManipulator> &console);
     std::string Label(const std::shared_ptr<ConsoleManipulator> &console);
