@@ -6,6 +6,7 @@
 #define TASKMANAGER_SRC_MODEL_TASKID_H_
 
 #include <stdexcept>
+#include <optional>
 
 class TaskId
 {
@@ -19,13 +20,13 @@ public:
     bool operator!=(const TaskId &other) const;
 
 public:
-    int value() const;
+    std::optional<int> value() const;
 
 private: // private methods
-    explicit TaskId(int);
+    explicit TaskId(std::optional<int>);
 
 private: // data
-    int value_;
+    std::optional<int> value_;
 };
 
 #endif //TASKMANAGER_SRC_MODEL_TASKID_H_
