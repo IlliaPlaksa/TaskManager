@@ -10,7 +10,7 @@ StepId Read::Command(const std::shared_ptr<ConsoleManipulator> &console)
 
     while (!input)
     {
-        console->WriteLine("No such command\nUse [help] to determine command you needed");
+        console->WriteError("No such command\nUse [help] to determine command you needed");
         input = Validate::Command(console->ReadLine());
     }
     return input.value();
@@ -24,7 +24,7 @@ std::string Read::Title(const std::shared_ptr<ConsoleManipulator> &console)
 
     while (!input)
     {
-        console->WriteLine("Wrong title passed");
+        console->WriteError("Wrong title passed");
         input = Validate::Title(
             console->ReadLine("[Title]")
         );
@@ -40,8 +40,9 @@ TaskId Read::Id(const std::shared_ptr<ConsoleManipulator> &console)
     );
 
     while (!input)
+
     {
-        console->WriteLine("Wrong ID passed");
+        console->WriteError("Wrong ID passed");
         input = Validate::Id(
             console->ReadLine(message)
         );
@@ -70,7 +71,7 @@ time_t Read::Date(const std::shared_ptr<ConsoleManipulator> &console)
 
     while (!input)
     {
-        console->WriteLine("Wrong Date passed");
+        console->WriteError("Wrong Date passed");
         input = Validate::Date(
             console->ReadLine(message)
         );
@@ -86,7 +87,7 @@ Task::Priority Read::Priority(const std::shared_ptr<ConsoleManipulator> &console
 
     while (!input)
     {
-        console->WriteLine("Wrong Priority passed");
+        console->WriteError("Wrong Priority passed");
         input = Validate::Priority(
             console->ReadLine(message)
         );
@@ -101,7 +102,7 @@ std::string Read::Label(const std::shared_ptr<ConsoleManipulator> &console)
     );
     while (!input)
     {
-        console->WriteLine("Wrong Label passed");
+        console->WriteError("Wrong Label passed");
         input = Validate::Label(
             console->ReadLine(message)
         );
@@ -117,7 +118,7 @@ bool Read::Confirm(const std::shared_ptr<ConsoleManipulator> &console)
 
     while (!input)
     {
-        console->WriteLine("Wrong Confirmation passed");
+        console->WriteError("Wrong Confirmation passed");
         input = Validate::Confirm(
             console->ReadLine(message)
         );
