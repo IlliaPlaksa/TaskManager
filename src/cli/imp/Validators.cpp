@@ -33,21 +33,17 @@ std::optional<std::string> Validate::Title(const std::string &title)
 }
 std::optional<TaskId> Validate::Id(const std::string &id)
 {
+    std::optional<TaskId> result;
     if (id.empty())
-        return TaskId::CreateDefault();
+        result = std::nullopt;
 
-    int num;
-    try
-    {
-        num = std::stoi(id);
-        if (num < 0)
-            throw std::runtime_error("Id is negative");
-    }
-    catch (std::exception &e)
-    {
-        return std::nullopt;
-    }
-    return TaskId::Create(num);
+    int num = std::stoi(id);
+    if (num < 0)
+        throw std::runtime_error("Id must be non-negative");
+    else
+        result = TaskId::Create(num);
+
+    return result;
 }
 std::optional<time_t> Validate::Date(const std::string &date)
 {
