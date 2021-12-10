@@ -7,7 +7,7 @@
 
 #include <memory>
 #include <sstream>
-#include "../../controller/include/OperationType.h"
+#include "../../controller/include/CommandFactory.h"
 #include "ConsoleManipulator.h"
 #include "Readers.h"
 
@@ -17,7 +17,7 @@ class Step;
 
 struct StepResult
 {
-    OperationType operation;
+    std::shared_ptr<Command> command;
     std::shared_ptr<Step> next_step;
 };
 

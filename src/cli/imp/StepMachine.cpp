@@ -24,7 +24,7 @@ void StepMachine::Run()
         auto result = current_step_->Execute(context_);
 
         SetNextStep(result.next_step);
-        controller_->Action(*this, result.operation);
+        controller_->Action(result.command);
     }
 }
 
