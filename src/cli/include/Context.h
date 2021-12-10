@@ -15,12 +15,14 @@ class Context
 {
 public:
     std::shared_ptr<TaskStruct> GetStruct() const;
+    std::shared_ptr<TaskStorage> GetTaskStorage() const;
 
 public:
     Context();
 
 private:
     std::shared_ptr<TaskStruct> task_struct_;
+    std::shared_ptr<TaskStorage> task_storage_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_CONTEXT_H_
