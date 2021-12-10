@@ -10,7 +10,6 @@
 #include "IView.h"
 #include "IModel.h"
 #include "Command.h"
-#include "OperationType.h"
 
 class Controller
 {
