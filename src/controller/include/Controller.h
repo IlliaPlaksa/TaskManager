@@ -9,17 +9,17 @@
 #include "../../model/include/TaskId.h"
 #include "IView.h"
 #include "IModel.h"
+#include "Command.h"
 #include "OperationType.h"
 
 class Controller
 {
 public:
-    void Action(const IView &view,
-                const OperationType &operation);
+    Command::Response Action(const std::shared_ptr<Command> &command);
 
-    // TODO add Show methods
 public:
     explicit Controller(const std::shared_ptr<IModel> &model);
+
 private:
     std::shared_ptr<IModel> model_;
 };
