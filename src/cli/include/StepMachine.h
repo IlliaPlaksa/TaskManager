@@ -20,6 +20,7 @@ public:
 public:
     std::optional<TaskStruct> GetTaskStruct() const override;
 
+    void LoadTasks(const TaskStorage &storage) override;
 public:
     explicit StepMachine(const std::shared_ptr<StepFactory> &factory,
                          const std::shared_ptr<Controller> &controller);

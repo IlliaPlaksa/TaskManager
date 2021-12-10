@@ -30,7 +30,7 @@ void StepMachine::Run()
 
 std::optional<TaskStruct> StepMachine::GetTaskStruct() const
 {
-    auto task_struct = this->context_.GetStruct();
+    auto task_struct = context_.GetStruct();
 
     if (task_struct->IsReadyToConstruct())
         return *task_struct;
@@ -41,4 +41,8 @@ std::optional<TaskStruct> StepMachine::GetTaskStruct() const
 void StepMachine::SetNextStep(const std::shared_ptr<Step> &step)
 {
     this->current_step_ = step;
+}
+void StepMachine::LoadTasks(const TaskStorage &storage)
+{
+    *context_.GetTaskStorage() = storage;
 }
