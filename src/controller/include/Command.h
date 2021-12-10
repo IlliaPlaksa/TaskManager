@@ -26,7 +26,7 @@ public: // Internals
 public:
     explicit Command(const std::shared_ptr<IView> &view);
 public:
-    virtual Response Execute(std::shared_ptr<IModel>) = 0;
+    virtual Response Execute(const std::shared_ptr<IModel> &model) = 0;
 
 public:
     std::shared_ptr<IView> GetView();
