@@ -31,8 +31,8 @@ public:
                   const std::shared_ptr<ConsoleManipulator> &console_manipulator);
 
 public:
-    std::shared_ptr<ConsoleManipulator> &GetConsoleManipulator();
-    std::shared_ptr<StepFactory> &GetFactory();
+    std::shared_ptr<ConsoleManipulator> GetConsoleManipulator();
+    std::shared_ptr<StepFactory> GetFactory();
 
 private:
     std::shared_ptr<ConsoleManipulator> console_manipulator_;

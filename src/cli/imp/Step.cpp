@@ -12,11 +12,11 @@ Step::Step(const std::shared_ptr<StepFactory> &factory,
 {
 }
 
-std::shared_ptr<ConsoleManipulator> &Step::GetConsoleManipulator()
+std::shared_ptr<ConsoleManipulator> Step::GetConsoleManipulator()
 {
     return this->console_manipulator_;
 }
-std::shared_ptr<StepFactory> &Step::GetFactory()
+std::shared_ptr<StepFactory> Step::GetFactory()
 {
     return this->factory_;
 }

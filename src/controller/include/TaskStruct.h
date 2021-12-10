@@ -26,10 +26,10 @@ public:
     TaskStruct &SetLabel(const std::string &label);
     TaskStruct &SetStatus(const Task::Status &status);
 
-    TaskStruct &SetParent(const TaskId& parent_id);
-    TaskStruct &SetId(const TaskId& id);
+    TaskStruct &SetParent(const TaskId &parent_id);
+    TaskStruct &SetId(const TaskId &id);
 
-    TaskStruct& SetFromTask(const Task &task);
+    TaskStruct &SetFromTask(const Task &task);
 
 public:
     TaskStruct();
