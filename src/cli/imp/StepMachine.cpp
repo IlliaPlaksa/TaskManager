@@ -24,7 +24,7 @@ void StepMachine::Run()
         auto result = current_step_->Execute(context_);
 
         SetNextStep(result.next_step);
-        controller_->Action(result.command);
+        controller_->Action(shared(), result.command_type);
     }
 }
 
@@ -46,3 +46,8 @@ void StepMachine::LoadTasks(const TaskStorage &storage)
 {
     *context_.GetTaskStorage() = storage;
 }
+std::shared_ptr<IView> StepMachine::shared()
+{
+    return shared_from_this();
+}
+
