@@ -11,6 +11,6 @@ StepResult RootStep::Execute(Context &context)
 
     StepResult result;
     result.next_step = GetFactory()->CreateStep(step_id);
-    result.operation = OperationType::kNone;
+    result.command_type = CommandType::kNone;
     return result;
 }

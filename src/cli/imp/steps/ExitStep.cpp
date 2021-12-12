@@ -8,7 +8,7 @@ StepResult ExitStep::Execute(Context &context)
 {
     StepResult result;
     result.next_step = GetFactory()->CreateStep(StepId::kNone);
-    result.operation = OperationType::kNone;
+    result.command_type = CommandType::kNone;
     return result;
 }
 

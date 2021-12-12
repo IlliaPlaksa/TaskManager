@@ -14,6 +14,6 @@ StepResult CompleteStep::Execute(Context &context)
 
     StepResult result;
     result.next_step = GetFactory()->CreateStep(StepId::kRoot);
-    result.operation = OperationType::kComplete;
+    result.command_type = CommandType::kComplete;
     return result;
 }

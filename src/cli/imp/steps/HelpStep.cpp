@@ -19,6 +19,6 @@ StepResult HelpStep::Execute(Context &context)
 
     StepResult result;
     result.next_step = GetFactory()->CreateStep(StepId::kRoot);
-    result.operation = OperationType::kNone;
+    result.command_type = CommandType::kNone;
     return result;
 }

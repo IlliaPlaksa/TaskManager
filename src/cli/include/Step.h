@@ -17,7 +17,7 @@ class Step;
 
 struct StepResult
 {
-    std::shared_ptr<Command> command;
+    CommandType command_type;
     std::shared_ptr<Step> next_step;
 };
 

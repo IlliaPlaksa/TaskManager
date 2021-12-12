@@ -14,6 +14,6 @@ StepResult DeleteStep::Execute(Context &context)
 
     StepResult result;
     result.next_step = GetFactory()->CreateStep(StepId::kRoot);
-    result.operation = OperationType::kDelete;
+    result.command_type = CommandType::kDelete;
     return result;
 }

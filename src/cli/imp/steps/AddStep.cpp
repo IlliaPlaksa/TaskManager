@@ -28,12 +28,12 @@ StepResult AddStep::Execute(Context &context)
 
     if (confirm)
     {
-        result.operation = OperationType::kAdd;
+        result.command_type = CommandType::kAdd;
     } else
     {
         console->WriteLine("Operation was canceled");
         task_struct.Reset();
-        result.operation = OperationType::kNone;
+        result.command_type = CommandType::kNone;
     }
     result.next_step = GetFactory()->CreateStep(StepId::kRoot);
     return result;
