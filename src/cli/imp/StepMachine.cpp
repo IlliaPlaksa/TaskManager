@@ -7,7 +7,7 @@
 StepMachine::StepMachine(const std::shared_ptr<StepFactory> &factory,
                          const std::shared_ptr<Controller> &controller)
     :
-    factory_(factory),
+    step_factory_(factory),
     controller_(controller)
 {
 
@@ -16,7 +16,7 @@ StepMachine::StepMachine(const std::shared_ptr<StepFactory> &factory,
 void StepMachine::Run()
 {
     this->context_ = Context();
-    auto initial_step = factory_->CreateStep(StepId::kRoot);
+    auto initial_step = step_factory_->CreateStep(StepId::kRoot);
     this->SetNextStep(initial_step);
 
     while (current_step_)

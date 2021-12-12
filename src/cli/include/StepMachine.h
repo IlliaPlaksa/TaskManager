@@ -30,7 +30,7 @@ private:
 
 private:
     Context context_;
-    std::shared_ptr<StepFactory> factory_;
+    std::shared_ptr<StepFactory> step_factory_;
     std::shared_ptr<Step> current_step_;
 
     std::shared_ptr<Controller> controller_;
