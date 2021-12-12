@@ -11,13 +11,14 @@ int main()
     auto model = std::shared_ptr<IModel>{
         new TaskManager{std::make_unique<IdGenerator>()}
     };
-    auto controller = std::make_shared<Controller>(Controller{model});
 
+    auto command_factory = std::make_shared<CommandFactory>();
+    auto controller = std::make_shared<Controller>(Controller{model, command_factory});
 
     auto console_manipulator = std::make_shared<ConsoleManipulator>();
-    auto factory = std::shared_ptr<StepFactory>{new StepFactory{console_manipulator}};
+    auto step_factory = std::shared_ptr<StepFactory>{new StepFactory{console_manipulator}};
 
-    auto view = std::shared_ptr<IView>{new StepMachine{factory,controller}};
+    auto view = std::shared_ptr<IView>{new StepMachine{step_factory,controller}};
 
     view->Run();
     return 0;
