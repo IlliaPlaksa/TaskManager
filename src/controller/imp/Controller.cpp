@@ -3,11 +3,23 @@
 //
 
 #include "../include/Controller.h"
-Controller::Controller(const std::shared_ptr<IModel> &model)
-    :
-    model_(model) {}
 
-Command::Response Controller::Action(const std::shared_ptr<Command> &command)
+Controller::Controller(const std::shared_ptr<IModel> &model,
+                       const std::shared_ptr<CommandFactory> &command_factory)
+    :
+    model_(model),
+    command_factory_(command_factory)
 {
-    return command->Execute(model_);
+}
+
+Response Controller::Action(const std::shared_ptr<IView> &view,
+                            const CommandType &command_type)
+{
+    auto result = Response{};
+    auto command = command_factory_->CreateCommand(command_type, model_);
+    if (command)
+    {
+        result = command->Execute(view);
+    }
+    return result;
 }

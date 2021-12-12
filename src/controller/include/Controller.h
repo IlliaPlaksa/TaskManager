@@ -10,17 +10,22 @@
 #include "IView.h"
 #include "IModel.h"
 #include "Command.h"
+#include "CommandFactory.h"
+#include "Response.h"
 
 class Controller
 {
 public:
-    Command::Response Action(const std::shared_ptr<Command> &command);
+    explicit Controller(const std::shared_ptr<IModel> &model,
+                        const std::shared_ptr<CommandFactory> &command_factory);
 
 public:
-    explicit Controller(const std::shared_ptr<IModel> &model);
+    Response Action(const std::shared_ptr<IView> &view,
+                    const CommandType &command_type);
 
 private:
     std::shared_ptr<IModel> model_;
+    std::shared_ptr<CommandFactory> command_factory_;
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_CONTROLLER_H_
