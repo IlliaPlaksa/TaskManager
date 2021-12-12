@@ -8,34 +8,22 @@
 #include <memory>
 #include "IModel.h"
 #include "IView.h"
+#include "Response.h"
 
 class Command
 {
-public: // Internals
-    struct Response
-    {
-        enum class Status
-        {
-            kSuccess,
-            kError
-        };
-        // TODO add more information
-        Status status;
-    };
+public:
+    explicit Command(const std::shared_ptr<IModel> &model);
+public:
+    virtual Response Execute(const std::shared_ptr<IView> &view) = 0;
 
 public:
-    explicit Command(const std::shared_ptr<IView> &view);
-public:
-    virtual Response Execute(const std::shared_ptr<IModel> &model) = 0;
-
-public:
-    std::shared_ptr<IView> GetView();
+    std::shared_ptr<IModel> GetModel();
 
 public:
     virtual ~Command() = default;
 
 private:
-    class Impl;
-    std::unique_ptr<Impl> pimpl_;
+    std::shared_ptr<IModel> model_;
 };
 #endif //TASKMANAGER_SRC_CONTROLLER_COMMAND_H_

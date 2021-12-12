@@ -4,22 +4,13 @@
 
 #include "../include/Command.h"
 
-struct Command::Impl
-{
-    explicit Impl(const std::shared_ptr<IView> &view)
-        :
-        view_(view) {}
-
-    std::shared_ptr<IView> view_;
-};
-
-Command::Command(const std::shared_ptr<IView> &view)
+Command::Command(const std::shared_ptr<IModel> &model)
     :
-    pimpl_(std::make_unique<Impl>(view)) {}
+    model_(model) {}
 
-std::shared_ptr<IView> Command::GetView()
+std::shared_ptr<IModel> Command::GetModel()
 {
-    return pimpl_->view_;
+    return model_;
 }
 
 
