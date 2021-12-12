@@ -11,7 +11,7 @@
 #include "../../controller/include/TaskStorage.h"
 #include "TaskStruct.h"
 
-class IView
+class IView :public std::enable_shared_from_this<IView>
 {
 public:
     virtual void Run() = 0;
@@ -19,7 +19,8 @@ public:
     virtual void LoadTasks(const TaskStorage &storage) = 0;
 public:
     virtual std::optional<TaskStruct> GetTaskStruct() const = 0;
-
+public:
+    virtual std::shared_ptr<IView> shared() = 0;
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_INCLUDE_IVIEW_H_
