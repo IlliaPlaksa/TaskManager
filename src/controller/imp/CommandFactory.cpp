@@ -3,34 +3,31 @@
 //
 
 #include "../include/CommandFactory.h"
-CommandFactory::CommandFactory(const std::shared_ptr<IView> &view)
-    :
-    view_(view)
-{
-}
-std::shared_ptr<Command> CommandFactory::CreateCommand(const CommandType &type)
+
+std::shared_ptr<Command> CommandFactory::CreateCommand(const CommandType &type, 
+                                                       const std::shared_ptr<IModel> &model)
 {
     switch (type)
     {
         case CommandType::kAdd:
         {
-            return std::shared_ptr<Command>{new AddCommand{view_}};
+            return std::shared_ptr<Command>{new AddCommand{model}};
         }
         case CommandType::kEdit:
         {
-            return std::shared_ptr<Command>{new EditCommand{view_}};
+            return std::shared_ptr<Command>{new EditCommand{model}};
         }
         case CommandType::kComplete:
         {
-            return std::shared_ptr<Command>{new CompleteCommand{view_}};
+            return std::shared_ptr<Command>{new CompleteCommand{model}};
         }
         case CommandType::kDelete:
         {
-            return std::shared_ptr<Command>{new DeleteCommand{view_}};
+            return std::shared_ptr<Command>{new DeleteCommand{model}};
         }
         case CommandType::kShow:
         {
-            return std::shared_ptr<Command>{new ShowCommand{view_}};
+            return std::shared_ptr<Command>{new ShowCommand{model}};
         }
         default: return std::shared_ptr<Command>{nullptr};
     }

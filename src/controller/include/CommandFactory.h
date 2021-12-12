@@ -23,12 +23,10 @@ enum class CommandType
 class CommandFactory
 {
 public:
-    explicit CommandFactory(const std::shared_ptr<IView> &view);
+    explicit CommandFactory() = default;
 public:
-    std::shared_ptr<Command> CreateCommand(const CommandType &type);
-
-private:
-    std::shared_ptr<IView> view_;
+    std::shared_ptr<Command> CreateCommand(const CommandType &type,
+                                           const std::shared_ptr<IModel> &model);
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_COMMANDFACTORY_H_
