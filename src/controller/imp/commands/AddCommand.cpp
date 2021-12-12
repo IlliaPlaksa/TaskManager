@@ -4,16 +4,15 @@
 
 #include "../../include/ConcreteCommands.h"
 
-Command::Response AddCommand::Execute(const std::shared_ptr<IModel> &model)
+Response AddCommand::Execute(const std::shared_ptr<IView> &view)
 {
-    auto result = Command::Response{};
+    auto result = Response{};
 
     // Command code here
-    auto view = this->GetView();
     auto task_struct = view->GetTaskStruct();
 
-    model->Add(task_struct->ConstructTask());
+    GetModel()->Add(task_struct->ConstructTask());
 
-    result.status = Command::Response::Status::kSuccess;
+    result.status = Response::Status::kSuccess;
     return result;
 }

@@ -4,12 +4,12 @@
 
 #include "../../include/ConcreteCommands.h"
 
-Command::Response DeleteCommand::Execute(const std::shared_ptr<IModel> &model)
+Response DeleteCommand::Execute(const std::shared_ptr<IView> &view)
 {
-    auto result = Command::Response{};
+    auto result = Response{};
 
     // Command code here
 
-    result.status = Command::Response::Status::kSuccess;
+    result.status = Response::Status::kSuccess;
     return result;
 }
