@@ -8,7 +8,20 @@ Response EditCommand::Execute(const std::shared_ptr<IView> &view)
 {
     auto result = Response{};
 
-    // Command code here
+    auto task_struct = view->GetTaskStruct();
+    auto id = task_struct->GetId();
+    auto parent_id = task_struct->GetParent();
+    auto task = task_struct->ConstructTask();
+
+    try
+    {
+        GetModel()->Edit(id, task, parent_id);
+    }
+    catch (const std::exception &e)
+    {
+        result.status = Response::Status::kError;
+        result.error_message = e.what();
+    }
 
     result.status = Response::Status::kSuccess;
     return result;
