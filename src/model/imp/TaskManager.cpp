@@ -7,11 +7,7 @@
 TaskManager::TaskManager(std::unique_ptr<IdGenerator> generator)
     : gen_{std::move(generator)} {}
 
-TaskId TaskManager::Add(const Task &task)
-{
-    return AddSubTask(task, TaskId::CreateDefault());
-}
-TaskId TaskManager::AddSubTask(const Task &task, const TaskId &parent_id)
+TaskId TaskManager::Add(const Task &task, const TaskId &parent_id)
 {
     TaskId new_id = this->gen_->GetNextId();
     if (this->tasks_.count(new_id))

@@ -15,8 +15,7 @@
 class TaskManager : public IModel
 {
 public:
-    TaskId Add(const Task &task) override;
-    TaskId AddSubTask(const Task &task, const TaskId &parent_id) override;
+    TaskId Add(const Task &task, const TaskId &parent_id) override;
     void Edit(const TaskId &id,
               const Task &task,
               const TaskId &parent_id) override;
