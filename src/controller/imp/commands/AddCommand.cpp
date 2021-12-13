@@ -15,7 +15,7 @@ Response AddCommand::Execute(const std::shared_ptr<IView> &view)
 
     try
     {
-        if (GetModel()->AddSubTask(task, parent_id).value())
+        if (GetModel()->Add(task, parent_id).value())
             result.status = Response::Status::kSuccess;
         else
             result.status = Response::Status::kError;
