@@ -8,8 +8,17 @@ Response CompleteCommand::Execute(const std::shared_ptr<IView> &view)
 {
     auto result = Response{};
 
-    // Command code here
+    auto task_struct = view->GetTaskStruct();
 
-    result.status = Response::Status::kSuccess;
+    try
+    {
+        GetModel()->Complete(task_struct->GetId());
+        result.status =  Response::Status::kSuccess;
+    }
+    catch (const std::exception &e)
+    {
+        result.status = Response::Status::kError;
+        result.error_message = e.what();
+    }
     return result;
 }
