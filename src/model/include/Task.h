@@ -46,7 +46,10 @@ public: // Getters
 public: // ToString methods
     std::string ToString() const;
     static std::string PriorityToString(const Task::Priority &priority);
-     static std::string StatusToString(const Task::Status &status);
+    static std::string StatusToString(const Task::Status &status);
+
+public:
+    bool operator==(const Task &other) const;
 
 private:
     Task(const std::string &title,

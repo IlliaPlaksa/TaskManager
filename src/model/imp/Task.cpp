@@ -72,7 +72,7 @@ std::string Task::ToString() const
 }
 std::string Task::PriorityToString(const Task::Priority &priority)
 {
-    switch(priority)
+    switch (priority)
     {
         case Task::Priority::kHigh: return "High";
         case Task::Priority::kMedium: return "Medium";
@@ -82,11 +82,18 @@ std::string Task::PriorityToString(const Task::Priority &priority)
 }
 std::string Task::StatusToString(const Task::Status &status)
 {
-    switch(status)
+    switch (status)
     {
         case Task::Status::kInProgress: return "In progress";
         case Task::Status::kCompleted: return "Completed";
         default: return std::string{};
     }
 }
-
+bool Task::operator==(const Task &other) const
+{
+    return this->GetTitle() == other.GetTitle() &&
+        this->GetPriority() == other.GetPriority() &&
+        this->GetLabel() == other.GetLabel() &&
+        this->GetStatus() == other.GetStatus() &&
+        this->GetDate() == other.GetDate();
+}
