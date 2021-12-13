@@ -16,6 +16,7 @@ enum class StepId
     kComplete,
     kDelete,
     kShow,
+    kUpdate,
 };
 
 #endif //TASKMANAGER_SRC_CLI_INCLUDE_STEPID_H_

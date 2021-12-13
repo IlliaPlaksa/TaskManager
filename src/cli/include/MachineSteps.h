@@ -67,4 +67,11 @@ public:
     StepResult Execute(Context &context) override;
 };
 
+class UpdateStep : public Step
+{
+public:
+    using Step::Step;
+    StepResult Execute(Context &context) override;
+};
+
 #endif //TASKMANAGER_SRC_CLI_MACHINESTATES_H_

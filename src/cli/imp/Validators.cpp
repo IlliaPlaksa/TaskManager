@@ -20,7 +20,7 @@ std::optional<StepId> Validate::Command(const std::string &command)
     else if (command == "delete")
         return StepId::kDelete;
     else if (command == "show")
-        return StepId::kShow;
+        return StepId::kUpdate;
     else
         return std::nullopt;
 }
