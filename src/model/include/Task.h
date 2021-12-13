@@ -44,9 +44,9 @@ public: // Getters
     Status GetStatus() const;
 
 public: // ToString methods
-    std::string ToString();
-    std::string PriorityToString(const Task::Priority &priority);
-    std::string StatusToString(const Task::Status &status);
+    std::string ToString() const;
+    static std::string PriorityToString(const Task::Priority &priority);
+     static std::string StatusToString(const Task::Status &status);
 
 private:
     Task(const std::string &title,

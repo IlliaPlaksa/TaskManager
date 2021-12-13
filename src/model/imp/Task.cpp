@@ -57,7 +57,7 @@ Task Task::Complete(const Task &task)
                         task.GetLabel(),
                         Task::Status::kCompleted);
 }
-std::string Task::ToString()
+std::string Task::ToString() const
 {
     std::time_t date = this->GetDate();
 
