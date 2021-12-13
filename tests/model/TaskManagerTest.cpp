@@ -24,8 +24,8 @@ TEST(TaskManagerTest, shouldAddTask)
     auto task_priority = Task::Priority::kLow;
 
     auto task = Task::Create(task_title,
-                                                task_date,
-                                                task_priority);
+                             task_date,
+                             task_priority);
     auto task_id = manager.Add(task, TaskId::CreateDefault());
 
     ASSERT_EQ(manager.Show().size(), 1);
@@ -124,10 +124,7 @@ TEST(TaskManagerTest, shouldCompleteTask)
 
     manager.Complete(task_id);
 
-    EXPECT_TRUE(manager.Show().empty());
-
-    EXPECT_THROW(manager.Edit(task_id, task, TaskId::CreateDefault()),
-                 std::runtime_error);
+    EXPECT_EQ(manager.Show()[0].second.GetStatus(), Task::Status::kCompleted);
 }
 
 using ::testing::Return;

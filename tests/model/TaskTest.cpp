@@ -41,8 +41,8 @@ TEST(TaskTest, shouldCompleteTask)
                              priority,
                              label,
                              status);
-    Task::Complete(task);
-    EXPECT_EQ(task.GetStatus(), Task::Status::kComplete);
+    task = Task::Complete(task);
+    EXPECT_EQ(task.GetStatus(), Task::Status::kCompleted);
 
 }
 
