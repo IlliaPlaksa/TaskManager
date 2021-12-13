@@ -2,6 +2,7 @@
 // Created by Illia Plaksa on 24.11.2021.
 //
 
+#include <sstream>
 #include "../../include/MachineSteps.h"
 
 StepResult ShowStep::Execute(Context &context)
@@ -17,12 +18,11 @@ StepResult ShowStep::Execute(Context &context)
             for (const auto &elem: task_storage->GetTasksByParentId(parent_id))
             {
                 auto id = elem.first.value();
-                std::string output = "";
+                std::stringstream output;
                 if (id)
-                    output = std::to_string(id.value()) + elem.second.ToString();
-                else
-                    output = elem.second.ToString();
-                console->WriteLine(output);
+                    output << std::to_string(id.value()) << ". " << elem.second.ToString();
+
+                console->WriteLine(output.str());
             }
     }
 

@@ -7,6 +7,8 @@
 StepResult RootStep::Execute(Context &context)
 {
     auto console = this->GetConsoleManipulator();
+
+    console->ResetPrompt();
     auto step_id = Read::Command(console);
 
     StepResult result;

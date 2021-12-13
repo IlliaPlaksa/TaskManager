@@ -11,6 +11,7 @@ StepResult DeleteStep::Execute(Context &context)
 
     console->ResetPrompt("delete Task");
     task_struct->SetId(Read::Id(console));
+    console->ResetPrompt();
 
     StepResult result;
     result.next_step = GetFactory()->CreateStep(StepId::kRoot);

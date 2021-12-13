@@ -11,6 +11,7 @@ StepResult CompleteStep::Execute(Context &context)
 
     console->ResetPrompt("complete Task");
     task_struct->SetId(Read::Id(console));
+    console->ResetPrompt();
 
     StepResult result;
     result.next_step = GetFactory()->CreateStep(StepId::kRoot);
