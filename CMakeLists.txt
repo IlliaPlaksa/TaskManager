@@ -30,15 +30,30 @@ file(GLOB_RECURSE TaskManager_SRC CONFIGURE_DEPENDS
         )
 
 file(GLOB MODEL_TEST_SRC tests/model/*)
+file(GLOB CONTROLLER_TEST_SRC tests/controller/*)
+file(GLOB CLI_TEST_SRC tests/cli/*)
 
 add_executable(Model_TEST
         ${MODEL_SRC}
         ${MODEL_TEST_SRC})
+target_link_libraries(Model_TEST GTest::GTest GTest::Main)
+target_link_libraries(Model_TEST GTest::gtest GTest::gmock GTest::gmock_main)
+
+
+add_executable(Controller_TEST
+        ${CONTROLLER_SRC}
+        ${MODEL_SRC}
+        ${CONTROLLER_TEST_SRC})
+target_link_libraries(Controller_TEST GTest::GTest GTest::Main)
+target_link_libraries(Controller_TEST GTest::gtest GTest::gmock GTest::gmock_main)
+
+add_executable(Cli_TEST
+        ${CLI_SRC}
+        ${CLI_TEST_SRC})
+target_link_libraries(Cli_TEST GTest::GTest GTest::Main)
+target_link_libraries(Cli_TEST GTest::gtest GTest::gmock GTest::gmock_main)
 
 add_executable(TaskManager_Controller
         ${TaskManager_SRC}
         )
 
-
-target_link_libraries(Model_TEST GTest::GTest GTest::Main)
-target_link_libraries(Model_TEST GTest::gtest GTest::gmock GTest::gmock_main)
