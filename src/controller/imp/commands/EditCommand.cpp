@@ -22,7 +22,5 @@ Response EditCommand::Execute(const std::shared_ptr<IView> &view)
         result.status = Response::Status::kError;
         result.error_message = e.what();
     }
-
-    result.status = Response::Status::kSuccess;
     return result;
 }
