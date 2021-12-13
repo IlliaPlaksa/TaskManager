@@ -5,7 +5,9 @@
 #include "../include/Context.h"
 
 Context::Context()
-    : task_struct_(std::make_shared<TaskStruct>())
+    :
+    task_struct_(std::make_shared<TaskStruct>()),
+    task_storage_(std::make_shared<TaskStorage>())
 {
 }
 
