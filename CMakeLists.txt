@@ -12,25 +12,26 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 file(GLOB_RECURSE MODEL_SRC CONFIGURE_DEPENDS
         "src/model/*.h"
-        "src/model/*.cpp"
-        )
+        "src/model/*.cpp")
+
 file(GLOB_RECURSE CLI_SRC CONFIGURE_DEPENDS
         "src/cli/*.h"
-        "src/cli/*.cpp"
-        )
+        "src/cli/*.cpp")
 
 file(GLOB_RECURSE CONTROLLER_SRC CONFIGURE_DEPENDS
         "src/controller/*.h"
-        "src/controller/*.cpp"
-        )
+        "src/controller/*.cpp")
 
 file(GLOB_RECURSE TaskManager_SRC CONFIGURE_DEPENDS
         "src/*.h"
-        "src/*.cpp"
-        )
+        "src/*.cpp")
 
 file(GLOB MODEL_TEST_SRC tests/model/*)
-file(GLOB CONTROLLER_TEST_SRC tests/controller/*)
+
+file(GLOB_RECURSE CONTROLLER_TEST_SRC CONFIGURE_DEPENDS
+        "tests/controller/*.cpp"
+        "tests/controller/*.h")
+
 file(GLOB CLI_TEST_SRC tests/cli/*)
 
 add_executable(Model_TEST
