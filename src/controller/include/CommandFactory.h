@@ -25,7 +25,7 @@ class CommandFactory
 public:
     explicit CommandFactory() = default;
 public:
-    std::shared_ptr<Command> CreateCommand(const CommandType &type,
+    virtual std::shared_ptr<Command> CreateCommand(const CommandType &type,
                                            const std::shared_ptr<IModel> &model);
 };
 
