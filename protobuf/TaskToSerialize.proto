@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+import "Task.proto";
+import "TaskId.proto";
+
+message TaskToSerialize
+{
+  TaskId id = 1;
+  Task task = 2;
+  TaskId parent_id = 3;
+}

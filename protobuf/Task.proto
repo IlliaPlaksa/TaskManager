@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+enum Priority
+{
+    kNone = 0;
+    kHigh = 1;
+    kMedium = 2;
+    kLow = 3;
+}
+
+enum Status
+{
+  kInProgress = 0;
+  kCompleted = 1;
+  kDeleted = 2;
+
+}
+
+message Task
+{
+  string title = 1;
+  Priority priority = 2;
+  google.protobuf.Timestamp due_date = 3;
+  string label = 4;
+  Status status = 5;
+}
