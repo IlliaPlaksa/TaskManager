@@ -12,14 +12,17 @@ class DeleteCommandTest : ::testing::Test {};
 
 TEST(DeleteCommandTest, shouldCreate)
 {
-//    auto model = std::shared_ptr<IModel>{new ModelMock};
-//    auto view = std::shared_ptr<IView>{new ViewMock};
-//
-//    auto command = CompleteCommand{model};
-//
-//    EXPECT_CALL(*model, ())
-//    .Times(1)
-//    .WillOnce(testing::Return());
-//
-//    command.Execute(view);
+    auto model = std::shared_ptr<ModelMock>{new ModelMock};
+    auto view = std::shared_ptr<ViewMock>{new ViewMock};
+
+    auto command = DeleteCommand{model};
+
+    auto id = TaskId::CreateDefault();
+
+    EXPECT_CALL(*view, GetTaskStruct())
+        .Times(1);
+    EXPECT_CALL(*model, Delete(id))
+        .Times(1);
+
+    command.Execute(view);
 }

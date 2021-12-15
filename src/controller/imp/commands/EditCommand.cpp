@@ -16,6 +16,7 @@ Response EditCommand::Execute(const std::shared_ptr<IView> &view)
     try
     {
         GetModel()->Edit(id, task, parent_id);
+        result.status = Response::Status::kSuccess;
     }
     catch (const std::exception &e)
     {

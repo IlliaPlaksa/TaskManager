@@ -10,16 +10,15 @@
 
 class ShowCommandTest : ::testing::Test {};
 
-TEST(ShowCommandTest, shouldCreate)
+TEST(ShowCommandTest, shouldExecuteCommonLogic)
 {
-//    auto model = std::shared_ptr<IModel>{new ModelMock};
-//    auto view = std::shared_ptr<IView>{new ViewMock};
-//
-//    auto command = CompleteCommand{model};
-//
-//    EXPECT_CALL(*model, ())
-//    .Times(1)
-//    .WillOnce(testing::Return());
-//
-//    command.Execute(view);
+    auto model = std::shared_ptr<ModelMock>{new ModelMock};
+    auto view = std::shared_ptr<ViewMock>{new ViewMock};
+
+    auto command = ShowCommand{model};
+
+    EXPECT_CALL(*model, ShowParents())
+        .Times(1);
+
+    command.Execute(view);
 }

@@ -10,7 +10,7 @@
 
 class AddCommandTest : ::testing::Test {};
 
-TEST(AddCommandTest, shouldCreate)
+TEST(AddCommandTest, shouldExecuteCommonLogic)
 {
     auto model = std::shared_ptr<ModelMock>{new ModelMock};
     auto view = std::shared_ptr<ViewMock>{new ViewMock};
@@ -20,7 +20,7 @@ TEST(AddCommandTest, shouldCreate)
     auto task = Task::Create("Title",
                              time(nullptr),
                              Task::Priority::kHigh);
-    auto id = TaskId::CreateDefault();
+    auto id = TaskId::Create(123);
 
     auto task_struct = TaskStruct{};
     task_struct
