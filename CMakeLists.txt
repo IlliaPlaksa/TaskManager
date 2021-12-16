@@ -41,6 +41,20 @@ foreach (proto_file ${Proto_SRCS})
             )
 endforeach (proto_file)
 
+# _________UTILS_________
+file(GLOB_RECURSE Utils_SRC CONFIGURE_DEPENDS
+        "utils/*.h"
+        "utils/*.cpp")
+
+add_library(Utils
+        STATIC ${Utils_SRC} ${PROTOBUF_GENERATED_SRCS}
+        )
+target_include_directories(Utils
+        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${PROTOBUF_CPP_OUT_DIR}
+        ${PROTOBUF_INCLUDE_DIR}
+        )
+
 # _________SRCS_________
 
 file(GLOB_RECURSE TaskManager_SRC CONFIGURE_DEPENDS
@@ -54,7 +68,7 @@ add_executable(main
         ${TaskManager_SRC}
         )
 
-target_link_libraries(main TaskManager protobuf::libprotobuf)
+target_link_libraries(main TaskManager Utils protobuf::libprotobuf)
 
 target_include_directories(TaskManager
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -133,7 +147,7 @@ add_executable(Persistence_TEST
         ${PERSISTENCE_TEST_SRC}
         )
 
-target_link_libraries(Persistence_TEST Persistence protobuf::libprotobuf)
+target_link_libraries(Persistence_TEST Persistence Utils protobuf::libprotobuf)
 target_link_libraries(Persistence_TEST GTest::GTest GTest::Main)
 target_link_libraries(Persistence_TEST GTest::gtest GTest::gmock GTest::gmock_main)
 
