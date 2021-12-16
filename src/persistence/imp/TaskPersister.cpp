@@ -6,14 +6,21 @@
 
 void TaskPersister::SerializeToFile(const std::string &file_name, const std::vector<TaskToSerialize> &tasks)
 {
+    auto task_package = TaskPackage{};
     std::fstream ofs(file_name,
-                      std::ios::out | std::ios::trunc | std::ios::binary);
+                     std::ios::out | std::ios::trunc | std::ios::binary);
 
-    if(!ofs.is_open())
+    if (!ofs.is_open())
         return; // Add returning error
     else
-        for(const auto& task : tasks)
-            task.SerializeToOstream(&ofs);
+    {
+        for (const auto &elem: tasks)
+        {
+            auto task = task_package.add_tasks();
+            *task = elem;
+        }
+        task_package.SerializeToOstream(&ofs);
+    }
 
     google::protobuf::ShutdownProtobufLibrary();
 }
@@ -24,14 +31,14 @@ std::optional<std::vector<TaskToSerialize>> TaskPersister::DeserializeFromFile(c
     std::fstream input(file_name,
                        std::ios::in | std::ios::binary);
 
-    while (input.is_open())
+    auto tmp = TaskPackage{};
+    if (tmp.ParseFromIstream(&input))
     {
-        auto tmp = TaskToSerialize{};
-        if(tmp.ParseFromIstream(&input))
-            result.emplace_back(tmp);
-        else
-            return std::nullopt;
-    }
+        for (size_t i = 0; i < tmp.tasks_size(); i++)
+            result.emplace_back(tmp.tasks(i));
+    } else
+        return std::nullopt;
+
     google::protobuf::ShutdownProtobufLibrary();
     return result;
 }
