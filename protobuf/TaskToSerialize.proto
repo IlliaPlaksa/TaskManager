@@ -9,3 +9,8 @@ message TaskToSerialize
   Task task = 2;
   TaskId parent_id = 3;
 }
+
+message TaskPackage
+{
+  repeated TaskToSerialize tasks = 1;
+}
