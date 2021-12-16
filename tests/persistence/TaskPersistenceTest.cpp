@@ -26,8 +26,8 @@ TEST(TaskPersisterTest, shouldSerializeAndDeserialize)
     std::string file_name = "test_file.txt";
 
     auto persister = TaskPersister{};
-    persister.SerializeToFile(file_name, tasks);
-    auto deserialized = persister.DeserializeFromFile(file_name);
+    persister.SerializeTasksToFile(file_name, tasks);
+    auto deserialized = persister.DeserializeTasksFromFile(file_name);
 
     ASSERT_TRUE(deserialized);
     ASSERT_EQ(tasks.size(), deserialized->size());

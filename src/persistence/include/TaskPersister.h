@@ -13,9 +13,9 @@
 class TaskPersister
 {
 public:
-    virtual void SerializeToFile(const std::string &file_name,
+    virtual void SerializeTasksToFile(const std::string &file_name,
                          const std::vector<TaskToSerialize> &tasks);
-    virtual std::optional<std::vector<TaskToSerialize>> DeserializeFromFile(const std::string &file_name);
+    virtual std::optional<std::vector<TaskToSerialize>> DeserializeTasksFromFile(const std::string &file_name);
 };
 
 #endif //TASKMANAGER_SRC_PERSISTENCE_TASKPERSISTER_H_

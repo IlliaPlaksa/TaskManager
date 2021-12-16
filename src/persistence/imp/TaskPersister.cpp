@@ -4,8 +4,9 @@
 
 #include "../include/TaskPersister.h"
 
-void TaskPersister::SerializeToFile(const std::string &file_name, const std::vector<TaskToSerialize> &tasks)
+void TaskPersister::SerializeTasksToFile(const std::string &file_name, const std::vector<TaskToSerialize> &tasks)
 {
+    // TODO Rewrite
     auto task_package = TaskPackage{};
     std::fstream ofs(file_name,
                      std::ios::out | std::ios::trunc | std::ios::binary);
@@ -24,7 +25,7 @@ void TaskPersister::SerializeToFile(const std::string &file_name, const std::vec
 
     google::protobuf::ShutdownProtobufLibrary();
 }
-std::optional<std::vector<TaskToSerialize>> TaskPersister::DeserializeFromFile(const std::string &file_name)
+std::optional<std::vector<TaskToSerialize>> TaskPersister::DeserializeTasksFromFile(const std::string &file_name)
 {
     auto result = std::vector<TaskToSerialize>{};
 
@@ -34,7 +35,7 @@ std::optional<std::vector<TaskToSerialize>> TaskPersister::DeserializeFromFile(c
     auto tmp = TaskPackage{};
     if (tmp.ParseFromIstream(&input))
     {
-        for (size_t i = 0; i < tmp.tasks_size(); i++)
+        for (std::size_t i = 0; i < tmp.tasks_size(); i++)
             result.emplace_back(tmp.tasks(i));
     } else
         return std::nullopt;
