@@ -5,28 +5,12 @@
 #ifndef TASKMANAGER_SRC_MODEL_TASKID_H_
 #define TASKMANAGER_SRC_MODEL_TASKID_H_
 
-#include <stdexcept>
-#include <optional>
+#include "TaskId.pb.h"
 
-class TaskId
-{
-public: // static interface
-    static TaskId Create(int value);
-    static TaskId CreateDefault();
+std::optional<TaskId> CreateTaskId(const google::protobuf::uint64 &value);
 
-public:
-    bool operator<(const TaskId &other) const;
-    bool operator==(const TaskId &other) const;
-    bool operator!=(const TaskId &other) const;
+bool operator==(const TaskId &first, const TaskId &second);
+bool operator<(const TaskId &first, const TaskId &second);
 
-public:
-    std::optional<int> value() const;
-
-private: // private methods
-    explicit TaskId(std::optional<int>);
-
-private: // data
-    std::optional<int> value_;
-};
 
 #endif //TASKMANAGER_SRC_MODEL_TASKID_H_

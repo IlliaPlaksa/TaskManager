@@ -4,36 +4,22 @@
 
 #include "../include/TaskId.h"
 
-TaskId TaskId::Create(int value)
+std::optional<TaskId> CreateTaskId(const google::protobuf::uint64 &value)
 {
-    if (value < 0)
-        throw std::runtime_error{"TaskId value must be non-negative"};
-    return TaskId{value};
-}
-TaskId TaskId::CreateDefault()
-{
-    return TaskId(std::nullopt);
+    auto result = TaskId{};
+    result.set_value(value);
+
+    return result;
 }
 
-TaskId::TaskId(std::optional<int> value)
-    :
-    value_(value)
-{}
-std::optional<int> TaskId::value() const
+bool operator==(const TaskId &first, const TaskId &second)
 {
-    return this->value_;
+    return first.SerializeAsString() == second.SerializeAsString();
 }
-bool TaskId::operator<(const TaskId &other) const
+
+bool operator<(const TaskId &first, const TaskId &second)
 {
-    return this->value_ < other.value_;
-}
-bool TaskId::operator==(const TaskId &other) const
-{
-    return this->value_ == other.value_;
-}
-bool TaskId::operator!=(const TaskId &other) const
-{
-    return this->value_ != other.value_;
+    return first.value() < second.value();
 }
 
 
