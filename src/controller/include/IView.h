@@ -6,10 +6,8 @@
 #define TASKMANAGER_SRC_CONTROLLER_INCLUDE_IVIEW_H_
 
 #include <optional>
-#include "../../model/include/Task.h"
-#include "../../model/include/TaskId.h"
-#include "../../controller/include/TaskStorage.h"
-#include "TaskStruct.h"
+#include "../../model/include/TaskToSerialize.h"
+#include "TaskStorage.h"
 
 class IView :public std::enable_shared_from_this<IView>
 {
@@ -18,7 +16,7 @@ public:
 public:
     virtual void LoadTasks(const TaskStorage &storage) = 0;
 public:
-    virtual std::optional<TaskStruct> GetTaskStruct() const = 0;
+    virtual std::optional<TaskToSerialize> GetTaskStruct() const = 0;
 public:
     virtual std::shared_ptr<IView> shared() = 0;
 };
