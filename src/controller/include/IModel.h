@@ -8,21 +8,58 @@
 #include <vector>
 #include <optional>
 
-#include "../../model/include/Task.h"
-#include "../../model/include/TaskId.h"
+#include "Task.pb.h"
+#include "TaskId.pb.h"
+#include "TaskToSerialize.pb.h"
 
 class IModel
 {
 public:
-    virtual TaskId Add(const Task &task, const TaskId &parent_id) = 0;
-    virtual void Edit(const TaskId &task_id, const Task &task, const TaskId &parent_id) = 0;
-    virtual void Complete(const TaskId &task_id) = 0;
-    virtual void Delete(const TaskId &task_id) = 0;
+    class Response;
 
 public:
-    virtual std::vector<std::pair<TaskId, Task>> Show() = 0;
-    virtual std::vector<std::pair<TaskId, Task>> ShowParents() = 0;
-    virtual std::vector<std::pair<TaskId, Task>> ShowChild(TaskId parent_id) = 0;
+    virtual Response Add(const Task &task) = 0;
+    virtual Response AddSubTask(const Task &task, const TaskId &parent_id) = 0;
+    virtual Response Edit(const TaskId &task_id, const Task &task, const TaskId &parent_id) = 0;
+    virtual Response Complete(const TaskId &task_id) = 0;
+    virtual Response Delete(const TaskId &task_id) = 0;
+
+public:
+    virtual std::vector<TaskToSerialize> Show() = 0;
+    virtual std::vector<TaskToSerialize> ShowParents() = 0;
+    virtual std::vector<TaskToSerialize> ShowChild(const TaskId &parent_id) = 0;
+
+public:
+    void LoadFromFile(const std::string &file_name);
+    void SaveToFile(const std::string &file_name);
+};
+
+class IModel::Response
+{
+public:
+    enum class Status
+    {
+        kNone,
+        kSuccess,
+        kError
+    };
+public:
+    Response();
+public: // Methods
+    bool IsError();
+
+public:
+    void SetStatus(Status status);
+    void SetErrorMessage(const std::string &message);
+
+public:
+    std::optional<std::string> error();
+    Status status();
+
+private: // Fields
+    Status status_;
+    std::optional<std::string> error_message_;
+
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_INCLUDE_IMODEL_H_
