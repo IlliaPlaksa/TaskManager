@@ -7,18 +7,32 @@
 
 #include <optional>
 #include <string>
-#include "TaskStorage.h"
 
-struct Response
+class Response
 {
+public:
     enum class Status
     {
+        kNone,
         kSuccess,
         kError
     };
-    // TODO add more information
-    Status status;
-    std::optional<std::string> error_message;
+public:
+    Response();
+public: // Methods
+    bool IsError();
+
+public:
+    void SetStatus(Status status);
+    void SetErrorMessage(const std::string &message);
+
+public:
+    std::optional<std::string> error();
+    Status status();
+
+private: // Fields
+    Status status_;
+    std::optional<std::string> error_message_;
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_INCLUDE_RESPONSE_H_
