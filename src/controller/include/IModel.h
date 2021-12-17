@@ -8,6 +8,7 @@
 #include <vector>
 #include <optional>
 
+#include "Response.h"
 #include "Task.pb.h"
 #include "TaskId.pb.h"
 #include "TaskToSerialize.pb.h"
@@ -15,12 +16,12 @@
 class IModel
 {
 public:
-    class Response;
 
 public:
     virtual Response Add(const Task &task) = 0;
     virtual Response AddSubTask(const Task &task, const TaskId &parent_id) = 0;
-    virtual Response Edit(const TaskId &task_id, const Task &task, const TaskId &parent_id) = 0;
+    virtual Response Edit(const TaskId &task_id, const Task &task) = 0;
+    virtual Response EditSubTask(const TaskId &task_id, const Task &task, const TaskId &parent_id) = 0;
     virtual Response Complete(const TaskId &task_id) = 0;
     virtual Response Delete(const TaskId &task_id) = 0;
 
