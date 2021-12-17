@@ -40,7 +40,7 @@ std::optional<TaskId> Validate::Id(const std::string &id)
     if (num < 0)
         throw std::runtime_error("Id must be non-negative");
     else
-        return TaskId::Create(num);
+        return CreateTaskId(num);
 }
 std::optional<time_t> Validate::Date(const std::string &date)
 {
@@ -67,17 +67,20 @@ std::optional<time_t> Validate::Date(const std::string &date)
 std::optional<Task::Priority> Validate::Priority(const std::string &priority)
 {
     if (priority == "high")
-        return Task::Priority::kHigh;
+        return Task_Priority_kHigh;
     if (priority == "medium")
-        return Task::Priority::kHigh;
+        return Task_Priority_kMedium;
     if (priority == "low")
-        return Task::Priority::kHigh;
+        return Task_Priority_kLow;
     else
         return std::nullopt;
 }
 std::optional<std::string> Validate::Label(const std::string &label)
 {
-    return label;
+    if (label.empty())
+        return std::nullopt;
+    else
+        return label;
 }
 std::optional<bool> Validate::Confirm(const std::string &symbol)
 {

@@ -49,7 +49,7 @@ TaskId Read::Id(const std::shared_ptr<ConsoleManipulator> &console)
     }
     return input.value();
 }
-TaskId Read::ParentId(const std::shared_ptr<ConsoleManipulator> &console)
+std::optional<TaskId> Read::ParentId(const std::shared_ptr<ConsoleManipulator> &console)
 {
     const std::string message = "[Parent ID]";
     std::optional<TaskId> input;
@@ -58,7 +58,7 @@ TaskId Read::ParentId(const std::shared_ptr<ConsoleManipulator> &console)
     );
 
     if (!input)
-        return TaskId::CreateDefault();
+        return std::nullopt;
     else
         return input.value();
 }
@@ -94,20 +94,13 @@ Task::Priority Read::Priority(const std::shared_ptr<ConsoleManipulator> &console
     }
     return input.value();
 }
-std::string Read::Label(const std::shared_ptr<ConsoleManipulator> &console)
+std::optional<std::string> Read::Label(const std::shared_ptr<ConsoleManipulator> &console)
 {
     std::string message = "[Label]";
     auto input = Validate::Label(
         console->ReadLine(message)
     );
-    while (!input)
-    {
-        console->WriteError("Wrong Label passed");
-        input = Validate::Label(
-            console->ReadLine(message)
-        );
-    }
-    return input.value();
+    return input;
 }
 bool Read::Confirm(const std::shared_ptr<ConsoleManipulator> &console)
 {
