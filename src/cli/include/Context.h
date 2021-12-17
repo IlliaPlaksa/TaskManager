@@ -8,20 +8,19 @@
 #include <memory>
 #include "Step.h"
 #include "StepFactory.h"
-#include "../../controller/include/TaskStruct.h"
-#include "../../model/include/TaskId.h"
+#include "../../model/include/TaskToSerialize.h"
 
 class Context
 {
 public:
-    std::shared_ptr<TaskStruct> GetStruct() const;
+    std::shared_ptr<TaskToSerialize> GetStruct() const;
     std::shared_ptr<TaskStorage> GetTaskStorage() const;
 
 public:
     Context();
 
 private:
-    std::shared_ptr<TaskStruct> task_struct_;
+    std::shared_ptr<TaskToSerialize> task_struct_;
     std::shared_ptr<TaskStorage> task_storage_;
 };
 
