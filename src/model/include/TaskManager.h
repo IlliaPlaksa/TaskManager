@@ -9,25 +9,31 @@
 #include <vector>
 #include "../../controller/include/IModel.h"
 #include "FamilyTask.h"
+#include "Task.h"
 #include "TaskId.h"
+#include "TaskToSerialize.h"
 #include "IdGenerator.h"
 
 class TaskManager : public IModel
 {
 public:
-    TaskId Add(const Task &task, const TaskId &parent_id) override;
-    void Edit(const TaskId &id,
-              const Task &task,
-              const TaskId &parent_id) override;
-    void Delete(const TaskId &id) override;
-    void Complete(const TaskId &id) override;
+    Response Add(const Task &task) override;
+    Response AddSubTask(const Task &task, const TaskId &parent_id) override;
+    Response Edit(const TaskId &id,
+                  const Task &task,
+                  const TaskId &parent_id) override;
+    Response Delete(const TaskId &id) override;
+    Response Complete(const TaskId &id) override;
 
-    std::vector<std::pair<TaskId, Task>> Show() override;
-    std::vector<std::pair<TaskId, Task>> ShowParents() override;
-    std::vector<std::pair<TaskId, Task>> ShowChild(TaskId parent_id) override;
+    std::vector<TaskToSerialize> Show() override;
+    std::vector<TaskToSerialize> ShowParents() override;
+    std::vector<TaskToSerialize> ShowChild(const TaskId &parent_id) override;
 
 public:
     explicit TaskManager(std::unique_ptr<IdGenerator> generator);
+
+private:
+    std::optional<TaskToSerialize> ConstructTaskToSerialize(const TaskId &id, const FamilyTask &task);
 
 private:
     std::map<TaskId, FamilyTask> tasks_;
