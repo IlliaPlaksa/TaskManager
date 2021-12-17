@@ -13,11 +13,11 @@ std::vector<TaskId> TaskStorage::GetParentIds()
 
     return result;
 }
-TaskStorage::TaskVect TaskStorage::GetTasksByParentId(const TaskId &parent_id)
+std::vector<TaskToSerialize> TaskStorage::GetTasksByParentId(const TaskId &parent_id)
 {
     return this->storage_.at(parent_id);
 }
-void TaskStorage::Add(const TaskId &parent_id, const TaskStorage::TaskVect &vect)
+void TaskStorage::Add(const TaskId &parent_id, const std::vector<TaskToSerialize> &vect)
 {
     this->storage_.insert({parent_id, vect});
 }
