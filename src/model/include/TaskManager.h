@@ -20,6 +20,8 @@ public:
     Response Add(const Task &task) override;
     Response AddSubTask(const Task &task, const TaskId &parent_id) override;
     Response Edit(const TaskId &id,
+                  const Task &task) override;
+    Response EditSubTask(const TaskId &id,
                   const Task &task,
                   const TaskId &parent_id) override;
     Response Delete(const TaskId &id) override;

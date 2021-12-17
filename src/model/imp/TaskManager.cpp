@@ -7,7 +7,7 @@
 TaskManager::TaskManager(std::unique_ptr<IdGenerator> generator)
     : gen_{std::move(generator)} {}
 
-TaskManager::Response TaskManager::Add(const Task &task)
+Response TaskManager::Add(const Task &task)
 {
     auto result = Response{};
 
@@ -27,7 +27,7 @@ TaskManager::Response TaskManager::Add(const Task &task)
     return result;
 }
 
-TaskManager::Response TaskManager::AddSubTask(const Task &task, const TaskId &parent_id)
+Response TaskManager::AddSubTask(const Task &task, const TaskId &parent_id)
 {
     auto result = Response{};
     TaskId new_id = this->gen_->GetNextId();
@@ -45,9 +45,24 @@ TaskManager::Response TaskManager::AddSubTask(const Task &task, const TaskId &pa
     return result;
 }
 
-TaskManager::Response TaskManager::Edit(const TaskId &id,
-                                        const Task &task,
-                                        const TaskId &parent_id)
+Response TaskManager::Edit(const TaskId &id, const Task &task)
+{
+    auto result = Response{};
+
+    if (this->tasks_.find(id) != this->tasks_.end())
+    {
+        this->tasks_.at(id) = FamilyTask::Create(task);
+        result.SetStatus(Response::Status::kSuccess);
+    } else
+    {
+        result.SetErrorMessage("Invalid id passed");
+        result.SetStatus(Response::Status::kError);
+    }
+
+    return result;
+}
+
+Response TaskManager::EditSubTask(const TaskId &id, const Task &task, const TaskId &parent_id)
 {
     auto result = Response{};
 
@@ -64,7 +79,7 @@ TaskManager::Response TaskManager::Edit(const TaskId &id,
     return result;
 }
 
-TaskManager::Response TaskManager::Delete(const TaskId &id)
+Response TaskManager::Delete(const TaskId &id)
 {
     auto result = Response{};
 
@@ -74,7 +89,7 @@ TaskManager::Response TaskManager::Delete(const TaskId &id)
     return result;
 }
 
-TaskManager::Response TaskManager::Complete(const TaskId &id)
+Response TaskManager::Complete(const TaskId &id)
 {
     if (this->tasks_.find(id) != this->tasks_.end())
     {
