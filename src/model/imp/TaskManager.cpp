@@ -9,19 +9,18 @@ TaskManager::TaskManager(std::unique_ptr<IdGenerator> generator)
 
 Response TaskManager::Add(const Task &task)
 {
-    auto result = Response{};
+    Response result;
 
     TaskId new_id = this->gen_->GetNextId();
     if (this->tasks_.count(new_id))
     {
-        result.SetErrorMessage("Generator returns non-identical ID");
-        result.SetStatus(Response::Status::kError);
+        result = Response::CreateError("Generator returns non-identical ID");
     } else
     {
         this->tasks_.insert(
             std::make_pair(new_id,
                            FamilyTask::Create(task)));
-        result.SetStatus(Response::Status::kSuccess);
+        result = Response::CreateSuccess();
     }
 
     return result;
@@ -29,18 +28,18 @@ Response TaskManager::Add(const Task &task)
 
 Response TaskManager::AddSubTask(const Task &task, const TaskId &parent_id)
 {
-    auto result = Response{};
+    Response result;
+
     TaskId new_id = this->gen_->GetNextId();
     if (this->tasks_.count(new_id))
     {
-        result.SetErrorMessage("Generator returns non-identical ID");
-        result.SetStatus(Response::Status::kError);
+        result = Response::CreateError("Generator returns non-identical ID");
     } else
     {
         this->tasks_.insert(
             std::make_pair(new_id,
                            FamilyTask::Create(task, parent_id)));
-        result.SetStatus(Response::Status::kSuccess);
+        result = Response::CreateSuccess();
     }
     return result;
 }
@@ -52,11 +51,10 @@ Response TaskManager::Edit(const TaskId &id, const Task &task)
     if (this->tasks_.find(id) != this->tasks_.end())
     {
         this->tasks_.at(id) = FamilyTask::Create(task);
-        result.SetStatus(Response::Status::kSuccess);
+        result = Response::CreateSuccess();
     } else
     {
-        result.SetErrorMessage("Invalid id passed");
-        result.SetStatus(Response::Status::kError);
+        result = Response::CreateError("Invalid id passed");
     }
 
     return result;
@@ -69,11 +67,10 @@ Response TaskManager::EditSubTask(const TaskId &id, const Task &task, const Task
     if (this->tasks_.find(id) != this->tasks_.end())
     {
         this->tasks_.at(id) = FamilyTask::Create(task, parent_id);
-        result.SetStatus(Response::Status::kSuccess);
+        result = Response::CreateSuccess();
     } else
     {
-        result.SetErrorMessage("Invalid id passed");
-        result.SetStatus(Response::Status::kError);
+        result = Response::CreateError("Invalid id passed");
     }
 
     return result;
@@ -85,21 +82,42 @@ Response TaskManager::Delete(const TaskId &id)
 
     this->tasks_.erase(id);
 
-    result.SetStatus(Response::Status::kSuccess);
+    result = Response::CreateSuccess();
     return result;
 }
 
 Response TaskManager::Complete(const TaskId &id)
 {
+    Response result;
+
     if (this->tasks_.find(id) != this->tasks_.end())
     {
         auto &task = this->tasks_.at(id);
-        Task new_task = task.GetTask();
-        new_task.set_status(Task_Status_kCompleted);
 
-        task = FamilyTask::Create(new_task, *task.GetParentId());
+        auto iter = std::find_if(tasks_.begin(), tasks_.end(),
+                                 [&](const FamilyTask &elem)
+                                 {
+                                     auto parent = elem.GetParentId();
+                                     if (parent)
+                                         return task.GetParentId() == parent;
+                                     else
+                                         return false;
+                                 });
+        while (iter != tasks_.end())
+        {
+            if (iter->second.GetTask().status() != Task_Status_kCompleted)
+                result = Response::CreateError(
+                    "Subtasks of Task with ID: "
+                    + std::to_string(id.value())
+                    + " isn't Completed"
+                    );
+        }
+        task.GetTask().set_status(Task_Status_kCompleted);
+
     } else
-        throw std::runtime_error("Invalid id passed");
+        result = Response::CreateError("Invalid ID passed");
+
+    return result;
 }
 
 std::vector<TaskToSerialize> TaskManager::Show()
