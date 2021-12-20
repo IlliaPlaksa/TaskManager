@@ -13,14 +13,6 @@ Response::Response()
 
 bool Response::IsError() { return status_ == Status::kError; }
 
-void Response::SetStatus(Response::Status status)
-{
-    status_ = status;
-}
-void Response::SetErrorMessage(const std::string &message)
-{
-    error_message_ = message;
-}
 std::optional<std::string> Response::error()
 {
     return error_message_;
@@ -28,4 +20,19 @@ std::optional<std::string> Response::error()
 Response::Status Response::status()
 {
     return status_;
+}
+Response Response::CreateSuccess()
+{
+    auto response = Response{};
+    response.status_ = Status::kSuccess;
+
+    return response;
+}
+Response Response::CreateError(const std::string &message)
+{
+    auto response = Response{};
+    response.status_ = Status::kError;
+    response.error_message_ = message;
+
+    return response;
 }

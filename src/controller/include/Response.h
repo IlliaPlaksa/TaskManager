@@ -18,13 +18,14 @@ public:
         kError
     };
 public:
-    Response();
-public: // Methods
-    bool IsError();
+    static Response CreateSuccess();
+    static Response CreateError(const std::string &message);
 
 public:
-    void SetStatus(Status status);
-    void SetErrorMessage(const std::string &message);
+    Response();
+
+public: // Methods
+    bool IsError();
 
 public:
     std::optional<std::string> error();
