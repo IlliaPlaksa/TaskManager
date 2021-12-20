@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <map>
+#include "Response.h"
 #include "../../model/include/Task.h"
 #include "../../model/include/TaskId.h"
 #include "../../model/include/TaskToSerialize.h"
@@ -14,13 +15,14 @@
 class TaskStorage
 {
 public:
-    std::vector<TaskId> GetParentIds();
-    std::vector<TaskToSerialize> GetTasksByParentId(const TaskId &parent_id);
-
+    std::vector<TaskToSerialize> GetRootTasks();
+    std::vector<TaskToSerialize> GetSubTasks(const TaskId &parent_id);
 public:
-    void Add(const TaskId &parent_id, const std::vector<TaskToSerialize> &vect);
+    Response LoadRootTasks(const std::vector<TaskToSerialize>& tasks);
+    Response LoadSubTasks(const TaskId &parent_id, const std::vector<TaskToSerialize>& tasks);
 private:
-    std::map<TaskId, std::vector<TaskToSerialize>> storage_;
+    std::vector<TaskToSerialize> root_storage_;
+    std::map<TaskId, std::vector<TaskToSerialize>> subtask_storage_;
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_TASKSTORAGE_H_
