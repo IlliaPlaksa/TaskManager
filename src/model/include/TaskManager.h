@@ -31,6 +31,8 @@ public:
     std::vector<TaskToSerialize> ShowParents() override;
     std::vector<TaskToSerialize> ShowChild(const TaskId &parent_id) override;
 
+    bool Load(const std::vector<TaskToSerialize>& tasks) override;
+
 public:
     explicit TaskManager(std::unique_ptr<IdGenerator> generator);
 

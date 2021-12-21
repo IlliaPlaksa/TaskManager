@@ -7,117 +7,101 @@
 TaskManager::TaskManager(std::unique_ptr<IdGenerator> generator)
     : gen_{std::move(generator)} {}
 
-Response TaskManager::Add(const Task &task)
+Model::Response TaskManager::Add(const Task &task)
 {
-    Response result;
-
     TaskId new_id = this->gen_->GetNextId();
-    if (this->tasks_.count(new_id))
-    {
-        result = Response::CreateError("Generator returns non-identical ID");
-    } else
-    {
-        this->tasks_.insert(
-            std::make_pair(new_id,
-                           FamilyTask::Create(task)));
-        result = Response::CreateSuccess();
-    }
 
-    return result;
+    assert(this->tasks_.count(new_id) == 0);
+
+    this->tasks_.insert(
+        std::make_pair(new_id,
+                       FamilyTask::Create(task)));
+    return Model::Response::CreateSuccess();
 }
 
-Response TaskManager::AddSubTask(const Task &task, const TaskId &parent_id)
+Model::Response TaskManager::AddSubTask(const Task &task, const TaskId &parent_id)
 {
-    Response result;
-
     TaskId new_id = this->gen_->GetNextId();
-    if (this->tasks_.count(new_id))
-    {
-        result = Response::CreateError("Generator returns non-identical ID");
-    } else
-    {
-        this->tasks_.insert(
-            std::make_pair(new_id,
-                           FamilyTask::Create(task, parent_id)));
-        result = Response::CreateSuccess();
-    }
-    return result;
+
+    assert(this->tasks_.count(new_id) == 0);
+
+    this->tasks_.insert(
+        std::make_pair(new_id,
+                       FamilyTask::Create(task, parent_id)));
+    return Model::Response::CreateSuccess();
 }
 
-Response TaskManager::Edit(const TaskId &id, const Task &task)
+Model::Response TaskManager::Edit(const TaskId &id, const Task &task)
 {
-    auto result = Response{};
 
     if (this->tasks_.find(id) != this->tasks_.end())
     {
         this->tasks_.at(id) = FamilyTask::Create(task);
-        result = Response::CreateSuccess();
+        return Model::Response::CreateSuccess();
     } else
     {
-        result = Response::CreateError("Invalid id passed");
+        return Model::Response::CreateError(Response::ErrorType::INVALID_ID);
     }
-
-    return result;
 }
 
-Response TaskManager::EditSubTask(const TaskId &id, const Task &task, const TaskId &parent_id)
+Model::Response TaskManager::EditSubTask(const TaskId &id, const Task &task, const TaskId &parent_id)
 {
-    auto result = Response{};
-
     if (this->tasks_.find(id) != this->tasks_.end())
     {
         this->tasks_.at(id) = FamilyTask::Create(task, parent_id);
-        result = Response::CreateSuccess();
+        return Model::Response::CreateSuccess();
     } else
     {
-        result = Response::CreateError("Invalid id passed");
+        return Model::Response::CreateError(Response::ErrorType::INVALID_ID);
     }
-
-    return result;
 }
 
-Response TaskManager::Delete(const TaskId &id)
+Model::Response TaskManager::Delete(const TaskId &id)
 {
-    auto result = Response{};
+    auto &task = tasks_.at(id);
 
-    this->tasks_.erase(id);
+    // Find subtasks
+    auto iter = std::find_if(tasks_.begin(), tasks_.end(),
+                             [task](const auto &elem)
+                             {
+                                 auto parent = elem.second.GetParentId();
+                                 if (parent)
+                                     return task.GetParentId() == parent;
+                                 else
+                                     return false;
+                             });
 
-    result = Response::CreateSuccess();
-    return result;
+    tasks_.erase(iter, tasks_.end());
+    tasks_.erase(id);
+
+    return Model::Response::CreateSuccess();
 }
 
-Response TaskManager::Complete(const TaskId &id)
+Model::Response TaskManager::Complete(const TaskId &id)
 {
-    Response result;
-
     if (this->tasks_.find(id) != this->tasks_.end())
     {
         auto &task = this->tasks_.at(id);
 
-        auto iter = std::find_if(tasks_.begin(), tasks_.end(),
-                                 [task](const auto &elem)
-                                 {
-                                     auto parent = elem.second.GetParentId();
-                                     if (parent)
-                                         return task.GetParentId() == parent;
-                                     else
-                                         return false;
-                                 });
-        while (iter != tasks_.end())
-        {
-            if (iter->second.GetTask().status() != Task_Status_kCompleted)
-                result = Response::CreateError(
-                    "Subtasks of Task with ID: "
-                    + std::to_string(id.value())
-                    + " isn't Completed"
-                    );
-        }
+        // Find uncompleted subtasks
+        auto count = std::count_if(tasks_.begin(), tasks_.end(),
+                                   [task](const auto &elem)
+                                   {
+                                       auto parent = elem.second.GetParentId();
+                                       if (parent)
+                                           return task.GetParentId() == parent and
+                                               task.GetTask().status() != Task_Status_kCompleted;
+                                       else
+                                           return false;
+                                   });
+
+        if (count) // Has uncompleted subtasks
+            return Model::Response::CreateError(Response::ErrorType::SUBTASKS_IS_NOT_COMPLETED);
+
         task.GetTask().set_status(Task_Status_kCompleted);
-
+        return Response::CreateSuccess();
     } else
-        result = Response::CreateError("Invalid ID passed");
-
-    return result;
+        return Model::Response::CreateError(Response::ErrorType::INVALID_ID);
 }
 
 std::vector<TaskToSerialize> TaskManager::Show()
@@ -171,5 +155,9 @@ std::optional<TaskToSerialize> TaskManager::ConstructTaskToSerialize(const TaskI
     else
         tmp = CreateTaskToSerialize(id, task.GetTask());
     return tmp;
+}
+bool TaskManager::Load(const std::vector<TaskToSerialize> &tasks)
+{
+    return false;
 }
 
