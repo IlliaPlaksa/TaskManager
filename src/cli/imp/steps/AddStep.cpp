@@ -18,10 +18,15 @@ StepResult AddStep::Execute(Context &context)
         .SetTitle(Read::Title(console))
         .SetDate(Read::Date(console))
         .SetPriority(Read::Priority(console))
-        .SetLabel(Read::Label(console))
-        .SetParent(Read::ParentId(console))
-        .SetStatus(Task::Status::kInProgress);
+        .SetStatus(Task_Status_kInProgress);
 
+    auto label = Read::Label(console);
+    if (label)
+        task_struct.SetLabel(label.value());
+
+    auto parent_id = Read::ParentId(console);
+    if (parent_id)
+        task_struct.SetParent(parent_id.value());
 
     console->ResetPrompt();
     auto confirm = Read::Confirm(console);

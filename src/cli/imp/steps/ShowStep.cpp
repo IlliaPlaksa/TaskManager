@@ -14,13 +14,13 @@ StepResult ShowStep::Execute(Context &context)
 
     if (task_storage)
     {
-        for (const auto &parent_id: task_storage->GetParentIds())
-            for (const auto &elem: task_storage->GetTasksByParentId(parent_id))
+        for (const auto &task: task_storage->GetRootTasks())
+            for (const auto &elem: task_storage->GetSubTasks(task.id()))
             {
-                auto id = elem.first.value();
+                auto id = elem.id();
                 std::stringstream output;
-                if (id)
-                    output << std::to_string(id.value()) << ". " << elem.second.ToString();
+                output << std::to_string(id.value()) << ". ";
+                elem.SerializeToOstream(&output);
 
                 console->WriteLine(output.str());
             }
