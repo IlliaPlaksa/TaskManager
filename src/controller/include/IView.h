@@ -7,7 +7,7 @@
 
 #include <optional>
 #include "../../model/include/TaskToSerialize.h"
-#include "TaskStorage.h"
+#include "cli/include/TaskStorage.h"
 
 class IView :public std::enable_shared_from_this<IView>
 {

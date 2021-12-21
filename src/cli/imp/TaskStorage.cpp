@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 10.12.2021.
 //
 
-#include "../include/TaskStorage.h"
+#include "cli/include/TaskStorage.h"
 
 std::vector<TaskToSerialize> TaskStorage::GetRootTasks()
 {

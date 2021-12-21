@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "../../src/model/include/Task.h"
-#include "../../src/controller/include/TaskStorage.h"
+#include "../../src/cli/include/TaskStorage.h"
 
 class TaskStorageTest : ::testing::Test
 {
