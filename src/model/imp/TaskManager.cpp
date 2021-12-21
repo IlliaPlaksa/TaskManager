@@ -95,9 +95,9 @@ Response TaskManager::Complete(const TaskId &id)
         auto &task = this->tasks_.at(id);
 
         auto iter = std::find_if(tasks_.begin(), tasks_.end(),
-                                 [&](const FamilyTask &elem)
+                                 [task](const auto &elem)
                                  {
-                                     auto parent = elem.GetParentId();
+                                     auto parent = elem.second.GetParentId();
                                      if (parent)
                                          return task.GetParentId() == parent;
                                      else
