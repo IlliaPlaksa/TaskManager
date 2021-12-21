@@ -28,14 +28,11 @@ void StepMachine::Run()
     }
 }
 
-std::optional<TaskStruct> StepMachine::GetTaskStruct() const
+std::optional<TaskToSerialize> StepMachine::GetTaskStruct() const
 {
     auto task_struct = context_.GetStruct();
 
-    if (task_struct->IsReadyToConstruct())
-        return *task_struct;
-    else
-        return std::nullopt;
+    return task_struct->MakeTaskToSerialize();
 }
 
 void StepMachine::SetNextStep(const std::shared_ptr<Step> &step)
