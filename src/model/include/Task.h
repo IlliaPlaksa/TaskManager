@@ -6,6 +6,7 @@
 #define TASKMANAGER_SRC_MODEL_TASK_H_
 
 #include "Task.pb.h"
+#include <google/protobuf/util/time_util.h>
 
 std::optional<Task> CreateTask(const std::string &title,
                                const std::time_t &due_to_date,

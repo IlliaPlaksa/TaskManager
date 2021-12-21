@@ -6,7 +6,7 @@
 
 TaskId IdGenerator::GetNextId()
 {
-    return TaskId::Create(this->id_counter_++);
+    return CreateTaskId(this->id_counter_++).value();
 }
 IdGenerator::IdGenerator()
     :
