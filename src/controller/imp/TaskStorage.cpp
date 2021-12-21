@@ -14,9 +14,9 @@ std::vector<TaskToSerialize> TaskStorage::GetSubTasks(const TaskId &parent_id)
 
     auto iter = std::find_if(subtask_storage_.begin(),
                              subtask_storage_.end(),
-                             [&](std::pair<TaskId, TaskToSerialize> elem)
+                             [parent_id](const auto &elem)
                              {
-                                 return elem.first = parent_id;
+                                 return elem.first == parent_id;
                              });
 
     if (iter != subtask_storage_.end())
