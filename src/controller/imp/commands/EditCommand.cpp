@@ -4,7 +4,7 @@
 
 #include "../../include/ConcreteCommands.h"
 
-Response EditCommand::Execute(const std::shared_ptr<IView> &view)
+Model::Response EditCommand::Execute(const std::shared_ptr<IView> &view)
 {
     auto task_struct = view->GetTaskStruct();
 

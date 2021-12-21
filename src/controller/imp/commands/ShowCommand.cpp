@@ -4,14 +4,13 @@
 
 #include "../../include/ConcreteCommands.h"
 
-Response ShowCommand::Execute(const std::shared_ptr<IView> &view)
+Model::Response ShowCommand::Execute(const std::shared_ptr<IView> &view)
 {
-    Response result;
     auto task_storage = TaskStorage{};
     auto model = GetModel();
     auto root = model->ShowParents();
 
-    result = task_storage.LoadRootTasks(model->ShowParents());
+    task_storage.LoadRootTasks(root);
 
     for (const auto &task: root)
     {
@@ -19,7 +18,7 @@ Response ShowCommand::Execute(const std::shared_ptr<IView> &view)
         task_storage.LoadSubTasks(parent_id, model->ShowChild(parent_id));
     }
 
-    if (!result.IsError())
-        view->LoadTasks(task_storage);
-    return result;
+    view->LoadTasks(task_storage);
+
+    return Model::Response::CreateSuccess();
 }

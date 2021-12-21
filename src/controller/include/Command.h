@@ -8,14 +8,13 @@
 #include <memory>
 #include "Model.h"
 #include "IView.h"
-#include "Response.h"
 
 class Command
 {
 public:
     explicit Command(const std::shared_ptr<Model> &model);
 public:
-    virtual Response Execute(const std::shared_ptr<IView> &view) = 0;
+    virtual Model::Response Execute(const std::shared_ptr<IView> &view) = 0;
 
 public:
     std::shared_ptr<Model> GetModel();
