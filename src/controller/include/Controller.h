@@ -11,10 +11,11 @@
 #include "Model.h"
 #include "Command.h"
 #include "CommandFactory.h"
-#include "Response.h"
 
 class Controller
 {
+public:
+    class Response;
 public:
     explicit Controller(const std::shared_ptr<Model> &model,
                         const std::shared_ptr<CommandFactory> &command_factory);
@@ -24,8 +25,38 @@ public:
                     const CommandType &command_type);
 
 private:
+    static std::string CreateErrorMessage(const Model::Response::ErrorType& error_type);
+
+private:
     std::shared_ptr<Model> model_;
     std::shared_ptr<CommandFactory> command_factory_;
+};
+
+class Controller::Response
+{
+public:
+    enum class Status
+    {
+        kSuccess,
+        kError
+    };
+public:
+    static Response CreateSuccess();
+    static Response CreateError(const std::string &message);
+
+private:
+    Response() = default;
+
+public: // Methods
+    bool IsError();
+
+public:
+    std::optional<std::string> error();
+    Status status();
+
+private: // Fields
+    Status status_;
+    std::optional<std::string> error_message_;
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_CONTROLLER_H_
