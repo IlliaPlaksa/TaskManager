@@ -52,7 +52,7 @@ void TaskStruct::Reset()
 bool TaskStruct::IsReady()
 {
     return task_.IsInitialized() and
-        task_.title().empty() and
+        !task_.title().empty() and
         task_.has_due_date() and
         id_.IsInitialized();
 }
