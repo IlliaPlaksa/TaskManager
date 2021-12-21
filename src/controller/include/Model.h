@@ -8,7 +8,6 @@
 #include <vector>
 #include <optional>
 
-#include "Response.h"
 #include "Task.pb.h"
 #include "TaskId.pb.h"
 #include "TaskToSerialize.pb.h"
@@ -16,7 +15,7 @@
 class Model
 {
 public:
-    
+    class Response;
 public:
     virtual Response Add(const Task &task) = 0;
     virtual Response AddSubTask(const Task &task, const TaskId &parent_id) = 0;
@@ -31,8 +30,44 @@ public:
     virtual std::vector<TaskToSerialize> ShowChild(const TaskId &parent_id) = 0;
 
 public:
-    void LoadFromFile(const std::string &file_name);
-    void SaveToFile(const std::string &file_name);
+    virtual bool Load(const std::vector<TaskToSerialize> &tasks) = 0;
 };
+
+class Model::Response
+{
+public:
+    enum class ErrorType
+    {
+        INVALID_ID,
+        EMPTY_TITLE,
+        NON_EXISTING_PARENT_ID,
+        SUBTASKS_IS_NOT_COMPLETED,
+        // TODO add more error types
+    };
+
+    enum class Status
+    {
+        kSuccess,
+        kError
+    };
+public:
+    static Response CreateSuccess();
+    static Response CreateError(const ErrorType &error_type);
+
+private:
+    Response() = default;
+
+public: // Methods
+    bool IsError();
+
+public:
+    std::optional<ErrorType> error();
+    Status status();
+
+private: // Fields
+    Status status_;
+    std::optional<ErrorType> error_type_;
+};
+
 
 #endif //TASKMANAGER_SRC_CONTROLLER_INCLUDE_MODEL_H_
