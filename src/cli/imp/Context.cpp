@@ -6,12 +6,12 @@
 
 Context::Context()
     :
-    task_struct_(std::make_shared<TaskToSerialize>()),
+    task_struct_(std::shared_ptr<TaskStruct>{new TaskStruct}),
     task_storage_(std::make_shared<TaskStorage>())
 {
 }
 
-std::shared_ptr<TaskToSerialize> Context::GetStruct() const
+std::shared_ptr<TaskStruct> Context::GetStruct() const
 {
     return this->task_struct_;
 }
