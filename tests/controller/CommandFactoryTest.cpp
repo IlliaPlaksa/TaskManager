@@ -19,7 +19,7 @@ TEST(CommandFactoryTest, shouldCreateCommands)
         CommandType::kShow
     };
 
-    auto model = std::shared_ptr<IModel>(nullptr);
+    auto model = std::shared_ptr<Model>(nullptr);
 
     for (auto type: types)
     {
@@ -31,7 +31,7 @@ TEST(CommandFactoryTest, shouldCreateCommands)
 TEST(CommandFactoryTest, shouldReturnNullptrToNoneCommandType)
 {
     auto factory = CommandFactory{};
-    auto model = std::shared_ptr<IModel>(nullptr);
+    auto model = std::shared_ptr<Model>(nullptr);
 
     EXPECT_EQ(nullptr,
               factory.CreateCommand(CommandType::kNone, model));

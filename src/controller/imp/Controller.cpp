@@ -4,7 +4,7 @@
 
 #include "../include/Controller.h"
 
-Controller::Controller(const std::shared_ptr<IModel> &model,
+Controller::Controller(const std::shared_ptr<Model> &model,
                        const std::shared_ptr<CommandFactory> &command_factory)
     :
     model_(model),

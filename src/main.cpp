@@ -8,7 +8,7 @@
 
 int main()
 {
-    auto model = std::shared_ptr<IModel>{
+    auto model = std::shared_ptr<Model>{
         new TaskManager{std::make_unique<IdGenerator>()}
     };
 

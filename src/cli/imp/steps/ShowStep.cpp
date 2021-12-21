@@ -15,15 +15,17 @@ StepResult ShowStep::Execute(Context &context)
     if (task_storage)
     {
         for (const auto &task: task_storage->GetRootTasks())
+        {
+            std::stringstream output;
+            output << std::to_string(task.id().value()) << ". " << task.DebugString();
+
             for (const auto &elem: task_storage->GetSubTasks(task.id()))
             {
-                auto id = elem.id();
-                std::stringstream output;
-                output << std::to_string(id.value()) << ". ";
-                elem.SerializeToOstream(&output);
-
-                console->WriteLine(output.str());
+                output << '\t' << std::to_string(elem.id().value()) << ". " << elem.DebugString();
             }
+
+            console->WriteLine(output.str());
+        }
     }
 
     result.next_step = GetFactory()->CreateStep(StepId::kRoot);

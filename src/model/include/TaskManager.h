@@ -7,14 +7,14 @@
 
 #include <map>
 #include <vector>
-#include "../../controller/include/IModel.h"
+#include "../../controller/include/Model.h"
 #include "FamilyTask.h"
 #include "Task.h"
 #include "TaskId.h"
 #include "TaskToSerialize.h"
 #include "IdGenerator.h"
 
-class TaskManager : public IModel
+class TaskManager : public Model
 {
 public:
     Response Add(const Task &task) override;

@@ -2,8 +2,8 @@
 // Created by Illia Plaksa on 03.12.2021.
 //
 
-#ifndef TASKMANAGER_SRC_CONTROLLER_INCLUDE_IMODEL_H_
-#define TASKMANAGER_SRC_CONTROLLER_INCLUDE_IMODEL_H_
+#ifndef TASKMANAGER_SRC_CONTROLLER_INCLUDE_MODEL_H_
+#define TASKMANAGER_SRC_CONTROLLER_INCLUDE_MODEL_H_
 
 #include <vector>
 #include <optional>
@@ -13,10 +13,10 @@
 #include "TaskId.pb.h"
 #include "TaskToSerialize.pb.h"
 
-class IModel
+class Model
 {
 public:
-
+    
 public:
     virtual Response Add(const Task &task) = 0;
     virtual Response AddSubTask(const Task &task, const TaskId &parent_id) = 0;
@@ -35,4 +35,4 @@ public:
     void SaveToFile(const std::string &file_name);
 };
 
-#endif //TASKMANAGER_SRC_CONTROLLER_INCLUDE_IMODEL_H_
+#endif //TASKMANAGER_SRC_CONTROLLER_INCLUDE_MODEL_H_

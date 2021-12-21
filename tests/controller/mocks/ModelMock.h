@@ -8,9 +8,9 @@
 #endif //TASKMANAGER_TESTS_CONTROLLER_MOCK_INCLUDE_MODELMOCK_H_
 
 #include "gmock/gmock.h"
-#include "../../../src/controller/include/IModel.h"
+#include "../../../src/controller/include/Model.h"
 
-class ModelMock : public IModel
+class ModelMock : public Model
 {
     using TaskVect = std::vector<std::pair<TaskId, Task>>;
 public:

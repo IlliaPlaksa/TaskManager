@@ -4,11 +4,11 @@
 
 #include "../include/Command.h"
 
-Command::Command(const std::shared_ptr<IModel> &model)
+Command::Command(const std::shared_ptr<Model> &model)
     :
     model_(model) {}
 
-std::shared_ptr<IModel> Command::GetModel()
+std::shared_ptr<Model> Command::GetModel()
 {
     return model_;
 }

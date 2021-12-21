@@ -22,7 +22,7 @@ TEST(ControllerTest, shouldCreate)
 
 TEST(ControllerTest, shouldCreateAndExecuteCommand)
 {
-    auto model = std::shared_ptr<IModel>{new ModelMock};
+    auto model = std::shared_ptr<Model>{new ModelMock};
     auto view = std::shared_ptr<IView>{new ViewMock};
     auto factory = std::make_shared<CommandFactoryMock>();
     auto obj = Controller{model, factory};
