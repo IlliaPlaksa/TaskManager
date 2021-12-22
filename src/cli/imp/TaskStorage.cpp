@@ -4,11 +4,11 @@
 
 #include "cli/include/TaskStorage.h"
 
-std::vector<TaskToSerialize> TaskStorage::GetRootTasks()
+std::vector<TaskToSerialize> TaskStorage::GetRootTasks() const
 {
     return this->root_storage_;
 }
-std::vector<TaskToSerialize> TaskStorage::GetSubTasks(const TaskId &parent_id)
+std::vector<TaskToSerialize> TaskStorage::GetSubTasks(const TaskId &parent_id) const
 {
     auto result = std::vector<TaskToSerialize>{};
 
