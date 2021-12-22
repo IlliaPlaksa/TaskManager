@@ -4,7 +4,7 @@
 
 #include "../../include/ConcreteCommands.h"
 
-Model::Response ShowCommand::Execute(const std::shared_ptr<IView> &view)
+Model::Response ShowCommand::Execute(const std::shared_ptr<View> &view)
 {
     auto task_storage = TaskStorage{};
     auto model = GetModel();

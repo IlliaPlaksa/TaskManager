@@ -7,7 +7,7 @@
 
 #include <memory>
 #include "Command.h"
-#include "IView.h"
+#include "View.h"
 #include "ConcreteCommands.h"
 
 enum class CommandType

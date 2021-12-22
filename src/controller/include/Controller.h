@@ -7,7 +7,7 @@
 
 #include "../../model/include/Task.h"
 #include "../../model/include/TaskId.h"
-#include "IView.h"
+#include "View.h"
 #include "Model.h"
 #include "Command.h"
 #include "CommandFactory.h"
@@ -21,7 +21,7 @@ public:
                         const std::shared_ptr<CommandFactory> &command_factory);
 
 public:
-    Response Action(const std::shared_ptr<IView> &view,
+    Response Action(const std::shared_ptr<View> &view,
                     const CommandType &command_type);
 
 private:

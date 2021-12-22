@@ -12,7 +12,7 @@ Controller::Controller(const std::shared_ptr<Model> &model,
 {
 }
 
-Controller::Response Controller::Action(const std::shared_ptr<IView> &view,
+Controller::Response Controller::Action(const std::shared_ptr<View> &view,
                                         const CommandType &command_type)
 {
     auto command = command_factory_->CreateCommand(command_type, model_);

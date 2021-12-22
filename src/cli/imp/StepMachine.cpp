@@ -43,7 +43,7 @@ void StepMachine::LoadTasks(const TaskStorage &storage)
 {
     *context_.GetTaskStorage() = storage;
 }
-std::shared_ptr<IView> StepMachine::shared()
+std::shared_ptr<View> StepMachine::shared()
 {
     return shared_from_this();
 }

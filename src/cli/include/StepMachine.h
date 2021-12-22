@@ -6,13 +6,13 @@
 #define TASKMANAGER_SRC_CLI_STEPMACHINE_H_
 
 #include <optional>
-#include "../../controller/include/IView.h"
+#include "../../controller/include/View.h"
 #include "../../controller/include/Controller.h"
 #include "Context.h"
 #include "Step.h"
 #include "MachineSteps.h"
 
-class StepMachine : public IView
+class StepMachine : public View
 {
 public:
     void Run() override;
@@ -25,7 +25,7 @@ public:
     explicit StepMachine(const std::shared_ptr<StepFactory> &factory,
                          const std::shared_ptr<Controller> &controller);
 public:
-    std::shared_ptr<IView> shared() override;
+    std::shared_ptr<View> shared() override;
 private:
     void SetNextStep(const std::shared_ptr<Step> &step);
 

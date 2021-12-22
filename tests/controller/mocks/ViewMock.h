@@ -6,15 +6,15 @@
 #define TASKMANAGER_TESTS_CONTROLLER_MOCK_INCLUDE_VIEWMOCK_H_
 
 #include "gmock/gmock.h"
-#include "../../../src/controller/include/IView.h"
+#include "../../../src/controller/include/View.h"
 
-class ViewMock : public IView
+class ViewMock : public View
 {
 public:
     MOCK_METHOD(void, Run, (), (override));
     MOCK_METHOD(void, LoadTasks, (const TaskStorage &storage), (override));
     MOCK_METHOD(std::optional<TaskStruct>, GetTaskStruct, (), (const, override));
-    MOCK_METHOD(std::shared_ptr<IView>, shared, (), (override));
+    MOCK_METHOD(std::shared_ptr<View>, shared, (), (override));
 };
 
 #endif //TASKMANAGER_TESTS_CONTROLLER_MOCK_INCLUDE_VIEWMOCK_H_
