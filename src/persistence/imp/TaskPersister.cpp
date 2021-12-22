@@ -4,42 +4,45 @@
 
 #include "../include/TaskPersister.h"
 
-void TaskPersister::SerializeTasksToFile(const std::string &file_name, const std::vector<TaskToSerialize> &tasks)
+#include "google/protobuf/util/delimited_message_util.h"
+
+bool TaskPersister::SerializeTasksToFile(const std::string& file_name, const std::vector<TaskToSerialize>& tasks)
 {
-    // TODO Rewrite
-    auto task_package = TaskPackage{};
     std::fstream ofs(file_name,
                      std::ios::out | std::ios::trunc | std::ios::binary);
 
     if (!ofs.is_open())
-        return; // Add returning error
+        return false;
     else
     {
-        for (const auto &elem: tasks)
+        for (const auto& elem : tasks)
         {
-            auto task = task_package.add_tasks();
-            *task = elem;
+            google::protobuf::util::SerializeDelimitedToOstream(elem, &ofs);
         }
-        task_package.SerializeToOstream(&ofs);
     }
-
     google::protobuf::ShutdownProtobufLibrary();
+    return true;
 }
-std::optional<std::vector<TaskToSerialize>> TaskPersister::DeserializeTasksFromFile(const std::string &file_name)
+std::optional<std::vector<TaskToSerialize>> TaskPersister::DeserializeTasksFromFile(const std::string& file_name)
 {
     auto result = std::vector<TaskToSerialize>{};
 
-    std::fstream input(file_name,
-                       std::ios::in | std::ios::binary);
+    std::fstream ifs(file_name,
+                     std::ios::in | std::ios::binary);
 
-    auto tmp = TaskPackage{};
-    if (tmp.ParseFromIstream(&input))
-    {
-        for (std::size_t i = 0; i < tmp.tasks_size(); i++)
-            result.emplace_back(tmp.tasks(i));
-    } else
-        return std::nullopt;
+    auto input = google::protobuf::io::IstreamInputStream(&ifs);
+
+    bool clean_eof = true;
+    TaskToSerialize tmp;
+
+    while (clean_eof)
+        if (google::protobuf::util::ParseDelimitedFromZeroCopyStream(&tmp, &input, &clean_eof))
+        {
+            result.emplace_back(tmp);
+        } else
+            return std::nullopt;
 
     google::protobuf::ShutdownProtobufLibrary();
     return result;
 }
+

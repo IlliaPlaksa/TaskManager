@@ -8,14 +8,13 @@
 #include <vector>
 #include <fstream>
 #include <optional>
-#include "TaskToSerialize.pb.h"
+#include "../../model/include/TaskToSerialize.h"
 
 class TaskPersister
 {
 public:
-    virtual void SerializeTasksToFile(const std::string &file_name,
-                         const std::vector<TaskToSerialize> &tasks);
-    virtual std::optional<std::vector<TaskToSerialize>> DeserializeTasksFromFile(const std::string &file_name);
+    virtual bool SerializeTasksToFile(const std::string& file_name, const std::vector<TaskToSerialize>& tasks);
+    virtual std::optional<std::vector<TaskToSerialize>> DeserializeTasksFromFile(const std::string& file_name);
 };
 
 #endif //TASKMANAGER_SRC_PERSISTENCE_TASKPERSISTER_H_
