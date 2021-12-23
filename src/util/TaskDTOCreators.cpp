@@ -1,12 +1,12 @@
 //
 // Created by Illia Plaksa on 17.12.2021.
 //
-#include "TaskToSerializeCreators.h"
+#include "TaskDTOCreators.h"
 
-std::optional<TaskToSerialize> CreateTaskToSerialize(const TaskId& id,
-                                                     const Task& task)
+std::optional<TaskDTO> CreateTaskDTO(const TaskId& id,
+                                     const Task& task)
 {
-    auto result = TaskToSerialize{};
+    auto result = TaskDTO{};
     if (id.IsInitialized() and task.IsInitialized())
     {
         // Allocation of struct fields
@@ -22,11 +22,11 @@ std::optional<TaskToSerialize> CreateTaskToSerialize(const TaskId& id,
     return result;
 }
 
-std::optional<TaskToSerialize> CreateSubTaskToSerialize(const TaskId& id,
-                                                        const Task& task,
-                                                        const TaskId& parent_id)
+std::optional<TaskDTO> CreateSubTaskDTO(const TaskId& id,
+                                        const Task& task,
+                                        const TaskId& parent_id)
 {
-    auto result = CreateTaskToSerialize(id, task);
+    auto result = CreateTaskDTO(id, task);
     if (result)
     {
         auto tmp_parent_id = std::make_unique<TaskId>(parent_id);

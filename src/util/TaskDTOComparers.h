@@ -5,8 +5,8 @@
 #ifndef TASKMANAGER_PROTOBUF_UTIL_TASKTOSERIALIZECOMPARERS_H_
 #define TASKMANAGER_PROTOBUF_UTIL_TASKTOSERIALIZECOMPARERS_H_
 
-#include "TaskToSerialize.pb.h"
+#include "TaskDTO.pb.h"
 
-bool operator==(const TaskToSerialize& first, const TaskToSerialize& second);
+bool operator==(const TaskDTO& first, const TaskDTO& second);
 
 #endif //TASKMANAGER_PROTOBUF_UTIL_TASKTOSERIALIZECOMPARERS_H_

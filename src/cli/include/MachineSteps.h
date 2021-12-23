@@ -72,7 +72,7 @@ private:
                                const TaskStorage& storage
     );
 
-    static std::string ToString(const TaskToSerialize& task);
+    static std::string ToString(const TaskDTO& task);
     static std::string ToString(const Task::Priority& priority);
     static std::string ToString(const Task::Status& status);
 };

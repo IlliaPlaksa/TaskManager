@@ -7,7 +7,7 @@
 
 #include "Task.pb.h"
 #include "TaskId.pb.h"
-#include "TaskToSerialize.pb.h"
+#include "TaskDTO.pb.h"
 
 class TaskStruct
 {
@@ -31,7 +31,7 @@ public:
     std::optional<TaskId> id();
     std::optional<Task> task();
     std::optional<TaskId> parent_id();
-    std::optional<TaskToSerialize> MakeTaskToSerialize();
+    std::optional<TaskDTO> MakeTaskToSerialize();
 
 private:
     TaskId id_;

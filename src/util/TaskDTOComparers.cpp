@@ -2,9 +2,9 @@
 // Created by Illia Plaksa on 23.12.2021.
 //
 
-#include "TaskToSerializeComparers.h"
+#include "TaskDTOComparers.h"
 
-bool operator==(const TaskToSerialize& first, const TaskToSerialize& second)
+bool operator==(const TaskDTO& first, const TaskDTO& second)
 {
     return first.SerializeAsString() == second.SerializeAsString();
 }

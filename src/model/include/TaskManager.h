@@ -12,7 +12,7 @@
 #include "IdGenerator.h"
 #include "Task.pb.h"
 #include "TaskId.pb.h"
-#include "TaskToSerialize.pb.h"
+#include "TaskDTO.pb.h"
 
 class TaskManager : public Model
 {
@@ -27,17 +27,17 @@ public:
     Response Delete(const TaskId& id) override;
     Response Complete(const TaskId& id) override;
 
-    std::vector<TaskToSerialize> Show() override;
-    std::vector<TaskToSerialize> ShowParents() override;
-    std::vector<TaskToSerialize> ShowChild(const TaskId& parent_id) override;
+    std::vector<TaskDTO> Show() override;
+    std::vector<TaskDTO> ShowParents() override;
+    std::vector<TaskDTO> ShowChild(const TaskId& parent_id) override;
 
-    bool Load(const std::vector<TaskToSerialize>& tasks) override;
+    bool Load(const std::vector<TaskDTO>& tasks) override;
 
 public:
     explicit TaskManager(std::unique_ptr<IdGenerator> generator);
 
 private:
-    std::optional<TaskToSerialize> ConstructTaskToSerialize(const TaskId& id, const FamilyTask& task);
+    std::optional<TaskDTO> ConstructTaskToSerialize(const TaskId& id, const FamilyTask& task);
 
 private:
     std::map<TaskId, FamilyTask> tasks_;

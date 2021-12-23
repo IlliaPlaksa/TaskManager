@@ -9,19 +9,19 @@
 #include <map>
 #include "Task.pb.h"
 #include "TaskId.pb.h"
-#include "TaskToSerialize.pb.h"
+#include "TaskDTO.pb.h"
 
 class TaskStorage
 {
 public:
-    std::vector<TaskToSerialize> GetRootTasks() const;
-    std::vector<TaskToSerialize> GetSubTasks(const TaskId& parent_id) const;
+    std::vector<TaskDTO> GetRootTasks() const;
+    std::vector<TaskDTO> GetSubTasks(const TaskId& parent_id) const;
 public:
-    void LoadRootTasks(const std::vector<TaskToSerialize>& tasks);
-    void LoadSubTasks(const TaskId& parent_id, const std::vector<TaskToSerialize>& tasks);
+    void LoadRootTasks(const std::vector<TaskDTO>& tasks);
+    void LoadSubTasks(const TaskId& parent_id, const std::vector<TaskDTO>& tasks);
 private:
-    std::vector<TaskToSerialize> root_storage_;
-    std::map<TaskId, std::vector<TaskToSerialize>> subtask_storage_;
+    std::vector<TaskDTO> root_storage_;
+    std::map<TaskId, std::vector<TaskDTO>> subtask_storage_;
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_TASKSTORAGE_H_

@@ -10,7 +10,7 @@
 
 #include "Task.pb.h"
 #include "TaskId.pb.h"
-#include "TaskToSerialize.pb.h"
+#include "TaskDTO.pb.h"
 
 class Model
 {
@@ -25,12 +25,12 @@ public:
     virtual Response Delete(const TaskId& task_id) = 0;
 
 public:
-    virtual std::vector<TaskToSerialize> Show() = 0;
-    virtual std::vector<TaskToSerialize> ShowParents() = 0;
-    virtual std::vector<TaskToSerialize> ShowChild(const TaskId& parent_id) = 0;
+    virtual std::vector<TaskDTO> Show() = 0;
+    virtual std::vector<TaskDTO> ShowParents() = 0;
+    virtual std::vector<TaskDTO> ShowChild(const TaskId& parent_id) = 0;
 
 public:
-    virtual bool Load(const std::vector<TaskToSerialize>& tasks) = 0;
+    virtual bool Load(const std::vector<TaskDTO>& tasks) = 0;
 };
 
 class Model::Response

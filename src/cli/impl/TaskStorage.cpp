@@ -5,13 +5,13 @@
 #include "../include/TaskStorage.h"
 #include "../../util/TaskIdComparers.h"
 
-std::vector<TaskToSerialize> TaskStorage::GetRootTasks() const
+std::vector<TaskDTO> TaskStorage::GetRootTasks() const
 {
     return this->root_storage_;
 }
-std::vector<TaskToSerialize> TaskStorage::GetSubTasks(const TaskId& parent_id) const
+std::vector<TaskDTO> TaskStorage::GetSubTasks(const TaskId& parent_id) const
 {
-    auto result = std::vector<TaskToSerialize>{};
+    auto result = std::vector<TaskDTO>{};
 
     auto iter = std::find_if(subtask_storage_.begin(),
                              subtask_storage_.end(),
@@ -25,11 +25,11 @@ std::vector<TaskToSerialize> TaskStorage::GetSubTasks(const TaskId& parent_id) c
 
     return result;
 }
-void TaskStorage::LoadRootTasks(const std::vector<TaskToSerialize>& tasks)
+void TaskStorage::LoadRootTasks(const std::vector<TaskDTO>& tasks)
 {
     root_storage_.insert(root_storage_.end(), tasks.begin(), tasks.end());
 }
-void TaskStorage::LoadSubTasks(const TaskId& parent_id, const std::vector<TaskToSerialize>& tasks)
+void TaskStorage::LoadSubTasks(const TaskId& parent_id, const std::vector<TaskDTO>& tasks)
 {
     auto iter = subtask_storage_.find(parent_id);
     if (iter != subtask_storage_.end())

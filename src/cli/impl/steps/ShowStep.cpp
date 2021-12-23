@@ -50,7 +50,7 @@ std::string ShowStep::ToString(const Task::Status &status)
         default: return std::string{};
     }
 }
-std::string ShowStep::ToString(const TaskToSerialize &task)
+std::string ShowStep::ToString(const TaskDTO &task)
 {
     std::stringstream output;
 

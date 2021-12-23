@@ -10,8 +10,8 @@
 #include "../../util/TaskIdComparers.h"
 #include "../../util/TaskIdCreators.h"
 
-#include "../../util/TaskToSerializeComparers.h"
-#include "../../util/TaskToSerializeCreators.h"
+#include "../../util/TaskDTOComparers.h"
+#include "../../util/TaskDTOCreators.h"
 
 TaskManager::TaskManager(std::unique_ptr<IdGenerator> generator)
     : gen_{std::move(generator)} {}
@@ -113,9 +113,9 @@ Model::Response TaskManager::Complete(const TaskId& id)
         return Model::Response::CreateError(Response::ErrorType::INVALID_ID);
 }
 
-std::vector<TaskToSerialize> TaskManager::Show()
+std::vector<TaskDTO> TaskManager::Show()
 {
-    auto result = std::vector<TaskToSerialize>{};
+    auto result = std::vector<TaskDTO>{};
     for (const auto& elem : this->tasks_)
     {
         auto tmp = ConstructTaskToSerialize(elem.first, elem.second);
@@ -125,9 +125,9 @@ std::vector<TaskToSerialize> TaskManager::Show()
     }
     return result;
 }
-std::vector<TaskToSerialize> TaskManager::ShowParents()
+std::vector<TaskDTO> TaskManager::ShowParents()
 {
-    auto result = std::vector<TaskToSerialize>{};
+    auto result = std::vector<TaskDTO>{};
     for (const auto& elem : this->tasks_)
     {
         if (!elem.second.GetParentId())
@@ -140,9 +140,9 @@ std::vector<TaskToSerialize> TaskManager::ShowParents()
     }
     return result;
 }
-std::vector<TaskToSerialize> TaskManager::ShowChild(const TaskId& parent_id)
+std::vector<TaskDTO> TaskManager::ShowChild(const TaskId& parent_id)
 {
-    auto result = std::vector<TaskToSerialize>{};
+    auto result = std::vector<TaskDTO>{};
     for (const auto& elem : this->tasks_)
     {
         if (elem.second.GetParentId() == parent_id)
@@ -154,18 +154,18 @@ std::vector<TaskToSerialize> TaskManager::ShowChild(const TaskId& parent_id)
     }
     return result;
 }
-std::optional<TaskToSerialize> TaskManager::ConstructTaskToSerialize(const TaskId& id, const FamilyTask& task)
+std::optional<TaskDTO> TaskManager::ConstructTaskToSerialize(const TaskId& id, const FamilyTask& task)
 {
-    std::optional<TaskToSerialize> tmp;
+    std::optional<TaskDTO> tmp;
     if (task.GetParentId())
-        tmp = CreateSubTaskToSerialize(id,
-                                       task.GetTask(),
-                                       *task.GetParentId());
+        tmp = CreateSubTaskDTO(id,
+                               task.GetTask(),
+                               *task.GetParentId());
     else
-        tmp = CreateTaskToSerialize(id, task.GetTask());
+        tmp = CreateTaskDTO(id, task.GetTask());
     return tmp;
 }
-bool TaskManager::Load(const std::vector<TaskToSerialize>& tasks)
+bool TaskManager::Load(const std::vector<TaskDTO>& tasks)
 {
     return false;
 }

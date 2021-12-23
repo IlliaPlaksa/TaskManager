@@ -4,8 +4,7 @@
 
 #include "../include/TaskStruct.h"
 #include <google/protobuf/util/time_util.h>
-#include "../../util/TaskToSerializeComparers.h"
-#include "../../util/TaskToSerializeCreators.h"
+#include "../../util/TaskDTOCreators.h"
 
 TaskStruct& TaskStruct::SetTitle(const std::string& title)
 {
@@ -72,12 +71,12 @@ std::optional<TaskId> TaskStruct::parent_id()
     return parent_id_ and parent_id_->IsInitialized()
            ? std::optional(id_) : std::nullopt;
 }
-std::optional<TaskToSerialize> TaskStruct::MakeTaskToSerialize()
+std::optional<TaskDTO> TaskStruct::MakeTaskToSerialize()
 {
     if (this->IsReady())
         return parent_id_.has_value()
-               ? *CreateSubTaskToSerialize(id_, task_, *parent_id_)
-               : *CreateTaskToSerialize(id_, task_);
+               ? *CreateSubTaskDTO(id_, task_, *parent_id_)
+               : *CreateTaskDTO(id_, task_);
     else
         return std::nullopt;
 }

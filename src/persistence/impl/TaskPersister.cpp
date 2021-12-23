@@ -6,7 +6,7 @@
 
 #include "google/protobuf/util/delimited_message_util.h"
 
-bool TaskPersister::SerializeTasksToFile(const std::string& file_name, const std::vector<TaskToSerialize>& tasks)
+bool TaskPersister::SerializeTasksToFile(const std::string& file_name, const std::vector<TaskDTO>& tasks)
 {
     std::fstream ofs(file_name,
                      std::ios::out | std::ios::trunc | std::ios::binary);
@@ -23,9 +23,9 @@ bool TaskPersister::SerializeTasksToFile(const std::string& file_name, const std
     google::protobuf::ShutdownProtobufLibrary();
     return true;
 }
-std::optional<std::vector<TaskToSerialize>> TaskPersister::DeserializeTasksFromFile(const std::string& file_name)
+std::optional<std::vector<TaskDTO>> TaskPersister::DeserializeTasksFromFile(const std::string& file_name)
 {
-    auto result = std::vector<TaskToSerialize>{};
+    auto result = std::vector<TaskDTO>{};
 
     std::fstream ifs(file_name,
                      std::ios::in | std::ios::binary);
@@ -33,7 +33,7 @@ std::optional<std::vector<TaskToSerialize>> TaskPersister::DeserializeTasksFromF
     auto input = google::protobuf::io::IstreamInputStream(&ifs);
 
     bool clean_eof = true;
-    TaskToSerialize tmp;
+    TaskDTO tmp;
 
     while (clean_eof)
         if (google::protobuf::util::ParseDelimitedFromZeroCopyStream(&tmp, &input, &clean_eof))

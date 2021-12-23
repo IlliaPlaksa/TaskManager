@@ -32,7 +32,7 @@ void StepMachine::Run()
     }
 }
 
-std::optional<TaskToSerialize> StepMachine::GetTaskStruct() const
+std::optional<TaskDTO> StepMachine::GetTaskStruct() const
 {
     auto task_struct = context_.GetStruct();
 

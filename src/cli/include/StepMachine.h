@@ -18,7 +18,7 @@ public:
     void Run() override;
 
 public:
-    std::optional<TaskToSerialize> GetTaskStruct() const override;
+    std::optional<TaskDTO> GetTaskStruct() const override;
 
     void LoadTasks(const TaskStorage& storage) override;
 public:
