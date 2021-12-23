@@ -13,11 +13,10 @@
 #include "../../util/TaskToSerializeComparers.h"
 #include "../../util/TaskToSerializeCreators.h"
 
-
 TaskManager::TaskManager(std::unique_ptr<IdGenerator> generator)
     : gen_{std::move(generator)} {}
 
-Model::Response TaskManager::Add(const Task &task)
+Model::Response TaskManager::Add(const Task& task)
 {
     TaskId new_id = this->gen_->GetNextId();
 
@@ -29,7 +28,7 @@ Model::Response TaskManager::Add(const Task &task)
     return Model::Response::CreateSuccess();
 }
 
-Model::Response TaskManager::AddSubTask(const Task &task, const TaskId &parent_id)
+Model::Response TaskManager::AddSubTask(const Task& task, const TaskId& parent_id)
 {
     TaskId new_id = this->gen_->GetNextId();
 
@@ -41,7 +40,7 @@ Model::Response TaskManager::AddSubTask(const Task &task, const TaskId &parent_i
     return Model::Response::CreateSuccess();
 }
 
-Model::Response TaskManager::Edit(const TaskId &id, const Task &task)
+Model::Response TaskManager::Edit(const TaskId& id, const Task& task)
 {
 
     if (this->tasks_.find(id) != this->tasks_.end())
@@ -54,7 +53,7 @@ Model::Response TaskManager::Edit(const TaskId &id, const Task &task)
     }
 }
 
-Model::Response TaskManager::EditSubTask(const TaskId &id, const Task &task, const TaskId &parent_id)
+Model::Response TaskManager::EditSubTask(const TaskId& id, const Task& task, const TaskId& parent_id)
 {
     if (this->tasks_.find(id) != this->tasks_.end())
     {
@@ -66,13 +65,13 @@ Model::Response TaskManager::EditSubTask(const TaskId &id, const Task &task, con
     }
 }
 
-Model::Response TaskManager::Delete(const TaskId &id)
+Model::Response TaskManager::Delete(const TaskId& id)
 {
-    auto &task = tasks_.at(id);
+    auto& task = tasks_.at(id);
 
     // Find subtasks
     auto iter = std::find_if(tasks_.begin(), tasks_.end(),
-                             [task](const auto &elem)
+                             [task](const auto& elem)
                              {
                                  auto parent = elem.second.GetParentId();
                                  if (parent)
@@ -87,15 +86,15 @@ Model::Response TaskManager::Delete(const TaskId &id)
     return Model::Response::CreateSuccess();
 }
 
-Model::Response TaskManager::Complete(const TaskId &id)
+Model::Response TaskManager::Complete(const TaskId& id)
 {
     if (this->tasks_.find(id) != this->tasks_.end())
     {
-        auto &task = this->tasks_.at(id);
+        auto& task = this->tasks_.at(id);
 
         // Find uncompleted subtasks
         auto count = std::count_if(tasks_.begin(), tasks_.end(),
-                                   [task](const auto &elem)
+                                   [task](const auto& elem)
                                    {
                                        auto parent = elem.second.GetParentId();
                                        if (parent)
@@ -117,7 +116,7 @@ Model::Response TaskManager::Complete(const TaskId &id)
 std::vector<TaskToSerialize> TaskManager::Show()
 {
     auto result = std::vector<TaskToSerialize>{};
-    for (const auto &elem: this->tasks_)
+    for (const auto& elem : this->tasks_)
     {
         auto tmp = ConstructTaskToSerialize(elem.first, elem.second);
         if (tmp)
@@ -129,7 +128,7 @@ std::vector<TaskToSerialize> TaskManager::Show()
 std::vector<TaskToSerialize> TaskManager::ShowParents()
 {
     auto result = std::vector<TaskToSerialize>{};
-    for (const auto &elem: this->tasks_)
+    for (const auto& elem : this->tasks_)
     {
         if (!elem.second.GetParentId())
         {
@@ -141,10 +140,10 @@ std::vector<TaskToSerialize> TaskManager::ShowParents()
     }
     return result;
 }
-std::vector<TaskToSerialize> TaskManager::ShowChild(const TaskId &parent_id)
+std::vector<TaskToSerialize> TaskManager::ShowChild(const TaskId& parent_id)
 {
     auto result = std::vector<TaskToSerialize>{};
-    for (const auto &elem: this->tasks_)
+    for (const auto& elem : this->tasks_)
     {
         if (elem.second.GetParentId() == parent_id)
         {
@@ -155,7 +154,7 @@ std::vector<TaskToSerialize> TaskManager::ShowChild(const TaskId &parent_id)
     }
     return result;
 }
-std::optional<TaskToSerialize> TaskManager::ConstructTaskToSerialize(const TaskId &id, const FamilyTask &task)
+std::optional<TaskToSerialize> TaskManager::ConstructTaskToSerialize(const TaskId& id, const FamilyTask& task)
 {
     std::optional<TaskToSerialize> tmp;
     if (task.GetParentId())
@@ -166,7 +165,7 @@ std::optional<TaskToSerialize> TaskManager::ConstructTaskToSerialize(const TaskI
         tmp = CreateTaskToSerialize(id, task.GetTask());
     return tmp;
 }
-bool TaskManager::Load(const std::vector<TaskToSerialize> &tasks)
+bool TaskManager::Load(const std::vector<TaskToSerialize>& tasks)
 {
     return false;
 }

@@ -4,7 +4,7 @@
 
 #include "../../include/ConcreteCommands.h"
 
-Model::Response AddCommand::Execute(const std::shared_ptr<View> &view)
+Model::Response AddCommand::Execute(const std::shared_ptr<View>& view)
 {
     auto task_struct = view->GetTaskStruct();
     auto task = task_struct->task();

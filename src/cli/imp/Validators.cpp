@@ -11,8 +11,7 @@
 #include "../../util/TaskIdComparers.h"
 #include "../../util/TaskIdCreators.h"
 
-
-std::optional<StepId> Validate::Command(const std::string &command)
+std::optional<StepId> Validate::Command(const std::string& command)
 {
     if (command == "exit")
         return StepId::kExit;
@@ -31,14 +30,14 @@ std::optional<StepId> Validate::Command(const std::string &command)
     else
         return std::nullopt;
 }
-std::optional<std::string> Validate::Title(const std::string &title)
+std::optional<std::string> Validate::Title(const std::string& title)
 {
     if (title.empty())
         return std::nullopt;
     else
         return title;
 }
-std::optional<TaskId> Validate::Id(const std::string &id)
+std::optional<TaskId> Validate::Id(const std::string& id)
 {
     if (id.empty())
         return std::nullopt;
@@ -49,7 +48,7 @@ std::optional<TaskId> Validate::Id(const std::string &id)
     else
         return CreateTaskId(num);
 }
-std::optional<time_t> Validate::Date(const std::string &date)
+std::optional<time_t> Validate::Date(const std::string& date)
 {
     const std::string pattern = R"(\d{2}.\d{2}.\d{4})";
     if (!std::regex_match(date, std::regex(pattern))) // Passed string doesn't match date pattern
@@ -71,7 +70,7 @@ std::optional<time_t> Validate::Date(const std::string &date)
             return std::nullopt;
     }
 }
-std::optional<Task::Priority> Validate::Priority(const std::string &priority)
+std::optional<Task::Priority> Validate::Priority(const std::string& priority)
 {
     if (priority == "high")
         return Task_Priority_kHigh;
@@ -82,14 +81,14 @@ std::optional<Task::Priority> Validate::Priority(const std::string &priority)
     else
         return std::nullopt;
 }
-std::optional<std::string> Validate::Label(const std::string &label)
+std::optional<std::string> Validate::Label(const std::string& label)
 {
     if (label.empty())
         return std::nullopt;
     else
         return label;
 }
-std::optional<bool> Validate::Confirm(const std::string &symbol)
+std::optional<bool> Validate::Confirm(const std::string& symbol)
 {
     if (symbol == "y")
         return true;

@@ -7,6 +7,6 @@
 
 #include "TaskToSerialize.pb.h"
 
-bool operator==(const TaskToSerialize &first, const TaskToSerialize &second);
+bool operator==(const TaskToSerialize& first, const TaskToSerialize& second);
 
 #endif //TASKMANAGER_PROTOBUF_UTIL_TASKTOSERIALIZECOMPARERS_H_

@@ -7,6 +7,6 @@
 
 #include "Task.pb.h"
 
-bool operator==(const Task &first, const Task &second);
+bool operator==(const Task& first, const Task& second);
 
 #endif //TASKMANAGER_PROTOBUF_UTIL_TASKCOMPARERS_H_

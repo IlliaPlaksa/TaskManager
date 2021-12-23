@@ -12,9 +12,9 @@
 class Command
 {
 public:
-    explicit Command(const std::shared_ptr<Model> &model);
+    explicit Command(const std::shared_ptr<Model>& model);
 public:
-    virtual Model::Response Execute(const std::shared_ptr<View> &view) = 0;
+    virtual Model::Response Execute(const std::shared_ptr<View>& view) = 0;
 
 public:
     std::shared_ptr<Model> GetModel();

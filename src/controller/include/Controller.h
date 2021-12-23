@@ -17,12 +17,12 @@ class Controller
 public:
     class Response;
 public:
-    explicit Controller(const std::shared_ptr<Model> &model,
-                        const std::shared_ptr<CommandFactory> &command_factory);
+    explicit Controller(const std::shared_ptr<Model>& model,
+                        const std::shared_ptr<CommandFactory>& command_factory);
 
 public:
-    Response Action(const std::shared_ptr<View> &view,
-                    const CommandType &command_type);
+    Response Action(const std::shared_ptr<View>& view,
+                    const CommandType& command_type);
 
 private:
     static std::string CreateErrorMessage(const Model::Response::ErrorType& error_type);
@@ -42,7 +42,7 @@ public:
     };
 public:
     static Response CreateSuccess();
-    static Response CreateError(const std::string &message);
+    static Response CreateError(const std::string& message);
 
 private:
     Response() = default;

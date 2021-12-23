@@ -9,13 +9,13 @@ std::vector<TaskToSerialize> TaskStorage::GetRootTasks() const
 {
     return this->root_storage_;
 }
-std::vector<TaskToSerialize> TaskStorage::GetSubTasks(const TaskId &parent_id) const
+std::vector<TaskToSerialize> TaskStorage::GetSubTasks(const TaskId& parent_id) const
 {
     auto result = std::vector<TaskToSerialize>{};
 
     auto iter = std::find_if(subtask_storage_.begin(),
                              subtask_storage_.end(),
-                             [parent_id](const auto &elem)
+                             [parent_id](const auto& elem)
                              {
                                  return elem.first == parent_id;
                              });
@@ -25,11 +25,11 @@ std::vector<TaskToSerialize> TaskStorage::GetSubTasks(const TaskId &parent_id) c
 
     return result;
 }
-void TaskStorage::LoadRootTasks(const std::vector<TaskToSerialize> &tasks)
+void TaskStorage::LoadRootTasks(const std::vector<TaskToSerialize>& tasks)
 {
     root_storage_.insert(root_storage_.end(), tasks.begin(), tasks.end());
 }
-void TaskStorage::LoadSubTasks(const TaskId &parent_id, const std::vector<TaskToSerialize> &tasks)
+void TaskStorage::LoadSubTasks(const TaskId& parent_id, const std::vector<TaskToSerialize>& tasks)
 {
     auto iter = subtask_storage_.find(parent_id);
     if (iter != subtask_storage_.end())

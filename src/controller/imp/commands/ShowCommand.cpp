@@ -4,7 +4,7 @@
 
 #include "../../include/ConcreteCommands.h"
 
-Model::Response ShowCommand::Execute(const std::shared_ptr<View> &view)
+Model::Response ShowCommand::Execute(const std::shared_ptr<View>& view)
 {
     auto task_storage = TaskStorage{};
     auto model = GetModel();
@@ -12,9 +12,9 @@ Model::Response ShowCommand::Execute(const std::shared_ptr<View> &view)
 
     task_storage.LoadRootTasks(root);
 
-    for (const auto &task: root)
+    for (const auto& task : root)
     {
-        const auto &parent_id = task.parent_id();
+        const auto& parent_id = task.parent_id();
         task_storage.LoadSubTasks(parent_id, model->ShowChild(parent_id));
     }
 

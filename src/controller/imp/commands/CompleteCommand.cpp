@@ -4,7 +4,7 @@
 
 #include "../../include/ConcreteCommands.h"
 
-Model::Response CompleteCommand::Execute(const std::shared_ptr<View> &view)
+Model::Response CompleteCommand::Execute(const std::shared_ptr<View>& view)
 {
     auto task_struct = view->GetTaskStruct();
     return GetModel()->Complete(task_struct->id());;

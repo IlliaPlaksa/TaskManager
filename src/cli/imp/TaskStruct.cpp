@@ -7,13 +7,12 @@
 #include "../../util/TaskToSerializeComparers.h"
 #include "../../util/TaskToSerializeCreators.h"
 
-
-TaskStruct &TaskStruct::SetTitle(const std::string &title)
+TaskStruct& TaskStruct::SetTitle(const std::string& title)
 {
     task_.set_title(title);
     return *this;
 }
-TaskStruct &TaskStruct::SetDate(const time_t &date)
+TaskStruct& TaskStruct::SetDate(const time_t& date)
 {
     task_.set_allocated_due_date(
         new google::protobuf::Timestamp(
@@ -22,27 +21,27 @@ TaskStruct &TaskStruct::SetDate(const time_t &date)
     );
     return *this;
 }
-TaskStruct &TaskStruct::SetPriority(const Task::Priority &priority)
+TaskStruct& TaskStruct::SetPriority(const Task::Priority& priority)
 {
     task_.set_priority(priority);
     return *this;
 }
-TaskStruct &TaskStruct::SetLabel(const std::string &label)
+TaskStruct& TaskStruct::SetLabel(const std::string& label)
 {
     task_.set_label(label);
     return *this;
 }
-TaskStruct &TaskStruct::SetStatus(const Task::Status &status)
+TaskStruct& TaskStruct::SetStatus(const Task::Status& status)
 {
     task_.set_status(status);
     return *this;
 }
-TaskStruct &TaskStruct::SetParent(const TaskId &parent_id)
+TaskStruct& TaskStruct::SetParent(const TaskId& parent_id)
 {
     parent_id_ = parent_id;
     return *this;
 }
-TaskStruct &TaskStruct::SetId(const TaskId &id)
+TaskStruct& TaskStruct::SetId(const TaskId& id)
 {
     id_ = id;
     return *this;

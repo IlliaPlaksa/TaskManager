@@ -11,17 +11,17 @@
 class FamilyTask
 {
 public:
-    static FamilyTask Create(const Task &task);
-    static FamilyTask Create(const Task &task, const TaskId &parent_id);
+    static FamilyTask Create(const Task& task);
+    static FamilyTask Create(const Task& task, const TaskId& parent_id);
 
 public:
     std::optional<TaskId> GetParentId() const;
     Task GetTask() const;
 public:
-    FamilyTask(const FamilyTask &task) = default;
+    FamilyTask(const FamilyTask& task) = default;
 private:
-    explicit FamilyTask(const Task &task);
-    FamilyTask(const Task &task, const TaskId &parent_id);
+    explicit FamilyTask(const Task& task);
+    FamilyTask(const Task& task, const TaskId& parent_id);
 
 private:
     Task task_;

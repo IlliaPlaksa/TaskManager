@@ -20,14 +20,14 @@ public:
 public:
     std::optional<TaskToSerialize> GetTaskStruct() const override;
 
-    void LoadTasks(const TaskStorage &storage) override;
+    void LoadTasks(const TaskStorage& storage) override;
 public:
-    explicit StepMachine(const std::shared_ptr<StepFactory> &factory,
-                         const std::shared_ptr<Controller> &controller);
+    explicit StepMachine(const std::shared_ptr<StepFactory>& factory,
+                         const std::shared_ptr<Controller>& controller);
 public:
     std::shared_ptr<View> shared() override;
 private:
-    void SetNextStep(const std::shared_ptr<Step> &step);
+    void SetNextStep(const std::shared_ptr<Step>& step);
 
 private:
     Context context_;

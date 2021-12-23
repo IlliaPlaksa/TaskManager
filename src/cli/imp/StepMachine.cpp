@@ -6,8 +6,8 @@
 
 #include "../../util/TaskIdComparers.h"
 
-StepMachine::StepMachine(const std::shared_ptr<StepFactory> &factory,
-                         const std::shared_ptr<Controller> &controller)
+StepMachine::StepMachine(const std::shared_ptr<StepFactory>& factory,
+                         const std::shared_ptr<Controller>& controller)
     :
     step_factory_(factory),
     controller_(controller)
@@ -39,11 +39,11 @@ std::optional<TaskToSerialize> StepMachine::GetTaskStruct() const
     return task_struct->MakeTaskToSerialize();
 }
 
-void StepMachine::SetNextStep(const std::shared_ptr<Step> &step)
+void StepMachine::SetNextStep(const std::shared_ptr<Step>& step)
 {
     this->current_step_ = step;
 }
-void StepMachine::LoadTasks(const TaskStorage &storage)
+void StepMachine::LoadTasks(const TaskStorage& storage)
 {
     *context_.GetTaskStorage() = storage;
 }

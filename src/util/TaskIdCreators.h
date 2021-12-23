@@ -7,6 +7,6 @@
 
 #include "TaskId.pb.h"
 
-std::optional<TaskId> CreateTaskId(const google::protobuf::uint64 &value);
+std::optional<TaskId> CreateTaskId(const google::protobuf::uint64& value);
 
 #endif //TASKMANAGER_SRC_MODEL_TASKID_H_

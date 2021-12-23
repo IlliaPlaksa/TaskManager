@@ -15,13 +15,13 @@ public:
     TaskStruct() = default;
 
 public: // Setters
-    TaskStruct &SetTitle(const std::string &title);
-    TaskStruct &SetDate(const time_t &date);
-    TaskStruct &SetPriority(const Task::Priority &priority);
-    TaskStruct &SetLabel(const std::string &label);
-    TaskStruct &SetStatus(const Task::Status &status);
-    TaskStruct &SetParent(const TaskId &parent_id);
-    TaskStruct &SetId(const TaskId &id);
+    TaskStruct& SetTitle(const std::string& title);
+    TaskStruct& SetDate(const time_t& date);
+    TaskStruct& SetPriority(const Task::Priority& priority);
+    TaskStruct& SetLabel(const std::string& label);
+    TaskStruct& SetStatus(const Task::Status& status);
+    TaskStruct& SetParent(const TaskId& parent_id);
+    TaskStruct& SetId(const TaskId& id);
 
 public:
     void Reset();

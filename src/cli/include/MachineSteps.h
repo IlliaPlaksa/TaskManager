@@ -15,87 +15,87 @@ class RootStep : public Step
 public:
     using Step::Step;
 
-    StepResult Execute(Context &context) override;
+    StepResult Execute(Context& context) override;
 };
 
 class HelpStep : public Step
 {
 public:
     using Step::Step;
-    StepResult Execute(Context &context) override;
+    StepResult Execute(Context& context) override;
 };
 
 class ExitStep : public Step
 {
 public:
     using Step::Step;
-    StepResult Execute(Context &context) override;
+    StepResult Execute(Context& context) override;
 };
 
 class AddStep : public Step
 {
 public:
     using Step::Step;
-    StepResult Execute(Context &context) override;
+    StepResult Execute(Context& context) override;
 };
 
 class EditStep : public Step
 {
 public:
     using Step::Step;
-    StepResult Execute(Context &context) override;
+    StepResult Execute(Context& context) override;
 };
 
 class CompleteStep : public Step
 {
 public:
     using Step::Step;
-    StepResult Execute(Context &context) override;
+    StepResult Execute(Context& context) override;
 };
 
 class DeleteStep : public Step
 {
 public:
     using Step::Step;
-    StepResult Execute(Context &context) override;
+    StepResult Execute(Context& context) override;
 };
 
 class ShowStep : public Step
 {
 public:
     using Step::Step;
-    StepResult Execute(Context &context) override;
+    StepResult Execute(Context& context) override;
 
 private:
-    static void OutputSubTasks(std::ostream &output,
-                        const TaskId &task_id,
-                        const TaskStorage &storage
+    static void OutputSubTasks(std::ostream& output,
+                               const TaskId& task_id,
+                               const TaskStorage& storage
     );
 
-    static std::string ToString(const TaskToSerialize &task);
-    static std::string ToString(const Task::Priority &priority);
-    static std::string ToString(const Task::Status &status);
+    static std::string ToString(const TaskToSerialize& task);
+    static std::string ToString(const Task::Priority& priority);
+    static std::string ToString(const Task::Status& status);
 };
 
 class UpdateStep : public Step
 {
 public:
     using Step::Step;
-    StepResult Execute(Context &context) override;
+    StepResult Execute(Context& context) override;
 };
 
 class SaveStep : public Step
 {
 public:
     using Step::Step;
-    StepResult Execute(Context &context) override;
+    StepResult Execute(Context& context) override;
 };
 
 class LoadStep : public Step
 {
 public:
     using Step::Step;
-    StepResult Execute(Context &context) override;
+    StepResult Execute(Context& context) override;
 };
 
 #endif //TASKMANAGER_SRC_CLI_MACHINESTATES_H_

@@ -4,7 +4,7 @@
 
 #include "../include/Command.h"
 
-Command::Command(const std::shared_ptr<Model> &model)
+Command::Command(const std::shared_ptr<Model>& model)
     :
     model_(model) {}
 

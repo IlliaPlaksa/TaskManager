@@ -9,12 +9,12 @@
 #include "TaskToSerialize.pb.h"
 #include "cli/include/TaskStorage.h"
 
-class View :public std::enable_shared_from_this<View>
+class View : public std::enable_shared_from_this<View>
 {
 public:
     virtual void Run() = 0;
 public:
-    virtual void LoadTasks(const TaskStorage &storage) = 0;
+    virtual void LoadTasks(const TaskStorage& storage) = 0;
 public:
     virtual std::optional<TaskToSerialize> GetTaskStruct() const = 0;
 public:

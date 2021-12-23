@@ -4,8 +4,8 @@
 
 #include "../include/Step.h"
 
-Step::Step(const std::shared_ptr<StepFactory> &factory,
-           const std::shared_ptr<ConsoleManipulator> &console_manipulator)
+Step::Step(const std::shared_ptr<StepFactory>& factory,
+           const std::shared_ptr<ConsoleManipulator>& console_manipulator)
     :
     factory_(factory),
     console_manipulator_(console_manipulator)

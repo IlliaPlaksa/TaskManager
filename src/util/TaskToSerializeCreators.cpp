@@ -3,8 +3,8 @@
 //
 #include "TaskToSerializeCreators.h"
 
-std::optional<TaskToSerialize> CreateTaskToSerialize(const TaskId &id,
-                                                     const Task &task)
+std::optional<TaskToSerialize> CreateTaskToSerialize(const TaskId& id,
+                                                     const Task& task)
 {
     auto result = TaskToSerialize{};
     if (id.IsInitialized() and task.IsInitialized())
@@ -22,9 +22,9 @@ std::optional<TaskToSerialize> CreateTaskToSerialize(const TaskId &id,
     return result;
 }
 
-std::optional<TaskToSerialize> CreateSubTaskToSerialize(const TaskId &id,
-                                                        const Task &task,
-                                                        const TaskId &parent_id)
+std::optional<TaskToSerialize> CreateSubTaskToSerialize(const TaskId& id,
+                                                        const Task& task,
+                                                        const TaskId& parent_id)
 {
     auto result = CreateTaskToSerialize(id, task);
     if (result)

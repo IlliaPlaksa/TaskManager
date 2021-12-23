@@ -4,29 +4,29 @@
 
 #include "../include/ConsoleManipulator.h"
 
-void ConsoleManipulator::WriteLine(const std::string &message) const
+void ConsoleManipulator::WriteLine(const std::string& message) const
 {
     std::cout << message << std::endl;
 }
-std::string ConsoleManipulator::ReadLine(const std::string &message) const
+std::string ConsoleManipulator::ReadLine(const std::string& message) const
 {
     std::cout << this->prompt_ << ' ' << message << "> ";
     std::string input;
     std::getline(std::cin, input);
-    
+
     return trim(std::move(input));
 }
 
-void ConsoleManipulator::ResetPrompt(const std::string &prompt)
+void ConsoleManipulator::ResetPrompt(const std::string& prompt)
 {
     this->prompt_ = prompt;
 }
-void ConsoleManipulator::WriteError(const std::string &message) const
+void ConsoleManipulator::WriteError(const std::string& message) const
 {
-    std::cout << "[Error]" << '\t' <<  message << std::endl;
+    std::cout << "[Error]" << '\t' << message << std::endl;
 }
 
-std::string ConsoleManipulator::rtrim(std::string &&s) const
+std::string ConsoleManipulator::rtrim(std::string&& s) const
 {
     s.erase(std::find_if(s.rbegin(), s.rend(),
                          [](unsigned char ch)
@@ -35,7 +35,7 @@ std::string ConsoleManipulator::rtrim(std::string &&s) const
                          }).base(), s.end());
     return s;
 }
-std::string ConsoleManipulator::ltrim(std::string &&s) const
+std::string ConsoleManipulator::ltrim(std::string&& s) const
 {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(),
                                     [](int c)
@@ -44,7 +44,7 @@ std::string ConsoleManipulator::ltrim(std::string &&s) const
                                     }));
     return s;
 }
-std::string ConsoleManipulator::trim(std::string &&s) const
+std::string ConsoleManipulator::trim(std::string&& s) const
 {
     return ltrim(rtrim(std::move(s)));
 }

@@ -11,20 +11,20 @@
 class ConsoleManipulator
 {
 public:
-    void WriteLine(const std::string &message) const;
-    void WriteError(const std::string &message) const;
-    std::string ReadLine(const std::string &message = "") const;
+    void WriteLine(const std::string& message) const;
+    void WriteError(const std::string& message) const;
+    std::string ReadLine(const std::string& message = "") const;
 
-    void ResetPrompt(const std::string &prompt = "");
+    void ResetPrompt(const std::string& prompt = "");
 private:
     // trim from start
-    std::string ltrim(std::string &&s) const;
+    std::string ltrim(std::string&& s) const;
 
     // trim from end
-    std::string rtrim(std::string &&s) const;
+    std::string rtrim(std::string&& s) const;
 
     // trim from both ends
-    std::string trim(std::string &&s) const;
+    std::string trim(std::string&& s) const;
 
 private:
     std::string prompt_;

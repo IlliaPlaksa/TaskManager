@@ -7,11 +7,11 @@
 
 #include "TaskToSerialize.pb.h"
 
-std::optional<TaskToSerialize> CreateTaskToSerialize(const TaskId &id,
-                                                     const Task &task);
+std::optional<TaskToSerialize> CreateTaskToSerialize(const TaskId& id,
+                                                     const Task& task);
 
-std::optional<TaskToSerialize> CreateSubTaskToSerialize(const TaskId &id,
-                                                        const Task &task,
-                                                        const TaskId &parent_id);
+std::optional<TaskToSerialize> CreateSubTaskToSerialize(const TaskId& id,
+                                                        const Task& task,
+                                                        const TaskId& parent_id);
 
 #endif //TASKMANAGER_SRC_MODEL_INCLUDE_TASKTOSERIALIZE_H_

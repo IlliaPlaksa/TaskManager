@@ -18,12 +18,12 @@
 namespace Validate
 {
     std::optional<StepId> Command(const std::string& command);
-    std::optional<std::string> Title(const std::string &title);
-    std::optional<TaskId> Id(const std::string &id);
-    std::optional<Task::Priority> Priority(const std::string &priority);
-    std::optional<time_t> Date(const std::string &date);
-    std::optional<std::string> Label(const std::string &label);
-    std::optional<bool> Confirm(const std::string &symbol);
+    std::optional<std::string> Title(const std::string& title);
+    std::optional<TaskId> Id(const std::string& id);
+    std::optional<Task::Priority> Priority(const std::string& priority);
+    std::optional<time_t> Date(const std::string& date);
+    std::optional<std::string> Label(const std::string& label);
+    std::optional<bool> Confirm(const std::string& symbol);
 }
 
 #endif //TASKMANAGER_SRC_CLI_INCLUDE_VALIDATORS_H_

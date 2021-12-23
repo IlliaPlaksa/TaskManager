@@ -4,7 +4,7 @@
 
 #include "../include/Readers.h"
 
-StepId Read::Command(const std::shared_ptr<ConsoleManipulator> &console)
+StepId Read::Command(const std::shared_ptr<ConsoleManipulator>& console)
 {
     auto input = Validate::Command(console->ReadLine());
 
@@ -15,7 +15,7 @@ StepId Read::Command(const std::shared_ptr<ConsoleManipulator> &console)
     }
     return input.value();
 }
-std::string Read::Title(const std::shared_ptr<ConsoleManipulator> &console)
+std::string Read::Title(const std::shared_ptr<ConsoleManipulator>& console)
 {
     std::optional<std::string> input;
     input = Validate::Title(
@@ -31,7 +31,7 @@ std::string Read::Title(const std::shared_ptr<ConsoleManipulator> &console)
     }
     return input.value();
 }
-TaskId Read::Id(const std::shared_ptr<ConsoleManipulator> &console)
+TaskId Read::Id(const std::shared_ptr<ConsoleManipulator>& console)
 {
     const std::string message = "[ID]";
     std::optional<TaskId> input;
@@ -40,7 +40,6 @@ TaskId Read::Id(const std::shared_ptr<ConsoleManipulator> &console)
     );
 
     while (!input)
-
     {
         console->WriteError("Wrong ID passed");
         input = Validate::Id(
@@ -49,7 +48,7 @@ TaskId Read::Id(const std::shared_ptr<ConsoleManipulator> &console)
     }
     return input.value();
 }
-std::optional<TaskId> Read::ParentId(const std::shared_ptr<ConsoleManipulator> &console)
+std::optional<TaskId> Read::ParentId(const std::shared_ptr<ConsoleManipulator>& console)
 {
     const std::string message = "[Parent ID]";
     std::optional<TaskId> input;
@@ -62,7 +61,7 @@ std::optional<TaskId> Read::ParentId(const std::shared_ptr<ConsoleManipulator> &
     else
         return input.value();
 }
-time_t Read::Date(const std::shared_ptr<ConsoleManipulator> &console)
+time_t Read::Date(const std::shared_ptr<ConsoleManipulator>& console)
 {
     const std::string message = "[Date] DD.MM.YY";
     auto input = Validate::Date(
@@ -78,7 +77,7 @@ time_t Read::Date(const std::shared_ptr<ConsoleManipulator> &console)
     }
     return input.value();
 }
-Task::Priority Read::Priority(const std::shared_ptr<ConsoleManipulator> &console)
+Task::Priority Read::Priority(const std::shared_ptr<ConsoleManipulator>& console)
 {
     std::string message = "[Priority]";
     auto input = Validate::Priority(
@@ -94,7 +93,7 @@ Task::Priority Read::Priority(const std::shared_ptr<ConsoleManipulator> &console
     }
     return input.value();
 }
-std::optional<std::string> Read::Label(const std::shared_ptr<ConsoleManipulator> &console)
+std::optional<std::string> Read::Label(const std::shared_ptr<ConsoleManipulator>& console)
 {
     std::string message = "[Label]";
     auto input = Validate::Label(
@@ -102,7 +101,7 @@ std::optional<std::string> Read::Label(const std::shared_ptr<ConsoleManipulator>
     );
     return input;
 }
-bool Read::Confirm(const std::shared_ptr<ConsoleManipulator> &console)
+bool Read::Confirm(const std::shared_ptr<ConsoleManipulator>& console)
 {
     std::string message = "[Confirm] \"y/n\"";
     auto input = Validate::Confirm(

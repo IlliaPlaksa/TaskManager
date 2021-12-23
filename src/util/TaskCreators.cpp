@@ -4,11 +4,11 @@
 
 #include "TaskCreators.h"
 
-std::optional<Task> CreateTask(const std::string &title,
-                               const std::time_t &due_to_date,
-                               const Task_Priority &priority,
-                               const std::string &label,
-                               const Task_Status &status)
+std::optional<Task> CreateTask(const std::string& title,
+                               const std::time_t& due_to_date,
+                               const Task_Priority& priority,
+                               const std::string& label,
+                               const Task_Status& status)
 {
     auto result = Task{};
     if (!title.empty() and due_to_date >= 0)

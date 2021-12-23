@@ -18,7 +18,7 @@ int main()
     auto console_manipulator = std::make_shared<ConsoleManipulator>();
     auto step_factory = std::shared_ptr<StepFactory>{new StepFactory{console_manipulator}};
 
-    auto view = std::shared_ptr<View>{new StepMachine{step_factory,controller}};
+    auto view = std::shared_ptr<View>{new StepMachine{step_factory, controller}};
 
     view->Run();
     return 0;

@@ -17,20 +17,20 @@ class Model
 public:
     class Response;
 public:
-    virtual Response Add(const Task &task) = 0;
-    virtual Response AddSubTask(const Task &task, const TaskId &parent_id) = 0;
-    virtual Response Edit(const TaskId &task_id, const Task &task) = 0;
-    virtual Response EditSubTask(const TaskId &task_id, const Task &task, const TaskId &parent_id) = 0;
-    virtual Response Complete(const TaskId &task_id) = 0;
-    virtual Response Delete(const TaskId &task_id) = 0;
+    virtual Response Add(const Task& task) = 0;
+    virtual Response AddSubTask(const Task& task, const TaskId& parent_id) = 0;
+    virtual Response Edit(const TaskId& task_id, const Task& task) = 0;
+    virtual Response EditSubTask(const TaskId& task_id, const Task& task, const TaskId& parent_id) = 0;
+    virtual Response Complete(const TaskId& task_id) = 0;
+    virtual Response Delete(const TaskId& task_id) = 0;
 
 public:
     virtual std::vector<TaskToSerialize> Show() = 0;
     virtual std::vector<TaskToSerialize> ShowParents() = 0;
-    virtual std::vector<TaskToSerialize> ShowChild(const TaskId &parent_id) = 0;
+    virtual std::vector<TaskToSerialize> ShowChild(const TaskId& parent_id) = 0;
 
 public:
-    virtual bool Load(const std::vector<TaskToSerialize> &tasks) = 0;
+    virtual bool Load(const std::vector<TaskToSerialize>& tasks) = 0;
 };
 
 class Model::Response
@@ -52,7 +52,7 @@ public:
     };
 public:
     static Response CreateSuccess();
-    static Response CreateError(const ErrorType &error_type);
+    static Response CreateError(const ErrorType& error_type);
 
 private:
     Response() = default;
@@ -68,6 +68,5 @@ private: // Fields
     Status status_;
     std::optional<ErrorType> error_type_;
 };
-
 
 #endif //TASKMANAGER_SRC_CONTROLLER_INCLUDE_MODEL_H_

@@ -25,8 +25,8 @@ class CommandFactory
 public:
     explicit CommandFactory() = default;
 public:
-    virtual std::shared_ptr<Command> CreateCommand(const CommandType &type,
-                                           const std::shared_ptr<Model> &model);
+    virtual std::shared_ptr<Command> CreateCommand(const CommandType& type,
+                                                   const std::shared_ptr<Model>& model);
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_COMMANDFACTORY_H_

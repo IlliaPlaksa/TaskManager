@@ -11,7 +11,7 @@ Model::Response Model::Response::CreateSuccess()
     result.error_type_ = std::nullopt;
     return result;
 }
-Model::Response Model::Response::CreateError(const Model::Response::ErrorType &error_type)
+Model::Response Model::Response::CreateError(const Model::Response::ErrorType& error_type)
 {
     Response result;
     result.status_ = Status::kError;

@@ -15,10 +15,10 @@ class TaskStorage
 {
 public:
     std::vector<TaskToSerialize> GetRootTasks() const;
-    std::vector<TaskToSerialize> GetSubTasks(const TaskId &parent_id) const;
+    std::vector<TaskToSerialize> GetSubTasks(const TaskId& parent_id) const;
 public:
     void LoadRootTasks(const std::vector<TaskToSerialize>& tasks);
-    void LoadSubTasks(const TaskId &parent_id, const std::vector<TaskToSerialize>& tasks);
+    void LoadSubTasks(const TaskId& parent_id, const std::vector<TaskToSerialize>& tasks);
 private:
     std::vector<TaskToSerialize> root_storage_;
     std::map<TaskId, std::vector<TaskToSerialize>> subtask_storage_;

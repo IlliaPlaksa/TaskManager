@@ -16,14 +16,14 @@ enum class StepId;
 
 namespace Read
 {
-    StepId Command(const std::shared_ptr<ConsoleManipulator> &console);
-    std::string Title(const std::shared_ptr<ConsoleManipulator> &console);
-    TaskId Id(const std::shared_ptr<ConsoleManipulator> &console);
-    std::optional<TaskId> ParentId(const std::shared_ptr<ConsoleManipulator> &console);
-    Task::Priority Priority(const std::shared_ptr<ConsoleManipulator> &console);
-    time_t Date(const std::shared_ptr<ConsoleManipulator> &console);
-    std::optional<std::string> Label(const std::shared_ptr<ConsoleManipulator> &console);
-    bool Confirm(const std::shared_ptr<ConsoleManipulator> &console);
+    StepId Command(const std::shared_ptr<ConsoleManipulator>& console);
+    std::string Title(const std::shared_ptr<ConsoleManipulator>& console);
+    TaskId Id(const std::shared_ptr<ConsoleManipulator>& console);
+    std::optional<TaskId> ParentId(const std::shared_ptr<ConsoleManipulator>& console);
+    Task::Priority Priority(const std::shared_ptr<ConsoleManipulator>& console);
+    time_t Date(const std::shared_ptr<ConsoleManipulator>& console);
+    std::optional<std::string> Label(const std::shared_ptr<ConsoleManipulator>& console);
+    bool Confirm(const std::shared_ptr<ConsoleManipulator>& console);
 }
 
 #endif //TASKMANAGER_SRC_CLI_INCLUDE_READERS_H_

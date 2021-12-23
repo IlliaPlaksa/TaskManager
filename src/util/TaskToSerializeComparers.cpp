@@ -4,7 +4,7 @@
 
 #include "TaskToSerializeComparers.h"
 
-bool operator==(const TaskToSerialize &first, const TaskToSerialize &second)
+bool operator==(const TaskToSerialize& first, const TaskToSerialize& second)
 {
     return first.SerializeAsString() == second.SerializeAsString();
 }

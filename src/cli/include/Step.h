@@ -24,11 +24,11 @@ struct StepResult
 class Step
 {
 public:
-    virtual StepResult Execute(Context &context) = 0;
+    virtual StepResult Execute(Context& context) = 0;
 
 public:
-    explicit Step(const std::shared_ptr<StepFactory> &factory,
-                  const std::shared_ptr<ConsoleManipulator> &console_manipulator);
+    explicit Step(const std::shared_ptr<StepFactory>& factory,
+                  const std::shared_ptr<ConsoleManipulator>& console_manipulator);
 
 public:
     std::shared_ptr<ConsoleManipulator> GetConsoleManipulator();

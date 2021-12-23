@@ -48,7 +48,7 @@ std::shared_ptr<Step> StepFactory::CreateStep(StepId step_id)
         case StepId::kUpdate:
             result = std::shared_ptr<Step>{
                 new UpdateStep{this->shared(),
-                             this->console_manipulator_}};
+                               this->console_manipulator_}};
             break;
 
         case StepId::kExit:
