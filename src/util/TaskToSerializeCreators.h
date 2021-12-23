@@ -14,6 +14,4 @@ std::optional<TaskToSerialize> CreateSubTaskToSerialize(const TaskId &id,
                                                         const Task &task,
                                                         const TaskId &parent_id);
 
-bool operator==(const TaskToSerialize &first, const TaskToSerialize &second);
-
 #endif //TASKMANAGER_SRC_MODEL_INCLUDE_TASKTOSERIALIZE_H_

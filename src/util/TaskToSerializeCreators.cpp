@@ -1,7 +1,7 @@
 //
 // Created by Illia Plaksa on 17.12.2021.
 //
-#include "../include/TaskToSerialize.h"
+#include "TaskToSerializeCreators.h"
 
 std::optional<TaskToSerialize> CreateTaskToSerialize(const TaskId &id,
                                                      const Task &task)
@@ -35,10 +35,5 @@ std::optional<TaskToSerialize> CreateSubTaskToSerialize(const TaskId &id,
         return std::nullopt;
 
     return result;
-}
-
-bool operator==(const TaskToSerialize &first, const TaskToSerialize &second)
-{
-    return first.SerializeAsString() == second.SerializeAsString();
 }
 

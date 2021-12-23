@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 08.11.2021.
 //
 
-#include "../include/Task.h"
+#include "TaskCreators.h"
 
 std::optional<Task> CreateTask(const std::string &title,
                                const std::time_t &due_to_date,
@@ -26,7 +26,4 @@ std::optional<Task> CreateTask(const std::string &title,
     return result;
 }
 
-bool operator==(const Task &first, const Task &second)
-{
-    return first.SerializeAsString() == second.SerializeAsString();
-}
+

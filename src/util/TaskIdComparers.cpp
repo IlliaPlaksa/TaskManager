@@ -1,16 +1,8 @@
 //
-// Created by Illia Plaksa on 10.11.2021.
+// Created by Illia Plaksa on 22.12.2021.
 //
 
-#include "../include/TaskId.h"
-
-std::optional<TaskId> CreateTaskId(const google::protobuf::uint64 &value)
-{
-    auto result = TaskId{};
-    result.set_value(value);
-
-    return result;
-}
+#include "TaskIdComparers.h"
 
 bool operator==(const TaskId &first, const TaskId &second)
 {
@@ -21,7 +13,3 @@ bool operator<(const TaskId &first, const TaskId &second)
 {
     return first.value() < second.value();
 }
-
-
-
-

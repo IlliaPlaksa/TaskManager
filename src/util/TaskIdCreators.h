@@ -9,8 +9,4 @@
 
 std::optional<TaskId> CreateTaskId(const google::protobuf::uint64 &value);
 
-bool operator==(const TaskId &first, const TaskId &second);
-bool operator<(const TaskId &first, const TaskId &second);
-
-
 #endif //TASKMANAGER_SRC_MODEL_TASKID_H_

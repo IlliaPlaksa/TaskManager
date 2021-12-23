@@ -14,6 +14,5 @@ std::optional<Task> CreateTask(const std::string &title,
                                const std::string &label = "",
                                const Task_Status &status = Task_Status_kInProgress);
 
-bool operator==(const Task &first, const Task &second);
 
 #endif //TASKMANAGER_SRC_MODEL_TASK_H_
