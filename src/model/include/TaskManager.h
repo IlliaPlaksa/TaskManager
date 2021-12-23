@@ -9,10 +9,10 @@
 #include <vector>
 #include "../../controller/include/Model.h"
 #include "FamilyTask.h"
-#include "Task.h"
-#include "TaskId.h"
-#include "TaskToSerialize.h"
 #include "IdGenerator.h"
+#include "Task.pb.h"
+#include "TaskId.pb.h"
+#include "TaskToSerialize.pb.h"
 
 class TaskManager : public Model
 {

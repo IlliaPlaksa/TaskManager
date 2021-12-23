@@ -12,10 +12,8 @@
 #include <iostream>
 #include <sstream>
 #include "StepId.h"
-#include "../../model/include/TaskId.h"
-#include "../../model/include/Task.h"
-
-
+#include "TaskId.pb.h"
+#include "Task.pb.h"
 
 namespace Validate
 {

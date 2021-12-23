@@ -8,7 +8,7 @@
 #include <vector>
 #include <fstream>
 #include <optional>
-#include "../../model/include/TaskToSerialize.h"
+#include "TaskToSerialize.pb.h"
 
 class TaskPersister
 {

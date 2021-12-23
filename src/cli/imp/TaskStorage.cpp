@@ -3,6 +3,7 @@
 //
 
 #include "../include/TaskStorage.h"
+#include "../../util/TaskIdComparers.h"
 
 std::vector<TaskToSerialize> TaskStorage::GetRootTasks() const
 {

@@ -4,6 +4,7 @@
 
 #include <sstream>
 #include "../../include/MachineSteps.h"
+#include <google/protobuf/util/time_util.h>
 
 StepResult ShowStep::Execute(Context &context)
 {

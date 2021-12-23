@@ -3,6 +3,10 @@
 //
 
 #include "../include/TaskStruct.h"
+#include <google/protobuf/util/time_util.h>
+#include "../../util/TaskToSerializeComparers.h"
+#include "../../util/TaskToSerializeCreators.h"
+
 
 TaskStruct &TaskStruct::SetTitle(const std::string &title)
 {

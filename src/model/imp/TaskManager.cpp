@@ -4,6 +4,16 @@
 
 #include "../include/TaskManager.h"
 
+#include "../../util/TaskComparers.h"
+#include "../../util/TaskCreators.h"
+
+#include "../../util/TaskIdComparers.h"
+#include "../../util/TaskIdCreators.h"
+
+#include "../../util/TaskToSerializeComparers.h"
+#include "../../util/TaskToSerializeCreators.h"
+
+
 TaskManager::TaskManager(std::unique_ptr<IdGenerator> generator)
     : gen_{std::move(generator)} {}
 

@@ -5,9 +5,9 @@
 #ifndef TASKMANAGER_SRC_CLI_INCLUDE_TASKSTRUCT_H_
 #define TASKMANAGER_SRC_CLI_INCLUDE_TASKSTRUCT_H_
 
-#include "../../model/include/Task.h"
-#include "../../model/include/TaskId.h"
-#include "../../model/include/TaskToSerialize.h"
+#include "Task.pb.h"
+#include "TaskId.pb.h"
+#include "TaskToSerialize.pb.h"
 
 class TaskStruct
 {

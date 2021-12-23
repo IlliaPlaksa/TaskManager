@@ -6,7 +6,7 @@
 #define TASKMANAGER_SRC_CONTROLLER_INCLUDE_VIEW_H_
 
 #include <optional>
-#include "../../model/include/TaskToSerialize.h"
+#include "TaskToSerialize.pb.h"
 #include "cli/include/TaskStorage.h"
 
 class View :public std::enable_shared_from_this<View>

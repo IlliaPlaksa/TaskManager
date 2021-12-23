@@ -5,6 +5,13 @@
 #include <regex>
 #include "../include/Validators.h"
 
+#include "../../util/TaskComparers.h"
+#include "../../util/TaskCreators.h"
+
+#include "../../util/TaskIdComparers.h"
+#include "../../util/TaskIdCreators.h"
+
+
 std::optional<StepId> Validate::Command(const std::string &command)
 {
     if (command == "exit")

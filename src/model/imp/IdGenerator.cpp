@@ -4,6 +4,8 @@
 
 #include "../include/IdGenerator.h"
 
+#include "../../util/TaskIdCreators.h"
+
 TaskId IdGenerator::GetNextId()
 {
     return CreateTaskId(this->id_counter_++).value();

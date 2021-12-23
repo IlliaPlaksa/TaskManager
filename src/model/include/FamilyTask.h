@@ -5,8 +5,8 @@
 #ifndef TASKMANAGER_SRC_MODEL_FAMILYTASK_H_
 #define TASKMANAGER_SRC_MODEL_FAMILYTASK_H_
 
-#include "Task.h"
-#include "TaskId.h"
+#include "Task.pb.h"
+#include "TaskId.pb.h"
 
 class FamilyTask
 {

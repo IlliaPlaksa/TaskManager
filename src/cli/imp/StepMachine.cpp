@@ -4,6 +4,8 @@
 
 #include "../include/StepMachine.h"
 
+#include "../../util/TaskIdComparers.h"
+
 StepMachine::StepMachine(const std::shared_ptr<StepFactory> &factory,
                          const std::shared_ptr<Controller> &controller)
     :
@@ -24,6 +26,8 @@ void StepMachine::Run()
         auto result = current_step_->Execute(context_);
 
         SetNextStep(result.next_step);
+
+        // TODO remove shared from this and pass Context to
         controller_->Action(shared(), result.command_type);
     }
 }

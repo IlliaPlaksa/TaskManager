@@ -5,7 +5,7 @@
 #ifndef TASKMANAGER_SRC_MODEL_IDGENERATOR_H_
 #define TASKMANAGER_SRC_MODEL_IDGENERATOR_H_
 
-#include "TaskId.h"
+#include "TaskId.pb.h"
 
 class IdGenerator
 {

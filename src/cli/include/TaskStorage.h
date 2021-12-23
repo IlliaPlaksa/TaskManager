@@ -7,9 +7,9 @@
 
 #include <vector>
 #include <map>
-#include "model/include/Task.h"
-#include "model/include/TaskId.h"
-#include "model/include/TaskToSerialize.h"
+#include "Task.pb.h"
+#include "TaskId.pb.h"
+#include "TaskToSerialize.pb.h"
 
 class TaskStorage
 {

@@ -5,8 +5,8 @@
 #ifndef TASKMANAGER_SRC_CONTROLLER_CONTROLLER_H_
 #define TASKMANAGER_SRC_CONTROLLER_CONTROLLER_H_
 
-#include "../../model/include/Task.h"
-#include "../../model/include/TaskId.h"
+#include "Task.pb.h"
+#include "TaskId.pb.h"
 #include "View.h"
 #include "Model.h"
 #include "Command.h"

@@ -8,7 +8,7 @@
 #include <string>
 #include <ctime>
 #include <optional>
-#include "../../model/include/TaskId.h"
+#include "TaskId.pb.h"
 #include "Validators.h"
 #include "ConsoleManipulator.h"
 
