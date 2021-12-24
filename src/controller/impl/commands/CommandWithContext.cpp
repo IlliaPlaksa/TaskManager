@@ -4,18 +4,18 @@
 
 #include "../../include/ConcreteCommands.h"
 
-CommandWithContext::CommandWithContext(const ContextDTO& context)
+CommandWithContext::CommandWithContext(const std::shared_ptr<ContextDTO>& context)
 :
     context_(context)
 {
 
 }
-ContextDTO CommandWithContext::GetContext()
+std::shared_ptr<ContextDTO> CommandWithContext::GetContext()
 {
     return context_;
 }
 void CommandWithContext::SetContext(const ContextDTO& context)
 {
-    context_ = context;
+    *context_ = context;
 }
 

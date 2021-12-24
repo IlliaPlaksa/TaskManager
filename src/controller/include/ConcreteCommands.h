@@ -14,15 +14,15 @@
 class CommandWithContext : public Command
 {
 public:
-    explicit CommandWithContext(const ContextDTO& context);
+    explicit CommandWithContext(const std::shared_ptr<ContextDTO>& context);
 
 public:
     void SetContext(const ContextDTO& context);
 public:
-    ContextDTO GetContext();
+    std::shared_ptr<ContextDTO> GetContext();
 
 private:
-    ContextDTO context_;
+    std::shared_ptr<ContextDTO> context_;
 };
 
 class AddCommand : public CommandWithContext

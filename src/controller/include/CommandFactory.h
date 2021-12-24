@@ -26,7 +26,7 @@ public:
     explicit CommandFactory() = default;
 public:
     virtual std::shared_ptr<Command> CreateCommand(const CommandType& type,
-                                                   const ContextDTO& context);
+                                                   const std::shared_ptr<ContextDTO>& context);
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_COMMANDFACTORY_H_

@@ -31,17 +31,19 @@ void StepMachine::Run()
 
         if (result.command_type != CommandType::kNone)
         {
+            auto context_dto = std::shared_ptr<ContextDTO>{new ContextDTO(context_.GetContextDTO())};
             auto command = command_factory_->CreateCommand(result.command_type,
-                                                           context_.GetContextDTO());
+                                                           context_dto);
             auto response = controller_->Action(command);
+
             // TODO add Error message invoking
-            /*
-            this->context_.SetFromContextDTO( response.context());
-            if(response.IsError())
+            if (response.IsError())
             {
-                SetNextStep(step_factory_->CreateStep(StepId::kError));
+                // SetNextStep(step_factory_->CreateStep(StepId::kError));
+            } else
+            {
+                context_.SetFromContextDTO(*context_dto);
             }
-             */
         }
     }
 }

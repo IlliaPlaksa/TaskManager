@@ -5,7 +5,7 @@
 #include "../include/CommandFactory.h"
 
 std::shared_ptr<Command> CommandFactory::CreateCommand(const CommandType& type,
-                                                       const ContextDTO& context)
+                                                       const std::shared_ptr<ContextDTO>& context)
 {
     switch (type)
     {
