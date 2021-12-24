@@ -7,11 +7,17 @@
 
 #include "Command.h"
 #include "ContextDTO.h"
+#include "Task.pb.h"
+#include "TaskDTO.pb.h"
+#include "TaskId.pb.h"
 
 class CommandWithContext : public Command
 {
 public:
     explicit CommandWithContext(const ContextDTO& context);
+
+public:
+    void SetContext(const ContextDTO& context);
 public:
     ContextDTO GetContext();
 

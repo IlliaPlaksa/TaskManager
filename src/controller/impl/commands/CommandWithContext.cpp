@@ -14,4 +14,8 @@ ContextDTO CommandWithContext::GetContext()
 {
     return context_;
 }
+void CommandWithContext::SetContext(const ContextDTO& context)
+{
+    context_ = context;
+}
 
