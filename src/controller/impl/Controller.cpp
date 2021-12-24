@@ -4,21 +4,17 @@
 
 #include "../include/Controller.h"
 
-Controller::Controller(const std::shared_ptr<Model>& model,
-                       const std::shared_ptr<CommandFactory>& command_factory)
+Controller::Controller(const std::shared_ptr<Model>& model)
     :
-    model_(model),
-    command_factory_(command_factory)
+    model_(model)
 {
 }
 
-Controller::Response Controller::Action(const std::shared_ptr<View>& view,
-                                        const CommandType& command_type)
+Controller::Response Controller::Action(const std::shared_ptr<Command>& command)
 {
-    auto command = command_factory_->CreateCommand(command_type, model_);
     if (command)
     {
-        auto command_result = command->Execute(view);
+        auto command_result = command->Execute(model_);
 
         if (command_result.IsError())
             return Response::CreateError(
@@ -34,10 +30,10 @@ std::string Controller::CreateErrorMessage(const Model::Response::ErrorType& err
 {
     switch (error_type)
     {
-        case Model::Response::ErrorType::INVALID_ID:return "Invalid ID passed";
-        case Model::Response::ErrorType::EMPTY_TITLE:return "Empty title of Task passed";
-        case Model::Response::ErrorType::NON_EXISTING_PARENT_ID:return "Non-existing parent Task ID passed";
-        default:return "Something went wrong";
+        case Model::Response::ErrorType::INVALID_ID: { return "Invalid ID passed"; }
+        case Model::Response::ErrorType::EMPTY_TITLE: { return "Empty title of Task passed"; }
+        case Model::Response::ErrorType::NON_EXISTING_PARENT_ID: { return "Non-existing parent Task ID passed"; }
+        default: { return "Something went wrong"; }
     }
 }
 Controller::Response Controller::Response::CreateSuccess()
