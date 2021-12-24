@@ -6,11 +6,13 @@
 
 #include "../../util/TaskIdComparers.h"
 
-StepMachine::StepMachine(const std::shared_ptr<StepFactory>& factory,
-                         const std::shared_ptr<Controller>& controller)
+StepMachine::StepMachine(const std::shared_ptr<StepFactory>& step_factory,
+                         const std::shared_ptr<Controller>& controller,
+                         const std::shared_ptr<CommandFactory>& command_factory)
     :
-    step_factory_(factory),
-    controller_(controller)
+    step_factory_(step_factory),
+    controller_(controller),
+    command_factory_(command_factory)
 {
 
 }
@@ -27,28 +29,26 @@ void StepMachine::Run()
 
         SetNextStep(result.next_step);
 
-        // TODO remove shared from this and pass Context to
-        controller_->Action(shared(), result.command_type);
+        if (result.command_type != CommandType::kNone)
+        {
+            auto command = command_factory_->CreateCommand(result.command_type,
+                                                           context_.GetContextDTO());
+            auto response = controller_->Action(command);
+            // TODO add Error message invoking
+            /*
+            this->context_.SetFromContextDTO( response.context());
+            if(response.IsError())
+            {
+                SetNextStep(step_factory_->CreateStep(StepId::kError));
+            }
+             */
+        }
     }
-}
-
-std::optional<TaskDTO> StepMachine::GetTaskStruct() const
-{
-    auto task_struct = context_.GetStruct();
-
-    return task_struct->MakeTaskToSerialize();
 }
 
 void StepMachine::SetNextStep(const std::shared_ptr<Step>& step)
 {
     this->current_step_ = step;
 }
-void StepMachine::LoadTasks(const TaskStorage& storage)
-{
-    *context_.GetTaskStorage() = storage;
-}
-std::shared_ptr<View> StepMachine::shared()
-{
-    return shared_from_this();
-}
+
 

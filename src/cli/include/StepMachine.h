@@ -18,22 +18,18 @@ public:
     void Run() override;
 
 public:
-    std::optional<TaskDTO> GetTaskStruct() const override;
-
-    void LoadTasks(const TaskStorage& storage) override;
-public:
-    explicit StepMachine(const std::shared_ptr<StepFactory>& factory,
-                         const std::shared_ptr<Controller>& controller);
-public:
-    std::shared_ptr<View> shared() override;
+    explicit StepMachine(const std::shared_ptr<StepFactory>& step_factory,
+                         const std::shared_ptr<Controller>& controller,
+                         const std::shared_ptr<CommandFactory>& command_factory);
 private:
     void SetNextStep(const std::shared_ptr<Step>& step);
 
 private:
     Context context_;
-    std::shared_ptr<StepFactory> step_factory_;
     std::shared_ptr<Step> current_step_;
 
+    std::shared_ptr<StepFactory> step_factory_;
+    std::shared_ptr<CommandFactory> command_factory_;
     std::shared_ptr<Controller> controller_;
 };
 
