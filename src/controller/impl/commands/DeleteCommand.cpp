@@ -7,7 +7,7 @@
 Model::Response DeleteCommand::Execute(const std::shared_ptr<Model>& model)
 {
     auto context = this->GetContext();
-    auto var_set = context.variable_set();
+    auto var_set = context->variable_set();
 
     return model->Delete(var_set.id);
 }

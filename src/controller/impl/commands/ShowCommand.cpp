@@ -7,7 +7,7 @@
 Model::Response ShowCommand::Execute(const std::shared_ptr<Model>& model)
 {
     auto context = this->GetContext();
-    auto var_set = context.variable_set();
+    auto var_set = context->variable_set();
 
     auto new_context = ContextDTO::Create(VariableSet{}, model->Show());
     this->SetContext(new_context);

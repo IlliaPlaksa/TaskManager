@@ -8,14 +8,10 @@
 Model::Response EditCommand::Execute(const std::shared_ptr<Model>& model)
 {
     auto context = this->GetContext();
-    auto var_set = context.variable_set();
+    auto var_set = context->variable_set();
 
     auto id = var_set.id;
-    auto task = CreateTask(var_set.title,
-                           var_set.date,
-                           var_set.priority,
-                           var_set.label,
-                           var_set.status);
+    auto task = var_set.MakeTask();
 
     if (var_set.parent_id.has_value())
         return model->EditSubTask(id, *task, *var_set.parent_id);

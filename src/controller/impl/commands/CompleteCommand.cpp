@@ -7,7 +7,7 @@
 Model::Response CompleteCommand::Execute(const std::shared_ptr<Model>& model)
 {
     auto context = this->GetContext();
-    auto var_set = context.variable_set();
+    auto var_set = context->variable_set();
 
     return model->Complete(var_set.id);
 }

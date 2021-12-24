@@ -8,13 +8,9 @@
 Model::Response AddCommand::Execute(const std::shared_ptr<Model>& model)
 {
     auto context = this->GetContext();
-    auto var_set = context.variable_set();
+    auto var_set = context->variable_set();
 
-    auto task = CreateTask(var_set.title,
-                           var_set.date,
-                           var_set.priority,
-                           var_set.label,
-                           var_set.status);
+    auto task = var_set.MakeTask();
 
     if (var_set.parent_id.has_value())
         return model->AddSubTask(*task, *var_set.parent_id);
