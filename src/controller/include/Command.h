@@ -12,17 +12,8 @@
 class Command
 {
 public:
-    explicit Command(const std::shared_ptr<Model>& model);
+    virtual Model::Response Execute(const std::shared_ptr<Model>& model) = 0;
 public:
-    virtual Model::Response Execute(const std::shared_ptr<View>& view) = 0;
-
-public:
-    std::shared_ptr<Model> GetModel();
-
-public:
-    virtual ~Command() = default;
-
-private:
-    std::shared_ptr<Model> model_;
+    virtual ~Command() = 0;
 };
 #endif //TASKMANAGER_SRC_CONTROLLER_COMMAND_H_
