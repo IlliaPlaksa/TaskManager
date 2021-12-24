@@ -6,16 +6,26 @@
 
 Context::Context()
     :
-    task_struct_(std::shared_ptr<TaskStruct>{new TaskStruct}),
-    task_storage_(std::make_shared<TaskStorage>())
+    variable_set_(std::shared_ptr<VariableSet>{new VariableSet}),
+    storage_(std::make_shared<TaskStorage>())
 {
+}
+std::shared_ptr<VariableSet> Context::GetVariableSet() const
+{
+    return this->variable_set_;
 }
 
-std::shared_ptr<TaskStruct> Context::GetStruct() const
+std::shared_ptr<TaskStorage> Context::GetStorage() const
 {
-    return this->task_struct_;
+    return this->storage_;
 }
-std::shared_ptr<TaskStorage> Context::GetTaskStorage() const
+bool Context::SetFromContextDTO(const ContextDTO& context_dto)
 {
-    return this->task_storage_;
+    *variable_set_ = context_dto.variable_set();
+    this->storage_->LoadTasks(context_dto.storage());
+    return false;
+}
+ContextDTO Context::GetContextDTO()
+{
+    return ContextDTO::Create(*variable_set_, storage_->GetTasks());
 }

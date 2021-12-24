@@ -9,19 +9,25 @@
 #include "Step.h"
 #include "StepFactory.h"
 #include "TaskStruct.h"
+#include "VariableSet.h"
+#include "ContextDTO.h"
 
 class Context
 {
 public:
-    std::shared_ptr<TaskStruct> GetStruct() const;
-    std::shared_ptr<TaskStorage> GetTaskStorage() const;
+    bool SetFromContextDTO(const ContextDTO& context_dto);
+
+    ContextDTO GetContextDTO();
+public:
+    std::shared_ptr<VariableSet> GetVariableSet() const;
+    std::shared_ptr<TaskStorage> GetStorage() const;
 
 public:
     Context();
 
 private:
-    std::shared_ptr<TaskStruct> task_struct_;
-    std::shared_ptr<TaskStorage> task_storage_;
+    std::shared_ptr<VariableSet> variable_set_;
+    std::shared_ptr<TaskStorage> storage_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_CONTEXT_H_
