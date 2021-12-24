@@ -4,8 +4,10 @@
 
 #include "../../include/ConcreteCommands.h"
 
-Model::Response DeleteCommand::Execute(const std::shared_ptr<View>& view)
+Model::Response DeleteCommand::Execute(const std::shared_ptr<Model>& model)
 {
-    auto task_struct = view->GetTaskStruct();
-    return GetModel()->Delete(task_struct->id());;
+    auto context = this->GetContext();
+    auto var_set = context.variable_set();
+
+    return model->Delete(var_set.id);
 }

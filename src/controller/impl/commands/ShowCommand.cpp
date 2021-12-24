@@ -6,19 +6,11 @@
 
 Model::Response ShowCommand::Execute(const std::shared_ptr<Model>& model)
 {
-    auto task_storage = TaskStorage{};
-    auto model = GetModel();
-    auto root = model->ShowParents();
+    auto context = this->GetContext();
+    auto var_set = context.variable_set();
 
-    task_storage.LoadRootTasks(root);
-
-    for (const auto& task : root)
-    {
-        const auto& parent_id = task.parent_id();
-        task_storage.LoadSubTasks(parent_id, model->ShowChild(parent_id));
-    }
-
-    view->LoadTasks(task_storage);
+    auto new_context = ContextDTO::Create(VariableSet{}, model->Show());
+    this->SetContext(new_context);
 
     return Model::Response::CreateSuccess();
 }

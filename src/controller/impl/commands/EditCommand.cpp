@@ -3,16 +3,22 @@
 //
 
 #include "../../include/ConcreteCommands.h"
+#include "../../../util/TaskCreators.h"
 
-Model::Response EditCommand::Execute(const std::shared_ptr<View>& view)
+Model::Response EditCommand::Execute(const std::shared_ptr<Model>& model)
 {
-    auto task_struct = view->GetTaskStruct();
+    auto context = this->GetContext();
+    auto var_set = context.variable_set();
 
-    auto id = task_struct->id();
-    auto task = task_struct->task();
+    auto id = var_set.id;
+    auto task = CreateTask(var_set.title,
+                           var_set.date,
+                           var_set.priority,
+                           var_set.label,
+                           var_set.status);
 
-    if (task_struct->has_parent_id())
-        return GetModel()->EditSubTask(id, task, task_struct->parent_id());
+    if (var_set.parent_id.has_value())
+        return model->EditSubTask(id, *task, *var_set.parent_id);
     else
-        return GetModel()->Edit(id, task);
+        return model->Edit(id, *task);
 }

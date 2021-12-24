@@ -3,14 +3,21 @@
 //
 
 #include "../../include/ConcreteCommands.h"
+#include "../../../util/TaskCreators.h"
 
 Model::Response AddCommand::Execute(const std::shared_ptr<Model>& model)
 {
-    auto task_struct = view->GetTaskStruct();
-    auto task = task_struct->task();
+    auto context = this->GetContext();
+    auto var_set = context.variable_set();
 
-    if (task_struct->has_parent_id())
-        return model->AddSubTask(task, task_struct->parent_id());
+    auto task = CreateTask(var_set.title,
+                           var_set.date,
+                           var_set.priority,
+                           var_set.label,
+                           var_set.status);
+
+    if (var_set.parent_id.has_value())
+        return model->AddSubTask(*task, *var_set.parent_id);
     else
-        return model->Add(task);
+        return model->Add(*task);
 }
