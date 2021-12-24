@@ -7,8 +7,8 @@
 
 #include <memory>
 #include "Command.h"
-#include "View.h"
 #include "ConcreteCommands.h"
+#include "ContextDTO.h"
 
 enum class CommandType
 {
@@ -26,7 +26,7 @@ public:
     explicit CommandFactory() = default;
 public:
     virtual std::shared_ptr<Command> CreateCommand(const CommandType& type,
-                                                   const std::shared_ptr<Model>& model);
+                                                   const ContextDTO& context);
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_COMMANDFACTORY_H_
