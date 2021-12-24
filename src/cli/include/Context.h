@@ -10,7 +10,7 @@
 #include "StepFactory.h"
 #include "TaskStruct.h"
 #include "VariableSet.h"
-#include "ContextDTO.h"
+#include "../../controller/include/ContextDTO.h"
 
 class Context
 {

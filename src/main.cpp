@@ -13,12 +13,12 @@ int main()
     };
 
     auto command_factory = std::make_shared<CommandFactory>();
-    auto controller = std::make_shared<Controller>(Controller{model, command_factory});
+    auto controller = std::make_shared<Controller>(Controller{model});
 
     auto console_manipulator = std::make_shared<ConsoleManipulator>();
     auto step_factory = std::shared_ptr<StepFactory>{new StepFactory{console_manipulator}};
 
-    auto view = std::shared_ptr<View>{new StepMachine{step_factory, controller}};
+    auto view = std::shared_ptr<View>{new StepMachine{step_factory, controller, command_factory}};
 
     view->Run();
     return 0;

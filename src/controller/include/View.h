@@ -9,13 +9,10 @@
 #include "TaskDTO.pb.h"
 #include "cli/include/TaskStorage.h"
 
-class View : public std::enable_shared_from_this<View>
+class View
 {
 public:
     virtual void Run() = 0;
-
-public:
-
 public:
     virtual ~View() = 0;
 };
