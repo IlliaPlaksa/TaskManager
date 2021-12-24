@@ -14,8 +14,6 @@ public:
     explicit CommandWithContext(const ContextDTO& context);
 public:
     ContextDTO GetContext();
-public:
-    virtual Model::Response Execute(const std::shared_ptr<Model>& model) override;
 
 private:
     ContextDTO context_;
