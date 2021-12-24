@@ -9,10 +9,14 @@
 
 std::optional<TaskDTO> VariableSet::MakeTaskDTO() const
 {
-    auto task = CreateTask(title, date, priority, label, status);
+    auto task = MakeTask();
     if (task)
         return parent_id.has_value() ? CreateSubTaskDTO(id, *task, *parent_id)
                                      : CreateTaskDTO(id, *task);
     else
         return std::nullopt;
+}
+std::optional<Task> VariableSet::MakeTask() const
+{
+    return CreateTask(title, date, priority, label, status);;
 }

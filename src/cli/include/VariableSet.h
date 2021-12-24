@@ -23,8 +23,10 @@ public:
 
     std::string file_name;
 
+    std::optional<std::string> error_message;
 public:
     std::optional<TaskDTO> MakeTaskDTO() const;
+    std::optional<Task> MakeTask()const;
 };
 
 #endif //TASKMANAGER_SRC_CLI_INCLUDE_VARIABELSET_H_
