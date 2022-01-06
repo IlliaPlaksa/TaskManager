@@ -42,6 +42,7 @@ public:
         EMPTY_TITLE,
         NON_EXISTING_PARENT_ID,
         SUBTASKS_IS_NOT_COMPLETED,
+        FAIL,
         // TODO add more error types
     };
 
