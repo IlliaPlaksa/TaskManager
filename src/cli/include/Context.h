@@ -8,7 +8,7 @@
 #include <memory>
 #include "Step.h"
 #include "StepFactory.h"
-#include "TaskStruct.h"
+#include "VariableSetBuilder.h"
 #include "VariableSet.h"
 #include "../../controller/include/ContextDTO.h"
 
