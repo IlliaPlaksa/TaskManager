@@ -31,6 +31,7 @@ void StepMachine::Run()
 
         if (result.command_type != CommandType::kNone)
         {
+            context_.GetStorage()->Clear();
             auto context_dto = std::shared_ptr<ContextDTO>{new ContextDTO(context_.GetContextDTO())};
             auto command = command_factory_->CreateCommand(result.command_type,
                                                            context_dto);
