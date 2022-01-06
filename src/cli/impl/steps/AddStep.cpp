@@ -4,17 +4,17 @@
 
 #include "../../include/MachineSteps.h"
 
-StepResult AddStep::Execute(Context &context)
+StepResult AddStep::Execute(Context& context)
 {
     StepResult result;
 
     auto console = this->GetConsoleManipulator();
-    auto &task_struct = *context.GetStruct();
+    auto variable_set_builder = VariableSetBuilder{};
 
     console->ResetPrompt("add Task");
 
     // Filling structure
-    task_struct
+    variable_set_builder
         .SetTitle(Read::Title(console))
         .SetDate(Read::Date(console))
         .SetPriority(Read::Priority(console))
@@ -22,22 +22,23 @@ StepResult AddStep::Execute(Context &context)
 
     auto label = Read::Label(console);
     if (label)
-        task_struct.SetLabel(label.value());
+        variable_set_builder.SetLabel(label.value());
 
     auto parent_id = Read::ParentId(console);
     if (parent_id)
-        task_struct.SetParent(parent_id.value());
+        variable_set_builder.SetParent(parent_id.value());
 
     console->ResetPrompt();
     auto confirm = Read::Confirm(console);
 
     if (confirm)
     {
+        *context.GetVariableSet() = variable_set_builder.GetResult();
         result.command_type = CommandType::kAdd;
     } else
     {
         console->WriteLine("Operation was canceled");
-        task_struct.Reset();
+        variable_set_builder.Reset();
         result.command_type = CommandType::kNone;
     }
     result.next_step = GetFactory()->CreateStep(StepId::kRoot);

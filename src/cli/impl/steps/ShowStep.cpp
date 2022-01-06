@@ -11,13 +11,12 @@ StepResult ShowStep::Execute(Context &context)
     StepResult result;
 
     auto console = this->GetConsoleManipulator();
-    auto task_storage = context.GetTaskStorage();
+    auto task_storage = context.GetStorage();
 
     if (task_storage)
     {
         for (const auto &task: task_storage->GetRootTasks())
         {
-            //
             std::stringstream output;
             output << ToString(task);
 

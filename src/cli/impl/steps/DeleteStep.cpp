@@ -6,11 +6,11 @@
 
 StepResult DeleteStep::Execute(Context &context)
 {
-    auto task_struct = context.GetStruct();
+    auto variable_set_builder = VariableSetBuilder{};
     auto console = this->GetConsoleManipulator();
 
     console->ResetPrompt("delete Task");
-    task_struct->SetId(Read::Id(console));
+    variable_set_builder.SetId(Read::Id(console));
     console->ResetPrompt();
 
     StepResult result;
