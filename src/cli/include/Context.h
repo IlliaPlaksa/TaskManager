@@ -27,7 +27,7 @@ public:
 
 private:
     std::shared_ptr<VariableSet> variable_set_;
-    std::shared_ptr<TaskStorage> storage_;
+    std::shared_ptr<TaskStorage> task_storage_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_CONTEXT_H_
