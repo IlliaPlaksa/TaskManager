@@ -107,7 +107,16 @@ Model::Response TaskManager::Complete(const TaskId& id)
         if (count) // Has uncompleted subtasks
             return Model::Response::CreateError(Response::ErrorType::SUBTASKS_IS_NOT_COMPLETED);
 
-        task.GetTask().set_status(Task_Status_kCompleted);
+        auto new_task = task.GetTask();
+        auto parent_id = task.GetParentId();
+
+        new_task.set_status(Task_Status_kCompleted);
+
+        if (parent_id.has_value())
+            task = FamilyTask::Create(new_task, parent_id.value());
+        else
+            task = FamilyTask::Create(new_task);
+
         return Response::CreateSuccess();
     } else
         return Model::Response::CreateError(Response::ErrorType::INVALID_ID);
