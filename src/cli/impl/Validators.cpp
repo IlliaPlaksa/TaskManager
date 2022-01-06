@@ -41,12 +41,19 @@ std::optional<TaskId> Validate::Id(const std::string& id)
 {
     if (id.empty())
         return std::nullopt;
+    try
+    {
+        int num = std::stoi(id);
+        if (num < 0)
+            throw std::runtime_error("Id must be non-negative");
+        else
+            return CreateTaskId(num);
 
-    int num = std::stoi(id);
-    if (num < 0)
-        throw std::runtime_error("Id must be non-negative");
-    else
-        return CreateTaskId(num);
+    } catch (const std::exception& e)
+    {
+        return std::nullopt;
+    }
+
 }
 std::optional<time_t> Validate::Date(const std::string& date)
 {
