@@ -29,4 +29,15 @@ void TaskStorage::LoadTasks(const std::vector<TaskDTO>& tasks)
             this->subtask_storage_[task.parent_id()].emplace_back(task);
     }
 }
+std::vector<TaskDTO> TaskStorage::GetTasks() const
+{
+    auto result = std::vector<TaskDTO>{root_storage_};
+
+    for (auto elem : subtask_storage_)
+    {
+        result.insert(result.end(), elem.second.begin(), elem.second.end());
+    }
+
+    return result;
+}
 

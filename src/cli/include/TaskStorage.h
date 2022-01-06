@@ -14,6 +14,7 @@
 class TaskStorage
 {
 public:
+    std::vector<TaskDTO> GetTasks() const;
     std::vector<TaskDTO> GetRootTasks() const;
     std::vector<TaskDTO> GetSubTasks(const TaskId& parent_id) const;
 public:
