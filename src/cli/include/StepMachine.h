@@ -21,6 +21,10 @@ public:
     explicit StepMachine(const std::shared_ptr<StepFactory>& step_factory,
                          const std::shared_ptr<Controller>& controller,
                          const std::shared_ptr<CommandFactory>& command_factory);
+
+public:
+    ~StepMachine() override = default;
+
 private:
     void SetNextStep(const std::shared_ptr<Step>& step);
 

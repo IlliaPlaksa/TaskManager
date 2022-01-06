@@ -14,7 +14,7 @@ class View
 public:
     virtual void Run() = 0;
 public:
-    virtual ~View() = 0;
+    virtual ~View() = default;
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_INCLUDE_VIEW_H_
