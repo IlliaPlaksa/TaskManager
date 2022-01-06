@@ -13,6 +13,8 @@ StepResult DeleteStep::Execute(Context &context)
     variable_set_builder.SetId(Read::Id(console));
     console->ResetPrompt();
 
+    *context.GetVariableSet() = variable_set_builder.GetResult();
+
     StepResult result;
     result.next_step = GetFactory()->CreateStep(StepId::kRoot);
     result.command_type = CommandType::kDelete;
