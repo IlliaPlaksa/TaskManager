@@ -13,30 +13,20 @@ std::vector<TaskDTO> TaskStorage::GetSubTasks(const TaskId& parent_id) const
 {
     auto result = std::vector<TaskDTO>{};
 
-    auto iter = std::find_if(subtask_storage_.begin(),
-                             subtask_storage_.end(),
-                             [parent_id](const auto& elem)
-                             {
-                                 return elem.first == parent_id;
-                             });
-
+    auto iter = subtask_storage_.find(parent_id);
     if (iter != subtask_storage_.end())
         result = iter->second;
 
     return result;
 }
-void TaskStorage::LoadRootTasks(const std::vector<TaskDTO>& tasks)
+void TaskStorage::LoadTasks(const std::vector<TaskDTO>& tasks)
 {
-    root_storage_.insert(root_storage_.end(), tasks.begin(), tasks.end());
-}
-void TaskStorage::LoadSubTasks(const TaskId& parent_id, const std::vector<TaskDTO>& tasks)
-{
-    auto iter = subtask_storage_.find(parent_id);
-    if (iter != subtask_storage_.end())
-        iter->second.insert(iter->second.end(), tasks.begin(), tasks.end());
-    else
-        subtask_storage_.insert(
-            std::make_pair(parent_id, tasks)
-        );
+    for (const auto& task : tasks)
+    {
+        if (!task.has_parent_id())
+            this->root_storage_.emplace_back(task);
+        else
+            this->subtask_storage_[task.parent_id()].emplace_back(task);
+    }
 }
 
