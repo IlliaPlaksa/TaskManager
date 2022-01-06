@@ -15,18 +15,18 @@ class ContextDTO
 {
 public:
     static ContextDTO Create(const VariableSet& variable_set,
-                             const std::vector<TaskDTO>& storage = std::vector<TaskDTO>{});
+                             const std::vector<TaskDTO>& tasks = std::vector<TaskDTO>{});
 
 public:
     ContextDTO() = default;
 
 public:
     VariableSet variable_set() const;
-    std::vector<TaskDTO> storage() const;
+    std::vector<TaskDTO> tasks() const;
 
 private:
     VariableSet variable_set_;
-    std::vector<TaskDTO> storage_;
+    std::vector<TaskDTO> task_storage_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_CONTEXTDTO_H_
