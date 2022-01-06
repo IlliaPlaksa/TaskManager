@@ -19,6 +19,7 @@ public:
     std::vector<TaskDTO> GetSubTasks(const TaskId& parent_id) const;
 public:
     void LoadTasks(const std::vector<TaskDTO>& tasks);
+    void Clear();
 private:
     std::vector<TaskDTO> root_storage_;
     std::map<TaskId, std::vector<TaskDTO>> subtask_storage_;

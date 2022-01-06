@@ -40,4 +40,9 @@ std::vector<TaskDTO> TaskStorage::GetTasks() const
 
     return result;
 }
+void TaskStorage::Clear()
+{
+    root_storage_.clear();
+    subtask_storage_.clear();
+}
 
