@@ -44,8 +44,6 @@ StepResult EditStep::Execute(Context &context)
         variable_set_builder.Reset();
         result.command_type = CommandType::kNone;
     }
-
     result.next_step = GetFactory()->CreateStep(StepId::kRoot);
-    result.command_type = CommandType::kNone;
     return result;
 }
