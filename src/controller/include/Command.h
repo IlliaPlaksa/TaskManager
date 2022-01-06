@@ -14,6 +14,6 @@ class Command
 public:
     virtual Model::Response Execute(const std::shared_ptr<Model>& model) = 0;
 public:
-    virtual ~Command() = 0;
+    virtual ~Command() = default;
 };
 #endif //TASKMANAGER_SRC_CONTROLLER_COMMAND_H_

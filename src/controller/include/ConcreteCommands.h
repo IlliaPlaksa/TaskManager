@@ -11,6 +11,7 @@
 #include "TaskDTO.pb.h"
 #include "TaskId.pb.h"
 
+// Abstract class of command with context
 class CommandWithContext : public Command
 {
 public:
@@ -21,6 +22,8 @@ public:
 public:
     std::shared_ptr<ContextDTO> GetContext();
 
+public:
+    ~CommandWithContext() override = default;
 private:
     std::shared_ptr<ContextDTO> context_;
 };
@@ -44,7 +47,6 @@ class CompleteCommand : public CommandWithContext
     using CommandWithContext::CommandWithContext;
 public:
     Model::Response Execute(const std::shared_ptr<Model>& model) override;
-
 };
 
 class DeleteCommand : public CommandWithContext
@@ -52,7 +54,6 @@ class DeleteCommand : public CommandWithContext
     using CommandWithContext::CommandWithContext;
 public:
     Model::Response Execute(const std::shared_ptr<Model>& model) override;
-
 };
 
 class ShowCommand : public CommandWithContext
@@ -61,6 +62,5 @@ class ShowCommand : public CommandWithContext
     using CommandWithContext::CommandWithContext;
 public:
     Model::Response Execute(const std::shared_ptr<Model>& model) override;
-
 };
 #endif //TASKMANAGER_SRC_CONTROLLER_INCLUDE_CommandWithContextS_H_
