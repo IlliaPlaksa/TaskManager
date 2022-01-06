@@ -12,8 +12,13 @@ Model::Response AddCommand::Execute(const std::shared_ptr<Model>& model)
 
     auto task = var_set.MakeTask();
 
-    if (var_set.parent_id.has_value())
-        return model->AddSubTask(*task, *var_set.parent_id);
+    if (task.has_value())
+    {
+        if (var_set.parent_id.has_value())
+            return model->AddSubTask(*task, *var_set.parent_id);
+        else
+            return model->Add(*task);
+    }
     else
-        return model->Add(*task);
+        return Model::Response::CreateError(Model::Response::ErrorType::FAIL);
 }
