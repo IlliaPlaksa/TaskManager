@@ -8,78 +8,48 @@
 
 VariableSetBuilder& VariableSetBuilder::SetTitle(const std::string& title)
 {
-    task_.set_title(title);
+    variable_set_.title = title;
     return *this;
 }
 VariableSetBuilder& VariableSetBuilder::SetDate(const time_t& date)
 {
-    task_.set_allocated_due_date(
-        new google::protobuf::Timestamp(
-            google::protobuf::util::TimeUtil::TimeTToTimestamp(date)
-        )
-    );
+    variable_set_.date = date;
     return *this;
 }
 VariableSetBuilder& VariableSetBuilder::SetPriority(const Task::Priority& priority)
 {
-    task_.set_priority(priority);
+    variable_set_.priority = priority;
     return *this;
 }
 VariableSetBuilder& VariableSetBuilder::SetLabel(const std::string& label)
 {
-    task_.set_label(label);
+    variable_set_.label = label;
     return *this;
 }
 VariableSetBuilder& VariableSetBuilder::SetStatus(const Task::Status& status)
 {
-    task_.set_status(status);
+    variable_set_.status = status;
     return *this;
 }
 VariableSetBuilder& VariableSetBuilder::SetParent(const TaskId& parent_id)
 {
-    parent_id_ = parent_id;
+    variable_set_.parent_id = parent_id;
     return *this;
 }
 VariableSetBuilder& VariableSetBuilder::SetId(const TaskId& id)
 {
-    id_ = id;
+    variable_set_.id = id;
     return *this;
 }
 void VariableSetBuilder::Reset()
 {
-    task_.Clear();
-    id_.Clear();
-    parent_id_ = std::nullopt;
+    variable_set_ = VariableSet{};
 }
-bool VariableSetBuilder::IsReady()
+VariableSet VariableSetBuilder::GetResult()
 {
-    return task_.IsInitialized() and
-        !task_.title().empty() and
-        task_.has_due_date() and
-        id_.IsInitialized();
+    return variable_set_;
 }
-std::optional<TaskId> VariableSetBuilder::id()
-{
-    return id_.IsInitialized() ? std::optional(id_) : std::nullopt;
-}
-std::optional<Task> VariableSetBuilder::task()
-{
-    return task_.IsInitialized() ? std::optional(task_) : std::nullopt;
-}
-std::optional<TaskId> VariableSetBuilder::parent_id()
-{
-    return parent_id_ and parent_id_->IsInitialized()
-           ? std::optional(id_) : std::nullopt;
-}
-std::optional<TaskDTO> VariableSetBuilder::MakeTaskToSerialize()
-{
-    if (this->IsReady())
-        return parent_id_.has_value()
-               ? *CreateSubTaskDTO(id_, task_, *parent_id_)
-               : *CreateTaskDTO(id_, task_);
-    else
-        return std::nullopt;
-}
+
 
 
 

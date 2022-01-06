@@ -5,9 +5,7 @@
 #ifndef TASKMANAGER_SRC_CLI_INCLUDE_VARIABLESETBUILDER_H_
 #define TASKMANAGER_SRC_CLI_INCLUDE_VARIABLESETBUILDER_H_
 
-#include "Task.pb.h"
-#include "TaskId.pb.h"
-#include "TaskDTO.pb.h"
+#include "VariableSet.h"
 
 class VariableSetBuilder
 {
@@ -25,18 +23,10 @@ public: // Setters
 
 public:
     void Reset();
-    bool IsReady();
-
-public:
-    std::optional<TaskId> id();
-    std::optional<Task> task();
-    std::optional<TaskId> parent_id();
-    std::optional<TaskDTO> MakeTaskToSerialize();
+    VariableSet GetResult();
 
 private:
-    TaskId id_;
-    Task task_;
-    std::optional<TaskId> parent_id_;
+    VariableSet variable_set_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_INCLUDE_VARIABLESETBUILDER_H_
