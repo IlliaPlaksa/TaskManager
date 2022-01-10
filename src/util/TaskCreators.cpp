@@ -15,6 +15,7 @@ std::optional<Task> CreateTask(const std::string& title,
     {
         result.set_title(title);
         result.set_status(status);
+        result.set_priority(priority);
         result.set_label(label);
 
         auto tmp_date = std::make_unique<google::protobuf::Timestamp>();
