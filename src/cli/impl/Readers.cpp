@@ -117,7 +117,7 @@ bool Read::Confirm(const std::shared_ptr<ConsoleManipulator>& console)
     }
     return input.value();
 }
-std::string FileName(const std::shared_ptr<ConsoleManipulator>& console)
+std::string Read::FileName(const std::shared_ptr<ConsoleManipulator>& console)
 {
     std::optional<std::string> input;
     input = Validate::FileName(
