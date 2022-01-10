@@ -6,14 +6,27 @@
 #define TASKMANAGER_SRC_CLI_MACHINESTATES_H_
 
 #include "Step.h"
+#include "StepDependency.h"
 #include "Context.h"
 
 enum class StepId;
 
-class RootStep : public Step
+class StepWithDependency : public Step
 {
 public:
-    using Step::Step;
+    explicit StepWithDependency(const std::shared_ptr<StepDependency>& dependency);
+
+public:
+    std::shared_ptr<StepDependency> dependency();
+
+private:
+    std::shared_ptr<StepDependency> dependency_;
+};
+
+class RootStep : public StepWithDependency
+{
+public:
+    using StepWithDependency::StepWithDependency;
 
     StepResult Execute(Context& context) override;
 };
