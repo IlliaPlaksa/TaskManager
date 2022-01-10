@@ -9,62 +9,63 @@ std::shared_ptr<Step> StepFactory::CreateStep(StepId step_id)
 {
     std::shared_ptr<Step> result;
 
+    auto dependency = std::shared_ptr<StepDependency>{
+        new StepDependency(shared(), console_manipulator_)
+    };
+
     switch (step_id)
     {
         case StepId::kRoot:
+        {
             result = std::shared_ptr<Step>{
-                new RootStep{this->shared(),
-                             this->console_manipulator_}};
+                new RootStep{dependency}};
             break;
-
+        }
         case StepId::kAdd:
-            result = std::shared_ptr<Step>{
-                new AddStep{this->shared(),
-                            this->console_manipulator_}};
+        {
+            result = std::shared_ptr<Step>{new AddStep{dependency}};
             break;
-
+        }
         case StepId::kEdit:
-            result = std::shared_ptr<Step>{
-                new EditStep{this->shared(),
-                             this->console_manipulator_}};
+        {
+            result = std::shared_ptr<Step>{new EditStep{dependency}};
             break;
+        }
         case StepId::kComplete:
-            result = std::shared_ptr<Step>{
-                new CompleteStep{this->shared(),
-                                 this->console_manipulator_}};
+        {
+            result = std::shared_ptr<Step>{new CompleteStep{dependency}};
             break;
-
+        }
         case StepId::kDelete:
-            result = std::shared_ptr<Step>{
-                new DeleteStep{this->shared(),
-                               this->console_manipulator_}};
+        {
+            result = std::shared_ptr<Step>{new DeleteStep{dependency}};
             break;
-
+        }
         case StepId::kShow:
-            result = std::shared_ptr<Step>{
-                new ShowStep{this->shared(),
-                             this->console_manipulator_}};
+        {
+            result = std::shared_ptr<Step>{new ShowStep{dependency}};
             break;
+        }
         case StepId::kUpdate:
-            result = std::shared_ptr<Step>{
-                new UpdateStep{this->shared(),
-                               this->console_manipulator_}};
+        {
+            result = std::shared_ptr<Step>{new UpdateStep{dependency}};
             break;
-
+        }
         case StepId::kExit:
-            result = std::shared_ptr<Step>{
-                new ExitStep{this->shared(),
-                             this->console_manipulator_}};
+        {
+            result = std::shared_ptr<Step>{new ExitStep{dependency}};
             break;
-
+        }
         case StepId::kHelp:
-            result = std::shared_ptr<Step>{
-                new HelpStep{this->shared(),
-                             this->console_manipulator_}};
+        {
+            result = std::shared_ptr<Step>{new HelpStep{dependency}};
             break;
-
-        default: result = std::shared_ptr<Step>{nullptr};
+        }
+        default:
+        {
+            result = std::shared_ptr<Step>{nullptr};
             break;
+        }
     }
     return result;
 }
