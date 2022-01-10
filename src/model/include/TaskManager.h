@@ -37,7 +37,7 @@ public:
     explicit TaskManager(std::unique_ptr<IdGenerator> generator);
 
 private:
-    std::optional<TaskDTO> ConstructTaskToSerialize(const TaskId& id, const FamilyTask& task);
+    std::optional<TaskDTO> ConstructTaskDTO(const TaskId& id, const FamilyTask& task);
 
 private:
     std::map<TaskId, FamilyTask> tasks_;

@@ -127,7 +127,7 @@ std::vector<TaskDTO> TaskManager::Show()
     auto result = std::vector<TaskDTO>{};
     for (const auto& elem : this->tasks_)
     {
-        auto tmp = ConstructTaskToSerialize(elem.first, elem.second);
+        auto tmp = ConstructTaskDTO(elem.first, elem.second);
         if (tmp)
             result.emplace_back(tmp.value());
 
@@ -141,7 +141,7 @@ std::vector<TaskDTO> TaskManager::ShowParents()
     {
         if (!elem.second.GetParentId())
         {
-            auto tmp = ConstructTaskToSerialize(elem.first, elem.second);
+            auto tmp = ConstructTaskDTO(elem.first, elem.second);
             if (tmp)
                 result.emplace_back(tmp.value());
         }
@@ -156,14 +156,14 @@ std::vector<TaskDTO> TaskManager::ShowChild(const TaskId& parent_id)
     {
         if (elem.second.GetParentId() == parent_id)
         {
-            auto tmp = ConstructTaskToSerialize(elem.first, elem.second);
+            auto tmp = ConstructTaskDTO(elem.first, elem.second);
             if (tmp)
                 result.emplace_back(tmp.value());
         }
     }
     return result;
 }
-std::optional<TaskDTO> TaskManager::ConstructTaskToSerialize(const TaskId& id, const FamilyTask& task)
+std::optional<TaskDTO> TaskManager::ConstructTaskDTO(const TaskId& id, const FamilyTask& task)
 {
     std::optional<TaskDTO> tmp;
     if (task.GetParentId())
