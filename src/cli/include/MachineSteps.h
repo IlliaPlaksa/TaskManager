@@ -82,7 +82,8 @@ public:
 private:
     static void OutputSubTasks(std::ostream& output,
                                const TaskId& task_id,
-                               const TaskStorage& storage
+                               const TaskStorage& storage,
+                               const std::string& offset
     );
 
     static std::string ToString(const TaskDTO& task);

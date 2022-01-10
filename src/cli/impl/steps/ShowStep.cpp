@@ -11,7 +11,7 @@ StepResult ShowStep::Execute(Context& context)
     StepResult result;
 
     auto dependency = this->dependency();
-    
+
     auto console = dependency->console_manipulator();
     auto step_factory = dependency->step_factory();
 
@@ -19,12 +19,13 @@ StepResult ShowStep::Execute(Context& context)
 
     if (task_storage)
     {
+        auto offset = std::string("\t");
         for (const auto& task : task_storage->GetRootTasks())
         {
             std::stringstream output;
             output << ToString(task);
 
-            OutputSubTasks(output, task.id(), *task_storage);
+            OutputSubTasks(output, task.id(), *task_storage, offset);
 
             console->WriteLine(output.str());
         }
@@ -67,13 +68,13 @@ std::string ShowStep::ToString(const TaskDTO& task)
 
     return output.str();
 }
-void ShowStep::OutputSubTasks(std::ostream& output, const TaskId& parent_id, const TaskStorage& storage)
+void ShowStep::OutputSubTasks(std::ostream& output, const TaskId& parent_id,
+                              const TaskStorage& storage, const std::string& offset)
 {
-    output << "\n\t";
     for (const auto& task : storage.GetSubTasks(parent_id))
     {
-        output << ToString(task);
-        OutputSubTasks(output, task.id(), storage);
+        output << '\n' << offset << ToString(task);
+        OutputSubTasks(output, task.id(), storage, offset + "\t");
     }
 }
 
