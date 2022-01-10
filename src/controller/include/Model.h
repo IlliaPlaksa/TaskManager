@@ -30,7 +30,7 @@ public:
     virtual std::vector<TaskDTO> ShowChild(const TaskId& parent_id) = 0;
 
 public:
-    virtual bool Load(const std::vector<TaskDTO>& tasks) = 0;
+    virtual Response Load(const std::vector<TaskDTO>& tasks) = 0;
 };
 
 class Model::Response
