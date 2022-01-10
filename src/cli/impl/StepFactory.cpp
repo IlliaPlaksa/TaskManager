@@ -61,6 +61,16 @@ std::shared_ptr<Step> StepFactory::CreateStep(StepId step_id)
             result = std::shared_ptr<Step>{new HelpStep{dependency}};
             break;
         }
+        case StepId::kSave:
+        {
+            result = std::shared_ptr<Step>{new SaveStep{dependency}};
+            break;
+        }
+        case StepId::kLoad:
+        {
+            result = std::shared_ptr<Step>{new LoadStep{dependency}};
+            break;
+        }
         default:
         {
             result = std::shared_ptr<Step>{nullptr};
