@@ -199,6 +199,11 @@ Model::Response TaskManager::Load(const std::vector<TaskDTO>& tasks)
         }
     }
 
+    auto last_id = *CreateTaskId(tmp_storage.size());
+
+
+    this->gen_->SetLastId(last_id);
+
     this->tasks_ = tmp_storage;
     return Model::Response::CreateSuccess();
 }

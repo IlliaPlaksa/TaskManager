@@ -13,4 +13,8 @@ TaskId IdGenerator::GetNextId()
 IdGenerator::IdGenerator()
     :
     id_counter_(0) {}
+void IdGenerator::SetLastId(const TaskId& last_id)
+{
+    this->id_counter_ = last_id.value();
+}
 

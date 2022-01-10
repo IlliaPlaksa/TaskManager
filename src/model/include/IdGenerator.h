@@ -10,13 +10,15 @@
 class IdGenerator
 {
 public:
+    IdGenerator();
+public:
     virtual TaskId GetNextId();
+    virtual void SetLastId(const TaskId& last_id);
+public:
     virtual ~IdGenerator() = default;
 
-public:
-    IdGenerator();
 private:
-    int id_counter_;
+    unsigned long long id_counter_;
 };
 
 #endif //TASKMANAGER_SRC_MODEL_IDGENERATOR_H_
