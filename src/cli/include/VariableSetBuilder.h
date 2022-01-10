@@ -20,6 +20,8 @@ public: // Setters
     VariableSetBuilder& SetStatus(const Task::Status& status);
     VariableSetBuilder& SetParent(const TaskId& parent_id);
     VariableSetBuilder& SetId(const TaskId& id);
+    VariableSetBuilder& SetFileName(const std::string& file_name);
+    VariableSetBuilder& SetErrorMessage(const std::string& message);
 
 public:
     void Reset();

@@ -41,6 +41,16 @@ VariableSetBuilder& VariableSetBuilder::SetId(const TaskId& id)
     variable_set_.id = id;
     return *this;
 }
+VariableSetBuilder& VariableSetBuilder::SetFileName(const std::string& file_name)
+{
+    variable_set_.file_name = file_name;
+    return *this;
+}
+VariableSetBuilder& VariableSetBuilder::SetErrorMessage(const std::string& message)
+{
+    variable_set_.error_message = message;
+    return *this;
+}
 void VariableSetBuilder::Reset()
 {
     variable_set_ = VariableSet{};
