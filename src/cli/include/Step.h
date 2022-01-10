@@ -8,11 +8,9 @@
 #include <memory>
 #include <sstream>
 #include "../../controller/include/CommandFactory.h"
-#include "ConsoleManipulator.h"
 #include "Readers.h"
 
 class Context;
-class StepFactory;
 class Step;
 
 struct StepResult
@@ -25,18 +23,8 @@ class Step
 {
 public:
     virtual StepResult Execute(Context& context) = 0;
-
 public:
-    explicit Step(const std::shared_ptr<StepFactory>& factory,
-                  const std::shared_ptr<ConsoleManipulator>& console_manipulator);
-
-public:
-    std::shared_ptr<ConsoleManipulator> GetConsoleManipulator();
-    std::shared_ptr<StepFactory> GetFactory();
-
-private:
-    std::shared_ptr<ConsoleManipulator> console_manipulator_;
-    std::shared_ptr<StepFactory> factory_;
+    virtual ~Step() = default;
 };
 
 #endif //TASKMANAGER_SRC_CLI_STEP_H_
