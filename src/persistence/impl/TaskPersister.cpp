@@ -35,8 +35,8 @@ std::optional<std::vector<TaskDTO>> TaskPersister::DeserializeTasksFromFile(cons
     bool clean_eof = true;
     TaskDTO tmp;
 
-    while (clean_eof)
-        if (google::protobuf::util::ParseDelimitedFromZeroCopyStream(&tmp, &input, &clean_eof))
+    while (google::protobuf::util::ParseDelimitedFromZeroCopyStream(&tmp, &input, &clean_eof))
+        if (!clean_eof)
         {
             result.emplace_back(tmp);
         } else
@@ -45,4 +45,3 @@ std::optional<std::vector<TaskDTO>> TaskPersister::DeserializeTasksFromFile(cons
     google::protobuf::ShutdownProtobufLibrary();
     return result;
 }
-
