@@ -10,7 +10,7 @@
 #include "Task.pb.h"
 #include "TaskDTO.pb.h"
 #include "TaskId.pb.h"
-#include "../../../persistence/include/TaskPersister.h"
+#include "persistence/include/TaskPersister.h"
 
 // Abstract class of command with context
 class CommandWithContext : public Command
