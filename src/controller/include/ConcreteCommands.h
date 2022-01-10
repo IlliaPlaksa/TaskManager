@@ -10,6 +10,7 @@
 #include "Task.pb.h"
 #include "TaskDTO.pb.h"
 #include "TaskId.pb.h"
+#include "../../../persistence/include/TaskPersister.h"
 
 // Abstract class of command with context
 class CommandWithContext : public Command
@@ -63,4 +64,19 @@ class ShowCommand : public CommandWithContext
 public:
     Model::Response Execute(const std::shared_ptr<Model>& model) override;
 };
+
+class SaveCommand : public CommandWithContext
+{
+    using CommandWithContext::CommandWithContext;
+public:
+    Model::Response Execute(const std::shared_ptr<Model>& model) override;
+};
+
+class LoadCommand : public CommandWithContext
+{
+    using CommandWithContext::CommandWithContext;
+public:
+    Model::Response Execute(const std::shared_ptr<Model>& model) override;
+};
+
 #endif //TASKMANAGER_SRC_CONTROLLER_INCLUDE_CommandWithContextS_H_
