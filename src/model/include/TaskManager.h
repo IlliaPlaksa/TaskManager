@@ -31,7 +31,7 @@ public:
     std::vector<TaskDTO> ShowParents() override;
     std::vector<TaskDTO> ShowChild(const TaskId& parent_id) override;
 
-    bool Load(const std::vector<TaskDTO>& tasks) override;
+    Response Load(const std::vector<TaskDTO>& tasks) override;
 
 public:
     explicit TaskManager(std::unique_ptr<IdGenerator> generator);

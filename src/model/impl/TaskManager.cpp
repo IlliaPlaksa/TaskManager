@@ -27,7 +27,6 @@ Model::Response TaskManager::Add(const Task& task)
                        FamilyTask::Create(task)));
     return Model::Response::CreateSuccess();
 }
-
 Model::Response TaskManager::AddSubTask(const Task& task, const TaskId& parent_id)
 {
     TaskId new_id = this->gen_->GetNextId();
@@ -42,7 +41,6 @@ Model::Response TaskManager::AddSubTask(const Task& task, const TaskId& parent_i
 
 Model::Response TaskManager::Edit(const TaskId& id, const Task& task)
 {
-
     if (this->tasks_.find(id) != this->tasks_.end())
     {
         this->tasks_.at(id) = FamilyTask::Create(task);
@@ -52,7 +50,6 @@ Model::Response TaskManager::Edit(const TaskId& id, const Task& task)
         return Model::Response::CreateError(Response::ErrorType::INVALID_ID);
     }
 }
-
 Model::Response TaskManager::EditSubTask(const TaskId& id, const Task& task, const TaskId& parent_id)
 {
     if (this->tasks_.find(id) != this->tasks_.end())
@@ -85,7 +82,6 @@ Model::Response TaskManager::Delete(const TaskId& id)
 
     return Model::Response::CreateSuccess();
 }
-
 Model::Response TaskManager::Complete(const TaskId& id)
 {
     if (this->tasks_.find(id) != this->tasks_.end())
@@ -163,6 +159,7 @@ std::vector<TaskDTO> TaskManager::ShowChild(const TaskId& parent_id)
     }
     return result;
 }
+
 std::optional<TaskDTO> TaskManager::ConstructTaskDTO(const TaskId& id, const FamilyTask& task)
 {
     std::optional<TaskDTO> tmp;
@@ -174,8 +171,35 @@ std::optional<TaskDTO> TaskManager::ConstructTaskDTO(const TaskId& id, const Fam
         tmp = CreateTaskDTO(id, task.GetTask());
     return tmp;
 }
-bool TaskManager::Load(const std::vector<TaskDTO>& tasks)
+Model::Response TaskManager::Load(const std::vector<TaskDTO>& tasks)
 {
-    return false;
+    auto tmp_storage = std::map<TaskId, FamilyTask>{};
+    for (const auto& elem : tasks)
+    {
+        auto tmp_task = elem.has_parent_id()
+                        ? FamilyTask::Create(elem.task(), elem.parent_id())
+                        : FamilyTask::Create(elem.task());
+        tmp_storage.insert({elem.id(), tmp_task});
+    }
+
+    for (const auto& elem : tmp_storage)
+    {
+        auto parent_id = elem.second.GetParentId();
+
+        if (parent_id.has_value())
+        {
+            if (tmp_storage.find(*parent_id) == tmp_storage.end())
+                return Model::Response::CreateError(
+                    Model::Response::ErrorType::FAIL
+                );
+            else if (*parent_id == elem.first)
+                return Model::Response::CreateError(
+                    Model::Response::ErrorType::FAIL
+                );
+        }
+    }
+
+    this->tasks_ = tmp_storage;
+    return Model::Response::CreateSuccess();
 }
 
