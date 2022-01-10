@@ -29,6 +29,14 @@ std::shared_ptr<Command> CommandFactory::CreateCommand(const CommandType& type,
         {
             return std::shared_ptr<Command>{new ShowCommand{context}};
         }
+        case CommandType::kSave:
+        {
+            return std::shared_ptr<Command>{new SaveCommand{context}};
+        }
+        case CommandType::kLoad:
+        {
+            return std::shared_ptr<Command>{new LoadCommand{context}};
+        }
         default: return std::shared_ptr<Command>{nullptr};
     }
 }

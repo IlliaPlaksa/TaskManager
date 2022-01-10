@@ -18,6 +18,8 @@ enum class CommandType
     kComplete,
     kDelete,
     kShow,
+    kSave,
+    kLoad
 };
 
 class CommandFactory
