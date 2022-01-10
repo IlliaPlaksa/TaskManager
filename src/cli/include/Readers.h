@@ -24,6 +24,7 @@ namespace Read
     time_t Date(const std::shared_ptr<ConsoleManipulator>& console);
     std::optional<std::string> Label(const std::shared_ptr<ConsoleManipulator>& console);
     bool Confirm(const std::shared_ptr<ConsoleManipulator>& console);
+    std::string FileName(const std::shared_ptr<ConsoleManipulator>& console);
 }
 
 #endif //TASKMANAGER_SRC_CLI_INCLUDE_READERS_H_

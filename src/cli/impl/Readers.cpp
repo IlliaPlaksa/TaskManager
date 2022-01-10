@@ -117,3 +117,20 @@ bool Read::Confirm(const std::shared_ptr<ConsoleManipulator>& console)
     }
     return input.value();
 }
+std::string FileName(const std::shared_ptr<ConsoleManipulator>& console)
+{
+    std::optional<std::string> input;
+    input = Validate::FileName(
+        console->ReadLine("[File name]")
+    );
+
+    while (!input)
+    {
+        console->WriteError("Wrong file name passed");
+        input = Validate::Title(
+            console->ReadLine("[File name]")
+        );
+    }
+    return input.value();
+}
+
