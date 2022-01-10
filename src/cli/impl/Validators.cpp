@@ -104,3 +104,12 @@ std::optional<bool> Validate::Confirm(const std::string& symbol)
     else
         return std::nullopt;
 }
+std::optional<std::string> FileName(const std::string& file_name)
+{
+    const std::string pattern = R"(\w{*}.\w{*})";
+    if (!std::regex_match(file_name, std::regex(pattern)))
+        return std::nullopt;
+    else
+        return file_name;
+}
+

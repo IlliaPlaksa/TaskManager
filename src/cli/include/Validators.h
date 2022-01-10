@@ -24,6 +24,7 @@ namespace Validate
     std::optional<time_t> Date(const std::string& date);
     std::optional<std::string> Label(const std::string& label);
     std::optional<bool> Confirm(const std::string& symbol);
+    std::optional<std::string> FileName(const std::string& file_name);
 }
 
 #endif //TASKMANAGER_SRC_CLI_INCLUDE_VALIDATORS_H_
