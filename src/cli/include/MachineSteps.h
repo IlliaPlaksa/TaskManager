@@ -31,52 +31,52 @@ public:
     StepResult Execute(Context& context) override;
 };
 
-class HelpStep : public Step
+class HelpStep : public StepWithDependency
 {
 public:
-    using Step::Step;
+    using StepWithDependency::StepWithDependency;
     StepResult Execute(Context& context) override;
 };
 
-class ExitStep : public Step
+class ExitStep : public StepWithDependency
 {
 public:
-    using Step::Step;
+    using StepWithDependency::StepWithDependency;
     StepResult Execute(Context& context) override;
 };
 
-class AddStep : public Step
+class AddStep : public StepWithDependency
 {
 public:
-    using Step::Step;
+    using StepWithDependency::StepWithDependency;
     StepResult Execute(Context& context) override;
 };
 
-class EditStep : public Step
+class EditStep : public StepWithDependency
 {
 public:
-    using Step::Step;
+    using StepWithDependency::StepWithDependency;
     StepResult Execute(Context& context) override;
 };
 
-class CompleteStep : public Step
+class CompleteStep : public StepWithDependency
 {
 public:
-    using Step::Step;
+    using StepWithDependency::StepWithDependency;
     StepResult Execute(Context& context) override;
 };
 
-class DeleteStep : public Step
+class DeleteStep : public StepWithDependency
 {
 public:
-    using Step::Step;
+    using StepWithDependency::StepWithDependency;
     StepResult Execute(Context& context) override;
 };
 
-class ShowStep : public Step
+class ShowStep : public StepWithDependency
 {
 public:
-    using Step::Step;
+    using StepWithDependency::StepWithDependency;
     StepResult Execute(Context& context) override;
 
 private:
@@ -90,24 +90,24 @@ private:
     static std::string ToString(const Task::Status& status);
 };
 
-class UpdateStep : public Step
+class UpdateStep : public StepWithDependency
 {
 public:
-    using Step::Step;
+    using StepWithDependency::StepWithDependency;
     StepResult Execute(Context& context) override;
 };
 
-class SaveStep : public Step
+class SaveStep : public StepWithDependency
 {
 public:
-    using Step::Step;
+    using StepWithDependency::StepWithDependency;
     StepResult Execute(Context& context) override;
 };
 
-class LoadStep : public Step
+class LoadStep : public StepWithDependency
 {
 public:
-    using Step::Step;
+    using StepWithDependency::StepWithDependency;
     StepResult Execute(Context& context) override;
 };
 

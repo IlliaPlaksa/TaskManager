@@ -10,15 +10,20 @@ StepResult HelpStep::Execute(Context &context)
     std::string output;
     std::ifstream file{"help.txt"};
 
+    auto dependency = this->dependency();
+
+    auto console = dependency->console_manipulator();
+    auto step_factory = dependency->step_factory();
+
     if (file.is_open())
     {
         while(std::getline(file, output))
-            this->GetConsoleManipulator()->WriteLine(output);
+            console->WriteLine(output);
     } else
-        this->GetConsoleManipulator()->WriteLine("File help.txt is not found");
+        console->WriteLine("File help.txt is not found");
 
     StepResult result;
-    result.next_step = GetFactory()->CreateStep(StepId::kRoot);
+    result.next_step = step_factory->CreateStep(StepId::kRoot);
     result.command_type = CommandType::kNone;
     return result;
 }

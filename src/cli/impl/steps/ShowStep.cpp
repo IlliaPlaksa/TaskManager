@@ -6,16 +6,20 @@
 #include "../../include/MachineSteps.h"
 #include <google/protobuf/util/time_util.h>
 
-StepResult ShowStep::Execute(Context &context)
+StepResult ShowStep::Execute(Context& context)
 {
     StepResult result;
 
-    auto console = this->GetConsoleManipulator();
+    auto dependency = this->dependency();
+    
+    auto console = dependency->console_manipulator();
+    auto step_factory = dependency->step_factory();
+
     auto task_storage = context.GetStorage();
 
     if (task_storage)
     {
-        for (const auto &task: task_storage->GetRootTasks())
+        for (const auto& task : task_storage->GetRootTasks())
         {
             std::stringstream output;
             output << ToString(task);
@@ -26,21 +30,22 @@ StepResult ShowStep::Execute(Context &context)
         }
     }
 
-    result.next_step = GetFactory()->CreateStep(StepId::kRoot);
+    result.next_step = step_factory->CreateStep(StepId::kRoot);
     result.command_type = CommandType::kNone;
     return result;
 }
-std::string ShowStep::ToString(const Task::Priority &priority)
+std::string ShowStep::ToString(const Task::Priority& priority)
 {
     switch (priority)
     {
-        case Task_Priority_kHigh: return "High";
-        case Task_Priority_kMedium: return "Medium";
-        case Task_Priority_kLow: return "Low";
+        case Task_Priority_kHigh:return "High";
+        case Task_Priority_kMedium:return "Medium";
+        case Task_Priority_kLow:return "Low";
+
         default: return std::string{};
     }
 }
-std::string ShowStep::ToString(const Task::Status &status)
+std::string ShowStep::ToString(const Task::Status& status)
 {
     switch (status)
     {
@@ -49,7 +54,7 @@ std::string ShowStep::ToString(const Task::Status &status)
         default: return std::string{};
     }
 }
-std::string ShowStep::ToString(const TaskDTO &task)
+std::string ShowStep::ToString(const TaskDTO& task)
 {
     std::stringstream output;
 
@@ -62,7 +67,7 @@ std::string ShowStep::ToString(const TaskDTO &task)
 
     return output.str();
 }
-void ShowStep::OutputSubTasks(std::ostream &output, const TaskId &parent_id, const TaskStorage &storage)
+void ShowStep::OutputSubTasks(std::ostream& output, const TaskId& parent_id, const TaskStorage& storage)
 {
     output << "\n\t";
     for (const auto& task : storage.GetSubTasks(parent_id))

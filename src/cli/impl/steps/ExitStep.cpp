@@ -7,7 +7,7 @@
 StepResult ExitStep::Execute(Context &context)
 {
     StepResult result;
-    result.next_step = GetFactory()->CreateStep(StepId::kNone);
+    result.next_step = this->dependency()->step_factory()->CreateStep(StepId::kNone);
     result.command_type = CommandType::kNone;
     return result;
 }

@@ -8,7 +8,10 @@ StepResult AddStep::Execute(Context& context)
 {
     StepResult result;
 
-    auto console = this->GetConsoleManipulator();
+    auto dependency = this->dependency();
+
+    auto console = dependency->console_manipulator();
+    auto step_factory = dependency->step_factory();
     auto variable_set_builder = VariableSetBuilder{};
 
     console->ResetPrompt("add Task");
@@ -41,6 +44,6 @@ StepResult AddStep::Execute(Context& context)
         variable_set_builder.Reset();
         result.command_type = CommandType::kNone;
     }
-    result.next_step = GetFactory()->CreateStep(StepId::kRoot);
+    result.next_step = step_factory->CreateStep(StepId::kRoot);
     return result;
 }

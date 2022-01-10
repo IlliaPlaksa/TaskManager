@@ -8,7 +8,7 @@ StepResult UpdateStep::Execute(Context &context)
 {
     // TODO add filter requests
     StepResult result;
-    result.next_step = GetFactory()->CreateStep(StepId::kShow);
+    result.next_step = this->dependency()->step_factory()->CreateStep(StepId::kShow);
     result.command_type = CommandType::kShow;
     return result;
 }

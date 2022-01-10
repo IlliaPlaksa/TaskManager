@@ -6,13 +6,16 @@
 
 StepResult RootStep::Execute(Context &context)
 {
-    auto console = this->GetConsoleManipulator();
+    auto dependency = this->dependency();
+
+    auto console = dependency->console_manipulator();
+    auto step_factory = dependency->step_factory();
 
     console->ResetPrompt();
     auto step_id = Read::Command(console);
 
     StepResult result;
-    result.next_step = GetFactory()->CreateStep(step_id);
+    result.next_step = step_factory->CreateStep(step_id);
     result.command_type = CommandType::kNone;
     return result;
 }
