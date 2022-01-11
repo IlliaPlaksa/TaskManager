@@ -116,24 +116,48 @@ file(GLOB_RECURSE PERSISTENCE_TEST_SRC
 # _________TEST'S_EXEC_________
 
 # Model TEST
+add_library(Model
+        STATIC ${MODEL_SRC} ${PROTOBUF_GENERATED_SRCS}
+        )
+
 add_executable(Model_TEST
         ${MODEL_SRC}
         ${MODEL_TEST_SRC})
+
+target_include_directories(Model_TEST
+        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${PROTOBUF_CPP_OUT_DIR}
+        ${PROTOBUF_INCLUDE_DIR}
+        )
+
+target_link_libraries(Model_TEST Model Utils protobuf::libprotobuf)
 target_link_libraries(Model_TEST GTest::GTest GTest::Main)
 target_link_libraries(Model_TEST GTest::gtest GTest::gmock GTest::gmock_main)
 
 # Controller TEST
+add_library(Controller
+        STATIC ${CONTROLLER_SRC} ${PROTOBUF_GENERATED_SRCS}
+        )
+
 add_executable(Controller_TEST
         ${CONTROLLER_SRC}
         ${MODEL_SRC}
         ${CONTROLLER_TEST_SRC})
+
+
+target_link_libraries(Controller_TEST Controller Utils protobuf::libprotobuf)
 target_link_libraries(Controller_TEST GTest::GTest GTest::Main)
 target_link_libraries(Controller_TEST GTest::gtest GTest::gmock GTest::gmock_main)
 
 # CLI TEST
+add_library(Cli
+        STATIC ${CLI_SRC} ${PROTOBUF_GENERATED_SRCS}
+        )
 add_executable(Cli_TEST
         ${CLI_SRC}
         ${CLI_TEST_SRC})
+
+target_link_libraries(Cli_TEST Cli Utils protobuf::libprotobuf)
 target_link_libraries(Cli_TEST GTest::GTest GTest::Main)
 target_link_libraries(Cli_TEST GTest::gtest GTest::gmock GTest::gmock_main)
 
