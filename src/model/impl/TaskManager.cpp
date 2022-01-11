@@ -33,9 +33,13 @@ Model::Response TaskManager::AddSubTask(const Task& task, const TaskId& parent_i
 
     assert(this->tasks_.count(new_id) == 0);
 
-    this->tasks_.insert(
-        std::make_pair(new_id,
-                       FamilyTask::Create(task, parent_id)));
+    if (tasks_.find(parent_id) != tasks_.end())
+        this->tasks_.insert(
+            std::make_pair(new_id,
+                           FamilyTask::Create(task, parent_id)));
+    else
+        return Model::Response::CreateError(Response::ErrorType::NON_EXISTING_PARENT_ID);
+
     return Model::Response::CreateSuccess();
 }
 
@@ -64,21 +68,30 @@ Model::Response TaskManager::EditSubTask(const TaskId& id, const Task& task, con
 
 Model::Response TaskManager::Delete(const TaskId& id)
 {
-    auto& task = tasks_.at(id);
+    auto elem_iter = tasks_.find(id);
 
-    // Find subtasks
-    auto iter = std::find_if(tasks_.begin(), tasks_.end(),
-                             [task](const auto& elem)
-                             {
-                                 auto parent = elem.second.GetParentId();
-                                 if (parent)
-                                     return task.GetParentId() == parent;
-                                 else
-                                     return false;
-                             });
+    if (elem_iter != tasks_.end())
+    {
+        auto& task = elem_iter->second;
+        // Find subtasks
+        auto iter = std::find_if(tasks_.begin(), tasks_.end(),
+                                 [task](const auto& elem)
+                                 {
+                                     auto parent = elem.second.GetParentId();
+                                     if (parent)
+                                         return task.GetParentId() == parent;
+                                     else
+                                         return false;
+                                 });
 
-    tasks_.erase(iter, tasks_.end());
-    tasks_.erase(id);
+        if (iter == tasks_.end())
+        {
+            tasks_.erase(iter, tasks_.end());
+            tasks_.erase(id);
+        }
+    }
+    else
+        return Response::CreateError(Response::ErrorType::INVALID_ID);
 
     return Model::Response::CreateSuccess();
 }
@@ -126,7 +139,6 @@ std::vector<TaskDTO> TaskManager::Show()
         auto tmp = ConstructTaskDTO(elem.first, elem.second);
         if (tmp)
             result.emplace_back(tmp.value());
-
     }
     return result;
 }
@@ -200,7 +212,6 @@ Model::Response TaskManager::Load(const std::vector<TaskDTO>& tasks)
     }
 
     auto last_id = *CreateTaskId(tmp_storage.size());
-
 
     this->gen_->SetLastId(last_id);
 
