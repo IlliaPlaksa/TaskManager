@@ -71,6 +71,11 @@ std::shared_ptr<Step> StepFactory::CreateStep(StepId step_id)
             result = std::shared_ptr<Step>{new LoadStep{dependency}};
             break;
         }
+        case StepId::kError:
+        {
+            result = std::shared_ptr<Step>{new ErrorStep{dependency}};
+            break;
+        }
         default:
         {
             result = std::shared_ptr<Step>{nullptr};
