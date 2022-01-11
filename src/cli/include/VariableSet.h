@@ -27,6 +27,9 @@ public:
 public:
     std::optional<TaskDTO> MakeTaskDTO() const;
     std::optional<Task> MakeTask()const;
+
+public:
+    void Clear();
 };
 
 #endif //TASKMANAGER_SRC_CLI_INCLUDE_VARIABELSET_H_
