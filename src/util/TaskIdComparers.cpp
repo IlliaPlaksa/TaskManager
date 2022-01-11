@@ -9,6 +9,11 @@ bool operator==(const TaskId& first, const TaskId& second)
     return first.SerializeAsString() == second.SerializeAsString();
 }
 
+bool operator!=(const TaskId& first, const TaskId& second)
+{
+    return !(first == second);
+}
+
 bool operator<(const TaskId& first, const TaskId& second)
 {
     return first.value() < second.value();
