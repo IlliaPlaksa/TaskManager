@@ -37,10 +37,10 @@ void StepMachine::Run()
                                                            context_dto);
             auto response = controller_->Action(command);
 
-            // TODO add Error message invoking
             if (response.IsError())
             {
-                // SetNextStep(step_factory_->CreateStep(StepId::kError));
+                context_.GetVariableSet()->error_message = response.error();
+                SetNextStep(step_factory_->CreateStep(StepId::kError));
             } else
             {
                 context_.SetFromContextDTO(*context_dto);
