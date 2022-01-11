@@ -6,6 +6,10 @@
 #include "gmock/gmock.h"
 
 #include "../../src/model/include/TaskManager.h"
+#include "../../src/util/TaskCreators.h"
+#include "../../src/util/TaskIdCreators.h"
+#include "../../src/util/TaskIdComparers.h"
+#include "../../src/util/TaskDTOCreators.h"
 
 class IdGeneratorMock : public IdGenerator
 {
@@ -21,22 +25,72 @@ TEST(TaskManagerTest, shouldAddTask)
 
     auto task_title = "Task name";
     auto task_date = time(nullptr);
-    auto task_priority = Task::Priority::kLow;
+    auto task_priority = Task::Priority::Task_Priority_kLow;
 
-    auto task = Task::Create(task_title,
-                             task_date,
-                             task_priority);
-    auto task_id = manager.Add(task, TaskId::CreateDefault());
+    auto task = CreateTask(task_title,
+                           task_date,
+                           task_priority);
+
+    auto task_id = *CreateTaskId(0);
+
+    manager.Add(*task);
 
     ASSERT_EQ(manager.Show().size(), 1);
 
-    auto added_task = manager.Show().begin()->second;
+    auto added_task = manager.Show().begin()->task();
 
-    EXPECT_EQ(task_id, manager.Show().begin()->first);
+    EXPECT_EQ(task_id, manager.Show().begin()->id());
 
-    EXPECT_EQ(task_title, added_task.GetTitle());
-    EXPECT_EQ(task_date, added_task.GetDate());
-    EXPECT_EQ(task_priority, added_task.GetPriority());
+    EXPECT_EQ(task_title, added_task.title());
+    EXPECT_EQ(task_date, added_task.due_date().seconds());
+    EXPECT_EQ(task_priority, added_task.priority());
+}
+
+TEST(TaskManagerTest, shouldAddSubTask)
+{
+    auto manager = TaskManager{std::make_unique<IdGenerator>()};
+
+    auto task_title = "Task name";
+    auto task_date = time(nullptr);
+    auto task_priority = Task::Priority::Task_Priority_kLow;
+
+    auto task = CreateTask(task_title,
+                           task_date,
+                           task_priority);
+
+    auto task_id = *CreateTaskId(0);
+
+    manager.Add(*task);
+    manager.AddSubTask(*task, *CreateTaskId(0));
+
+    auto added_task = manager.Show()[1].task();
+    auto parent_id = manager.Show()[1].parent_id();
+
+    EXPECT_EQ(task_id, manager.Show().begin()->id());
+
+    EXPECT_EQ(task_title, added_task.title());
+    EXPECT_EQ(task_date, added_task.due_date().seconds());
+    EXPECT_EQ(task_priority, added_task.priority());
+    EXPECT_EQ(task_id, parent_id);
+}
+
+TEST(TaskManagerTest, shouldReturnWrongParentIdErrorInAdd)
+{
+    auto manager = TaskManager{std::make_unique<IdGenerator>()};
+
+    auto task_title = "Task name";
+    auto task_date = time(nullptr);
+    auto task_priority = Task::Priority::Task_Priority_kLow;
+
+    auto task = *CreateTask(task_title,
+                            task_date,
+                            task_priority);
+
+    auto task_id = *CreateTaskId(0);
+    manager.Add(task);
+
+    EXPECT_TRUE(
+        manager.AddSubTask(task, *CreateTaskId(1234)).error() == Model::Response::ErrorType::NON_EXISTING_PARENT_ID);
 }
 
 TEST(TaskManagerTest, shouldAddMultiplyTasks)
@@ -45,86 +99,139 @@ TEST(TaskManagerTest, shouldAddMultiplyTasks)
 
     auto task_title = "Task name";
     auto task_date = time(nullptr);
-    auto task_priority = Task::Priority::kLow;
+    auto task_priority = Task::Priority::Task_Priority_kLow;
 
-    auto task = Task::Create(task_title,
-                             task_date,
-                             task_priority);
+    auto task = CreateTask(task_title,
+                           task_date,
+                           task_priority);
 
-    manager.Add(task, TaskId::CreateDefault());
-    manager.Add(task, TaskId::CreateDefault());
-    manager.Add(task, TaskId::CreateDefault());
-    manager.Add(task, TaskId::CreateDefault());
+    manager.Add(*task);
+    manager.Add(*task);
+    manager.Add(*task);
+    manager.Add(*task);
 
     EXPECT_EQ(manager.Show().size(), 4);
 }
 
-TEST(TaskManagerTest, shouldThrowWrongIdException)
+TEST(TaskManagerTest, shouldReturnWrongIdErrorInEdit)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
 
-    auto task = Task::Create("Task name",
-                             time(nullptr),
-                             Task::Priority::kHigh);
+    auto task = CreateTask("Task name",
+                           time(nullptr),
+                           Task::Priority::Task_Priority_kHigh);
 
-    ASSERT_THROW(
-        manager.Edit(TaskId::Create(123), task, TaskId::CreateDefault()),
-        std::runtime_error
+    ASSERT_TRUE(
+        manager.Edit(*CreateTaskId(123), *task).error() == Model::Response::ErrorType::INVALID_ID
+    );
+
+    ASSERT_TRUE(
+        manager.EditSubTask(*CreateTaskId(123), *task, *CreateTaskId(0)).error()
+            == Model::Response::ErrorType::INVALID_ID
+    );
+}
+
+TEST(TaskManagerTest, shouldReturnWrongParentIdErrorInEdit)
+{
+    auto manager = TaskManager{std::make_unique<IdGenerator>()};
+
+    auto task = *CreateTask("Task name",
+                            time(nullptr),
+                            Task::Priority::Task_Priority_kHigh);
+    auto parent_id = CreateTaskId(0);
+
+    manager.Add(task);
+    manager.AddSubTask(task, *CreateTaskId(0));
+
+    ASSERT_TRUE(
+        manager.EditSubTask(*CreateTaskId(1), task, *CreateTaskId(123)).error()
+            == Model::Response::ErrorType::NON_EXISTING_PARENT_ID
     );
 }
 
 TEST(TaskManagerTest, shouldEditTask)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
-    auto task = Task::Create("Task name",
-                             time(nullptr),
-                             Task::Priority::kHigh);
-    manager.Add(task, TaskId::CreateDefault());
+    auto task = CreateTask("Task name",
+                           time(nullptr),
+                           Task::Priority::Task_Priority_kHigh);
+    manager.Add(*task);
 
     auto new_title = "New task name";
     auto new_date = time(nullptr);
-    auto new_priority = Task::Priority::kLow;
-    auto new_task = Task::Create(new_title,
-                                 new_date,
-                                 new_priority);
+    auto new_priority = Task::Priority::Task_Priority_kLow;
+    auto new_task = CreateTask(new_title,
+                               new_date,
+                               new_priority);
 
-    manager.Edit(TaskId::Create(0), new_task, TaskId::CreateDefault());
+    manager.Edit(*CreateTaskId(0), *new_task);
 
-    auto edited_task = manager.Show().begin()->second;
+    auto edited_task = manager.Show().begin()->task();
 
-    EXPECT_EQ(new_title, edited_task.GetTitle());
-    EXPECT_EQ(new_date, edited_task.GetDate());
-    EXPECT_EQ(new_priority, edited_task.GetPriority());
+    EXPECT_EQ(new_title, edited_task.title());
+    EXPECT_EQ(new_date, edited_task.due_date().seconds());
+    EXPECT_EQ(new_priority, edited_task.priority());
 }
 
 TEST(TaskManagerTest, shouldDeleteTask)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
-    auto task = Task::Create("Task name",
-                             time(nullptr),
-                             Task::Priority::kHigh);
-    auto task_id = manager.Add(task, TaskId::CreateDefault());
+    auto task = *CreateTask("Task name",
+                            time(nullptr),
+                            Task::Priority::Task_Priority_kHigh);
+    auto task_id = *CreateTaskId(0);
 
+    manager.Add(task);
     manager.Delete(task_id);
 
     ASSERT_TRUE(manager.Show().empty());
 
-    EXPECT_THROW(manager.Edit(task_id, task, TaskId::CreateDefault()),
-                 std::runtime_error);
+    EXPECT_TRUE(manager.Edit(task_id, task).IsError());
+}
+
+TEST(TaskManagerTest, shouldReturnWrongIdErrorInDelete)
+{
+    auto manager = TaskManager{std::make_unique<IdGenerator>()};
+
+    auto task_id = *CreateTaskId(0);
+
+    EXPECT_TRUE(manager.Delete(task_id).error() == Model::Response::ErrorType::INVALID_ID);
 }
 
 TEST(TaskManagerTest, shouldCompleteTask)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
-    auto task = Task::Create("Task name",
-                             time(nullptr),
-                             Task::Priority::kHigh);
+    auto task = *CreateTask("Task name",
+                           time(nullptr),
+                           Task::Priority::Task_Priority_kHigh);
 
-    auto task_id = manager.Add(task, TaskId::CreateDefault());
+    manager.Add(task);
 
-    manager.Complete(task_id);
+    manager.Complete(*CreateTaskId(0));
 
-    EXPECT_EQ(manager.Show()[0].second.GetStatus(), Task::Status::kCompleted);
+    EXPECT_EQ(manager.Show()[0].task().status(), Task::Status::Task_Status_kCompleted);
+}
+
+TEST(TaskManagerTest, shouldReturnWrongIdErrorInComplete)
+{
+    auto manager = TaskManager{std::make_unique<IdGenerator>()};
+
+    auto task_id = *CreateTaskId(123);
+    EXPECT_TRUE(manager.Complete(task_id).error() == Model::Response::ErrorType::INVALID_ID);
+}
+
+TEST(TaskManagerTest, shouldReturnNotcompletedSubtasksErrorInComplete)
+{
+    auto manager = TaskManager{std::make_unique<IdGenerator>()};
+    auto task = *CreateTask("Task name",
+                           time(nullptr),
+                           Task::Priority::Task_Priority_kHigh);
+
+    auto task_id = *CreateTaskId(0);
+
+    manager.Add(task);
+    manager.AddSubTask(task, task_id);
+    EXPECT_TRUE(manager.Complete(task_id).error() == Model::Response::ErrorType::NOT_COMPLETED_SUBTASKS);
 }
 
 using ::testing::Return;
@@ -132,32 +239,32 @@ TEST(TaskManagerTest, shouldThrowBadGeneratorBehaviourException)
 {
     auto generator = std::make_unique<IdGeneratorMock>();
 
-    EXPECT_CALL(*generator, GetNextId())                   // #4
-        .Times(2)
-        .WillRepeatedly(Return(TaskId::Create(1)));
+    EXPECT_CALL(*generator, GetNextId())
+        .WillRepeatedly(Return(*CreateTaskId(1)));
 
     TaskManager manager(std::move(generator));
 
     auto task_title = "Task name";
     auto task_date = time(nullptr);
-    auto task_priority = Task::Priority::kLow;
+    auto task_priority = Task::Priority::Task_Priority_kLow;
 
-    auto task = Task::Create(task_title,
-                             task_date,
-                             task_priority);
+    auto task = *CreateTask(task_title,
+                            task_date,
+                            task_priority);
 
-    manager.Add(task, TaskId::CreateDefault());
-    EXPECT_ANY_THROW(manager.Add(task, TaskId::CreateDefault()));
+    manager.Add(task);
+
+    EXPECT_DEATH(manager.Add(task), "");
 }
 
 TEST(TaskManagerTest, shouldShowParentTasks)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
     size_t size = 5;
-    for (int i = 0; i < size; ++i)
+    for (int i = 0 ; i < size ; ++i)
     {
-        auto task = Task::Create("Title", time(nullptr), Task::Priority::kMedium);
-        manager.Add(task, TaskId::CreateDefault());
+        auto task = CreateTask("Title", time(nullptr), Task::Priority::Task_Priority_kMedium);
+        manager.Add(*task);
     }
     auto tasks = manager.ShowParents();
     EXPECT_EQ(tasks.size(), size);
@@ -168,19 +275,24 @@ TEST(TaskManagerTest, shouldReturnChildTasks)
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
 
     auto parent_task = FamilyTask::Create(
-        Task::Create("Parent",
-                     time(nullptr),
-                     Task::Priority::kHigh),
-        TaskId::CreateDefault());
-    auto parent_id = manager.Add(parent_task.GetTask(), TaskId::CreateDefault());
+        *CreateTask("Parent",
+                    time(nullptr),
+                    Task::Priority::Task_Priority_kHigh)
+    );
+
+    manager.Add(parent_task.GetTask());
+
+    auto parent_id = *CreateTaskId(0);
     size_t size = 5;
-    for (int i = 0; i < size; ++i)
+    for (int i = 0 ; i < size ; ++i)
     {
-        auto task = Task::Create("Title",
-                                 time(nullptr),
-                                 Task::Priority::kMedium);
-        manager.Add(task, parent_id);
+        auto task = CreateTask("Title",
+                               time(nullptr),
+                               Task::Priority::Task_Priority_kMedium);
+        manager.AddSubTask(*task, parent_id);
     }
     auto tasks = manager.ShowChild(parent_id);
     EXPECT_EQ(tasks.size(), size);
 }
+
+//TODO add Load tests
