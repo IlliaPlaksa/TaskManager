@@ -21,6 +21,8 @@ public:
     ContextDTO() = default;
 
 public:
+    void Clear();
+public:
     VariableSet variable_set() const;
     std::vector<TaskDTO> tasks() const;
 

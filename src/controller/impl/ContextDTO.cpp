@@ -19,3 +19,8 @@ ContextDTO ContextDTO::Create(const VariableSet& variable_set, const std::vector
 
     return result;
 }
+void ContextDTO::Clear()
+{
+    variable_set_.Clear();
+    task_storage_.clear();
+}
