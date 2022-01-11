@@ -43,8 +43,8 @@ endforeach (proto_file)
 
 # _________UTILS_________
 file(GLOB_RECURSE Utils_SRC CONFIGURE_DEPENDS
-        "utils/*.h"
-        "utils/*.cpp")
+        "src/util/*.h"
+        "src/util/*.cpp")
 
 add_library(Utils
         STATIC ${Utils_SRC} ${PROTOBUF_GENERATED_SRCS}
@@ -117,12 +117,15 @@ file(GLOB_RECURSE PERSISTENCE_TEST_SRC
 
 # Model TEST
 add_library(Model
-        STATIC ${MODEL_SRC} ${PROTOBUF_GENERATED_SRCS}
+        STATIC ${MODEL_SRC} ${Utils_SRC} ${MODEL_TEST_SRC} ${PROTOBUF_GENERATED_SRCS}
         )
 
 add_executable(Model_TEST
         ${MODEL_SRC}
-        ${MODEL_TEST_SRC})
+        ${MODEL_TEST_SRC}
+        ${Utils_SRC}
+        ${Controller_SRC}
+        )
 
 target_include_directories(Model
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -130,7 +133,7 @@ target_include_directories(Model
         ${PROTOBUF_INCLUDE_DIR}
         )
 
-target_link_libraries(Model_TEST Model Utils protobuf::libprotobuf)
+target_link_libraries(Model_TEST Model Utils Controller protobuf::libprotobuf)
 target_link_libraries(Model_TEST GTest::GTest GTest::Main)
 target_link_libraries(Model_TEST GTest::gtest GTest::gmock GTest::gmock_main)
 
