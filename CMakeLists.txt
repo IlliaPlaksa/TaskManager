@@ -124,7 +124,7 @@ add_executable(Model_TEST
         ${MODEL_SRC}
         ${MODEL_TEST_SRC})
 
-target_include_directories(Model_TEST
+target_include_directories(Model
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${PROTOBUF_CPP_OUT_DIR}
         ${PROTOBUF_INCLUDE_DIR}
@@ -144,6 +144,11 @@ add_executable(Controller_TEST
         ${MODEL_SRC}
         ${CONTROLLER_TEST_SRC})
 
+target_include_directories(Controller
+        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${PROTOBUF_CPP_OUT_DIR}
+        ${PROTOBUF_INCLUDE_DIR}
+        )
 
 target_link_libraries(Controller_TEST Controller Utils protobuf::libprotobuf)
 target_link_libraries(Controller_TEST GTest::GTest GTest::Main)
@@ -156,6 +161,12 @@ add_library(Cli
 add_executable(Cli_TEST
         ${CLI_SRC}
         ${CLI_TEST_SRC})
+
+target_include_directories(Cli
+        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${PROTOBUF_CPP_OUT_DIR}
+        ${PROTOBUF_INCLUDE_DIR}
+        )
 
 target_link_libraries(Cli_TEST Cli Utils protobuf::libprotobuf)
 target_link_libraries(Cli_TEST GTest::GTest GTest::Main)
@@ -171,14 +182,14 @@ add_executable(Persistence_TEST
         ${PERSISTENCE_TEST_SRC}
         )
 
-target_link_libraries(Persistence_TEST Persistence Utils protobuf::libprotobuf)
-target_link_libraries(Persistence_TEST GTest::GTest GTest::Main)
-target_link_libraries(Persistence_TEST GTest::gtest GTest::gmock GTest::gmock_main)
-
 target_include_directories(Persistence
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${PROTOBUF_CPP_OUT_DIR}
         ${PROTOBUF_INCLUDE_DIR}
         )
+
+target_link_libraries(Persistence_TEST Persistence Utils protobuf::libprotobuf)
+target_link_libraries(Persistence_TEST GTest::GTest GTest::Main)
+target_link_libraries(Persistence_TEST GTest::gtest GTest::gmock GTest::gmock_main)
 
 
