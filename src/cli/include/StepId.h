@@ -8,6 +8,7 @@
 enum class StepId
 {
     kNone,
+    kError,
     kRoot,
     kHelp,
     kExit,
