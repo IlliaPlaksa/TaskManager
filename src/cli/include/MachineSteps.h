@@ -112,4 +112,10 @@ public:
     StepResult Execute(Context& context) override;
 };
 
+class ErrorStep : public StepWithDependency
+{
+    using StepWithDependency::StepWithDependency;
+    StepResult Execute(Context& context) override;
+};
+
 #endif //TASKMANAGER_SRC_CLI_MACHINESTATES_H_
