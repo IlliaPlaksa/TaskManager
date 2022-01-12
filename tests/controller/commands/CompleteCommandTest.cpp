@@ -6,23 +6,23 @@
 #include "gmock/gmock.h"
 #include "../../../src/controller/include/ConcreteCommands.h"
 #include "../mocks/ModelMock.h"
-#include "../mocks/ViewMock.h"
+#include "../mocks/ContextDTOMock.h"
+#include "./../../src/util/TaskIdCreators.h"
+#include "./../../src/util/TaskIdComparers.h"
 
 class CompleteCommandTest : ::testing::Test {};
 
 TEST(CompleteCommandTest, shouldExecute)
 {
     auto model = std::shared_ptr<ModelMock>{new ModelMock};
-    auto view = std::shared_ptr<ViewMock>{new ViewMock};
+    auto context = std::make_shared<ContextDTOMock>();
 
-    auto command = CompleteCommand{model};
+    auto command = CompleteCommand{context};
 
-    auto id = TaskId::CreateDefault();
+    auto id = *CreateTaskId(0);
 
-    EXPECT_CALL(*view, GetTaskStruct())
-        .Times(1);
     EXPECT_CALL(*model, Complete(id))
         .Times(1);
 
-    command.Execute(view);
+    command.Execute(model);
 }

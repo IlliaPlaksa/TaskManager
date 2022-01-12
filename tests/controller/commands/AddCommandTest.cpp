@@ -4,36 +4,31 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
+
 #include "../../../src/controller/include/ConcreteCommands.h"
+#include "../../../src/util/TaskCreators.h"
+#include "../../../src/util/TaskComparers.h"
+
 #include "../mocks/ModelMock.h"
-#include "../mocks/ViewMock.h"
+
+
 
 class AddCommandTest : ::testing::Test {};
 
 TEST(AddCommandTest, shouldExecuteCommonLogic)
 {
-    auto model = std::shared_ptr<ModelMock>{new ModelMock};
-    auto view = std::shared_ptr<ViewMock>{new ViewMock};
+    auto model = std::make_shared<ModelMock>();
+    auto context_dto = std::make_shared<ContextDTO>();
 
-    auto command = AddCommand{model};
+    auto command = AddCommand{context_dto};
 
-    auto task = Task::Create("Title",
-                             time(nullptr),
-                             Task::Priority::kHigh);
-    auto id = TaskId::Create(123);
+    auto task = *CreateTask("Title",
+                           time(nullptr),
+                           Task::Priority::Task_Priority_kHigh);
 
-    auto task_struct = TaskStruct{};
-    task_struct
-        .SetFromTask(task)
-        .SetParent(id);
-
-    EXPECT_CALL(*view, GetTaskStruct())
+    EXPECT_CALL(*model, Add(task))
         .Times(1)
-        .WillOnce(testing::Return(task_struct));
+        .WillOnce(testing::Return(Model::Response::CreateSuccess()));
 
-    EXPECT_CALL(*model, Add(task, id))
-        .Times(1)
-        .WillOnce(testing::Return(TaskId::CreateDefault()));
-
-    command.Execute(view);
+    command.Execute(model);
 }

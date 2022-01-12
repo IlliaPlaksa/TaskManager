@@ -16,15 +16,16 @@ TEST(CommandFactoryTest, shouldCreateCommands)
         CommandType::kEdit,
         CommandType::kComplete,
         CommandType::kDelete,
-        CommandType::kShow
+        CommandType::kShow,
+        CommandType::kLoad,
+        CommandType::kSave
     };
 
     auto model = std::shared_ptr<Model>(nullptr);
-
-    for (auto type: types)
+    auto context = std::make_shared<ContextDTO>();
+    for (auto type : types)
     {
-        EXPECT_NE(nullptr,
-                  factory.CreateCommand(type, model));
+        EXPECT_NE(nullptr, factory.CreateCommand(type, context));
     }
 }
 
@@ -33,6 +34,6 @@ TEST(CommandFactoryTest, shouldReturnNullptrToNoneCommandType)
     auto factory = CommandFactory{};
     auto model = std::shared_ptr<Model>(nullptr);
 
-    EXPECT_EQ(nullptr,
-              factory.CreateCommand(CommandType::kNone, model));
+    auto context = std::make_shared<ContextDTO>();
+    EXPECT_EQ(nullptr, factory.CreateCommand(CommandType::kNone, context));
 }
