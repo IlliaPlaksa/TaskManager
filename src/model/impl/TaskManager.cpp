@@ -81,20 +81,20 @@ Model::Response TaskManager::Delete(const TaskId& id)
         auto& task = elem_iter->second;
         // Find subtasks
         auto iter = std::find_if(tasks_.begin(), tasks_.end(),
-                                 [task](const auto& elem)
+                                 [&id](const auto& elem)
                                  {
                                      auto parent = elem.second.GetParentId();
                                      if (parent)
-                                         return task.GetParentId() == parent;
+                                         return id == parent;
                                      else
                                          return false;
                                  });
 
-        if (iter == tasks_.end())
+        if (iter != tasks_.end())
         {
             tasks_.erase(iter, tasks_.end());
-            tasks_.erase(id);
         }
+        tasks_.erase(id);
     } else
         return Response::CreateError(Response::ErrorType::INVALID_ID);
 
@@ -206,11 +206,11 @@ Model::Response TaskManager::Load(const std::vector<TaskDTO>& tasks)
 
         if (parent_id.has_value())
         {
-            if (tmp_storage.find(*parent_id) == tmp_storage.end())
+            if (tmp_storage.find(*parent_id) == tmp_storage.end()) // No task with suck id found
                 return Response::CreateError(
                     Response::ErrorType::FAIL
                 );
-            else if (*parent_id == elem.first)
+            else if (*parent_id == elem.first) // parent id equals to task id
                 return Response::CreateError(
                     Response::ErrorType::FAIL
                 );
