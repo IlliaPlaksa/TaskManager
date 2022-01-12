@@ -12,18 +12,17 @@
 
 class ModelMock : public Model
 {
-    using TaskVect = std::vector<std::pair<TaskId, Task>>;
 public:
-    MOCK_METHOD(TaskId, Add,
-                (const Task &task, const TaskId &parent_id), (override));
-    MOCK_METHOD(void, Edit,
-                (const TaskId &task_id, const Task &task, const TaskId &parent_id), (override));
-    MOCK_METHOD(void, Complete,
-                (const TaskId &task_id), (override));
-    MOCK_METHOD(void, Delete,
-                (const TaskId &task_id), (override));
+    MOCK_METHOD(Response, Add, (const Task &task), (override));
+    MOCK_METHOD(Response, AddSubTask, (const Task &task, const TaskId &parent_id), (override));
+    MOCK_METHOD(Response, Edit, (const TaskId &task_id, const Task &task), (override));
+    MOCK_METHOD(Response, EditSubTask, (const TaskId &task_id, const Task &task, const TaskId &parent_id), (override));
+    MOCK_METHOD(Response, Complete, (const TaskId &task_id), (override));
+    MOCK_METHOD(Response, Delete, (const TaskId &task_id), (override));
 
-    MOCK_METHOD(TaskVect, Show, (), (override));
-    MOCK_METHOD(TaskVect, ShowParents, (), (override));
-    MOCK_METHOD(TaskVect, ShowChild, (TaskId parent_id), (override));
+    MOCK_METHOD(std::vector<TaskDTO>, Show, (), (override));
+    MOCK_METHOD(std::vector<TaskDTO>, ShowParents, (), (override));
+    MOCK_METHOD(std::vector<TaskDTO>, ShowChild, (const TaskId& task_id), (override));
+
+    MOCK_METHOD(Response, Load, (const std::vector<TaskDTO>& tasks), (override));
 };

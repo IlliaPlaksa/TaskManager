@@ -12,9 +12,6 @@ class ViewMock : public View
 {
 public:
     MOCK_METHOD(void, Run, (), (override));
-    MOCK_METHOD(void, LoadTasks, (const TaskStorage &storage), (override));
-    MOCK_METHOD(std::optional<TaskStruct>, GetTaskStruct, (), (const, override));
-    MOCK_METHOD(std::shared_ptr<View>, shared, (), (override));
 };
 
 #endif //TASKMANAGER_TESTS_CONTROLLER_MOCK_INCLUDE_VIEWMOCK_H_

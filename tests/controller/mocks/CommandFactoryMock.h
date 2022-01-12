@@ -11,10 +11,8 @@
 class CommandFactoryMock : public CommandFactory
 {
 public:
-    MOCK_METHOD(std::shared_ptr<Command>,
-        CreateCommand,
-    (const CommandType &type, const std::shared_ptr<IModel> &model),
-    (override));
+    MOCK_METHOD(std::shared_ptr<Command>, CreateCommand,
+                (const CommandType& type, const std::shared_ptr<ContextDTO>& context), (override));
 };
 
 #endif //TASKMANAGER_TESTS_CONTROLLER_MOCK_INCLUDE_COMMANDFACTORYMOCK_H_
