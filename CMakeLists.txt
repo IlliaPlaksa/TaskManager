@@ -41,21 +41,7 @@ foreach (proto_file ${Proto_SRCS})
             )
 endforeach (proto_file)
 
-# _________UTILS_________
-file(GLOB_RECURSE Utils_SRC CONFIGURE_DEPENDS
-        "src/util/*.h"
-        "src/util/*.cpp")
-
-add_library(Utils
-        STATIC ${Utils_SRC} ${PROTOBUF_GENERATED_SRCS}
-        )
-target_include_directories(Utils
-        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
-        ${PROTOBUF_CPP_OUT_DIR}
-        ${PROTOBUF_INCLUDE_DIR}
-        )
-
-# _________SRCS_________
+# _________MAIN_________
 
 file(GLOB_RECURSE TaskManager_SRC CONFIGURE_DEPENDS
         "src/*.h"
@@ -68,7 +54,7 @@ add_executable(main
         ${TaskManager_SRC}
         )
 
-target_link_libraries(main TaskManager Utils protobuf::libprotobuf)
+target_link_libraries(main TaskManager protobuf::libprotobuf)
 
 target_include_directories(TaskManager
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -84,115 +70,43 @@ enable_testing()
 
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
-# _________TEST_SRCS_________
-file(GLOB_RECURSE MODEL_SRC CONFIGURE_DEPENDS
-        "src/model/*.h"
-        "src/model/*.cpp")
+# _________GLOBAL TEST_________
 
-file(GLOB_RECURSE CLI_SRC CONFIGURE_DEPENDS
+file(GLOB_RECURSE Tests_SRC
+        "src/cli/*.cpp"
         "src/cli/*.h"
-        "src/cli/*.cpp")
 
-file(GLOB_RECURSE CONTROLLER_SRC CONFIGURE_DEPENDS
+        "src/controller/*.cpp"
         "src/controller/*.h"
-        "src/controller/*.cpp")
 
-file(GLOB_RECURSE PERSISTENCE_SRC CONFIGURE_DEPENDS
+        "src/model/*.cpp"
+        "src/model/*.h"
+
+        "src/persistence/*.cpp"
         "src/persistence/*.h"
-        "src/persistence/*.cpp")
 
-file(GLOB_RECURSE MODEL_TEST_SRC CONFIGURE_DEPENDS
-        "tests/model/*.cpp"
-        "tests/model/*.h")
+        "src/util/*.cpp"
+        "src/util/*.h"
 
-file(GLOB_RECURSE CONTROLLER_TEST_SRC CONFIGURE_DEPENDS
-        "tests/controller/*.cpp"
-        "tests/controller/*.h")
+        "tests/*.cpp"
+        "tests/*.h")
 
-file(GLOB_RECURSE PERSISTENCE_TEST_SRC
-        "tests/persistence/*.cpp"
-        "tests/persistence/*.h")
-
-# _________TEST'S_EXEC_________
-
-# Model TEST
-add_library(Model
-        STATIC ${MODEL_SRC} ${Utils_SRC} ${MODEL_TEST_SRC} ${PROTOBUF_GENERATED_SRCS}
+add_library(Tests
+        STATIC ${Tests_SRC} ${PROTOBUF_GENERATED_SRCS}
         )
 
-add_executable(Model_TEST
-        ${MODEL_SRC}
-        ${MODEL_TEST_SRC}
-        ${Utils_SRC}
-        ${Controller_SRC}
-        )
-
-target_include_directories(Model
+target_include_directories(Tests
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${PROTOBUF_CPP_OUT_DIR}
         ${PROTOBUF_INCLUDE_DIR}
         )
 
-target_link_libraries(Model_TEST Model Utils Controller protobuf::libprotobuf)
-target_link_libraries(Model_TEST GTest::GTest GTest::Main)
-target_link_libraries(Model_TEST GTest::gtest GTest::gmock GTest::gmock_main)
-
-# Controller TEST
-add_library(Controller
-        STATIC ${CONTROLLER_SRC} ${PROTOBUF_GENERATED_SRCS}
+add_executable(TaskManger_TEST
+        ${Tests_SRC}
         )
 
-add_executable(Controller_TEST
-        ${CONTROLLER_SRC}
-        ${MODEL_SRC}
-        ${CONTROLLER_TEST_SRC})
-
-target_include_directories(Controller
-        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
-        ${PROTOBUF_CPP_OUT_DIR}
-        ${PROTOBUF_INCLUDE_DIR}
-        )
-
-target_link_libraries(Controller_TEST Controller Utils protobuf::libprotobuf)
-target_link_libraries(Controller_TEST GTest::GTest GTest::Main)
-target_link_libraries(Controller_TEST GTest::gtest GTest::gmock GTest::gmock_main)
-
-# CLI TEST
-add_library(Cli
-        STATIC ${CLI_SRC} ${PROTOBUF_GENERATED_SRCS}
-        )
-add_executable(Cli_TEST
-        ${CLI_SRC}
-        ${CLI_TEST_SRC})
-
-target_include_directories(Cli
-        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
-        ${PROTOBUF_CPP_OUT_DIR}
-        ${PROTOBUF_INCLUDE_DIR}
-        )
-
-target_link_libraries(Cli_TEST Cli Utils protobuf::libprotobuf)
-target_link_libraries(Cli_TEST GTest::GTest GTest::Main)
-target_link_libraries(Cli_TEST GTest::gtest GTest::gmock GTest::gmock_main)
-
-# Persistence TEST
-add_library(Persistence
-        STATIC ${Persistence_SRC} ${PROTOBUF_GENERATED_SRCS}
-        )
-
-add_executable(Persistence_TEST
-        ${PERSISTENCE_SRC}
-        ${PERSISTENCE_TEST_SRC}
-        )
-
-target_include_directories(Persistence
-        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
-        ${PROTOBUF_CPP_OUT_DIR}
-        ${PROTOBUF_INCLUDE_DIR}
-        )
-
-target_link_libraries(Persistence_TEST Persistence Utils protobuf::libprotobuf)
-target_link_libraries(Persistence_TEST GTest::GTest GTest::Main)
-target_link_libraries(Persistence_TEST GTest::gtest GTest::gmock GTest::gmock_main)
+target_link_libraries(TaskManger_TEST Tests protobuf::libprotobuf)
+target_link_libraries(TaskManger_TEST GTest::GTest GTest::Main)
+target_link_libraries(TaskManger_TEST GTest::gtest GTest::gmock GTest::gmock_main)
 
 
