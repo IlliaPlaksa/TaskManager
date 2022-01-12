@@ -33,6 +33,7 @@
 
 # Directories
 cmake-build-debug/*
+cmake-build-debug-coverage/*
 tests/cmake-build-debug/*
 .idea
 
