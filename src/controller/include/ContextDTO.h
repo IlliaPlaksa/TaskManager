@@ -21,10 +21,13 @@ public:
     ContextDTO() = default;
 
 public:
-    void Clear();
+    virtual ~ContextDTO() = default;
+
 public:
-    VariableSet variable_set() const;
-    std::vector<TaskDTO> tasks() const;
+    virtual void Clear();
+public:
+    virtual VariableSet variable_set() const;
+    virtual std::vector<TaskDTO> tasks() const;
 
 private:
     VariableSet variable_set_;
