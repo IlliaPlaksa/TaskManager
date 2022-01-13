@@ -6,10 +6,7 @@
 #include "../../src/util/TaskIdComparers.h"
 
 class IdGeneratorTest : public ::testing::Test
-{
-    virtual void SetUp() {}
-    virtual void TearDown() {}
-};
+{};
 
 TEST(IdGeneratorTest, mustReturnNewId)
 {

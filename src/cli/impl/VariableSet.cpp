@@ -17,7 +17,7 @@ std::optional<TaskDTO> VariableSet::MakeTaskDTO() const
 }
 std::optional<Task> VariableSet::MakeTask() const
 {
-    return CreateTask(title, date, priority, label, status);;
+    return CreateTask(title, date, priority, label, status);
 }
 void VariableSet::Clear()
 {
