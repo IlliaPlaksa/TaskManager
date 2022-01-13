@@ -4,17 +4,18 @@
 
 #include "gtest/gtest.h"
 #include "../../src/persistence/include/TaskPersister.h"
-#include "../../utils/include/TaskComparers.h"
+#include "TaskDTO.pb.h"
+#include "../../src/util/TaskDTOComparers.h"
 
 class TaskPersisterTest : public ::testing::Test {};
 
 TEST(TaskPersisterTest, shouldSerializeAndDeserialize)
 {
-    auto tasks = std::vector<TaskToSerialize>{};
+    auto tasks = std::vector<TaskDTO>{};
 
     for (size_t i = 0; i < 5; i++)
     {
-        auto tmp = TaskToSerialize{};
+        auto tmp = TaskDTO{};
         auto task = tmp.mutable_task();
         task->set_title(std::to_string(i));
         task->set_priority(Task_Priority_kHigh);
