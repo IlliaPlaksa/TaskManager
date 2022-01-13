@@ -10,7 +10,7 @@ CommandWithContext::CommandWithContext(const std::shared_ptr<ContextDTO>& contex
 {
 
 }
-std::shared_ptr<ContextDTO> CommandWithContext::GetContext()
+std::shared_ptr<ContextDTO> CommandWithContext::GetContext() const
 {
     return context_;
 }

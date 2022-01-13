@@ -11,3 +11,10 @@ Model::Response DeleteCommand::Execute(const std::shared_ptr<Model>& model)
 
     return model->Delete(var_set.id);
 }
+bool DeleteCommand::IsReady() const
+{
+    auto task_dto = GetContext()->variable_set().MakeTaskDTO();
+
+    return task_dto.has_value()
+        and task_dto->id().IsInitialized();
+}

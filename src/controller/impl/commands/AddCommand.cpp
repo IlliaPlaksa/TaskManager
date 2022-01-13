@@ -17,3 +17,12 @@ Model::Response AddCommand::Execute(const std::shared_ptr<Model>& model)
     else
         return model->Add(*task);
 }
+bool AddCommand::IsReady() const
+{
+    auto task = GetContext()->variable_set().MakeTask();
+
+    return task.has_value()
+        and !task->title().empty()
+        and Task_Priority_IsValid(task->priority())
+        and Task_Status_IsValid(task->status());
+}

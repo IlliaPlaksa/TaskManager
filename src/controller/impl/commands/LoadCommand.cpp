@@ -19,3 +19,8 @@ Model::Response LoadCommand::Execute(const std::shared_ptr<Model>& model)
     else
         return Model::Response::CreateError(Model::Response::ErrorType::FAIL);
 }
+bool LoadCommand::IsReady() const
+{
+    auto variable_set = GetContext()->variable_set();
+    return !variable_set.file_name.empty();
+}

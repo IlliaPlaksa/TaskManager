@@ -18,3 +18,12 @@ Model::Response EditCommand::Execute(const std::shared_ptr<Model>& model)
     else
         return model->Edit(id, *task);
 }
+bool EditCommand::IsReady() const
+{
+    auto task_dto = GetContext()->variable_set().MakeTaskDTO();
+    auto task = task_dto->task();
+
+    return task_dto.has_value()
+        and task.IsInitialized()
+        and task_dto->id().IsInitialized();
+}
