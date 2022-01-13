@@ -12,7 +12,7 @@ Controller::Controller(const std::shared_ptr<Model>& model)
 
 Controller::Response Controller::Action(const std::shared_ptr<Command>& command)
 {
-    if (command)
+    if (command and command->IsReady())
     {
         auto command_result = command->Execute(model_);
 
