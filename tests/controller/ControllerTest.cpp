@@ -26,6 +26,10 @@ TEST(ControllerTest, shouldCreateAndExecuteCommand)
 
     auto command = std::make_shared<CommandMock>();
 
+    EXPECT_CALL(*command, IsReady())
+    .Times(1)
+    .WillOnce(testing::Return(true));
+
     EXPECT_CALL(*command, Execute(model))
         .Times(1)
         .WillOnce(testing::Return(Model::Response::CreateSuccess()));
