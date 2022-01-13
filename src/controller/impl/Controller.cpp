@@ -20,10 +20,9 @@ Controller::Response Controller::Action(const std::shared_ptr<Command>& command)
             return Response::CreateError(
                 CreateErrorMessage(*command_result.error())
             );
-        else
-            return Response::CreateSuccess();
+    } else
+        return Response::CreateError("Command is not initialized or ready to use");
 
-    }
     return Response::CreateSuccess();
 }
 std::string Controller::CreateErrorMessage(const Model::Response::ErrorType& error_type)
@@ -32,7 +31,7 @@ std::string Controller::CreateErrorMessage(const Model::Response::ErrorType& err
     {
         case Model::Response::ErrorType::INVALID_ID: { return "Invalid ID passed"; }
         case Model::Response::ErrorType::EMPTY_TITLE: { return "Empty title of Task passed"; }
-        case Model::Response::ErrorType::NON_EXISTING_PARENT_ID: { return "Non-existing parent Task ID passed"; }
+        case Model::Response::ErrorType::NON_EXISTING_PARENT_ID: { return "Non-existing parent ID passed"; }
         default: { return "Something went wrong"; }
     }
 }
