@@ -17,11 +17,7 @@ TEST(ShowCommandTest, shouldExecuteCommonLogic)
     auto model = std::make_shared<ModelMock>();
     auto context_dto = std::make_shared<ContextDTOMock>();
 
-    auto command = EditCommand{context_dto};
-
-    EXPECT_CALL(*context_dto, variable_set())
-    .Times(1)
-    .WillOnce(testing::Return(VariableSet{}));
+    auto command = ShowCommand{context_dto};
 
     EXPECT_CALL(*model, Show())
     .Times(1)

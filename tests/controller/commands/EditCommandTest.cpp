@@ -16,25 +16,53 @@
 
 class EditCommandTest : ::testing::Test {};
 
-TEST(EditCommandTest, shouldExecuteCommonLogic)
+TEST(EditCommandTest, shouldExecuteEdit)
 {
     auto model = std::make_shared<ModelMock>();
     auto context_dto = std::make_shared<ContextDTOMock>();
 
+    auto variable_set = VariableSet{};
+    variable_set.title = "Title";
+    variable_set.date = time(nullptr);
+    variable_set.priority = Task::Priority::Task_Priority_kHigh;
+    variable_set.id = *CreateTaskId(0);
+
     auto command = EditCommand{context_dto};
 
-    auto task = *CreateTask("Title",
-                             time(nullptr),
-                             Task::Priority::Task_Priority_kHigh);
+    EXPECT_CALL(*context_dto, variable_set())
+        .Times(1)
+        .WillRepeatedly(testing::Return(variable_set));
 
-    auto id = *CreateTaskId(123);
+    EXPECT_CALL(*model, Edit(variable_set.id, *variable_set.MakeTask()))
+        .Times(1)
+        .WillRepeatedly(testing::Return(Model::Response::CreateSuccess()));
+
+    command.Execute(model);
+
+    variable_set.parent_id = *CreateTaskId(1);
+}
+
+TEST(EditCommandTest, shouldExecuteEditSubTask)
+{
+    auto model = std::make_shared<ModelMock>();
+    auto context_dto = std::make_shared<ContextDTOMock>();
+
+    auto variable_set = VariableSet{};
+    variable_set.title = "Title";
+    variable_set.date = time(nullptr);
+    variable_set.priority = Task::Priority::Task_Priority_kHigh;
+    variable_set.id = *CreateTaskId(0);
+    variable_set.parent_id = *CreateTaskId(1);
+
+    auto command = EditCommand{context_dto};
 
     EXPECT_CALL(*context_dto, variable_set())
-    .Times(1)
-    .WillOnce(testing::Return(VariableSet()));
+        .Times(1)
+        .WillRepeatedly(testing::Return(variable_set));
 
-    EXPECT_CALL(*model, Edit(id, task))
-    .Times(1);
+    EXPECT_CALL(*model, EditSubTask(variable_set.id, *variable_set.MakeTask(), *variable_set.parent_id))
+        .Times(1)
+        .WillRepeatedly(testing::Return(Model::Response::CreateSuccess()));
 
     command.Execute(model);
 }

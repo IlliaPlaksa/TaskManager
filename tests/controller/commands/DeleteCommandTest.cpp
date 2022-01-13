@@ -12,7 +12,7 @@
 
 class DeleteCommandTest : ::testing::Test {};
 
-TEST(DeleteCommandTest, shouldCreate)
+TEST(DeleteCommandTest, shouldExecute)
 {
     auto model = std::shared_ptr<ModelMock>{new ModelMock};
     auto context = std::make_shared<ContextDTOMock>();
@@ -21,8 +21,9 @@ TEST(DeleteCommandTest, shouldCreate)
 
     auto id = *CreateTaskId(0);
 
-    EXPECT_CALL(*model, Complete(id))
-        .Times(1);
+    EXPECT_CALL(*model, Delete(id))
+        .Times(1)
+        .WillOnce(testing::Return(Model::Response::CreateSuccess()));
 
     command.Execute(model);
 }

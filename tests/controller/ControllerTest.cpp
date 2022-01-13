@@ -25,13 +25,6 @@ TEST(ControllerTest, shouldCreateAndExecuteCommand)
     auto obj = Controller{model};
 
     auto command = std::make_shared<CommandMock>();
-    auto command_type = CommandType::kNone;
-
-    auto context_dto = std::shared_ptr<ContextDTO>{};
-
-    EXPECT_CALL(*factory, CreateCommand(command_type, context_dto))
-        .Times(1)
-        .WillOnce(testing::Return(command));
 
     EXPECT_CALL(*command, Execute(model))
         .Times(1)
