@@ -100,18 +100,18 @@ Model::Response TaskManager::Complete(const TaskId& id)
     {
         auto& task = this->tasks_.at(id);
 
-        // Find uncompleted subtasks
-        auto count = std::count_if(tasks_.begin(), tasks_.end(),
-                                   [id](const auto& elem)
-                                   {
-                                       auto parent = elem.second.GetParentId();
-                                       auto task = elem.second.GetTask();
-                                       if (parent)
-                                           return id == parent and
-                                               elem.second.GetTask().status() != Task_Status_kCompleted;
-                                       else
-                                           return false;
-                                   });
+        auto is_uncompleted = [id](const std::pair<TaskId, FamilyTask>& elem)
+        {
+            auto parent = elem.second.GetParentId();
+            if (parent)
+                return id == parent
+                    and elem.second.GetTask().status() != Task_Status_kCompleted;
+            else
+                return false;
+        };
+
+        // Count uncompleted subtasks
+        auto count = std::count_if(tasks_.begin(), tasks_.end(), is_uncompleted);
 
         if (count) // Has uncompleted subtasks
             return Response::CreateError(Response::ErrorType::NOT_COMPLETED_SUBTASKS);
