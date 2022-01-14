@@ -63,7 +63,7 @@ std::optional<TaskId> Read::ParentId(const std::shared_ptr<ConsoleManipulator>& 
 }
 time_t Read::Date(const std::shared_ptr<ConsoleManipulator>& console)
 {
-    const std::string message = "[Date] DD.MM.YY";
+    const std::string message = "[Date] DD.MM.YYYY";
     auto input = Validate::Date(
         console->ReadLine(message)
     );

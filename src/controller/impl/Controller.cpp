@@ -21,7 +21,7 @@ Controller::Response Controller::Action(const std::shared_ptr<Command>& command)
                 CreateErrorMessage(*command_result.error())
             );
     } else
-        return Response::CreateError("Command is not initialized or ready to use");
+        return Response::CreateError("Command is not initialized/ready to use");
 
     return Response::CreateSuccess();
 }
