@@ -8,7 +8,7 @@
 #include "../mocks/ModelMock.h"
 #include "../mocks/ContextDTOMock.h"
 #include "./../../src/util/TaskIdCreators.h"
-#include "./../../src/util/TaskIdComparers.h"
+#include "./../../src/util/TaskIdComparators.h"
 
 class CompleteCommandTest : ::testing::Test {};
 

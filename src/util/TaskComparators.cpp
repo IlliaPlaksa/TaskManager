@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 22.12.2021.
 //
 
-#include "TaskComparers.h"
+#include "TaskComparators.h"
 
 bool operator==(const Task& first, const Task& second)
 {

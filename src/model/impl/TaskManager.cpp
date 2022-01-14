@@ -4,13 +4,13 @@
 
 #include "../include/TaskManager.h"
 
-#include "../../util/TaskComparers.h"
+#include "../../util/TaskComparators.h"
 #include "../../util/TaskCreators.h"
 
-#include "../../util/TaskIdComparers.h"
+#include "../../util/TaskIdComparators.h"
 #include "../../util/TaskIdCreators.h"
 
-#include "../../util/TaskDTOComparers.h"
+#include "../../util/TaskDTOComparators.h"
 #include "../../util/TaskDTOCreators.h"
 
 TaskManager::TaskManager(std::unique_ptr<IdGenerator> generator)

@@ -8,7 +8,7 @@
 #include "../../src/model/include/TaskManager.h"
 #include "../../src/util/TaskCreators.h"
 #include "../../src/util/TaskIdCreators.h"
-#include "../../src/util/TaskIdComparers.h"
+#include "../../src/util/TaskIdComparators.h"
 #include "../../src/util/TaskDTOCreators.h"
 
 class IdGeneratorMock : public IdGenerator

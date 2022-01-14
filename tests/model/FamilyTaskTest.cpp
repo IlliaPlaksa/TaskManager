@@ -6,7 +6,7 @@
 #include "../../src/model/include/FamilyTask.h"
 #include "../../src/util/TaskCreators.h"
 #include "../../src/util/TaskIdCreators.h"
-#include "../../src/util/TaskIdComparers.h"
+#include "../../src/util/TaskIdComparators.h"
 
 #include "gtest/gtest.h"
 

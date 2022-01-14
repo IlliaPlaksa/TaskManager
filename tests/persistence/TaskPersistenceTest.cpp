@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 #include "../../src/persistence/include/FilePersister.h"
 #include "TaskDTO.pb.h"
-#include "../../src/util/TaskDTOComparers.h"
+#include "../../src/util/TaskDTOComparators.h"
 
 class FilePersisterTest : public ::testing::Test {};
 

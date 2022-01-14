@@ -7,7 +7,7 @@
 
 #include "../../../src/controller/include/ConcreteCommands.h"
 
-#include "../../../src/util/TaskDTOComparers.h"
+#include "../../../src/util/TaskDTOComparators.h"
 
 #include "../mocks/ModelMock.h"
 #include "../mocks/ContextDTOMock.h"

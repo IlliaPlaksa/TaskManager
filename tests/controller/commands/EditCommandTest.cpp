@@ -8,8 +8,8 @@
 #include "../../../src/controller/include/ConcreteCommands.h"
 #include "../../../src/util/TaskCreators.h"
 #include "../../../src/util/TaskIdCreators.h"
-#include "../../../src/util/TaskComparers.h"
-#include "../../../src/util/TaskIdComparers.h"
+#include "../../../src/util/TaskComparators.h"
+#include "../../../src/util/TaskIdComparators.h"
 
 #include "../mocks/ModelMock.h"
 #include "../mocks/ContextDTOMock.h"
