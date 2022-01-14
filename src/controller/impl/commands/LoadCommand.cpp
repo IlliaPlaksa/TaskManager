@@ -10,9 +10,9 @@ Model::Response LoadCommand::Execute(const std::shared_ptr<Model>& model)
     auto context = this->GetContext();
     auto var_set = context->variable_set();
 
-    auto persister = TaskPersister{};
+    auto persister = FilePersister{var_set.file_name};
 
-    auto tasks = persister.DeserializeTasksFromFile(var_set.file_name);
+    auto tasks = persister.Load();
 
     if (tasks.has_value())
         return model->Load(*tasks);

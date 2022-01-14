@@ -9,9 +9,9 @@ Model::Response SaveCommand::Execute(const std::shared_ptr<Model>& model)
     auto context = this->GetContext();
     auto var_set = context->variable_set();
 
-    auto persister = TaskPersister{};
+    auto persister = FilePersister{var_set.file_name};
 
-    if (persister.SerializeTasksToFile(var_set.file_name, model->Show()))
+    if (persister.Save(model->Show()))
         return Model::Response::CreateSuccess();
     else
         return Model::Response::CreateError(Model::Response::ErrorType::FAIL);
