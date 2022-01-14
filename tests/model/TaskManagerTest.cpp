@@ -209,9 +209,10 @@ TEST(TaskManagerTest, shouldDeleteTask)
 
     manager.Add(task);
     manager.AddSubTask(task, *CreateTaskId(0));
+    manager.Add(task);
     manager.Delete(task_id);
 
-    ASSERT_TRUE(manager.Show().empty());
+    ASSERT_EQ(manager.Show().size(), 1);
 
     EXPECT_TRUE(manager.Edit(task_id, task).IsError());
 }
@@ -328,8 +329,6 @@ TEST(TaskManagerTest, shouldReturnChildTasks)
     auto tasks = manager.ShowChild(parent_id);
     EXPECT_EQ(tasks.size(), size);
 }
-
-//TODO add Load tests
 
 TEST(TaskManagerTest, shouldLoadTasks)
 {
