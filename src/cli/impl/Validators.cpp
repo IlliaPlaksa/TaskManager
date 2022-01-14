@@ -5,11 +5,11 @@
 #include <regex>
 #include "../include/Validators.h"
 
-#include "../../util/TaskComparators.h"
-#include "../../util/TaskCreators.h"
+#include "util/Task/TaskComparators.h"
+#include "util/Task/TaskCreators.h"
 
-#include "../../util/TaskIdComparators.h"
-#include "../../util/TaskIdCreators.h"
+#include "util/TaskId/TaskIdComparators.h"
+#include "util/TaskId/TaskIdCreators.h"
 
 std::optional<StepId> Validate::Command(const std::string& command)
 {

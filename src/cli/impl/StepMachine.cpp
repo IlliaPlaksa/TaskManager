@@ -4,7 +4,7 @@
 
 #include "../include/StepMachine.h"
 
-#include "../../util/TaskIdComparators.h"
+#include "util/TaskId/TaskIdComparators.h"
 
 StepMachine::StepMachine(const std::shared_ptr<StepFactory>& step_factory,
                          const std::shared_ptr<Controller>& controller,

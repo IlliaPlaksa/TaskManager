@@ -3,7 +3,7 @@
 //
 #include "gtest/gtest.h"
 #include "../../src/model/include/IdGenerator.h"
-#include "../../src/util/TaskIdComparators.h"
+#include "util/TaskId/TaskIdComparators.h"
 
 class IdGeneratorTest : public ::testing::Test
 {};

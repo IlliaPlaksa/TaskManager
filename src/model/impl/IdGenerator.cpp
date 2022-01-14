@@ -4,7 +4,7 @@
 
 #include "../include/IdGenerator.h"
 
-#include "../../util/TaskIdCreators.h"
+#include "util/TaskId/TaskIdCreators.h"
 
 TaskId IdGenerator::GetNextId()
 {

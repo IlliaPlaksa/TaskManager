@@ -6,10 +6,10 @@
 #include "gmock/gmock.h"
 
 #include "../../../src/controller/include/ConcreteCommands.h"
-#include "../../../src/util/TaskCreators.h"
-#include "../../../src/util/TaskIdCreators.h"
-#include "../../../src/util/TaskComparators.h"
-#include "../../../src/util/TaskIdComparators.h"
+#include "util/Task/TaskCreators.h"
+#include "util/TaskId/TaskIdCreators.h"
+#include "util/Task/TaskComparators.h"
+#include "util/TaskId/TaskIdComparators.h"
 
 #include "../mocks/ModelMock.h"
 #include "../mocks/ContextDTOMock.h"

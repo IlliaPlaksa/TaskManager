@@ -4,7 +4,7 @@
 
 #include "../include/VariableSetBuilder.h"
 #include <google/protobuf/util/time_util.h>
-#include "../../util/TaskDTOCreators.h"
+#include "util/TaskDTO/TaskDTOCreators.h"
 
 VariableSetBuilder& VariableSetBuilder::SetTitle(const std::string& title)
 {
