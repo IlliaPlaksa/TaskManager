@@ -2,14 +2,19 @@
 // Created by Illia Plaksa on 15.12.2021.
 //
 
-#include "../include/TaskPersister.h"
+#include "../include/FilePersister.h"
 
 #include "google/protobuf/util/delimited_message_util.h"
 
-bool TaskPersister::SerializeTasksToFile(const std::string& file_name, const std::vector<TaskDTO>& tasks)
+FilePersister::FilePersister(const std::string& file_name)
 {
-    std::fstream ofs(file_name,
-                     std::ios::out | std::ios::trunc | std::ios::binary);
+    this->file_name_ = file_name;
+}
+
+bool FilePersister::Save(const std::vector<TaskDTO>& tasks)
+{
+    std::fstream ofs(file_name_,
+    std::ios::out | std::ios::trunc | std::ios::binary);
 
     if (!ofs.is_open())
         return false;
@@ -23,11 +28,11 @@ bool TaskPersister::SerializeTasksToFile(const std::string& file_name, const std
     google::protobuf::ShutdownProtobufLibrary();
     return true;
 }
-std::optional<std::vector<TaskDTO>> TaskPersister::DeserializeTasksFromFile(const std::string& file_name)
+std::optional<std::vector<TaskDTO>> FilePersister::Load()
 {
     auto result = std::vector<TaskDTO>{};
 
-    std::fstream ifs(file_name,
+    std::fstream ifs(file_name_,
                      std::ios::in | std::ios::binary);
 
     auto input = google::protobuf::io::IstreamInputStream(&ifs);
@@ -45,3 +50,4 @@ std::optional<std::vector<TaskDTO>> TaskPersister::DeserializeTasksFromFile(cons
     google::protobuf::ShutdownProtobufLibrary();
     return result;
 }
+
