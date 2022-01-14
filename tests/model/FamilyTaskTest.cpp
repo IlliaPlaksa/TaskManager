@@ -3,16 +3,16 @@
 //
 
 #include "gtest/gtest.h"
-#include "../../src/model/include/FamilyTask.h"
+#include "../../src/model/include/TaskNode.h"
 #include "util/Task/TaskCreators.h"
 #include "util/TaskId/TaskIdCreators.h"
 #include "util/TaskId/TaskIdComparators.h"
 
 #include "gtest/gtest.h"
 
-class FamilyTaskTest : public ::testing::Test {};
+class TaskNodeTest : public ::testing::Test {};
 
-TEST(FamilyTaskTest, shouldCreate)
+TEST(TaskNodeTest, shouldCreate)
 {
     auto title = "Simple task name";
     auto due_date = time(nullptr);
@@ -21,7 +21,7 @@ TEST(FamilyTaskTest, shouldCreate)
     auto parent_id = *CreateTaskId(1234);
 
     auto simple_task = *CreateTask(title, due_date, priority, label);
-    auto task = FamilyTask::Create(simple_task, parent_id);
+    auto task = TaskNode::Create(simple_task, parent_id);
 
     EXPECT_EQ(task.GetTask().title(), title);
     EXPECT_EQ(task.GetTask().due_date().seconds(), due_date);

@@ -8,7 +8,7 @@
 #include <map>
 #include <vector>
 #include "../../controller/include/Model.h"
-#include "FamilyTask.h"
+#include "TaskNode.h"
 #include "IdGenerator.h"
 #include "Task.pb.h"
 #include "TaskId.pb.h"
@@ -37,12 +37,12 @@ public:
     explicit TaskManager(std::unique_ptr<IdGenerator> generator);
 
 private:
-    std::optional<TaskDTO> ConstructTaskDTO(const TaskId& id, const FamilyTask& task);
-    std::vector<std::map<TaskId, FamilyTask>::iterator> FindSubTasks(const TaskId& parent_id);
+    std::optional<TaskDTO> ConstructTaskDTO(const TaskId& id, const TaskNode& task);
+    std::vector<std::map<TaskId, TaskNode>::iterator> FindSubTasks(const TaskId& parent_id);
 
 
 private:
-    std::map<TaskId, FamilyTask> tasks_;
+    std::map<TaskId, TaskNode> tasks_;
     std::unique_ptr<IdGenerator> gen_;
 };
 

@@ -309,7 +309,7 @@ TEST(TaskManagerTest, shouldReturnChildTasks)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
 
-    auto parent_task = FamilyTask::Create(
+    auto parent_task = TaskNode::Create(
         *CreateTask("Parent",
                     time(nullptr),
                     Task::Priority::Task_Priority_kHigh)

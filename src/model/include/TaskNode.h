@@ -8,20 +8,20 @@
 #include "Task.pb.h"
 #include "TaskId.pb.h"
 
-class FamilyTask
+class TaskNode
 {
 public:
-    static FamilyTask Create(const Task& task);
-    static FamilyTask Create(const Task& task, const TaskId& parent_id);
+    static TaskNode Create(const Task& task);
+    static TaskNode Create(const Task& task, const TaskId& parent_id);
 
 public:
     std::optional<TaskId> GetParentId() const;
     Task GetTask() const;
 public:
-    FamilyTask(const FamilyTask& task) = default;
+    TaskNode(const TaskNode& task) = default;
 private:
-    explicit FamilyTask(const Task& task);
-    FamilyTask(const Task& task, const TaskId& parent_id);
+    explicit TaskNode(const Task& task);
+    TaskNode(const Task& task, const TaskId& parent_id);
 
 private:
     Task task_;
