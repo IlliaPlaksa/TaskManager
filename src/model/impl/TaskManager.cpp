@@ -60,11 +60,13 @@ Model::Response TaskManager::Edit(const TaskId& id, const Task& task)
 }
 Model::Response TaskManager::EditSubTask(const TaskId& id, const Task& task, const TaskId& parent_id)
 {
-    if (this->tasks_.find(id) != this->tasks_.end())
+    auto tmp = this->tasks_.find(id);
+
+    if (tmp != this->tasks_.end())
     {
         if (this->tasks_.find(parent_id) != this->tasks_.end())
         {
-            this->tasks_.at(id) = FamilyTask::Create(task, parent_id);
+            tmp->second = FamilyTask::Create(task, parent_id);
             return Response::CreateSuccess();
         } else
             return Response::CreateError(Response::ErrorType::NON_EXISTING_PARENT_ID);
@@ -79,20 +81,12 @@ Model::Response TaskManager::Delete(const TaskId& id)
     if (elem_iter != tasks_.end())
     {
         auto& task = elem_iter->second;
-        // Find subtasks
-        auto iter = std::find_if(tasks_.begin(), tasks_.end(),
-                                 [&id](const auto& elem)
-                                 {
-                                     auto parent = elem.second.GetParentId();
-                                     if (parent)
-                                         return id == parent;
-                                     else
-                                         return false;
-                                 });
+        auto subtasks = FindSubTasks(id);
 
-        if (iter != tasks_.end())
+        if (!subtasks.empty())
         {
-            tasks_.erase(iter, tasks_.end());
+            for (auto iter : subtasks)
+                tasks_.erase(iter);
         }
         tasks_.erase(id);
     } else
@@ -206,7 +200,7 @@ Model::Response TaskManager::Load(const std::vector<TaskDTO>& tasks)
 
         if (parent_id.has_value())
         {
-            if (tmp_storage.find(*parent_id) == tmp_storage.end()) // No task with suck id found
+            if (tmp_storage.find(*parent_id) == tmp_storage.end()) // No task with such id found
                 return Response::CreateError(
                     Response::ErrorType::FAIL
                 );
@@ -223,5 +217,16 @@ Model::Response TaskManager::Load(const std::vector<TaskDTO>& tasks)
 
     this->tasks_ = tmp_storage;
     return Response::CreateSuccess();
+}
+std::vector<std::map<TaskId, FamilyTask>::iterator> TaskManager::FindSubTasks(const TaskId& parent_id)
+{
+    auto result = std::vector<std::map<TaskId, FamilyTask>::iterator>{};
+
+    for (auto iter = tasks_.begin() ; iter != tasks_.end() ; ++iter)
+    {
+        if (iter->second.GetParentId() == parent_id)
+            result.emplace_back(iter);
+    }
+    return result;
 }
 

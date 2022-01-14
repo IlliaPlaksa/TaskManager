@@ -38,6 +38,8 @@ public:
 
 private:
     std::optional<TaskDTO> ConstructTaskDTO(const TaskId& id, const FamilyTask& task);
+    std::vector<std::map<TaskId, FamilyTask>::iterator> FindSubTasks(const TaskId& parent_id);
+
 
 private:
     std::map<TaskId, FamilyTask> tasks_;
