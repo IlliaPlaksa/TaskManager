@@ -11,10 +11,3 @@ Model::Response CompleteCommand::Execute(const std::shared_ptr<Model>& model)
 
     return model->Complete(var_set.id);
 }
-bool CompleteCommand::IsReady() const
-{
-    auto task_dto = GetContext()->variable_set().MakeTaskDTO();
-
-    return task_dto.has_value()
-        and task_dto->id().IsInitialized();
-}

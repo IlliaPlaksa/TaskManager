@@ -16,8 +16,3 @@ Model::Response SaveCommand::Execute(const std::shared_ptr<Model>& model)
     else
         return Model::Response::CreateError(Model::Response::ErrorType::FAIL);
 }
-bool SaveCommand::IsReady() const
-{
-    auto variable_set = GetContext()->variable_set();
-    return !variable_set.file_name.empty();
-}

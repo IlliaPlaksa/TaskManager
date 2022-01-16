@@ -14,8 +14,3 @@ Model::Response ShowCommand::Execute(const std::shared_ptr<Model>& model)
 
     return Model::Response::CreateSuccess();
 }
-bool ShowCommand::IsReady() const
-{
-    auto variable_set = GetContext()->variable_set();
-    return true; // TODO add some conditions
-}

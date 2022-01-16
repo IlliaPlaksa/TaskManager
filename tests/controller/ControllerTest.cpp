@@ -26,10 +26,6 @@ TEST(ControllerTest, shouldCreateAndExecuteCommand)
 
     auto command = std::make_shared<CommandMock>();
 
-    EXPECT_CALL(*command, IsReady())
-        .Times(1)
-        .WillOnce(testing::Return(true));
-
     EXPECT_CALL(*command, Execute(model))
         .Times(1)
         .WillOnce(testing::Return(Model::Response::CreateSuccess()));
@@ -45,28 +41,9 @@ TEST(ControllerTest, shouldHandleCommandReturnedError)
 
     auto command = std::make_shared<CommandMock>();
 
-    EXPECT_CALL(*command, IsReady())
-        .WillRepeatedly(testing::Return(true));
-
     EXPECT_CALL(*command, Execute(model))
         .Times(1)
         .WillOnce(testing::Return(Model::Response::CreateError(Model::Response::ErrorType::FAIL)));
-
-    auto response = obj.Action(command);
-
-    EXPECT_TRUE(response.IsError());
-}
-
-TEST(ControllerTest, shouldHandleCommandWithWrongContext)
-{
-    auto model = std::shared_ptr<Model>{new ModelMock};
-    auto factory = std::make_shared<CommandFactoryMock>();
-    auto obj = Controller{model};
-
-    auto command = std::make_shared<CommandMock>();
-
-    EXPECT_CALL(*command, IsReady())
-        .WillRepeatedly(testing::Return(false));
 
     auto response = obj.Action(command);
 
@@ -102,9 +79,6 @@ TEST(ControllerTest, shouldCreateErrorMessage)
     };
 
     auto command = std::make_shared<CommandMock>();
-
-    EXPECT_CALL(*command, IsReady())
-    .WillRepeatedly(testing::Return(true));
 
     for (const auto& elem : test)
     {

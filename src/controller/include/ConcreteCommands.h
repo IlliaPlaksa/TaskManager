@@ -34,9 +34,6 @@ class AddCommand : public CommandWithContext
     using CommandWithContext::CommandWithContext;
 public:
     Model::Response Execute(const std::shared_ptr<Model>& model) override;
-public:
-    bool IsReady() const override;
-
 };
 
 class EditCommand : public CommandWithContext
@@ -44,8 +41,6 @@ class EditCommand : public CommandWithContext
     using CommandWithContext::CommandWithContext;
 public:
     Model::Response Execute(const std::shared_ptr<Model>& model) override;
-public:
-    bool IsReady() const override;
 };
 
 class CompleteCommand : public CommandWithContext
@@ -53,8 +48,6 @@ class CompleteCommand : public CommandWithContext
     using CommandWithContext::CommandWithContext;
 public:
     Model::Response Execute(const std::shared_ptr<Model>& model) override;
-public:
-    bool IsReady() const override;
 };
 
 class DeleteCommand : public CommandWithContext
@@ -62,8 +55,6 @@ class DeleteCommand : public CommandWithContext
     using CommandWithContext::CommandWithContext;
 public:
     Model::Response Execute(const std::shared_ptr<Model>& model) override;
-public:
-    bool IsReady() const override;
 };
 
 class ShowCommand : public CommandWithContext
@@ -72,8 +63,6 @@ class ShowCommand : public CommandWithContext
     using CommandWithContext::CommandWithContext;
 public:
     Model::Response Execute(const std::shared_ptr<Model>& model) override;
-public:
-    bool IsReady() const override;
 };
 
 class SaveCommand : public CommandWithContext
@@ -81,8 +70,6 @@ class SaveCommand : public CommandWithContext
     using CommandWithContext::CommandWithContext;
 public:
     Model::Response Execute(const std::shared_ptr<Model>& model) override;
-public:
-    bool IsReady() const override;
 };
 
 class LoadCommand : public CommandWithContext
@@ -90,8 +77,6 @@ class LoadCommand : public CommandWithContext
     using CommandWithContext::CommandWithContext;
 public:
     Model::Response Execute(const std::shared_ptr<Model>& model) override;
-public:
-    bool IsReady() const override;
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_INCLUDE_CommandWithContextS_H_
