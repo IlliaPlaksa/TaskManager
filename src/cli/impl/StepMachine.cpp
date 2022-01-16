@@ -3,7 +3,6 @@
 //
 
 #include "../include/StepMachine.h"
-
 #include "util/TaskId/TaskIdComparators.h"
 
 StepMachine::StepMachine(const std::shared_ptr<StepFactory>& step_factory,
@@ -30,11 +29,10 @@ void StepMachine::Run()
 
         if (response.IsError())
         {
-            context_.SetError(CreateErrorMessage(*response.error()));
             SetNextStep(step_factory_->CreateStep(StepId::kError));
         } else
         {
-            context_.SetFromContextDTO();
+            SetContextFromCommandResponse(response);
         }
     }
 }
@@ -43,14 +41,26 @@ void StepMachine::SetNextStep(const std::shared_ptr<Step>& step)
 {
     this->current_step_ = step;
 }
-std::string StepMachine::CreateErrorMessage(const Model::Response::ErrorType& error_type)
+std::string StepMachine::CreateErrorMessage(const ModelResponse::ErrorType& error_type)
 {
     switch (error_type)
     {
-        case Model::Response::ErrorType::INVALID_ID: { return "Invalid ID passed"; }
-        case Model::Response::ErrorType::EMPTY_TITLE: { return "Empty title of Task passed"; }
-        case Model::Response::ErrorType::NON_EXISTING_PARENT_ID: { return "Non-existing parent ID passed"; }
+        case ModelResponse::ErrorType::INVALID_ID: { return "Invalid ID passed"; }
+        case ModelResponse::ErrorType::EMPTY_TITLE: { return "Empty title of Task passed"; }
+        case ModelResponse::ErrorType::NON_EXISTING_PARENT_ID: { return "Non-existing parent ID passed"; }
         default: { return "Something went wrong"; }
     }
 }
-
+void StepMachine::SetContextFromCommandResponse(const CommandResponse& response)
+{
+    if (response.IsError())
+    {
+        auto error = *response.model_response->error();
+        context_.SetError(CreateErrorMessage(error));
+    }
+    else
+    {
+        if (response.tasks.has_value())
+            context_.GetStorage()->LoadTasks(*response.tasks);
+    }
+}

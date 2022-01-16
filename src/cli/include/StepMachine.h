@@ -15,19 +15,20 @@
 class StepMachine : public View
 {
 public:
-    void Run() override;
-
-public:
     explicit StepMachine(const std::shared_ptr<StepFactory>& step_factory,
                          const std::shared_ptr<ModelController>& controller);
+public:
+    void Run() override;
 
 public:
     ~StepMachine() override = default;
 
 private:
     void SetNextStep(const std::shared_ptr<Step>& step);
+    void SetContextFromCommandResponse(const CommandResponse& response);
 
-    std::string CreateErrorMessage(const Model::Response::ErrorType& error_type);
+private:
+    static std::string CreateErrorMessage(const ModelResponse::ErrorType& error_type);
 
 private:
     Context context_;
