@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "../../src/controller/include/Controller.h"
+#include "controller/include/Controller.h"
 #include "mocks/ModelMock.h"
 #include "mocks/CommandFactoryMock.h"
 #include "mocks/CommandMock.h"

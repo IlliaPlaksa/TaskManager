@@ -6,7 +6,7 @@
 #define TASKMANAGER_TESTS_CONTROLLER_MOCKS_CONTEXTDTOMOCK_H_
 
 #include "gmock/gmock.h"
-#include "../../../src/controller/include/ContextDTO.h"
+#include "controller/include/ContextDTO.h"
 
 class ContextDTOMock : public ContextDTO
 {

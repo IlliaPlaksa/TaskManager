@@ -6,7 +6,7 @@
 #define TASKMANAGER_TESTS_CONTROLLER_MOCK_INCLUDE_COMMANDFACTORYMOCK_H_
 
 #include "gmock/gmock.h"
-#include "../../../src/controller/include/CommandFactory.h"
+#include "controller/include/CommandFactory.h"
 
 class CommandFactoryMock : public CommandFactory
 {

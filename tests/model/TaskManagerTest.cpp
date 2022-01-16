@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
-#include "../../src/model/include/TaskManager.h"
+#include "model/include/TaskManager.h"
 #include "util/Task/TaskCreators.h"
 #include "util/TaskId/TaskIdCreators.h"
 #include "util/TaskId/TaskIdComparators.h"

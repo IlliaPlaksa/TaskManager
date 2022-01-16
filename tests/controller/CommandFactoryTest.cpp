@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "../../src/controller/include/CommandFactory.h"
+#include "controller/include/CommandFactory.h"
 
 class CommandFactoryTest : public ::testing::Test {};
 

@@ -5,15 +5,13 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
-#include "../../../src/controller/include/ConcreteCommands.h"
+#include "controller/include/ConcreteCommands.h"
 #include "util/TaskId/TaskIdCreators.h"
 #include "util/Task/TaskComparators.h"
 #include "util/TaskId/TaskIdComparators.h"
 
 #include "../mocks/ModelMock.h"
 #include "../mocks/ContextDTOMock.h"
-
-
 
 class AddCommandTest : ::testing::Test {};
 

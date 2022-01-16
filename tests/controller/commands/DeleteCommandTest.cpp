@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "../../../src/controller/include/ConcreteCommands.h"
+#include "controller/include/ConcreteCommands.h"
 #include "../mocks/ModelMock.h"
 #include "../mocks/ContextDTOMock.h"
 #include "util/TaskId/TaskIdCreators.h"

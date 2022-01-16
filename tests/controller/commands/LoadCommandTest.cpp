@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
-#include "../../../src/controller/include/ConcreteCommands.h"
+#include "controller/include/ConcreteCommands.h"
 
 #include "util/TaskDTO/TaskDTOComparators.h"
 
