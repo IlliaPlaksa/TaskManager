@@ -22,7 +22,7 @@ ModelResponse ModelResponse::CreateError(const ModelResponse::ErrorType& error_t
     result.error_type_ = error_type;
     return result;
 }
-bool ModelResponse::IsError()
+bool ModelResponse::IsError() const
 {
     return status_ == Status::kError;
 }

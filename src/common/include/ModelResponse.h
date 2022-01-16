@@ -33,11 +33,11 @@ private:
     ModelResponse() = default;
 
 public: // Methods
-    bool IsError();
+    bool IsError() const;
 
 public:
-    std::optional<ErrorType> error();
-    Status status();
+    std::optional<ErrorType> error() const;
+    Status status() const;
 
 private: // Fields
     Status status_;
