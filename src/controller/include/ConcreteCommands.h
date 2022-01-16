@@ -6,7 +6,6 @@
 #define TASKMANAGER_SRC_CONTROLLER_INCLUDE_CommandWithContextS_H_
 
 #include "common/include/Command.h"
-#include "ContextDTO.h"
 #include "Task.pb.h"
 #include "TaskDTO.pb.h"
 #include "TaskId.pb.h"
