@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "controller/include/Controller.h"
+#include "controller/include/ModelController.h"
 #include "mocks/ModelMock.h"
 #include "mocks/CommandFactoryMock.h"
 #include "mocks/CommandMock.h"
@@ -15,14 +15,14 @@ TEST(ControllerTest, shouldCreate)
 {
     auto factory = std::make_shared<CommandFactoryMock>();
 
-    ASSERT_NO_THROW(Controller{std::shared_ptr<Model>{new ModelMock}});
+    ASSERT_NO_THROW(ModelController{std::shared_ptr<Model>{new ModelMock}});
 }
 
 TEST(ControllerTest, shouldCreateAndExecuteCommand)
 {
     auto model = std::shared_ptr<Model>{new ModelMock};
     auto factory = std::make_shared<CommandFactoryMock>();
-    auto obj = Controller{model};
+    auto obj = ModelController{model};
 
     auto command = std::make_shared<CommandMock>();
 
@@ -37,7 +37,7 @@ TEST(ControllerTest, shouldHandleCommandReturnedError)
 {
     auto model = std::shared_ptr<Model>{new ModelMock};
     auto factory = std::make_shared<CommandFactoryMock>();
-    auto obj = Controller{model};
+    auto obj = ModelController{model};
 
     auto command = std::make_shared<CommandMock>();
 
@@ -54,7 +54,7 @@ TEST(ControllerTest, shouldHandleNullptrCommand)
 {
     auto model = std::shared_ptr<Model>{new ModelMock};
     auto factory = std::make_shared<CommandFactoryMock>();
-    auto obj = Controller{model};
+    auto obj = ModelController{model};
 
     auto command = std::shared_ptr<CommandMock>(nullptr);
 
@@ -67,7 +67,7 @@ TEST(ControllerTest, shouldCreateErrorMessage)
 {
     auto model = std::shared_ptr<Model>{new ModelMock};
     auto factory = std::make_shared<CommandFactoryMock>();
-    auto obj = Controller{model};
+    auto obj = ModelController{model};
 
     using ErrorType = Model::Response::ErrorType;
     auto test = std::vector<std::pair<ErrorType, std::string>>

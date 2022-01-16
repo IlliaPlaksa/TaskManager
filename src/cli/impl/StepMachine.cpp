@@ -7,12 +7,10 @@
 #include "util/TaskId/TaskIdComparators.h"
 
 StepMachine::StepMachine(const std::shared_ptr<StepFactory>& step_factory,
-                         const std::shared_ptr<Controller>& controller,
-                         const std::shared_ptr<CommandFactory>& command_factory)
+                         const std::shared_ptr<ModelController>& controller)
     :
     step_factory_(step_factory),
-    controller_(controller),
-    command_factory_(command_factory)
+    controller_(controller)
 {
 
 }
@@ -28,23 +26,15 @@ void StepMachine::Run()
         auto result = current_step_->Execute(context_);
 
         SetNextStep(result.next_step);
+        auto response = result.command->Execute(controller_);
 
-        if (result.command_type != CommandType::kNone)
+        if (response.IsError())
         {
-            context_.GetStorage()->Clear();
-            auto context_dto = std::shared_ptr<ContextDTO>{new ContextDTO(context_.GetContextDTO())};
-            auto command = command_factory_->CreateCommand(result.command_type,
-                                                           context_dto);
-            auto response = controller_->Action(command);
-
-            if (response.IsError())
-            {
-                context_.GetVariableSet()->error_message = response.error();
-                SetNextStep(step_factory_->CreateStep(StepId::kError));
-            } else
-            {
-                context_.SetFromContextDTO(*context_dto);
-            }
+            context_.SetError(CreateErrorMessage(*response.error()));
+            SetNextStep(step_factory_->CreateStep(StepId::kError));
+        } else
+        {
+            context_.SetFromContextDTO();
         }
     }
 }
@@ -53,5 +43,14 @@ void StepMachine::SetNextStep(const std::shared_ptr<Step>& step)
 {
     this->current_step_ = step;
 }
-
+std::string StepMachine::CreateErrorMessage(const Model::Response::ErrorType& error_type)
+{
+    switch (error_type)
+    {
+        case Model::Response::ErrorType::INVALID_ID: { return "Invalid ID passed"; }
+        case Model::Response::ErrorType::EMPTY_TITLE: { return "Empty title of Task passed"; }
+        case Model::Response::ErrorType::NON_EXISTING_PARENT_ID: { return "Non-existing parent ID passed"; }
+        default: { return "Something went wrong"; }
+    }
+}
 

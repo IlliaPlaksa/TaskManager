@@ -7,7 +7,7 @@
 
 #include <optional>
 #include "common/include/View.h"
-#include "controller/include/Controller.h"
+#include "controller/include/ModelController.h"
 #include "Context.h"
 #include "Step.h"
 #include "MachineSteps.h"
@@ -19,8 +19,7 @@ public:
 
 public:
     explicit StepMachine(const std::shared_ptr<StepFactory>& step_factory,
-                         const std::shared_ptr<Controller>& controller,
-                         const std::shared_ptr<CommandFactory>& command_factory);
+                         const std::shared_ptr<ModelController>& controller);
 
 public:
     ~StepMachine() override = default;
@@ -28,13 +27,14 @@ public:
 private:
     void SetNextStep(const std::shared_ptr<Step>& step);
 
+    std::string CreateErrorMessage(const Model::Response::ErrorType& error_type);
+
 private:
     Context context_;
     std::shared_ptr<Step> current_step_;
 
     std::shared_ptr<StepFactory> step_factory_;
-    std::shared_ptr<CommandFactory> command_factory_;
-    std::shared_ptr<Controller> controller_;
+    std::shared_ptr<ModelController> controller_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_STEPMACHINE_H_
