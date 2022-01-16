@@ -2,10 +2,6 @@
 // Created by Illia Plaksa on 16.01.2022.
 //
 
-//
-// Created by Illia Plaksa on 21.12.2021.
-//
-
 #include "common/include/ModelResponse.h"
 
 ModelResponse ModelResponse::CreateSuccess()
@@ -26,11 +22,11 @@ bool ModelResponse::IsError() const
 {
     return status_ == Status::kError;
 }
-std::optional<ModelResponse::ErrorType> ModelResponse::error()
+std::optional<ModelResponse::ErrorType> ModelResponse::error() const
 {
     return this->error_type_;
 }
-ModelResponse::Status ModelResponse::status()
+ModelResponse::Status ModelResponse::status() const
 {
     return this->status_;
 }
