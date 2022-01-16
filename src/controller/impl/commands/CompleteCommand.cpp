@@ -4,10 +4,13 @@
 
 #include "../../include/ConcreteCommands.h"
 
-Model::Response CompleteCommand::Execute(const std::shared_ptr<Model>& model)
+CommandResponse CompleteCommand::Execute(const std::shared_ptr<Model>& model)
 {
-    auto context = this->GetContext();
-    auto var_set = context->variable_set();
+    auto result = CommandResponse{};
+    result.model_response =  model->Complete(id_);
 
-    return model->Complete(var_set.id);
+    return result;
 }
+CompleteCommand::CompleteCommand(const TaskId& id)
+    :
+    id_(id) {}

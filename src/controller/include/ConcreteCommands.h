@@ -12,71 +12,75 @@
 #include "TaskId.pb.h"
 #include "persistence/include/FilePersister.h"
 
-// Abstract class of command with context
-class CommandWithContext : public Command
+class AddCommand : public Command
 {
+    explicit AddCommand(const Task& task, const std::optional<TaskId>& parent_id);
 public:
-    explicit CommandWithContext(const std::shared_ptr<ContextDTO>& context);
+    CommandResponse Execute(const std::shared_ptr<Model>& model) override;
 
-public:
-    void SetContext(const ContextDTO& context);
-public:
-    std::shared_ptr<ContextDTO> GetContext() const;
-
-public:
-    ~CommandWithContext() override = default;
 private:
-    std::shared_ptr<ContextDTO> context_;
+    Task task_;
+    std::optional<TaskId> parent_id_;
 };
 
-class AddCommand : public CommandWithContext
+class EditCommand : public Command
 {
-    using CommandWithContext::CommandWithContext;
+    explicit EditCommand(const TaskId& id, const Task& task, const std::optional<TaskId>& parent_id);
 public:
-    Model::Response Execute(const std::shared_ptr<Model>& model) override;
+    CommandResponse Execute(const std::shared_ptr<Model>& model) override;
+
+private:
+    TaskId id_;
+    Task task_;
+    std::optional<TaskId> parent_id_;
 };
 
-class EditCommand : public CommandWithContext
+class CompleteCommand : public Command
 {
-    using CommandWithContext::CommandWithContext;
+    explicit CompleteCommand(const TaskId& id);
 public:
-    Model::Response Execute(const std::shared_ptr<Model>& model) override;
+    CommandResponse Execute(const std::shared_ptr<Model>& model) override;
+
+private:
+    TaskId id_;
 };
 
-class CompleteCommand : public CommandWithContext
+class DeleteCommand : public Command
 {
-    using CommandWithContext::CommandWithContext;
+    explicit DeleteCommand(const TaskId& id);
 public:
-    Model::Response Execute(const std::shared_ptr<Model>& model) override;
+    CommandResponse Execute(const std::shared_ptr<Model>& model) override;
+
+private:
+    TaskId id_;
 };
 
-class DeleteCommand : public CommandWithContext
-{
-    using CommandWithContext::CommandWithContext;
-public:
-    Model::Response Execute(const std::shared_ptr<Model>& model) override;
-};
-
-class ShowCommand : public CommandWithContext
+class ShowCommand : public Command
 {
     // TODO Add constructor with filter params
-    using CommandWithContext::CommandWithContext;
+    explicit ShowCommand() = default;
 public:
-    Model::Response Execute(const std::shared_ptr<Model>& model) override;
+    CommandResponse Execute(const std::shared_ptr<Model>& model) override;
 };
 
-class SaveCommand : public CommandWithContext
+class SaveCommand : public Command
 {
-    using CommandWithContext::CommandWithContext;
+    explicit SaveCommand(const std::string& file_name);
 public:
-    Model::Response Execute(const std::shared_ptr<Model>& model) override;
+    CommandResponse Execute(const std::shared_ptr<Model>& model) override;
+
+private:
+    std::string file_name_;
 };
 
-class LoadCommand : public CommandWithContext
+class LoadCommand : public Command
 {
-    using CommandWithContext::CommandWithContext;
+    explicit LoadCommand(const std::string& file_name);
 public:
-    Model::Response Execute(const std::shared_ptr<Model>& model) override;
+    CommandResponse Execute(const std::shared_ptr<Model>& model) override;
+    
+private:
+    std::string file_name_;
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_INCLUDE_CommandWithContextS_H_

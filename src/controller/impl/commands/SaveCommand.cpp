@@ -4,15 +4,21 @@
 
 #include "../../include/ConcreteCommands.h"
 
-Model::Response SaveCommand::Execute(const std::shared_ptr<Model>& model)
+CommandResponse SaveCommand::Execute(const std::shared_ptr<Model>& model)
 {
-    auto context = this->GetContext();
-    auto var_set = context->variable_set();
+    auto result = CommandResponse{};
 
-    auto persister = FilePersister{var_set.file_name};
+    auto persister = FilePersister{file_name_};
 
     if (persister.Save(model->Show()))
-        return Model::Response::CreateSuccess();
+        result.model_response = ModelResponse::CreateSuccess();
     else
-        return Model::Response::CreateError(Model::Response::ErrorType::FAIL);
+        result.model_response = ModelResponse::CreateError(ModelResponse::ErrorType::FAIL);
+
+    return result;
+}
+SaveCommand::SaveCommand(const std::string& file_name)
+    :
+    file_name_(file_name)
+{
 }

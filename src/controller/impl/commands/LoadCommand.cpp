@@ -4,19 +4,23 @@
 
 #include "../../include/ConcreteCommands.h"
 
-
-Model::Response LoadCommand::Execute(const std::shared_ptr<Model>& model)
+CommandResponse LoadCommand::Execute(const std::shared_ptr<Model>& model)
 {
-    auto context = this->GetContext();
-    auto var_set = context->variable_set();
+    auto result = CommandResponse{};
 
-    auto persister = FilePersister{var_set.file_name};
-
+    auto persister = FilePersister{file_name_};
     auto tasks = persister.Load();
 
     if (tasks.has_value())
-        return model->Load(*tasks);
+        result.model_response = model->Load(*tasks);
     else
-        return Model::Response::CreateError(Model::Response::ErrorType::FAIL);
+        result.model_response = ModelResponse::CreateError(ModelResponse::ErrorType::FAIL);
+
+    return result;
+}
+LoadCommand::LoadCommand(const std::string& file_name)
+    :
+    file_name_(file_name)
+{
 }
 

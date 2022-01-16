@@ -5,15 +5,19 @@
 #include "../../include/ConcreteCommands.h"
 #include "util/Task/TaskCreators.h"
 
-Model::Response AddCommand::Execute(const std::shared_ptr<Model>& model)
+CommandResponse AddCommand::Execute(const std::shared_ptr<Model>& model)
 {
-    auto context = this->GetContext();
-    auto var_set = context->variable_set();
+    auto result = CommandResponse{};
 
-    auto task = var_set.MakeTask();
-
-    if (var_set.parent_id.has_value())
-        return model->AddSubTask(*task, *var_set.parent_id);
+    if (this->parent_id_.has_value())
+        result.model_response = model->AddSubTask(task_, *parent_id_);
     else
-        return model->Add(*task);
+        result.model_response = model->Add(task_);
+
+    return result;
+}
+AddCommand::AddCommand(const Task& task, const std::optional<TaskId>& parent_id)
+{
+    this->task_ = task;
+    this->parent_id_ = parent_id;
 }
