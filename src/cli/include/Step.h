@@ -7,7 +7,7 @@
 
 #include <memory>
 #include <sstream>
-#include "controller/include/CommandFactory.h"
+#include "common/include/Command.h"
 #include "Readers.h"
 
 class Context;
@@ -15,7 +15,7 @@ class Step;
 
 struct StepResult
 {
-    CommandType command_type;
+    std::shared_ptr<Command> command;
     std::shared_ptr<Step> next_step;
 };
 
