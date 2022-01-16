@@ -7,12 +7,12 @@
 
 #include <memory>
 #include "Model.h"
-#include "View.h"
+#include "CommandResponse.h"
 
 class Command
 {
 public:
-    virtual Model::Response Execute(const std::shared_ptr<Model>& model) = 0;
+    virtual CommandResponse Execute(const std::shared_ptr<Model>& model) = 0;
 public:
     virtual ~Command() = default;
 };
