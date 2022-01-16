@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 03.12.2021.
 //
 
-#include "controller/include/Controller.h"
+#include "controller/include/ModelController.h"
 #include "cli/include/StepMachine.h"
 #include "model/include/TaskManager.h"
 
@@ -13,7 +13,7 @@ int main()
     };
 
     auto command_factory = std::make_shared<CommandFactory>();
-    auto controller = std::make_shared<Controller>(Controller{model});
+    auto controller = std::make_shared<ModelController>(ModelController{model});
 
     auto console_manipulator = std::make_shared<ConsoleManipulator>();
     auto step_factory = std::shared_ptr<StepFactory>{new StepFactory{console_manipulator}};
