@@ -14,7 +14,7 @@ public:
     std::optional<std::vector<TaskDTO>> tasks;
 
 public:
-    bool IsError();
+    bool IsError() const;
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_INCLUDE_COMMANDRESPONSE_H_

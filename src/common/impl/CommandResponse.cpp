@@ -4,7 +4,7 @@
 
 #include "common/include/CommandResponse.h"
 
-bool CommandResponse::IsError()
+bool CommandResponse::IsError() const
 {
     if (model_response.has_value())
         return false;
