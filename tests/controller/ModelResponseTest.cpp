@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "../../src/controller/include/Model.h"
+#include "common/include/Model.h"
 
 class ModelResponseTest : public ::testing::Test {};
 

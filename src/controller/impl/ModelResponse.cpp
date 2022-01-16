@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 21.12.2021.
 //
 
-#include "../include/Model.h"
+#include "common/include/Model.h"
 
 Model::Response Model::Response::CreateSuccess()
 {

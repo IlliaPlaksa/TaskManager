@@ -6,7 +6,7 @@
 #define TASKMANAGER_SRC_CLI_STEPMACHINE_H_
 
 #include <optional>
-#include "../../controller/include/View.h"
+#include "common/include/View.h"
 #include "../../controller/include/Controller.h"
 #include "Context.h"
 #include "Step.h"

@@ -7,7 +7,7 @@
 
 #include <map>
 #include <vector>
-#include "../../controller/include/Model.h"
+#include "common/include/Model.h"
 #include "TaskNode.h"
 #include "IdGenerator.h"
 #include "Task.pb.h"

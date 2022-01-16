@@ -9,7 +9,7 @@
 #include <fstream>
 #include <optional>
 #include "TaskDTO.pb.h"
-#include "../../controller/include/Persister.h"
+#include "common/include/Persister.h"
 
 class FilePersister final : public TaskPersister
 {

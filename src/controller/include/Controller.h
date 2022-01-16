@@ -7,9 +7,9 @@
 
 #include "Task.pb.h"
 #include "TaskId.pb.h"
-#include "View.h"
-#include "Model.h"
-#include "Command.h"
+#include "common/include/View.h"
+#include "common/include/Model.h"
+#include "common/include/Command.h"
 #include "CommandFactory.h"
 
 class Controller

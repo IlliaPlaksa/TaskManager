@@ -6,7 +6,7 @@
 #define TASKMANAGER_SRC_CONTROLLER_COMMANDFACTORY_H_
 
 #include <memory>
-#include "Command.h"
+#include "common/include/Command.h"
 #include "ConcreteCommands.h"
 #include "ContextDTO.h"
 
