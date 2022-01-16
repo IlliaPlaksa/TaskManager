@@ -11,3 +11,10 @@ bool CommandResponse::IsError() const
     else
         return model_response->IsError();
 }
+CommandResponse::CommandResponse()
+    :
+    model_response(std::nullopt),
+    tasks(std::nullopt)
+{
+
+}

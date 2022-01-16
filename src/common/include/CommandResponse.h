@@ -10,6 +10,9 @@
 class CommandResponse
 {
 public:
+    CommandResponse();
+
+public:
     std::optional<ModelResponse> model_response;
     std::optional<std::vector<TaskDTO>> tasks;
 

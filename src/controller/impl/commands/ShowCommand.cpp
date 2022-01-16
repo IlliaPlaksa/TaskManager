@@ -4,13 +4,10 @@
 
 #include "../../include/ConcreteCommands.h"
 
-Model::Response ShowCommand::Execute(const std::shared_ptr<Model>& model)
+CommandResponse ShowCommand::Execute(const std::shared_ptr<Model>& model)
 {
-    auto context = this->GetContext();
-    auto var_set = context->variable_set();
+    auto result = CommandResponse{};
+    result.tasks = model->Show();
 
-    auto new_context = ContextDTO::Create(VariableSet{}, model->Show());
-    this->SetContext(new_context);
-
-    return Model::Response::CreateSuccess();
+    return result;
 }
