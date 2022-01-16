@@ -3,8 +3,9 @@
 //
 
 #include "../include/VariableSet.h"
-#include "../../util/TaskDTOCreators.h"
-#include "../../util/TaskCreators.h"
+#include "util/TaskDTO/TaskDTOCreators.h"
+#include "util/Task/TaskCreators.h"
+#include "util/TaskId/TaskIdComparators.h"
 
 std::optional<TaskDTO> VariableSet::MakeTaskDTO() const
 {
@@ -22,4 +23,14 @@ std::optional<Task> VariableSet::MakeTask() const
 void VariableSet::Clear()
 {
     *this = VariableSet{};
+}
+bool VariableSet::operator==(const VariableSet& other) const
+{
+    return this->title == other.title
+    and this->id == other.id
+    and this->status == other.status
+    and this->date == other.date
+    and this->file_name == other.file_name
+    and this->priority == other.priority
+    and this->label == other.label;
 }

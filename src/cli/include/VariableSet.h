@@ -23,10 +23,11 @@ public:
 
     std::string file_name;
 
-    std::optional<std::string> error_message;
 public:
     std::optional<TaskDTO> MakeTaskDTO() const;
     std::optional<Task> MakeTask()const;
+
+    bool operator==(const VariableSet& other) const;
 
 public:
     void Clear();
