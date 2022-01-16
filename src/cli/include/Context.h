@@ -10,17 +10,17 @@
 #include "StepFactory.h"
 #include "VariableSetBuilder.h"
 #include "VariableSet.h"
-#include "controller/include/ContextDTO.h"
+#include "TaskStorage.h"
 
 class Context
 {
 public:
-    bool SetFromContextDTO(const ContextDTO& context_dto);
-
-    ContextDTO GetContextDTO();
-public:
     std::shared_ptr<VariableSet> GetVariableSet() const;
     std::shared_ptr<TaskStorage> GetStorage() const;
+    std::optional<std::string> GetError() const;
+
+public:
+    void SetError(const std::string& message);
 
 public:
     Context();
@@ -28,6 +28,7 @@ public:
 private:
     std::shared_ptr<VariableSet> variable_set_;
     std::shared_ptr<TaskStorage> task_storage_;
+    std::optional<std::string> error_message_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_CONTEXT_H_

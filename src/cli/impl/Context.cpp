@@ -7,7 +7,8 @@
 Context::Context()
     :
     variable_set_(std::shared_ptr<VariableSet>{new VariableSet}),
-    task_storage_(std::make_shared<TaskStorage>())
+    task_storage_(std::make_shared<TaskStorage>()),
+    error_message_(std::nullopt)
 {
 }
 std::shared_ptr<VariableSet> Context::GetVariableSet() const
@@ -19,13 +20,11 @@ std::shared_ptr<TaskStorage> Context::GetStorage() const
 {
     return this->task_storage_;
 }
-bool Context::SetFromContextDTO(const ContextDTO& context_dto)
+std::optional<std::string> Context::GetError() const
 {
-    *variable_set_ = context_dto.variable_set();
-    this->task_storage_->LoadTasks(context_dto.tasks());
-    return false;
+    return this->error_message_;
 }
-ContextDTO Context::GetContextDTO()
+void Context::SetError(const std::string& message)
 {
-    return ContextDTO::Create(*variable_set_, task_storage_->GetTasks());
+    this->error_message_ = message;
 }
