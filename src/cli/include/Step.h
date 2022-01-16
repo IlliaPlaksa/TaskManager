@@ -7,7 +7,7 @@
 
 #include <memory>
 #include <sstream>
-#include "../../controller/include/CommandFactory.h"
+#include "controller/include/CommandFactory.h"
 #include "Readers.h"
 
 class Context;

@@ -6,7 +6,7 @@
 #define TASKMANAGER_SRC_CLI_CONTEXTDTO_H_
 
 #include "TaskDTO.pb.h"
-#include "../../cli/include/VariableSet.h"
+#include "cli/include/VariableSet.h"
 
 /*
  * Class used to transfer data between Controller and View

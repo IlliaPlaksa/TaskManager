@@ -7,7 +7,7 @@
 
 #include <optional>
 #include "common/include/View.h"
-#include "../../controller/include/Controller.h"
+#include "controller/include/Controller.h"
 #include "Context.h"
 #include "Step.h"
 #include "MachineSteps.h"
