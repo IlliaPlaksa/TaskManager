@@ -13,6 +13,7 @@
 
 class AddCommand : public Command
 {
+public:
     explicit AddCommand(const Task& task, const std::optional<TaskId>& parent_id);
 public:
     CommandResponse Execute(const std::shared_ptr<Model>& model) override;
@@ -24,6 +25,7 @@ private:
 
 class EditCommand : public Command
 {
+public:
     explicit EditCommand(const TaskId& id, const Task& task, const std::optional<TaskId>& parent_id);
 public:
     CommandResponse Execute(const std::shared_ptr<Model>& model) override;
@@ -36,6 +38,7 @@ private:
 
 class CompleteCommand : public Command
 {
+public:
     explicit CompleteCommand(const TaskId& id);
 public:
     CommandResponse Execute(const std::shared_ptr<Model>& model) override;
@@ -46,6 +49,7 @@ private:
 
 class DeleteCommand : public Command
 {
+public:
     explicit DeleteCommand(const TaskId& id);
 public:
     CommandResponse Execute(const std::shared_ptr<Model>& model) override;
@@ -56,6 +60,7 @@ private:
 
 class ShowCommand : public Command
 {
+public:
     // TODO Add constructor with filter params
     explicit ShowCommand() = default;
 public:
@@ -64,6 +69,7 @@ public:
 
 class SaveCommand : public Command
 {
+public:
     explicit SaveCommand(const std::string& file_name);
 public:
     CommandResponse Execute(const std::shared_ptr<Model>& model) override;
@@ -74,6 +80,7 @@ private:
 
 class LoadCommand : public Command
 {
+public:
     explicit LoadCommand(const std::string& file_name);
 public:
     CommandResponse Execute(const std::shared_ptr<Model>& model) override;
