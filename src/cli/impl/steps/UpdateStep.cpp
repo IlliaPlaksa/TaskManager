@@ -9,6 +9,6 @@ StepResult UpdateStep::Execute(Context &context)
     // TODO add filter requests
     StepResult result;
     result.next_step = this->dependency()->step_factory()->CreateStep(StepId::kShow);
-    result.command_type = CommandType::kShow;
+    result.command = std::shared_ptr<Command>(new ShowCommand());
     return result;
 }

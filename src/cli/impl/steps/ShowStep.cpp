@@ -32,7 +32,7 @@ StepResult ShowStep::Execute(Context& context)
     }
 
     result.next_step = step_factory->CreateStep(StepId::kRoot);
-    result.command_type = CommandType::kNone;
+    result.command = std::shared_ptr<Command>(nullptr);
     return result;
 }
 std::string ShowStep::ToString(const Task::Priority& priority)

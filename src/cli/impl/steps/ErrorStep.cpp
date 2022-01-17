@@ -11,7 +11,7 @@ StepResult ErrorStep::Execute(Context& context)
     auto console = dependency->console_manipulator();
     auto step_factory = dependency->step_factory();
 
-    auto message = context.GetVariableSet()->error_message;
+    auto message = context.GetError();
 
     if (message)
         console->WriteError(*message);
@@ -20,6 +20,6 @@ StepResult ErrorStep::Execute(Context& context)
 
     StepResult result;
     result.next_step = step_factory->CreateStep(StepId::kRoot);
-    result.command_type = CommandType::kNone;
+    result.command = std::shared_ptr<Command>(nullptr);
     return result;
 }

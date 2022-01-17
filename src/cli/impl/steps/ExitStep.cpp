@@ -8,7 +8,7 @@ StepResult ExitStep::Execute(Context &context)
 {
     StepResult result;
     result.next_step = this->dependency()->step_factory()->CreateStep(StepId::kNone);
-    result.command_type = CommandType::kNone;
+    result.command = std::shared_ptr<Command>(nullptr);
     return result;
 }
 

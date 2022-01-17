@@ -36,13 +36,17 @@ StepResult AddStep::Execute(Context& context)
 
     if (confirm)
     {
-        *context.GetVariableSet() = variable_set_builder.GetResult();
-        result.command_type = CommandType::kAdd;
+        auto var_set = variable_set_builder.GetResult();
+
+        auto task = var_set.MakeTask();
+        auto parent_id = var_set.parent_id;
+
+        if (task.has_value())
+            result.command = std::shared_ptr<Command>(new AddCommand(*task, parent_id));
     } else
     {
         console->WriteLine("Operation was canceled");
-        variable_set_builder.Reset();
-        result.command_type = CommandType::kNone;
+        result.command = std::shared_ptr<Command>(nullptr);
     }
     result.next_step = step_factory->CreateStep(StepId::kRoot);
     return result;

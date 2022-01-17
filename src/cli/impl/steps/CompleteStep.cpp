@@ -17,10 +17,12 @@ StepResult CompleteStep::Execute(Context &context)
     variable_set_builder.SetId(Read::Id(console));
     console->ResetPrompt();
 
-    *context.GetVariableSet() = variable_set_builder.GetResult();
+    // *context.GetVariableSet() = variable_set_builder.GetResult();
+
+    auto id = variable_set_builder.GetResult().id;
 
     StepResult result;
     result.next_step = step_factory->CreateStep(StepId::kRoot);
-    result.command_type = CommandType::kComplete;
+    result.command = std::shared_ptr<Command>(new CompleteCommand(id));
     return result;
 }

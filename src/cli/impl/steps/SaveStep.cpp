@@ -15,9 +15,10 @@ StepResult SaveStep::Execute(Context& context)
     auto variable_set_builder = VariableSetBuilder{};
 
     variable_set_builder.SetFileName(Read::FileName(console));
-    *context.GetVariableSet() = variable_set_builder.GetResult();
 
-    result.command_type = CommandType::kSave;
+    auto var_set = variable_set_builder.GetResult();
+
+    result.command = result.command = std::shared_ptr<Command>(new SaveCommand(var_set.file_name));
     result.next_step = step_factory->CreateStep(StepId::kRoot);
     return result;
 }

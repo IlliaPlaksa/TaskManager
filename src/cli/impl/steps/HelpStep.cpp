@@ -24,6 +24,6 @@ StepResult HelpStep::Execute(Context &context)
 
     StepResult result;
     result.next_step = step_factory->CreateStep(StepId::kRoot);
-    result.command_type = CommandType::kNone;
+    result.command = std::shared_ptr<Command>(nullptr);
     return result;
 }

@@ -4,7 +4,7 @@
 
 #include "cli/include/MachineSteps.h"
 
-StepResult EditStep::Execute(Context &context)
+StepResult EditStep::Execute(Context& context)
 {
     StepResult result;
 
@@ -41,14 +41,36 @@ StepResult EditStep::Execute(Context &context)
 
     if (confirm)
     {
-        *context.GetVariableSet() = variable_set_builder.GetResult();
-        result.command_type = CommandType::kEdit;
+        auto var_set = variable_set_builder.GetResult();
+        auto id = var_set.id;
+        auto task = var_set.MakeTask();
+        auto parent_id = var_set.parent_id;
+
+        if (task.has_value())
+            result.command = std::shared_ptr<Command>(new EditCommand(id, *task, parent_id));
+
     } else
     {
         console->WriteLine("Operation was canceled");
-        variable_set_builder.Reset();
-        result.command_type = CommandType::kNone;
+        result.command = std::shared_ptr<Command>(nullptr);
     }
+
+//    if (confirm)
+//    {
+//        auto var_set = variable_set_builder.GetResult();
+//
+//        auto task = var_set.MakeTask();
+//        auto parent_id = var_set.parent_id;
+//
+//        if (task.has_value())
+//            result.command = std::shared_ptr<Command>(new AddCommand(*task, parent_id));
+//    } else
+//    {
+//        console->WriteLine("Operation was canceled");
+//        variable_set_builder.Reset();
+//        result.command = std::shared_ptr<Command>(nullptr);
+//    }
+
     result.next_step = step_factory->CreateStep(StepId::kRoot);
     return result;
 }

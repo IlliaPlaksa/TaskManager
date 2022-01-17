@@ -8,6 +8,7 @@
 #include "Step.h"
 #include "StepDependency.h"
 #include "Context.h"
+#include "ConcreteCommands.h"
 
 enum class StepId;
 
