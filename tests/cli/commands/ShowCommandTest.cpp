@@ -7,8 +7,7 @@
 
 #include "cli/include/ConcreteCommands.h"
 
-#include "../mocks/ModelMock.h"
-#include "../mocks/ContextDTOMock.h"
+#include "mocks/ModelMock.h"
 
 class ShowCommandTest : ::testing::Test {};
 

@@ -10,8 +10,7 @@
 #include "util/Task/TaskComparators.h"
 #include "util/TaskId/TaskIdComparators.h"
 
-#include "../mocks/ModelMock.h"
-#include "../mocks/ContextDTOMock.h"
+#include "mocks/ModelMock.h"
 
 class AddCommandTest : ::testing::Test {};
 

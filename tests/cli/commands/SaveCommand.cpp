@@ -9,8 +9,7 @@
 
 #include "util/TaskDTO/TaskDTOComparators.h"
 
-#include "../mocks/ModelMock.h"
-#include "../mocks/ContextDTOMock.h"
+#include "mocks/ModelMock.h"
 
 class SaveCommandTest : ::testing::Test {};
 

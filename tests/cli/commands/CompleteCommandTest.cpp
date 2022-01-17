@@ -5,8 +5,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "cli/include/ConcreteCommands.h"
-#include "../mocks/ModelMock.h"
-#include "../mocks/ContextDTOMock.h"
+#include "mocks/ModelMock.h"
 #include "util/TaskId/TaskIdCreators.h"
 #include "util/TaskId/TaskIdComparators.h"
 
