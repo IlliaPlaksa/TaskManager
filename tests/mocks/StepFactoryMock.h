@@ -11,6 +11,8 @@
 class StepFactoryMock : public StepFactory
 {
 public:
+    using StepFactory::StepFactory;
+public:
     MOCK_METHOD(std::shared_ptr<Step>, CreateStep, (StepId step_id), (override));
     MOCK_METHOD(std::shared_ptr<StepFactory>, shared, (), (override));
 };
