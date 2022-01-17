@@ -7,9 +7,9 @@
 bool CommandResponse::IsError() const
 {
     if (model_response.has_value())
-        return false;
-    else
         return model_response->IsError();
+    else
+        return !tasks.has_value();
 }
 CommandResponse::CommandResponse()
     :
