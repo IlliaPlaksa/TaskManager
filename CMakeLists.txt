@@ -76,6 +76,9 @@ file(GLOB_RECURSE Tests_SRC
         "src/cli/*.cpp"
         "src/cli/*.h"
 
+        "src/common/*.cpp"
+        "src/common/*.h"
+
         "src/controller/*.cpp"
         "src/controller/*.h"
 
