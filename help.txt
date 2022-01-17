@@ -1,0 +1,17 @@
+Commands:
+    [help] - Show all available commands
+    [exit] - Exit program
+    [add] - Add new Task
+    [edit] - Edit existing Task
+    [complete] - Complete existing Task
+    [delete] - Delete Task
+    [show] - Show Tasks
+Input formats:
+    [Title] - must be non-empty
+    [ID] - must be non-negative integer
+    [Priority] - available values: "high", "medium", "low"
+    [Label] - optional, can be empty
+    [Date] - date format = DD.MM.YYYY
+    [Confirm] - must be one of the following: "y", "n"
+    [File name] - must be non-empty: file_name.*
+
