@@ -5,6 +5,7 @@
 #ifndef TASKMANAGER_SRC_CONTROLLER_INCLUDE_COMMANDRESPONSE_H_
 #define TASKMANAGER_SRC_CONTROLLER_INCLUDE_COMMANDRESPONSE_H_
 
+#include "TaskDTO.pb.h"
 #include "ModelResponse.h"
 
 class CommandResponse
