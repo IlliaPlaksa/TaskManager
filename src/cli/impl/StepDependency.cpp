@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 10.01.2022.
 //
 
-#include "../include/StepDependency.h"
+#include "cli/include/StepDependency.h"
 
 StepDependency::StepDependency(const std::shared_ptr<StepFactory>& factory,
                                const std::shared_ptr<ConsoleManipulator>& console_manipulator)

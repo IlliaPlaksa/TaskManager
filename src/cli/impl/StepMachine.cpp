@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 22.11.2021.
 //
 
-#include "../include/StepMachine.h"
+#include "cli/include/StepMachine.h"
 #include "util/TaskId/TaskIdComparators.h"
 
 StepMachine::StepMachine(const std::shared_ptr<StepFactory>& step_factory,

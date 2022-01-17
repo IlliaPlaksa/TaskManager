@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 20.12.2021.
 //
 
-#include "../include/VariableSetBuilder.h"
+#include "cli/include/VariableSetBuilder.h"
 #include <google/protobuf/util/time_util.h>
 #include "util/TaskDTO/TaskDTOCreators.h"
 

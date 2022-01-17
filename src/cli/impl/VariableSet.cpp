@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 23.12.2021.
 //
 
-#include "../include/VariableSet.h"
+#include "cli/include/VariableSet.h"
 #include "util/TaskDTO/TaskDTOCreators.h"
 #include "util/Task/TaskCreators.h"
 #include "util/TaskId/TaskIdComparators.h"

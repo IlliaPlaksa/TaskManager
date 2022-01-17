@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 29.11.2021.
 //
 
-#include "../include/Readers.h"
+#include "cli/include/Readers.h"
 
 StepId Read::Command(const std::shared_ptr<ConsoleManipulator>& console)
 {

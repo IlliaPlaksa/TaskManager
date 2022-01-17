@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 13.12.2021.
 //
 
-#include "../../include/MachineSteps.h"
+#include "cli/include/MachineSteps.h"
 
 StepResult UpdateStep::Execute(Context &context)
 {
