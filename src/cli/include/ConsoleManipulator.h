@@ -11,11 +11,14 @@
 class ConsoleManipulator
 {
 public:
-    void WriteLine(const std::string& message) const;
-    void WriteError(const std::string& message) const;
-    std::string ReadLine(const std::string& message = "") const;
+    virtual void WriteLine(const std::string& message) const;
+    virtual void WriteError(const std::string& message) const;
+    virtual std::string ReadLine(const std::string& message = "") const;
 
-    void ResetPrompt(const std::string& prompt = "");
+    virtual void ResetPrompt(const std::string& prompt = "");
+
+public:
+    virtual ~ConsoleManipulator() = default;
 private:
     // trim from start
     std::string ltrim(std::string&& s) const;
