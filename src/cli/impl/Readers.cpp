@@ -24,7 +24,7 @@ std::string Read::Title(const std::shared_ptr<ConsoleManipulator>& console)
 
     while (!input)
     {
-        console->WriteError("Wrong title passed");
+        console->WriteError("Wrong title entered");
         input = Validate::Title(
             console->ReadLine("[Title]")
         );
@@ -41,7 +41,7 @@ TaskId Read::Id(const std::shared_ptr<ConsoleManipulator>& console)
 
     while (!input)
     {
-        console->WriteError("Wrong ID passed");
+        console->WriteError("Wrong ID entered");
         input = Validate::Id(
             console->ReadLine(message)
         );
@@ -70,7 +70,7 @@ time_t Read::Date(const std::shared_ptr<ConsoleManipulator>& console)
 
     while (!input)
     {
-        console->WriteError("Wrong Date passed");
+        console->WriteError("Wrong Date entered");
         input = Validate::Date(
             console->ReadLine(message)
         );
@@ -79,14 +79,14 @@ time_t Read::Date(const std::shared_ptr<ConsoleManipulator>& console)
 }
 Task::Priority Read::Priority(const std::shared_ptr<ConsoleManipulator>& console)
 {
-    std::string message = "[Priority]";
+    std::string message = R"([Priority] "high", "medium", "low")";
     auto input = Validate::Priority(
         console->ReadLine(message)
     );
 
     while (!input)
     {
-        console->WriteError("Wrong Priority passed");
+        console->WriteError(R"(Wrong Priority entered)");
         input = Validate::Priority(
             console->ReadLine(message)
         );
@@ -103,14 +103,14 @@ std::optional<std::string> Read::Label(const std::shared_ptr<ConsoleManipulator>
 }
 bool Read::Confirm(const std::shared_ptr<ConsoleManipulator>& console)
 {
-    std::string message = "[Confirm] \"y/n\"";
+    std::string message = R"([Confirm] "y/n")";
     auto input = Validate::Confirm(
         console->ReadLine(message)
     );
 
     while (!input)
     {
-        console->WriteError("Wrong Confirmation passed");
+        console->WriteError("No such confirmation");
         input = Validate::Confirm(
             console->ReadLine(message)
         );
@@ -121,12 +121,12 @@ std::string Read::FileName(const std::shared_ptr<ConsoleManipulator>& console)
 {
     std::optional<std::string> input;
     input = Validate::FileName(
-        console->ReadLine("[File name]")
+        console->ReadLine(R"([File name] "example.*" )")
     );
 
     while (!input)
     {
-        console->WriteError("Wrong file name passed");
+        console->WriteError("Wrong file name entered");
         input = Validate::Title(
             console->ReadLine("[File name]")
         );
