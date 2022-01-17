@@ -90,7 +90,7 @@ TEST(TaskManagerTest, shouldReturnWrongParentIdErrorInAdd)
     manager.Add(task);
 
     EXPECT_TRUE(
-        manager.AddSubTask(task, *CreateTaskId(1234)).error() == Model::Response::ErrorType::NON_EXISTING_PARENT_ID);
+        manager.AddSubTask(task, *CreateTaskId(1234)).error() == ModelResponse::ErrorType::NON_EXISTING_PARENT_ID);
 }
 
 TEST(TaskManagerTest, shouldAddMultiplyTasks)
@@ -122,12 +122,12 @@ TEST(TaskManagerTest, shouldReturnWrongIdErrorInEdit)
                            Task::Priority::Task_Priority_kHigh);
 
     ASSERT_TRUE(
-        manager.Edit(*CreateTaskId(123), *task).error() == Model::Response::ErrorType::INVALID_ID
+        manager.Edit(*CreateTaskId(123), *task).error() == ModelResponse::ErrorType::INVALID_ID
     );
 
     ASSERT_TRUE(
         manager.EditSubTask(*CreateTaskId(123), *task, *CreateTaskId(0)).error()
-            == Model::Response::ErrorType::INVALID_ID
+            == ModelResponse::ErrorType::INVALID_ID
     );
 }
 
@@ -195,7 +195,7 @@ TEST(TaskManagerTest, shouldReturnWrongParentIdErrorInEdit)
 
     ASSERT_TRUE(
         manager.EditSubTask(*CreateTaskId(1), task, *CreateTaskId(123)).error()
-            == Model::Response::ErrorType::NON_EXISTING_PARENT_ID
+            == ModelResponse::ErrorType::NON_EXISTING_PARENT_ID
     );
 }
 
@@ -223,7 +223,7 @@ TEST(TaskManagerTest, shouldReturnWrongIdErrorInDelete)
 
     auto task_id = *CreateTaskId(0);
 
-    EXPECT_TRUE(manager.Delete(task_id).error() == Model::Response::ErrorType::INVALID_ID);
+    EXPECT_TRUE(manager.Delete(task_id).error() == ModelResponse::ErrorType::INVALID_ID);
 }
 
 TEST(TaskManagerTest, shouldCompleteTask)
@@ -252,7 +252,7 @@ TEST(TaskManagerTest, shouldReturnWrongIdErrorInComplete)
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
 
     auto task_id = *CreateTaskId(123);
-    EXPECT_TRUE(manager.Complete(task_id).error() == Model::Response::ErrorType::INVALID_ID);
+    EXPECT_TRUE(manager.Complete(task_id).error() == ModelResponse::ErrorType::INVALID_ID);
 }
 
 TEST(TaskManagerTest, shouldReturnNotcompletedSubtasksErrorInComplete)
@@ -266,7 +266,7 @@ TEST(TaskManagerTest, shouldReturnNotcompletedSubtasksErrorInComplete)
 
     manager.Add(task);
     manager.AddSubTask(task, task_id);
-    EXPECT_TRUE(manager.Complete(task_id).error() == Model::Response::ErrorType::NOT_COMPLETED_SUBTASKS);
+    EXPECT_TRUE(manager.Complete(task_id).error() == ModelResponse::ErrorType::NOT_COMPLETED_SUBTASKS);
 }
 
 using ::testing::Return;
@@ -359,7 +359,7 @@ TEST(TaskManagerTest, shouldRejectLoadingWrongTasks)
     tasks.emplace_back(*CreateSubTaskDTO(*CreateTaskId(1), task, *CreateTaskId(123)));
     tasks.emplace_back(*CreateTaskDTO(*CreateTaskId(2), task));
 
-    EXPECT_TRUE(manager.Load(tasks).error() == Model::Response::ErrorType::FAIL);
+    EXPECT_TRUE(manager.Load(tasks).error() == ModelResponse::ErrorType::FAIL);
 
     tasks.clear();
 
@@ -367,5 +367,5 @@ TEST(TaskManagerTest, shouldRejectLoadingWrongTasks)
     tasks.emplace_back(*CreateSubTaskDTO(*CreateTaskId(1), task, *CreateTaskId(1)));
     tasks.emplace_back(*CreateTaskDTO(*CreateTaskId(2), task));
 
-    EXPECT_TRUE(manager.Load(tasks).error() == Model::Response::ErrorType::FAIL);
+    EXPECT_TRUE(manager.Load(tasks).error() == ModelResponse::ErrorType::FAIL);
 }
