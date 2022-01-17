@@ -12,13 +12,12 @@ int main()
         new TaskManager{std::make_unique<IdGenerator>()}
     };
 
-    auto command_factory = std::make_shared<CommandFactory>();
-    auto controller = std::make_shared<ModelController>(ModelController{model});
+    // auto controller = std::shared_ptr<Model>(new ModelController{model});
 
     auto console_manipulator = std::make_shared<ConsoleManipulator>();
     auto step_factory = std::shared_ptr<StepFactory>{new StepFactory{console_manipulator}};
 
-    auto view = std::shared_ptr<View>{new StepMachine{step_factory, controller, command_factory}};
+    auto view = std::shared_ptr<View>{new StepMachine{step_factory, model}};
 
     view->Run();
     return 0;
