@@ -97,6 +97,7 @@ add_library(Tests
 
 target_include_directories(Tests
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
+        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/tests
         ${PROTOBUF_CPP_OUT_DIR}
         ${PROTOBUF_INCLUDE_DIR}
         )
@@ -108,5 +109,3 @@ add_executable(TaskManger_TEST
 target_link_libraries(TaskManger_TEST Tests protobuf::libprotobuf)
 target_link_libraries(TaskManger_TEST GTest::GTest GTest::Main)
 target_link_libraries(TaskManger_TEST GTest::gtest GTest::gmock GTest::gmock_main)
-
-
