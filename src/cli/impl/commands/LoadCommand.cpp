@@ -14,7 +14,7 @@ CommandResponse LoadCommand::Execute(const std::shared_ptr<Model>& model)
     if (tasks.has_value())
         result.model_response = model->Load(*tasks);
     else
-        result.model_response = ModelResponse::CreateError(ModelResponse::ErrorType::FAIL);
+        result.model_response = ModelResponse::Error(ModelResponse::ErrorType::FAIL);
 
     return result;
 }

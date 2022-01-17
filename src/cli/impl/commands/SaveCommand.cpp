@@ -11,9 +11,9 @@ CommandResponse SaveCommand::Execute(const std::shared_ptr<Model>& model)
     auto persister = FilePersister{file_name_};
 
     if (persister.Save(model->Show()))
-        result.model_response = ModelResponse::CreateSuccess();
+        result.model_response = ModelResponse::Success();
     else
-        result.model_response = ModelResponse::CreateError(ModelResponse::ErrorType::FAIL);
+        result.model_response = ModelResponse::Error(ModelResponse::ErrorType::FAIL);
 
     return result;
 }

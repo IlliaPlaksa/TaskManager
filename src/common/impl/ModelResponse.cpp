@@ -4,14 +4,14 @@
 
 #include "common/include/ModelResponse.h"
 
-ModelResponse ModelResponse::CreateSuccess()
+ModelResponse ModelResponse::Success()
 {
     ModelResponse result;
     result.status_ = Status::kSuccess;
     result.error_type_ = std::nullopt;
     return result;
 }
-ModelResponse ModelResponse::CreateError(const ModelResponse::ErrorType& error_type)
+ModelResponse ModelResponse::Error(const ModelResponse::ErrorType& error_type)
 {
     ModelResponse result;
     result.status_ = Status::kError;

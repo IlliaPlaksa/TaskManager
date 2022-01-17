@@ -26,8 +26,8 @@ public:
         kError
     };
 public:
-    static ModelResponse CreateSuccess();
-    static ModelResponse CreateError(const ErrorType& error_type);
+    static ModelResponse Success();
+    static ModelResponse Error(const ErrorType& error_type);
 
 private:
     ModelResponse() = default;

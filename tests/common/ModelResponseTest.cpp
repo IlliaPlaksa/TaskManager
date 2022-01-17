@@ -10,7 +10,7 @@ class ModelResponseTest : public ::testing::Test {};
 
 TEST(ModelResponseTest, shouldIsErrorMethodWorks)
 {
-    auto response = ModelResponse::CreateSuccess();
+    auto response = ModelResponse::Success();
 
     EXPECT_EQ(response.IsError(), response.status() == ModelResponse::Status::kError);
 }
@@ -18,7 +18,7 @@ TEST(ModelResponseTest, shouldIsErrorMethodWorks)
 
 TEST(ModelResponseTest, shouldCreateSuccessResponse)
 {
-    auto response = ModelResponse::CreateSuccess();
+    auto response = ModelResponse::Success();
 
     EXPECT_EQ(response.status(), ModelResponse::Status::kSuccess);
     EXPECT_TRUE(!response.IsError());
@@ -26,7 +26,7 @@ TEST(ModelResponseTest, shouldCreateSuccessResponse)
 
 TEST(ModelResponseTest, shouldCreateErrorResponse)
 {
-    auto response = ModelResponse::CreateError(ModelResponse::ErrorType::FAIL);
+    auto response = ModelResponse::Error(ModelResponse::ErrorType::FAIL);
 
     EXPECT_EQ(response.status(), ModelResponse::Status::kError);
     EXPECT_TRUE(response.IsError());
