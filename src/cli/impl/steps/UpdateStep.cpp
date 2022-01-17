@@ -10,5 +10,7 @@ StepResult UpdateStep::Execute(Context &context)
     StepResult result;
     result.next_step = this->dependency()->step_factory()->CreateStep(StepId::kShow);
     result.command = std::shared_ptr<Command>(new ShowCommand());
+
+    context.GetStorage()->Clear();
     return result;
 }
