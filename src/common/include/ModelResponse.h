@@ -5,7 +5,7 @@
 #ifndef TASKMANAGER_SRC_COMMON_INCLUDE_MODELRESPONSE_H_
 #define TASKMANAGER_SRC_COMMON_INCLUDE_MODELRESPONSE_H_
 
-#include "common/include/Model.h"
+#include <optional>
 
 class ModelResponse
 {
