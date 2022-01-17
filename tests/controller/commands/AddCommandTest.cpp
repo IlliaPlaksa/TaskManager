@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
-#include "controller/include/ConcreteCommands.h"
+#include "cli/include/ConcreteCommands.h"
 #include "util/TaskId/TaskIdCreators.h"
 #include "util/Task/TaskComparators.h"
 #include "util/TaskId/TaskIdComparators.h"

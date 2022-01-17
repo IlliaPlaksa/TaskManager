@@ -2,23 +2,25 @@
 // Created by Illia Plaksa on 10.01.2022.
 //
 
-#include "../../include/ConcreteCommands.h"
+#include "cli/include/ConcreteCommands.h"
 
-CommandResponse SaveCommand::Execute(const std::shared_ptr<Model>& model)
+CommandResponse LoadCommand::Execute(const std::shared_ptr<Model>& model)
 {
     auto result = CommandResponse{};
 
     auto persister = FilePersister{file_name_};
+    auto tasks = persister.Load();
 
-    if (persister.Save(model->Show()))
-        result.model_response = ModelResponse::CreateSuccess();
+    if (tasks.has_value())
+        result.model_response = model->Load(*tasks);
     else
         result.model_response = ModelResponse::CreateError(ModelResponse::ErrorType::FAIL);
 
     return result;
 }
-SaveCommand::SaveCommand(const std::string& file_name)
+LoadCommand::LoadCommand(const std::string& file_name)
     :
     file_name_(file_name)
 {
 }
+

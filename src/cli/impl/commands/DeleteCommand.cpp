@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 10.12.2021.
 //
 
-#include "../../include/ConcreteCommands.h"
+#include "cli/include/ConcreteCommands.h"
 
 CommandResponse DeleteCommand::Execute(const std::shared_ptr<Model>& model)
 {
