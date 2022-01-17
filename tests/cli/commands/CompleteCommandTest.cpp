@@ -14,26 +14,15 @@ class CompleteCommandTest : ::testing::Test {};
 TEST(CompleteCommandTest, shouldExecute)
 {
     auto model = std::shared_ptr<ModelMock>{new ModelMock};
-    auto context_dto = std::make_shared<ContextDTOMock>();
-
-    auto command = CompleteCommand{context_dto};
 
     auto id = *CreateTaskId(0);
-
-    auto variable_set = VariableSet{};
-    variable_set.title = "Title";
-    variable_set.date = time(nullptr);
-    variable_set.priority = Task::Priority::Task_Priority_kHigh;
-
-
-    EXPECT_CALL(*context_dto, variable_set())
-        .Times(1)
-        .WillOnce(testing::Return(variable_set));
-
+    auto command = CompleteCommand{id};
 
     EXPECT_CALL(*model, Complete(id))
         .Times(1)
-        .WillOnce(testing::Return(Model::Response::CreateSuccess()));
+        .WillOnce(testing::Return(ModelResponse::Success()));
 
-    command.Execute(model);
+    auto response = command.Execute(model);
+
+    EXPECT_FALSE(response.IsError());
 }

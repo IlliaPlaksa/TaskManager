@@ -18,50 +18,50 @@ class EditCommandTest : ::testing::Test {};
 TEST(EditCommandTest, shouldExecuteEdit)
 {
     auto model = std::make_shared<ModelMock>();
-    auto context_dto = std::make_shared<ContextDTOMock>();
 
-    auto variable_set = VariableSet{};
-    variable_set.title = "Title";
-    variable_set.date = time(nullptr);
-    variable_set.priority = Task::Priority::Task_Priority_kHigh;
-    variable_set.id = *CreateTaskId(0);
+    auto task_title = "Task name";
+    auto task_date = time(nullptr);
+    auto task_priority = Task::Priority::Task_Priority_kLow;
 
-    auto command = EditCommand{context_dto};
+    auto task = *CreateTask(task_title,
+                            task_date,
+                            task_priority);
 
-    EXPECT_CALL(*context_dto, variable_set())
+    auto id = *CreateTaskId(0);
+
+    auto command = EditCommand{id, task, std::nullopt};
+
+    EXPECT_CALL(*model, Edit(id, task))
         .Times(1)
-        .WillRepeatedly(testing::Return(variable_set));
+        .WillRepeatedly(testing::Return(ModelResponse::Success()));
 
-    EXPECT_CALL(*model, Edit(variable_set.id, *variable_set.MakeTask()))
-        .Times(1)
-        .WillRepeatedly(testing::Return(Model::Response::CreateSuccess()));
+    auto response = command.Execute(model);
 
-    command.Execute(model);
-
-    variable_set.parent_id = *CreateTaskId(1);
+    EXPECT_FALSE(response.IsError());
 }
 
 TEST(EditCommandTest, shouldExecuteEditSubTask)
 {
     auto model = std::make_shared<ModelMock>();
-    auto context_dto = std::make_shared<ContextDTOMock>();
 
-    auto variable_set = VariableSet{};
-    variable_set.title = "Title";
-    variable_set.date = time(nullptr);
-    variable_set.priority = Task::Priority::Task_Priority_kHigh;
-    variable_set.id = *CreateTaskId(0);
-    variable_set.parent_id = *CreateTaskId(1);
+    auto task_title = "Task name";
+    auto task_date = time(nullptr);
+    auto task_priority = Task::Priority::Task_Priority_kLow;
 
-    auto command = EditCommand{context_dto};
+    auto task = *CreateTask(task_title,
+                            task_date,
+                            task_priority);
 
-    EXPECT_CALL(*context_dto, variable_set())
+    auto id = *CreateTaskId(20349857);
+    auto parent_id = CreateTaskId(1234);
+
+    auto command = EditCommand{id, task, parent_id};
+
+    EXPECT_CALL(*model, EditSubTask(id, task, *parent_id))
         .Times(1)
-        .WillRepeatedly(testing::Return(variable_set));
+        .WillRepeatedly(testing::Return(ModelResponse::Success()));
 
-    EXPECT_CALL(*model, EditSubTask(variable_set.id, *variable_set.MakeTask(), *variable_set.parent_id))
-        .Times(1)
-        .WillRepeatedly(testing::Return(Model::Response::CreateSuccess()));
+    auto response = command.Execute(model);
 
-    command.Execute(model);
+    EXPECT_FALSE(response.IsError());
 }

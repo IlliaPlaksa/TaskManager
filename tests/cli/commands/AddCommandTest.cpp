@@ -7,6 +7,7 @@
 
 #include "cli/include/ConcreteCommands.h"
 #include "util/TaskId/TaskIdCreators.h"
+#include "util/Task/TaskCreators.h"
 #include "util/Task/TaskComparators.h"
 #include "util/TaskId/TaskIdComparators.h"
 
@@ -18,47 +19,46 @@ TEST(AddCommandTest, shouldExecuteAdd)
 {
     auto model = std::make_shared<ModelMock>();
 
-    auto variable_set = VariableSet{};
-    variable_set.title = "Title";
-    variable_set.date = time(nullptr);
-    variable_set.priority = Task::Priority::Task_Priority_kHigh;
+    auto task_title = "Task name";
+    auto task_date = time(nullptr);
+    auto task_priority = Task::Priority::Task_Priority_kLow;
 
-    auto context_dto = std::make_shared<ContextDTOMock>();
+    auto task = *CreateTask(task_title,
+                           task_date,
+                           task_priority);
 
-    auto command = AddCommand{context_dto};
+    auto command = AddCommand{task, std::nullopt};
 
-    EXPECT_CALL(*context_dto, variable_set())
-    .Times(1)
-    .WillOnce(testing::Return(variable_set));
-
-    EXPECT_CALL(*model, Add(*variable_set.MakeTask()))
+    EXPECT_CALL(*model, Add(task))
         .Times(1)
-        .WillOnce(testing::Return(Model::Response::CreateSuccess()));
+        .WillOnce(testing::Return(ModelResponse::Success()));
 
-    command.Execute(model);
+    auto response = command.Execute(model);
+
+    EXPECT_FALSE(response.IsError());
 }
 
 TEST(AddCommandTest, shouldExecuteAddSubTask)
 {
     auto model = std::make_shared<ModelMock>();
 
-    auto variable_set = VariableSet{};
-    variable_set.title = "Title";
-    variable_set.date = time(nullptr);
-    variable_set.priority = Task::Priority::Task_Priority_kHigh;
-    variable_set.parent_id = CreateTaskId(0);
+    auto task_title = "Task name";
+    auto task_date = time(nullptr);
+    auto task_priority = Task::Priority::Task_Priority_kLow;
 
-    auto context_dto = std::make_shared<ContextDTOMock>();
+    auto task = *CreateTask(task_title,
+                            task_date,
+                            task_priority);
 
-    auto command = AddCommand{context_dto};
+    auto parent_id = *CreateTaskId(0);
 
-    EXPECT_CALL(*context_dto, variable_set())
+    auto command = AddCommand{task, parent_id};
+
+    EXPECT_CALL(*model, AddSubTask(task, parent_id))
         .Times(1)
-        .WillOnce(testing::Return(variable_set));
+        .WillOnce(testing::Return(ModelResponse::Success()));
 
-    EXPECT_CALL(*model, AddSubTask(*variable_set.MakeTask(), *variable_set.parent_id))
-        .Times(1)
-        .WillOnce(testing::Return(Model::Response::CreateSuccess()));
+    auto response = command.Execute(model);
 
-    command.Execute(model);
+    EXPECT_FALSE(response.IsError());
 }
