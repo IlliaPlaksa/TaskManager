@@ -13,8 +13,10 @@ class ConsoleManipulatorMock : public ConsoleManipulator
 public:
     MOCK_METHOD(void, WriteLine, (const std::string& message), (const, override));
     MOCK_METHOD(void, WriteError, (const std::string& message), (const, override));
-    MOCK_METHOD(std::string, ReadLine, (const std::string& message = ""), (const, override));
-    MOCK_METHOD(void, ResetPrompt, (const std::string& prompt = ""), (const, override));
+    MOCK_METHOD(std::string, ReadLine, (), (const, override));
+    MOCK_METHOD(std::string, ReadLine, (const std::string& message), (const, override));
+    MOCK_METHOD(void, ResetPrompt, (), (override));
+    MOCK_METHOD(void, ResetPrompt, (const std::string& prompt), (override));
 };
 
 #endif //TASKMANAGER_TESTS_MOCKS_CONSOLEMANIPULATORMOCK_H_
