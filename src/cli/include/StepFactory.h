@@ -11,12 +11,15 @@
 class StepFactory : public std::enable_shared_from_this<StepFactory>
 {
 public:
-    std::shared_ptr<Step> CreateStep(StepId step_id);
+   virtual std::shared_ptr<Step> CreateStep(StepId step_id);
 
 public:
-    std::shared_ptr<StepFactory> shared();
+    virtual std::shared_ptr<StepFactory> shared();
 public:
     explicit StepFactory(const std::shared_ptr<ConsoleManipulator>& console_manipulator);
+
+public:
+    virtual ~StepFactory() = default;
 private:
     std::shared_ptr<ConsoleManipulator> console_manipulator_;
 };
