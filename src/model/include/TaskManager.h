@@ -17,21 +17,21 @@
 class TaskManager : public Model
 {
 public:
-    Response Add(const Task& task) override;
-    Response AddSubTask(const Task& task, const TaskId& parent_id) override;
-    Response Edit(const TaskId& id,
+    ModelResponse Add(const Task& task) override;
+    ModelResponse AddSubTask(const Task& task, const TaskId& parent_id) override;
+    ModelResponse Edit(const TaskId& id,
                   const Task& task) override;
-    Response EditSubTask(const TaskId& id,
+    ModelResponse EditSubTask(const TaskId& id,
                          const Task& task,
                          const TaskId& parent_id) override;
-    Response Delete(const TaskId& id) override;
-    Response Complete(const TaskId& id) override;
+    ModelResponse Delete(const TaskId& id) override;
+    ModelResponse Complete(const TaskId& id) override;
 
     std::vector<TaskDTO> Show() override;
     std::vector<TaskDTO> ShowParents() override;
     std::vector<TaskDTO> ShowChild(const TaskId& parent_id) override;
 
-    Response Load(const std::vector<TaskDTO>& tasks) override;
+    ModelResponse Load(const std::vector<TaskDTO>& tasks) override;
 
 public:
     explicit TaskManager(std::unique_ptr<IdGenerator> generator);
