@@ -48,3 +48,11 @@ std::string ConsoleManipulator::trim(std::string&& s) const
 {
     return ltrim(rtrim(std::move(s)));
 }
+std::string ConsoleManipulator::ReadLine() const
+{
+    return ReadLine("");
+}
+void ConsoleManipulator::ResetPrompt()
+{
+    ResetPrompt("");
+}

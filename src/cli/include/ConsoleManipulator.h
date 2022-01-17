@@ -13,9 +13,11 @@ class ConsoleManipulator
 public:
     virtual void WriteLine(const std::string& message) const;
     virtual void WriteError(const std::string& message) const;
-    virtual std::string ReadLine(const std::string& message = "") const;
+    virtual std::string ReadLine() const;
+    virtual std::string ReadLine(const std::string& message) const;
 
-    virtual void ResetPrompt(const std::string& prompt = "");
+    virtual void ResetPrompt();
+    virtual void ResetPrompt(const std::string& prompt);
 
 public:
     virtual ~ConsoleManipulator() = default;
