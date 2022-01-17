@@ -6,10 +6,10 @@
 #include "util/TaskId/TaskIdComparators.h"
 
 StepMachine::StepMachine(const std::shared_ptr<StepFactory>& step_factory,
-                         const std::shared_ptr<ModelController>& controller)
+                         const std::shared_ptr<Model>& model)
     :
     step_factory_(step_factory),
-    controller_(controller)
+    model_(model)
 {
 
 }
@@ -25,14 +25,18 @@ void StepMachine::Run()
         auto result = current_step_->Execute(context_);
 
         SetNextStep(result.next_step);
-        auto response = result.command->Execute(controller_);
 
-        if (response.IsError())
+        if (result.command)
         {
-            SetNextStep(step_factory_->CreateStep(StepId::kError));
-        } else
-        {
-            SetContextFromCommandResponse(response);
+            auto response = result.command->Execute(model_);
+
+            if (response.IsError())
+            {
+                SetNextStep(step_factory_->CreateStep(StepId::kError));
+            } else
+            {
+                SetContextFromCommandResponse(response);
+            }
         }
     }
 }
@@ -57,8 +61,7 @@ void StepMachine::SetContextFromCommandResponse(const CommandResponse& response)
     {
         auto error = *response.model_response->error();
         context_.SetError(CreateErrorMessage(error));
-    }
-    else
+    } else
     {
         if (response.tasks.has_value())
             context_.GetStorage()->LoadTasks(*response.tasks);

@@ -16,7 +16,7 @@ class StepMachine : public View
 {
 public:
     explicit StepMachine(const std::shared_ptr<StepFactory>& step_factory,
-                         const std::shared_ptr<ModelController>& controller);
+                         const std::shared_ptr<Model>& model);
 public:
     void Run() override;
 
@@ -35,7 +35,7 @@ private:
     std::shared_ptr<Step> current_step_;
 
     std::shared_ptr<StepFactory> step_factory_;
-    std::shared_ptr<ModelController> controller_;
+    std::shared_ptr<Model> model_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_STEPMACHINE_H_
