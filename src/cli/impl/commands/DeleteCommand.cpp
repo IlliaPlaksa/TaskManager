@@ -13,7 +13,7 @@ CommandResponse DeleteCommand::Execute(const std::shared_ptr<Model>& model)
 }
 DeleteCommand::DeleteCommand(const TaskId& id)
     :
-    id_(id) {}
+    id_(id)
 {
 }
 
