@@ -30,13 +30,7 @@ void StepMachine::Run()
         {
             auto response = result.command->Execute(model_);
 
-            if (response.IsError())
-            {
-                SetNextStep(step_factory_->CreateStep(StepId::kError));
-            } else
-            {
-                SetContextFromCommandResponse(response);
-            }
+            SetContextFromCommandResponse(response);
         }
     }
 }
@@ -59,6 +53,8 @@ void StepMachine::SetContextFromCommandResponse(const CommandResponse& response)
 {
     if (response.IsError())
     {
+        SetNextStep(step_factory_->CreateStep(StepId::kError));
+
         auto error = *response.model_response->error();
         context_.SetError(CreateErrorMessage(error));
     } else
