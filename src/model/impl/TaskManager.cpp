@@ -20,8 +20,6 @@ ModelResponse TaskManager::Add(const Task& task)
 {
     TaskId new_id = this->gen_->GetNextId();
 
-    assert(this->tasks_.count(new_id) == 0);
-
     this->tasks_.insert(
         std::make_pair(new_id,
                        TaskNode::Create(task)));
@@ -30,8 +28,6 @@ ModelResponse TaskManager::Add(const Task& task)
 ModelResponse TaskManager::AddSubTask(const Task& task, const TaskId& parent_id)
 {
     TaskId new_id = this->gen_->GetNextId();
-
-    assert(this->tasks_.count(new_id) == 0);
 
     if (tasks_.find(parent_id) != tasks_.end())
     {

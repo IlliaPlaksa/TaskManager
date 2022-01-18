@@ -269,29 +269,6 @@ TEST(TaskManagerTest, shouldReturnNotcompletedSubtasksErrorInComplete)
     EXPECT_TRUE(manager.Complete(task_id).error() == ModelResponse::ErrorType::NOT_COMPLETED_SUBTASKS);
 }
 
-using ::testing::Return;
-TEST(TaskManagerTest, shouldThrowBadGeneratorBehaviourException)
-{
-    auto generator = std::make_unique<IdGeneratorMock>();
-
-    EXPECT_CALL(*generator, GetNextId())
-        .WillRepeatedly(Return(*CreateTaskId(1)));
-
-    TaskManager manager(std::move(generator));
-
-    auto task_title = "Task name";
-    auto task_date = time(nullptr);
-    auto task_priority = Task::Priority::Task_Priority_kLow;
-
-    auto task = *CreateTask(task_title,
-                            task_date,
-                            task_priority);
-
-    manager.Add(task);
-
-    EXPECT_DEATH(manager.Add(task), "");
-}
-
 TEST(TaskManagerTest, shouldShowParentTasks)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
