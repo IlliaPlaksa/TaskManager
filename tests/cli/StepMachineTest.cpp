@@ -18,7 +18,9 @@ class StepMachineTest : ::testing::Test
 
 TEST(StepMachineTest, shouldRunWithDefaultStep)
 {
-    auto console = std::make_shared<ConsoleManipulatorMock>();
+    auto ostream = std::stringstream{};
+    auto istream = std::stringstream{};
+    auto console = std::make_shared<ConsoleManipulatorMock>(ostream, istream);
     auto factory = std::make_shared<StepFactoryMock>(console);
     auto model = std::make_shared<ModelMock>();
 
@@ -52,7 +54,9 @@ TEST(StepMachineTest, shouldRunWithDefaultStep)
 
 TEST(StepMachineTest, shouldProcessErrorResponse)
 {
-    auto console = std::make_shared<ConsoleManipulatorMock>();
+    auto ostream = std::stringstream{};
+    auto istream = std::stringstream{};
+    auto console = std::make_shared<ConsoleManipulatorMock>(ostream, istream);
     auto factory = std::make_shared<StepFactoryMock>(console);
     auto model = std::make_shared<ModelMock>();
 
@@ -90,7 +94,9 @@ TEST(StepMachineTest, shouldProcessErrorResponse)
 
 TEST(StepMachineTest, shouldProcessTasksResponse)
 {
-    auto console = std::make_shared<ConsoleManipulatorMock>();
+    auto ostream = std::stringstream{};
+    auto istream = std::stringstream{};
+    auto console = std::make_shared<ConsoleManipulatorMock>(ostream, istream);
     auto factory = std::make_shared<StepFactoryMock>(console);
     auto model = std::make_shared<ModelMock>();
 

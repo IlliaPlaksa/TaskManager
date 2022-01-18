@@ -15,7 +15,9 @@ class StepDependencyTest : ::testing::Test
 
 TEST(StepDependencyTest, shouldCreate)
 {
-    auto console = std::make_shared<ConsoleManipulatorMock>();
+    auto ostream = std::stringstream{};
+    auto istream = std::stringstream{};
+    auto console = std::make_shared<ConsoleManipulatorMock>(ostream, istream);
     auto factory = std::make_shared<StepFactoryMock>(console);
     auto obj = StepDependency{factory, console};
 

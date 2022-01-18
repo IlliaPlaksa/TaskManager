@@ -18,7 +18,9 @@ class StepFactoryTest : ::testing::Test
 
 TEST(StepFactoryTest, shouldReturnSelfShared)
 {
-    auto console = std::make_shared<ConsoleManipulatorMock>();
+    auto ostream = std::stringstream{};
+    auto istream = std::stringstream{};
+    auto console = std::make_shared<ConsoleManipulatorMock>(ostream, istream);
 
     auto obj = std::make_shared<StepFactory>(console);
 
@@ -27,7 +29,9 @@ TEST(StepFactoryTest, shouldReturnSelfShared)
 
 TEST(StepFactory, shouldCreateSteps)
 {
-    auto console = std::make_shared<ConsoleManipulatorMock>();
+    auto ostream = std::stringstream{};
+    auto istream = std::stringstream{};
+    auto console = std::make_shared<ConsoleManipulatorMock>(ostream, istream);
     auto factory = std::make_shared<StepFactory>(console);
 
     auto test_ids = std::vector<StepId>

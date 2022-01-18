@@ -11,6 +11,8 @@
 class ConsoleManipulatorMock : public ConsoleManipulator
 {
 public:
+    using ConsoleManipulator::ConsoleManipulator;
+
     MOCK_METHOD(void, WriteLine, (const std::string& message), (const, override));
     MOCK_METHOD(void, WriteError, (const std::string& message), (const, override));
     MOCK_METHOD(std::string, ReadLine, (), (const, override));
