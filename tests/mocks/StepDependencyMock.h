@@ -14,6 +14,8 @@
 
 class StepDependencyMock : public StepDependency
 {
+public:
+    using StepDependency::StepDependency;
     MOCK_METHOD(std::shared_ptr<ConsoleManipulator>, console_manipulator, (), (override));
     MOCK_METHOD(std::shared_ptr<StepFactory>, step_factory, (), (override));
 };
