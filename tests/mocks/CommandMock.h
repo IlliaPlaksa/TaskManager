@@ -11,8 +11,7 @@
 class CommandMock : public Command
 {
 public:
-    using Command::Command;
-    MOCK_METHOD(CommandResponse, Execute, (const std::shared_ptr<Model> &view), (override));
+    MOCK_METHOD(CommandResponse, Execute, (const std::shared_ptr<Model>& model), (override));
 };
 
 #endif //TASKMANAGER_TESTS_CONTROLLER_MOCK_INCLUDE_COMMANDMOCK_H_
