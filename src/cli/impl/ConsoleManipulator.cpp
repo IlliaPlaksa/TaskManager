@@ -4,13 +4,19 @@
 
 #include "cli/include/ConsoleManipulator.h"
 
+ConsoleManipulator::ConsoleManipulator(std::ostream& stream)
+    :
+    stream_(stream)
+{
+}
+
 void ConsoleManipulator::WriteLine(const std::string& message) const
 {
-    std::cout << message << std::endl;
+    stream_ << message << std::endl;
 }
 std::string ConsoleManipulator::ReadLine(const std::string& message) const
 {
-    std::cout << this->prompt_ << ' ' << message << "> ";
+    stream_ << this->prompt_ << ' ' << message << "> ";
     std::string input;
     std::getline(std::cin, input);
 
@@ -23,7 +29,7 @@ void ConsoleManipulator::ResetPrompt(const std::string& prompt)
 }
 void ConsoleManipulator::WriteError(const std::string& message) const
 {
-    std::cout << "[Error]" << '\t' << message << std::endl;
+    stream_ << "[Error]" << '\t' << message << std::endl;
 }
 
 std::string ConsoleManipulator::rtrim(std::string&& s) const
@@ -56,3 +62,4 @@ void ConsoleManipulator::ResetPrompt()
 {
     ResetPrompt("");
 }
+

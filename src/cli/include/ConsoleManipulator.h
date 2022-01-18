@@ -11,6 +11,8 @@
 class ConsoleManipulator
 {
 public:
+    explicit ConsoleManipulator(std::ostream& stream);
+public:
     virtual void WriteLine(const std::string& message) const;
     virtual void WriteError(const std::string& message) const;
     virtual std::string ReadLine() const;
@@ -33,6 +35,7 @@ private:
 
 private:
     std::string prompt_;
+    std::ostream& stream_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_CONSOLEMANIPULATOR_H_
