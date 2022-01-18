@@ -48,11 +48,8 @@ std::optional<TaskId> Validate::Id(const std::string& id)
     try
     {
         int num = std::stoi(id);
-        if (num < 0)
-            throw std::runtime_error("Id must be non-negative");
-        else
-            return CreateTaskId(num);
 
+        return CreateTaskId(num);
     } catch (const std::exception& e)
     {
         return std::nullopt;
