@@ -61,7 +61,7 @@ std::optional<TaskId> Validate::Id(const std::string& id)
 }
 std::optional<time_t> Validate::Date(const std::string& date)
 {
-    const std::string pattern = R"(\d{2}.\d{2}.\d{4})";
+    const std::string pattern = R"(\d{1,2}.\d{1,2}.\d{4})";
     if (!std::regex_match(date, std::regex(pattern))) // Passed string doesn't match date pattern
         return std::nullopt;
 

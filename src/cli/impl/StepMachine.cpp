@@ -43,9 +43,9 @@ std::string StepMachine::CreateErrorMessage(const ModelResponse::ErrorType& erro
 {
     switch (error_type)
     {
-        case ModelResponse::ErrorType::INVALID_ID: { return "Invalid ID passed"; }
-        case ModelResponse::ErrorType::EMPTY_TITLE: { return "Empty title of Task passed"; }
-        case ModelResponse::ErrorType::NON_EXISTING_PARENT_ID: { return "Non-existing parent ID passed"; }
+        case ModelResponse::ErrorType::INVALID_ID: { return "Invalid ID entered"; }
+        case ModelResponse::ErrorType::EMPTY_TITLE: { return "Empty title of Task entered"; }
+        case ModelResponse::ErrorType::NON_EXISTING_PARENT_ID: { return "Non-existing parent ID entered"; }
         default: { return "Something went wrong"; }
     }
 }

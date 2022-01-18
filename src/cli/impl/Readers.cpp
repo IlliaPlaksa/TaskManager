@@ -121,7 +121,7 @@ std::string Read::FileName(const std::shared_ptr<ConsoleManipulator>& console)
 {
     std::optional<std::string> input;
     input = Validate::FileName(
-        console->ReadLine(R"([File name] "example.*" )")
+        console->ReadLine(R"([File name] "example.*")")
     );
 
     while (!input)
