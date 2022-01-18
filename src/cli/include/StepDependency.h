@@ -15,8 +15,11 @@ public:
                    const std::shared_ptr<ConsoleManipulator>& console_manipulator);
 
 public:
-    std::shared_ptr<ConsoleManipulator> console_manipulator();
-    std::shared_ptr<StepFactory> step_factory();
+    virtual std::shared_ptr<ConsoleManipulator> console_manipulator();
+    virtual std::shared_ptr<StepFactory> step_factory();
+
+public:
+    virtual ~StepDependency() = default;
 private:
     std::shared_ptr<ConsoleManipulator> console_manipulator_;
     std::shared_ptr<StepFactory> factory_;
