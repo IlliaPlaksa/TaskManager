@@ -4,6 +4,8 @@
 
 #include "cli/include/Readers.h"
 
+std::vector<std::string> Split(const std::string& str, const std::string& delimiter);
+
 StepId Read::Command(const std::shared_ptr<ConsoleManipulator>& console)
 {
     auto input = Validate::Command(console->ReadLine());
@@ -134,3 +136,19 @@ std::string Read::FileName(const std::shared_ptr<ConsoleManipulator>& console)
     return input.value();
 }
 
+std::vector<std::string> Split(const std::string& str, const std::string& delimiter)
+{
+    auto result = std::vector<std::string>{};
+
+    size_t pivot = 0;
+    auto tmp = str;
+
+    while (pivot != std::string::npos)
+    {
+        pivot = tmp.find(delimiter);
+        result.emplace_back(tmp.substr(0, pivot));
+        tmp.erase(0, pivot + 1);
+    }
+
+    return result;
+}
