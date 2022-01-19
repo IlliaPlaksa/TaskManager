@@ -10,7 +10,7 @@ Input formats:
     [Title] - must be non-empty
     [ID] - must be non-negative integer
     [Priority] - available values: "high", "medium", "low"
-    [Label] - optional, can be empty
+    [Labels] - optional (can be empty). To add multiply labels write them into one line delimited with spaces "_"
     [Date] - date format = DD.MM.YYYY
     [Confirm] - must be one of the following: "y", "n"
     [File name] - must be non-empty: file_name.*
