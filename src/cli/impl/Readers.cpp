@@ -156,7 +156,11 @@ std::vector<std::string> Split(const std::string& str, const std::string& delimi
     while (pivot != std::string::npos)
     {
         pivot = tmp.find(delimiter);
-        result.emplace_back(tmp.substr(0, pivot));
+        auto sub_str = tmp.substr(0, pivot);
+
+        if (!sub_str.empty())
+            result.emplace_back(sub_str);
+
         tmp.erase(0, pivot + 1);
     }
 
