@@ -91,6 +91,7 @@ private:
     static std::string ToString(const Task::Priority& priority);
     static std::string ToString(const Task::Status& status);
     static std::string ToString(const time_t& date);
+    static std::string ToString(const google::protobuf::RepeatedPtrField<std::string>& labels);
 };
 
 class UpdateStep : public StepWithDependency
