@@ -20,7 +20,7 @@ StepResult ShowStep::Execute(Context& context)
     if (task_storage)
     {
         auto offset = std::string("\t");
-        for (const auto& task : task_storage->GetRootTasks())
+        for (const auto& task: task_storage->GetRootTasks())
         {
             std::stringstream output;
             output << ToString(task);
@@ -55,27 +55,37 @@ std::string ShowStep::ToString(const Task::Status& status)
         default: return std::string{};
     }
 }
-std::string ShowStep::ToString(const TaskDTO& task)
+std::string ShowStep::ToString(const TaskDTO& task_dto)
 {
     std::stringstream output;
 
-    output << "ID: " << task.id().value() << " "
-           << "Title: " << task.task().title() << " "
-           << "Due date: " << google::protobuf::util::TimeUtil::ToString(task.task().due_date()) << " "
-           << "Priority: " << ToString(task.task().priority()) << " "
-           << "Status: " << ToString(task.task().status()) << " "
-           << "Label: " << task.task().label();
+    const auto& task = task_dto.task();
+    const auto& id = task_dto.id();
+
+    output << "ID: " << id.value() << ", "
+           << "Title: " << task.title() << ", "
+           << "Due date: " << ToString(task.due_date().seconds()) << ", "
+           << "Priority: " << ToString(task.priority()) << ", "
+           << "Status: " << ToString(task.status()) << ", "
+           << "Label: " << task.label();
 
     return output.str();
 }
 void ShowStep::OutputSubTasks(std::ostream& output, const TaskId& parent_id,
                               const TaskStorage& storage, const std::string& offset)
 {
-    for (const auto& task : storage.GetSubTasks(parent_id))
+    for (const auto& task: storage.GetSubTasks(parent_id))
     {
         output << '\n' << offset << ToString(task);
         OutputSubTasks(output, task.id(), storage, offset + "\t");
     }
+}
+std::string ShowStep::ToString(const time_t& date)
+{
+    std::tm tm = *std::localtime(&date);
+    std::stringstream stream;
+    stream << std::put_time(&tm, "%d.%m.%Y");
+    return stream.str();
 }
 
 

@@ -90,6 +90,7 @@ private:
     static std::string ToString(const TaskDTO& task);
     static std::string ToString(const Task::Priority& priority);
     static std::string ToString(const Task::Status& status);
+    static std::string ToString(const time_t& date);
 };
 
 class UpdateStep : public StepWithDependency
