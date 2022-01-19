@@ -25,9 +25,9 @@ StepResult EditStep::Execute(Context& context)
         .SetPriority(Read::Priority(console))
         .SetStatus(Task_Status_kInProgress);
 
-    auto label = Read::Label(console);
-    if (label)
-        variable_set_builder.SetLabel(label.value());
+    auto labels = Read::Labels(console);
+    if (labels)
+        variable_set_builder.SetLabel(labels.value());
 
     auto parent_id = Read::ParentId(console);
     if (parent_id)
@@ -45,7 +45,6 @@ StepResult EditStep::Execute(Context& context)
 
         if (task.has_value())
             result.command = std::shared_ptr<Command>(new EditCommand(id, *task, parent_id));
-
     } else
     {
         console->WriteLine("Operation was canceled");
