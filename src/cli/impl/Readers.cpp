@@ -108,10 +108,11 @@ std::optional<std::vector<std::string>> Read::Labels(const std::shared_ptr<Conso
     {
         if (Validate::Label(label))
             result.emplace_back(label);
-        else
-            return std::nullopt;
     }
-    return result;
+    if (!result.empty())
+        return result;
+    else
+        return std::nullopt;
 }
 bool Read::Confirm(const std::shared_ptr<ConsoleManipulator>& console)
 {
