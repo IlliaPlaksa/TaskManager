@@ -55,8 +55,7 @@ TEST_F(ReadersTest, shouldRejectWrongIdValue)
     auto input = std::vector<std::string>{
         "-12345",
         "     ",
-        ""
-    };
+        ""};
 
     auto correct_id = "12345";
 
@@ -100,8 +99,7 @@ TEST_F(ReadersTest, shouldReadCorrectDate)
     auto correct_date_input = std::vector<std::string>{
         "12.12.2020",
         "9.8.1970",
-        "30.01.2022"
-    };
+        "30.01.2022"};
 
     EXPECT_CALL(*console_, ReadLine(::testing::_))
         .WillOnce(::testing::Return(correct_date_input[0]))
@@ -136,7 +134,6 @@ TEST_F(ReadersTest, shouldRejectWrongAndBlankDate)
 
     auto result = Read::Date(console_);
     EXPECT_TRUE(result >= 0);
-
 }
 
 TEST_F(ReadersTest, shouldReadCommand)
@@ -148,8 +145,7 @@ TEST_F(ReadersTest, shouldReadCommand)
         "delete",
         "complete",
         "edit",
-        "show"
-    };
+        "show"};
 
     EXPECT_CALL(*console_, ReadLine())
         .WillOnce(::testing::Return(correct_command[0]))
@@ -161,12 +157,11 @@ TEST_F(ReadersTest, shouldReadCommand)
         .WillOnce(::testing::Return(correct_command[6]));
 
     auto result = StepId::kNone;
-    for (size_t i = 0 ; i < correct_command.size() ; ++i)
+    for (size_t i = 0; i < correct_command.size(); ++i)
     {
         result = Read::Command(console_);
         EXPECT_TRUE(result != StepId::kNone);
     }
-
 }
 
 TEST_F(ReadersTest, shouldRejectWrongCommands)
@@ -210,11 +205,11 @@ TEST_F(ReadersTest, shouldReadPriority)
         Task_Priority_kLow,
     };
 
-    for (size_t i = 0 ; i < correct_priorities.size() ; ++i)
+    for (size_t i = 0; i < correct_priorities.size(); ++i)
     {
         auto result = Read::Priority(console_);
         bool is_any_of_possible = std::any_of(possible_priorities.cbegin(), possible_priorities.cend(),
-                                              [&result](const auto& priority)
+                                              [&result](const auto &priority)
                                               {
                                                   return result == priority;
                                               });
@@ -254,7 +249,7 @@ TEST_F(ReadersTest, shouldReadConfirmation)
         .WillOnce(::testing::Return(correct_priorities[0]))
         .WillOnce(::testing::Return(correct_priorities[1]));
 
-    for (size_t i = 0 ; i < correct_priorities.size() ; ++i)
+    for (size_t i = 0; i < correct_priorities.size(); ++i)
     {
         Read::Confirm(console_);
     }
@@ -292,7 +287,7 @@ TEST_F(ReadersTest, shouldReadFileName)
         .WillOnce(::testing::Return(correct_priorities[0]))
         .WillOnce(::testing::Return(correct_priorities[1]));
 
-    for (size_t i = 0 ; i < correct_priorities.size() ; ++i)
+    for (size_t i = 0; i < correct_priorities.size(); ++i)
     {
         auto result = Read::FileName(console_);
         EXPECT_FALSE(result.empty());
@@ -320,3 +315,39 @@ TEST_F(ReadersTest, shouldRejectWrongFileNameInput)
     EXPECT_FALSE(result.empty());
 }
 
+TEST_F(ReadersTest, shouldReadLabels)
+{
+    auto input_vect = std::vector<std::string>{
+        "first",
+        "second",
+        "third"};
+
+    auto input = std::stringstream{};
+
+    for (const auto &label : input_vect)
+        input << label << " ";
+
+    EXPECT_CALL(*console_, ReadLine(::testing::_))
+        .Times(1)
+        .WillOnce(::testing::Return(input.str()));
+
+    auto result = Read::Labels(console_);
+
+    ASSERT_FALSE(result.empty());
+
+    for (const auto &label : input_vect)
+        EXPECT_TRUE(std::find(result.begin(), result.end(), label) != input_vect.end());
+}
+
+TEST_F(ReadersTest, ReadLabelsShouldRejectBlankLabels)
+{
+    auto input = "            ";
+
+    EXPECT_CALL(*console_, ReadLine(::testing::_))
+        .Times(1)
+        .WillOnce(::testing::Return(input));
+
+    auto result = Read::Labels(console_);
+
+    EXPECT_TRUE(result.empty());
+}
