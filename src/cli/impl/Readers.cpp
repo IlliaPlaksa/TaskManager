@@ -95,13 +95,23 @@ Task::Priority Read::Priority(const std::shared_ptr<ConsoleManipulator>& console
     }
     return input.value();
 }
-std::optional<std::string> Read::Label(const std::shared_ptr<ConsoleManipulator>& console)
+std::optional<std::vector<std::string>> Read::Labels(const std::shared_ptr<ConsoleManipulator>& console)
 {
-    std::string message = "[Label]";
-    auto input = Validate::Label(
-        console->ReadLine(message)
-    );
-    return input;
+    std::vector<std::string> result;
+
+    std::string message = "[Labels]";
+    auto input = console->ReadLine(message);
+
+    auto labels = Split(input, " ");
+
+    for (const auto& label: labels)
+    {
+        if (Validate::Label(label))
+            result.emplace_back(label);
+        else
+            return std::nullopt;
+    }
+    return result;
 }
 bool Read::Confirm(const std::shared_ptr<ConsoleManipulator>& console)
 {
