@@ -17,7 +17,7 @@ public:
 
     std::string title;
     std::time_t date;
-    std::string label;
+    std::vector<std::string> labels;
     Task::Status status;
     Task::Priority priority;
 

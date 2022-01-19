@@ -18,7 +18,7 @@ std::optional<TaskDTO> VariableSet::MakeTaskDTO() const
 }
 std::optional<Task> VariableSet::MakeTask() const
 {
-    return CreateTask(title, date, priority, label, status);
+    return CreateTask(title, date, priority, labels, status);
 }
 void VariableSet::Clear()
 {
@@ -32,5 +32,5 @@ bool VariableSet::operator==(const VariableSet& other) const
     and this->date == other.date
     and this->file_name == other.file_name
     and this->priority == other.priority
-    and this->label == other.label;
+    and this->labels == other.labels;
 }
