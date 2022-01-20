@@ -34,7 +34,7 @@ TEST(VariableSetBuilderTest, shouldSetAllFields)
         .SetStatus(var_set.status)
         .SetId(var_set.id)
         .SetParent(*var_set.parent_id)
-        .SetLabel(var_set.labels)
+        .SetLabels(var_set.labels)
         .SetFileName(var_set.file_name);
 
 
@@ -64,7 +64,7 @@ TEST(VariableSetBuilderTest, shouldReset)
         .SetStatus(var_set.status)
         .SetId(var_set.id)
         .SetParent(*var_set.parent_id)
-        .SetLabel(var_set.labels)
+        .SetLabels(var_set.labels)
         .SetFileName(var_set.file_name);
 
     builder.Reset();
