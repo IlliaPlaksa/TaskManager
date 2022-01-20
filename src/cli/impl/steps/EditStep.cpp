@@ -23,7 +23,7 @@ StepResult EditStep::Execute(Context& context)
         .SetTitle(Read::Title(console))
         .SetDate(Read::Date(console))
         .SetPriority(Read::Priority(console))
-        .SetLabel(Read::Labels(console))
+        .SetLabels(Read::Labels(console))
         .SetStatus(Task_Status_kInProgress);
 
     auto parent_id = Read::ParentId(console);

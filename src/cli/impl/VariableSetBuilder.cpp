@@ -21,7 +21,7 @@ VariableSetBuilder& VariableSetBuilder::SetPriority(const Task::Priority& priori
     variable_set_.priority = priority;
     return *this;
 }
-VariableSetBuilder& VariableSetBuilder::SetLabel(const std::vector<std::string>& labels)
+VariableSetBuilder& VariableSetBuilder::SetLabels(const std::vector<std::string>& labels)
 {
     variable_set_.labels = labels;
     return *this;

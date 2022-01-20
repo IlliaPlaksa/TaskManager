@@ -67,7 +67,7 @@ std::string ShowStep::ToString(const TaskDTO& task_dto)
            << "Due date: " << ToString(task.due_date().seconds()) << ", "
            << "Priority: " << ToString(task.priority()) << ", "
            << "Status: " << ToString(task.status()) << ", "
-           << "Label: " << ToString(task.labels());
+           << "Labels: " << ToString(task.labels());
 
     return output.str();
 }
