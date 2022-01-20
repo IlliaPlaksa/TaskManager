@@ -23,11 +23,8 @@ StepResult EditStep::Execute(Context& context)
         .SetTitle(Read::Title(console))
         .SetDate(Read::Date(console))
         .SetPriority(Read::Priority(console))
+        .SetLabel(Read::Labels(console))
         .SetStatus(Task_Status_kInProgress);
-
-    auto labels = Read::Labels(console);
-    if (labels)
-        variable_set_builder.SetLabel(labels.value());
 
     auto parent_id = Read::ParentId(console);
     if (parent_id)

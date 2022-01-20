@@ -34,10 +34,10 @@ TEST(ReadersTest, shouldReadLabels)
 
     auto result = Read::Labels(console);
 
-    ASSERT_TRUE(result.has_value());
+    ASSERT_FALSE(result.empty());
 
     for (const auto& label: input_vect)
-        EXPECT_TRUE(std::find(result->begin(), result->end(), label) != input_vect.end());
+        EXPECT_TRUE(std::find(result.begin(), result.end(), label) != input_vect.end());
 }
 
 TEST(ReadersTest, shouldRejectBlankLabels)
@@ -54,5 +54,5 @@ TEST(ReadersTest, shouldRejectBlankLabels)
 
     auto result = Read::Labels(console);
 
-    EXPECT_FALSE(result.has_value());
+    EXPECT_TRUE(result.empty());
 }

@@ -95,7 +95,7 @@ Task::Priority Read::Priority(const std::shared_ptr<ConsoleManipulator>& console
     }
     return input.value();
 }
-std::optional<std::vector<std::string>> Read::Labels(const std::shared_ptr<ConsoleManipulator>& console)
+std::vector<std::string> Read::Labels(const std::shared_ptr<ConsoleManipulator>& console)
 {
     std::vector<std::string> result;
 
@@ -109,10 +109,7 @@ std::optional<std::vector<std::string>> Read::Labels(const std::shared_ptr<Conso
         if (Validate::Label(label))
             result.emplace_back(label);
     }
-    if (!result.empty())
-        return result;
-    else
-        return std::nullopt;
+    return result;
 }
 bool Read::Confirm(const std::shared_ptr<ConsoleManipulator>& console)
 {
