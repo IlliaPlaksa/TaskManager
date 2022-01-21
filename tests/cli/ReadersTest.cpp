@@ -320,8 +320,7 @@ TEST_F(ReadersTest, shouldReadLabels)
     auto input_vect = std::vector<std::string>{
         "first",
         "second",
-        "third"
-    };
+        "third"};
 
     auto input = std::stringstream{};
 
