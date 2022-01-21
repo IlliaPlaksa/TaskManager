@@ -7,16 +7,23 @@
 #include "cli/include/Readers.h"
 #include "mocks/ConsoleManipulatorMock.h"
 
-class ReadersTest : ::testing::Test
+class ReadersTest : public ::testing::Test
 {
+protected:
+    std::stringstream ostream_;
+    std::stringstream istream_;
+    std::shared_ptr<ConsoleManipulatorMock> console_;
+
+    void SetUp() override
+    {
+        ostream_ = std::stringstream{};
+        istream_ = std::stringstream{};
+        console_ = std::make_shared<ConsoleManipulatorMock>(ostream_, istream_);
+    }
 };
 
-TEST(ReadersTest, shouldReadLabels)
+TEST_F(ReadersTest, shouldReadLabels)
 {
-    auto ostream = std::stringstream{};
-    auto istream = std::stringstream{};
-    auto console = std::make_shared<ConsoleManipulatorMock>(ostream, istream);
-
     auto input_vect = std::vector<std::string>{
         "first",
         "second",
@@ -28,11 +35,11 @@ TEST(ReadersTest, shouldReadLabels)
     for (const auto& label: input_vect)
         input << label << " ";
 
-    EXPECT_CALL(*console, ReadLine(::testing::_))
+    EXPECT_CALL(*console_, ReadLine(::testing::_))
         .Times(1)
         .WillOnce(::testing::Return(input.str()));
 
-    auto result = Read::Labels(console);
+    auto result = Read::Labels(console_);
 
     ASSERT_FALSE(result.empty());
 
@@ -40,19 +47,17 @@ TEST(ReadersTest, shouldReadLabels)
         EXPECT_TRUE(std::find(result.begin(), result.end(), label) != input_vect.end());
 }
 
-TEST(ReadersTest, shouldRejectBlankLabels)
+TEST_F(ReadersTest, ReadLabelsShouldRejectBlankLabels)
 {
-    auto ostream = std::stringstream{};
-    auto istream = std::stringstream{};
-    auto console = std::make_shared<ConsoleManipulatorMock>(ostream, istream);
-
     auto input = "            ";
 
-    EXPECT_CALL(*console, ReadLine(::testing::_))
+    EXPECT_CALL(*console_, ReadLine(::testing::_))
         .Times(1)
         .WillOnce(::testing::Return(input));
 
-    auto result = Read::Labels(console);
+    auto result = Read::Labels(console_);
 
     EXPECT_TRUE(result.empty());
+}
+
 }
