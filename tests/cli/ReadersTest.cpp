@@ -157,7 +157,7 @@ TEST_F(ReadersTest, shouldReadCommand)
         .WillOnce(::testing::Return(correct_command[6]));
 
     auto result = StepId::kNone;
-    for (size_t i = 0; i < correct_command.size(); ++i)
+    for (size_t i = 0 ; i < correct_command.size() ; ++i)
     {
         result = Read::Command(console_);
         EXPECT_TRUE(result != StepId::kNone);
@@ -205,11 +205,11 @@ TEST_F(ReadersTest, shouldReadPriority)
         Task_Priority_kLow,
     };
 
-    for (size_t i = 0; i < correct_priorities.size(); ++i)
+    for (size_t i = 0 ; i < correct_priorities.size() ; ++i)
     {
         auto result = Read::Priority(console_);
         bool is_any_of_possible = std::any_of(possible_priorities.cbegin(), possible_priorities.cend(),
-                                              [&result](const auto &priority)
+                                              [&result](const auto& priority)
                                               {
                                                   return result == priority;
                                               });
@@ -249,7 +249,7 @@ TEST_F(ReadersTest, shouldReadConfirmation)
         .WillOnce(::testing::Return(correct_priorities[0]))
         .WillOnce(::testing::Return(correct_priorities[1]));
 
-    for (size_t i = 0; i < correct_priorities.size(); ++i)
+    for (size_t i = 0 ; i < correct_priorities.size() ; ++i)
     {
         Read::Confirm(console_);
     }
@@ -287,7 +287,7 @@ TEST_F(ReadersTest, shouldReadFileName)
         .WillOnce(::testing::Return(correct_priorities[0]))
         .WillOnce(::testing::Return(correct_priorities[1]));
 
-    for (size_t i = 0; i < correct_priorities.size(); ++i)
+    for (size_t i = 0 ; i < correct_priorities.size() ; ++i)
     {
         auto result = Read::FileName(console_);
         EXPECT_FALSE(result.empty());
@@ -320,11 +320,12 @@ TEST_F(ReadersTest, shouldReadLabels)
     auto input_vect = std::vector<std::string>{
         "first",
         "second",
-        "third"};
+        "third"
+    };
 
     auto input = std::stringstream{};
 
-    for (const auto &label : input_vect)
+    for (const auto& label: input_vect)
         input << label << " ";
 
     EXPECT_CALL(*console_, ReadLine(::testing::_))
@@ -335,7 +336,7 @@ TEST_F(ReadersTest, shouldReadLabels)
 
     ASSERT_FALSE(result.empty());
 
-    for (const auto &label : input_vect)
+    for (const auto& label: input_vect)
         EXPECT_TRUE(std::find(result.begin(), result.end(), label) != input_vect.end());
 }
 
