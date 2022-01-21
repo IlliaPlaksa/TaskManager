@@ -49,6 +49,9 @@ std::optional<TaskId> Validate::Id(const std::string& id)
     {
         int num = std::stoi(id);
 
+        if (num < 0)
+            return std::nullopt;
+
         return CreateTaskId(num);
     } catch (const std::exception& e)
     {
@@ -107,7 +110,7 @@ std::optional<bool> Validate::Confirm(const std::string& symbol)
 }
 std::optional<std::string> Validate::FileName(const std::string& file_name)
 {
-    const std::string pattern = R"(\w{0,}.\w{0,})";
+    const std::string pattern = R"(\w{0,}\.\w{0,})";
     if (!std::regex_match(file_name, std::regex(pattern)))
         return std::nullopt;
     else

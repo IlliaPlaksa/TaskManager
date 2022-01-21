@@ -127,7 +127,7 @@ std::string Read::FileName(const std::shared_ptr<ConsoleManipulator>& console)
     while (!input)
     {
         console->WriteError("Wrong file name entered");
-        input = Validate::Title(
+        input = Validate::FileName(
             console->ReadLine("[File name]")
         );
     }
