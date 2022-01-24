@@ -181,7 +181,7 @@ std::vector<TaskDTO> TaskManager::ShowTasksWithLabel(const std::string& label)
                                        });
         if (has_label)
         {
-            auto tmp = ConstructTaskDTO(elem.first, elem.second);
+            auto tmp = CreateTaskDTO(elem.first, elem.second.GetTask());
             if (tmp)
                 result.emplace_back(tmp.value());
         }
