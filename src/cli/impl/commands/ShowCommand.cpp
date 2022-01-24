@@ -13,7 +13,12 @@ ShowCommand::ShowCommand(const std::optional<std::string>& label)
 CommandResponse ShowCommand::Execute(const std::shared_ptr<Model>& model)
 {
     auto result = CommandResponse{};
-    result.tasks = model->Show();
+
+    if (label_.has_value())
+    {
+        result.tasks = model->ShowTasksWithLabel(label_.value());
+    } else
+        result.tasks = model->Show();
 
     return result;
 }
