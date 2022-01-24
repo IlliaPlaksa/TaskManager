@@ -22,7 +22,7 @@ TEST(VariableSetBuilderTest, shouldSetAllFields)
     var_set.status = Task_Status_kInProgress;
     var_set.id = *CreateTaskId(123);
     var_set.parent_id = *CreateTaskId(0);
-    var_set.label = "Label";
+    var_set.labels = std::vector<std::string>{"Label"};
     var_set.file_name = "file.txt";
 
 
@@ -34,7 +34,7 @@ TEST(VariableSetBuilderTest, shouldSetAllFields)
         .SetStatus(var_set.status)
         .SetId(var_set.id)
         .SetParent(*var_set.parent_id)
-        .SetLabel(var_set.label)
+        .SetLabels(var_set.labels)
         .SetFileName(var_set.file_name);
 
 
@@ -52,7 +52,7 @@ TEST(VariableSetBuilderTest, shouldReset)
     var_set.status = Task_Status_kInProgress;
     var_set.id = *CreateTaskId(123);
     var_set.parent_id = *CreateTaskId(0);
-    var_set.label = "Label";
+    var_set.labels = std::vector<std::string>{"Label"};
     var_set.file_name = "file.txt";
 
 
@@ -64,7 +64,7 @@ TEST(VariableSetBuilderTest, shouldReset)
         .SetStatus(var_set.status)
         .SetId(var_set.id)
         .SetParent(*var_set.parent_id)
-        .SetLabel(var_set.label)
+        .SetLabels(var_set.labels)
         .SetFileName(var_set.file_name);
 
     builder.Reset();

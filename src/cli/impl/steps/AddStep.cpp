@@ -21,11 +21,8 @@ StepResult AddStep::Execute(Context& context)
         .SetTitle(Read::Title(console))
         .SetDate(Read::Date(console))
         .SetPriority(Read::Priority(console))
+        .SetLabels(Read::Labels(console))
         .SetStatus(Task_Status_kInProgress);
-
-    auto label = Read::Label(console);
-    if (label)
-        variable_set_builder.SetLabel(label.value());
 
     auto parent_id = Read::ParentId(console);
     if (parent_id)

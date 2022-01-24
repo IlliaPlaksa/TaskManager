@@ -21,6 +21,6 @@ message Task
   string title = 1;
   Priority priority = 2;
   google.protobuf.Timestamp due_date = 3;
-  string label = 4;
+  repeated string labels = 4;
   Status status = 5;
 }

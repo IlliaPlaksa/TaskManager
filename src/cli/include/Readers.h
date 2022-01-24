@@ -22,7 +22,7 @@ namespace Read
     std::optional<TaskId> ParentId(const std::shared_ptr<ConsoleManipulator>& console);
     Task::Priority Priority(const std::shared_ptr<ConsoleManipulator>& console);
     time_t Date(const std::shared_ptr<ConsoleManipulator>& console);
-    std::optional<std::string> Label(const std::shared_ptr<ConsoleManipulator>& console);
+    std::vector<std::string> Labels(const std::shared_ptr<ConsoleManipulator>& console);
     bool Confirm(const std::shared_ptr<ConsoleManipulator>& console);
     std::string FileName(const std::shared_ptr<ConsoleManipulator>& console);
 }

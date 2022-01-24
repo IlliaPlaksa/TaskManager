@@ -67,7 +67,7 @@ std::string ShowStep::ToString(const TaskDTO& task_dto)
            << "Due date: " << ToString(task.due_date().seconds()) << ", "
            << "Priority: " << ToString(task.priority()) << ", "
            << "Status: " << ToString(task.status()) << ", "
-           << "Label: " << task.label();
+           << "Labels: " << ToString(task.labels());
 
     return output.str();
 }
@@ -85,6 +85,14 @@ std::string ShowStep::ToString(const time_t& date)
     std::tm tm = *std::localtime(&date);
     std::stringstream stream;
     stream << std::put_time(&tm, "%d.%m.%Y");
+    return stream.str();
+}
+std::string ShowStep::ToString(const google::protobuf::RepeatedPtrField<std::string>& labels)
+{
+    std::stringstream stream;
+    for(const auto& label : labels)
+        stream << label << ", ";
+
     return stream.str();
 }
 

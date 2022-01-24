@@ -16,7 +16,7 @@ public: // Setters
     VariableSetBuilder& SetTitle(const std::string& title);
     VariableSetBuilder& SetDate(const time_t& date);
     VariableSetBuilder& SetPriority(const Task::Priority& priority);
-    VariableSetBuilder& SetLabel(const std::string& label);
+    VariableSetBuilder& SetLabels(const std::vector<std::string>& labels);
     VariableSetBuilder& SetStatus(const Task::Status& status);
     VariableSetBuilder& SetParent(const TaskId& parent_id);
     VariableSetBuilder& SetId(const TaskId& id);

@@ -55,8 +55,7 @@ TEST_F(ReadersTest, shouldRejectWrongIdValue)
     auto input = std::vector<std::string>{
         "-12345",
         "     ",
-        ""
-    };
+        ""};
 
     auto correct_id = "12345";
 
@@ -100,8 +99,7 @@ TEST_F(ReadersTest, shouldReadCorrectDate)
     auto correct_date_input = std::vector<std::string>{
         "12.12.2020",
         "9.8.1970",
-        "30.01.2022"
-    };
+        "30.01.2022"};
 
     EXPECT_CALL(*console_, ReadLine(::testing::_))
         .WillOnce(::testing::Return(correct_date_input[0]))
@@ -136,7 +134,6 @@ TEST_F(ReadersTest, shouldRejectWrongAndBlankDate)
 
     auto result = Read::Date(console_);
     EXPECT_TRUE(result >= 0);
-
 }
 
 TEST_F(ReadersTest, shouldReadCommand)
@@ -148,8 +145,7 @@ TEST_F(ReadersTest, shouldReadCommand)
         "delete",
         "complete",
         "edit",
-        "show"
-    };
+        "show"};
 
     EXPECT_CALL(*console_, ReadLine())
         .WillOnce(::testing::Return(correct_command[0]))
@@ -166,7 +162,6 @@ TEST_F(ReadersTest, shouldReadCommand)
         result = Read::Command(console_);
         EXPECT_TRUE(result != StepId::kNone);
     }
-
 }
 
 TEST_F(ReadersTest, shouldRejectWrongCommands)
@@ -320,3 +315,39 @@ TEST_F(ReadersTest, shouldRejectWrongFileNameInput)
     EXPECT_FALSE(result.empty());
 }
 
+TEST_F(ReadersTest, shouldReadLabels)
+{
+    auto input_vect = std::vector<std::string>{
+        "first",
+        "second",
+        "third"};
+
+    auto input = std::stringstream{};
+
+    for (const auto& label: input_vect)
+        input << label << " ";
+
+    EXPECT_CALL(*console_, ReadLine(::testing::_))
+        .Times(1)
+        .WillOnce(::testing::Return(input.str()));
+
+    auto result = Read::Labels(console_);
+
+    ASSERT_FALSE(result.empty());
+
+    for (const auto& label: input_vect)
+        EXPECT_TRUE(std::find(result.begin(), result.end(), label) != input_vect.end());
+}
+
+TEST_F(ReadersTest, ReadLabelsShouldRejectBlankLabels)
+{
+    auto input = "            ";
+
+    EXPECT_CALL(*console_, ReadLine(::testing::_))
+        .Times(1)
+        .WillOnce(::testing::Return(input));
+
+    auto result = Read::Labels(console_);
+
+    EXPECT_TRUE(result.empty());
+}

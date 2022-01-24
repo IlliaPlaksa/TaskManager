@@ -7,7 +7,7 @@
 std::optional<Task> CreateTask(const std::string& title,
                                const std::time_t& due_to_date,
                                const Task_Priority& priority,
-                               const std::string& label,
+                               const std::vector<std::string>& labels,
                                const Task_Status& status)
 {
     auto result = Task{};
@@ -16,7 +16,9 @@ std::optional<Task> CreateTask(const std::string& title,
         result.set_title(title);
         result.set_status(status);
         result.set_priority(priority);
-        result.set_label(label);
+
+        for(const auto& label: labels)
+            result.add_labels(label);
 
         auto tmp_date = std::make_unique<google::protobuf::Timestamp>();
         tmp_date->set_seconds(due_to_date);

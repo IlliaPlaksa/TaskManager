@@ -4,6 +4,8 @@
 
 #include "cli/include/Readers.h"
 
+std::vector<std::string> Split(const std::string& str, const std::string& delimiter);
+
 StepId Read::Command(const std::shared_ptr<ConsoleManipulator>& console)
 {
     auto input = Validate::Command(console->ReadLine());
@@ -93,13 +95,21 @@ Task::Priority Read::Priority(const std::shared_ptr<ConsoleManipulator>& console
     }
     return input.value();
 }
-std::optional<std::string> Read::Label(const std::shared_ptr<ConsoleManipulator>& console)
+std::vector<std::string> Read::Labels(const std::shared_ptr<ConsoleManipulator>& console)
 {
-    std::string message = "[Label]";
-    auto input = Validate::Label(
-        console->ReadLine(message)
-    );
-    return input;
+    std::vector<std::string> result;
+
+    std::string message = "[Labels]";
+    auto input = console->ReadLine(message);
+
+    auto labels = Split(input, " ");
+
+    for (const auto& label: labels)
+    {
+        if (Validate::Label(label))
+            result.emplace_back(label);
+    }
+    return result;
 }
 bool Read::Confirm(const std::shared_ptr<ConsoleManipulator>& console)
 {
@@ -134,3 +144,23 @@ std::string Read::FileName(const std::shared_ptr<ConsoleManipulator>& console)
     return input.value();
 }
 
+std::vector<std::string> Split(const std::string& str, const std::string& delimiter)
+{
+    auto result = std::vector<std::string>{};
+
+    size_t pivot = 0;
+    auto tmp = str;
+
+    while (pivot != std::string::npos)
+    {
+        pivot = tmp.find(delimiter);
+        auto sub_str = tmp.substr(0, pivot);
+
+        if (!sub_str.empty())
+            result.emplace_back(sub_str);
+
+        tmp.erase(0, pivot + 1);
+    }
+
+    return result;
+}
