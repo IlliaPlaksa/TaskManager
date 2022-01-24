@@ -30,6 +30,7 @@ public:
     std::vector<TaskDTO> Show() override;
     std::vector<TaskDTO> ShowParents() override;
     std::vector<TaskDTO> ShowChild(const TaskId& parent_id) override;
+    std::vector<TaskDTO> ShowTasksWithLabel(const std::string& label) override;
 
     ModelResponse Load(const std::vector<TaskDTO>& tasks) override;
 

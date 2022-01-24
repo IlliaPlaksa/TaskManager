@@ -81,7 +81,7 @@ ModelResponse TaskManager::Delete(const TaskId& id)
 
         if (!subtasks.empty())
         {
-            for (auto iter : subtasks)
+            for (auto iter: subtasks)
                 tasks_.erase(iter);
         }
         tasks_.erase(id);
@@ -130,7 +130,7 @@ ModelResponse TaskManager::Complete(const TaskId& id)
 std::vector<TaskDTO> TaskManager::Show()
 {
     auto result = std::vector<TaskDTO>{};
-    for (const auto& elem : this->tasks_)
+    for (const auto& elem: this->tasks_)
     {
         auto tmp = ConstructTaskDTO(elem.first, elem.second);
         if (tmp)
@@ -141,7 +141,7 @@ std::vector<TaskDTO> TaskManager::Show()
 std::vector<TaskDTO> TaskManager::ShowParents()
 {
     auto result = std::vector<TaskDTO>{};
-    for (const auto& elem : this->tasks_)
+    for (const auto& elem: this->tasks_)
     {
         if (!elem.second.GetParentId())
         {
@@ -156,7 +156,7 @@ std::vector<TaskDTO> TaskManager::ShowParents()
 std::vector<TaskDTO> TaskManager::ShowChild(const TaskId& parent_id)
 {
     auto result = std::vector<TaskDTO>{};
-    for (const auto& elem : this->tasks_)
+    for (const auto& elem: this->tasks_)
     {
         if (elem.second.GetParentId() == parent_id)
         {
@@ -165,6 +165,28 @@ std::vector<TaskDTO> TaskManager::ShowChild(const TaskId& parent_id)
                 result.emplace_back(tmp.value());
         }
     }
+    return result;
+}
+std::vector<TaskDTO> TaskManager::ShowTasksWithLabel(const std::string& label)
+{
+    auto result = std::vector<TaskDTO>{};
+
+    for (const auto& elem: this->tasks_)
+    {
+        auto task = elem.second.GetTask();
+        auto has_label = std::count_if(task.labels().cbegin(), task.labels().cend(),
+                                       [&label](const auto& tmp_label)
+                                       {
+                                           return tmp_label == label;
+                                       });
+        if (has_label)
+        {
+            auto tmp = ConstructTaskDTO(elem.first, elem.second);
+            if (tmp)
+                result.emplace_back(tmp.value());
+        }
+    }
+
     return result;
 }
 
@@ -182,7 +204,7 @@ std::optional<TaskDTO> TaskManager::ConstructTaskDTO(const TaskId& id, const Tas
 ModelResponse TaskManager::Load(const std::vector<TaskDTO>& tasks)
 {
     auto tmp_storage = std::map<TaskId, TaskNode>{};
-    for (const auto& elem : tasks)
+    for (const auto& elem: tasks)
     {
         auto tmp_task = elem.has_parent_id()
                         ? TaskNode::Create(elem.task(), elem.parent_id())
@@ -190,7 +212,7 @@ ModelResponse TaskManager::Load(const std::vector<TaskDTO>& tasks)
         tmp_storage.insert({elem.id(), tmp_task});
     }
 
-    for (const auto& elem : tmp_storage)
+    for (const auto& elem: tmp_storage)
     {
         auto parent_id = elem.second.GetParentId();
 
@@ -225,4 +247,5 @@ std::vector<std::map<TaskId, TaskNode>::iterator> TaskManager::FindSubTasks(cons
     }
     return result;
 }
+
 
