@@ -95,6 +95,13 @@ Task::Priority Read::Priority(const std::shared_ptr<ConsoleManipulator>& console
     }
     return input.value();
 }
+std::optional<std::string> Read::Label(const std::shared_ptr<ConsoleManipulator>& console)
+{
+    std::string message = "[Label] press 'Enter' to skip";
+    auto input = console->ReadLine(message);
+
+   return Validate::Label(input);
+}
 std::vector<std::string> Read::Labels(const std::shared_ptr<ConsoleManipulator>& console)
 {
     std::vector<std::string> result;
