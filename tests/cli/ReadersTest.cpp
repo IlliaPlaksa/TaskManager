@@ -339,7 +339,7 @@ TEST_F(ReadersTest, shouldReadLabels)
         EXPECT_TRUE(std::find(result.begin(), result.end(), label) != input_vect.end());
 }
 
-TEST_F(ReadersTest, ReadLabelsShouldRejectBlankLabels)
+TEST_F(ReadersTest, shouldRejectBlankLabels)
 {
     auto input = "            ";
 
@@ -350,4 +350,28 @@ TEST_F(ReadersTest, ReadLabelsShouldRejectBlankLabels)
     auto result = Read::Labels(console_);
 
     EXPECT_TRUE(result.empty());
+}
+
+TEST_F(ReadersTest, shouldReadCorrectLabel)
+{
+    auto input = "Example";
+
+    EXPECT_CALL(*console_, ReadLine(::testing::_))
+        .WillOnce(::testing::Return(input));
+
+    auto result = Read::Label(console_);
+
+    EXPECT_TRUE(result.has_value());
+}
+
+TEST_F(ReadersTest, shoulRejectdBlankLabel)
+{
+    auto input = "";
+
+    EXPECT_CALL(*console_, ReadLine(::testing::_))
+        .WillOnce(::testing::Return(input));
+
+    auto result = Read::Label(console_);
+
+    EXPECT_FALSE(result.has_value());
 }
