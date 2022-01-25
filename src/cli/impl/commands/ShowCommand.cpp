@@ -16,9 +16,9 @@ CommandResponse ShowCommand::Execute(const std::shared_ptr<Model>& model)
 
     if (label_.has_value())
     {
-        result.tasks = model->ShowTasksWithLabel(label_.value());
+        result.tasks->LoadRootTasks(model->ShowTasksWithLabel(label_.value()));
     } else
-        result.tasks = model->Show();
+        result.tasks->LoadTasks(model->Show());
 
     return result;
 }
