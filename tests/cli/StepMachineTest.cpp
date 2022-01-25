@@ -11,6 +11,7 @@
 #include "mocks/ConsoleManipulatorMock.h"
 #include "mocks/StepMock.h"
 #include "mocks/CommandMock.h"
+#include "util/TaskId/TaskIdComparators.h"
 
 class StepMachineTest : ::testing::Test
 {
@@ -109,7 +110,7 @@ TEST(StepMachineTest, shouldProcessTasksResponse)
 
     auto command = std::make_shared<CommandMock>();
     auto response = CommandResponse{};
-    response.tasks = std::vector<TaskDTO>{};
+    response.tasks = TaskStorage();
 
     step_result.command = command;
 

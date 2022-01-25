@@ -24,7 +24,7 @@ TEST(CommandResponseTest, shouldWorkIsErrorMethod)
     EXPECT_TRUE(response.IsError());
 
     response = CommandResponse{};
-    response.tasks = std::vector<TaskDTO>{};
+    response.tasks = TaskStorage{};
 
     EXPECT_FALSE(response.IsError());
 
