@@ -19,7 +19,7 @@ StepResult UpdateStep::Execute(Context &context)
     auto label = Read::Label(console);
 
     result.next_step = this->dependency()->step_factory()->CreateStep(StepId::kShow);
-    result.command = std::shared_ptr<Command>(new ShowCommand(label));
+    result.command = std::make_shared<ShowCommand>(label);
 
     context.GetStorage()->Clear();
     return result;
