@@ -60,6 +60,6 @@ void StepMachine::SetContextFromCommandResponse(const CommandResponse& response)
     } else
     {
         if (response.tasks.has_value())
-            context_.GetStorage()->LoadTasks(*response.tasks);
+            *context_.GetStorage() = *response.tasks;
     }
 }
