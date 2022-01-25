@@ -174,7 +174,7 @@ std::vector<TaskDTO> TaskManager::ShowTasksWithLabel(const std::string& label)
     for (const auto& elem: this->tasks_)
     {
         auto task = elem.second.GetTask();
-        auto has_label = std::count_if(task.labels().cbegin(), task.labels().cend(),
+        auto has_label = std::any_of(task.labels().cbegin(), task.labels().cend(),
                                        [&label](const auto& tmp_label)
                                        {
                                            return tmp_label == label;
