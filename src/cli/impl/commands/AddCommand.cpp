@@ -5,7 +5,7 @@
 #include "cli/include/ConcreteCommands.h"
 #include "util/Task/TaskCreators.h"
 
-CommandResponse AddCommand::Execute(const std::shared_ptr<Model>& model)
+CommandResponse AddCommand::Execute(const std::shared_ptr<ModelController>& model)
 {
     auto result = CommandResponse{};
 

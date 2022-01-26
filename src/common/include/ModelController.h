@@ -12,11 +12,7 @@
 class ModelController : public Model
 {
 public:
-    class Response;
-public:
-    explicit ModelController(const std::shared_ptr<Model>& model);
-
-private:
-    std::shared_ptr<Model> model_;
+    virtual ModelResponse LoadFromFile(const std::string& file_name) = 0;
+    virtual ModelResponse SaveToFile(const std::string& file_name) = 0;
 };
 #endif //TASKMANAGER_SRC_CONTROLLER_CONTROLLER_H_

@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "cli/include/ConcreteCommands.h"
-#include "mocks/ModelMock.h"
+#include "mocks/ModelControllerMock.h"
 #include "util/TaskId/TaskIdCreators.h"
 #include "util/TaskId/TaskIdComparators.h"
 
@@ -13,7 +13,7 @@ class DeleteCommandTest : ::testing::Test {};
 
 TEST(DeleteCommandTest, shouldExecute)
 {
-    auto model = std::shared_ptr<ModelMock>{new ModelMock};
+    auto model = std::make_shared<ModelControllerMock>();
 
     auto id = *CreateTaskId(0);
     auto command = DeleteCommand{id};

@@ -11,21 +11,21 @@
 #include "util/Task/TaskComparators.h"
 #include "util/TaskId/TaskIdComparators.h"
 
-#include "mocks/ModelMock.h"
+#include "mocks/ModelControllerMock.h"
 
 class AddCommandTest : ::testing::Test {};
 
 TEST(AddCommandTest, shouldExecuteAdd)
 {
-    auto model = std::make_shared<ModelMock>();
+    auto model = std::make_shared<ModelControllerMock>();
 
     auto task_title = "Task name";
     auto task_date = time(nullptr);
     auto task_priority = Task::Priority::Task_Priority_kLow;
 
     auto task = *CreateTask(task_title,
-                           task_date,
-                           task_priority);
+                            task_date,
+                            task_priority);
 
     auto command = AddCommand{task, std::nullopt};
 
@@ -40,7 +40,7 @@ TEST(AddCommandTest, shouldExecuteAdd)
 
 TEST(AddCommandTest, shouldExecuteAddSubTask)
 {
-    auto model = std::make_shared<ModelMock>();
+    auto model = std::make_shared<ModelControllerMock>();
 
     auto task_title = "Task name";
     auto task_date = time(nullptr);

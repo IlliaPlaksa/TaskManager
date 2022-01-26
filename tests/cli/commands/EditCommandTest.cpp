@@ -11,13 +11,13 @@
 #include "util/Task/TaskComparators.h"
 #include "util/TaskId/TaskIdComparators.h"
 
-#include "mocks/ModelMock.h"
+#include "mocks/ModelControllerMock.h"
 
 class EditCommandTest : ::testing::Test {};
 
 TEST(EditCommandTest, shouldExecuteEdit)
 {
-    auto model = std::make_shared<ModelMock>();
+    auto model = std::make_shared<ModelControllerMock>();
 
     auto task_title = "Task name";
     auto task_date = time(nullptr);
@@ -42,7 +42,7 @@ TEST(EditCommandTest, shouldExecuteEdit)
 
 TEST(EditCommandTest, shouldExecuteEditSubTask)
 {
-    auto model = std::make_shared<ModelMock>();
+    auto model = std::make_shared<ModelControllerMock>();
 
     auto task_title = "Task name";
     auto task_date = time(nullptr);

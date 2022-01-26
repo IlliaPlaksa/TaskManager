@@ -7,13 +7,13 @@
 
 #include "cli/include/ConcreteCommands.h"
 
-#include "mocks/ModelMock.h"
+#include "mocks/ModelControllerMock.h"
 
 class ShowCommandTest : ::testing::Test {};
 
 TEST(ShowCommandTest, shouldExecuteCommonLogic)
 {
-    auto model = std::make_shared<ModelMock>();
+    auto model = std::make_shared<ModelControllerMock>();
 
     auto command = ShowCommand{};
 
