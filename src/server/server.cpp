@@ -11,13 +11,6 @@
 #include "model/include/TaskManager.h"
 #include "RequestHandlerImpl.h"
 
-using grpc::Server;
-using grpc::ServerBuilder;
-using grpc::ServerContext;
-using grpc::ServerReader;
-using grpc::ServerReaderWriter;
-using grpc::ServerWriter;
-using grpc::Status;
 
 int main(int argc, char** argv)
 {
@@ -27,10 +20,10 @@ int main(int argc, char** argv)
 
     auto service = RequestHandlerImpl{std::move(model)};
 
-    ServerBuilder builder;
+    grpc::ServerBuilder builder;
     builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
     builder.RegisterService(&service);
-    std::unique_ptr<Server> server(builder.BuildAndStart());
+    std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
     std::cout << "Server listening on " << server_address << std::endl;
     server->Wait();
     return 0;
