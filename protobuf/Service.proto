@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+import "Task.proto";
+import "TaskId.proto";
+import "TaskDTO.proto";
+import "google/protobuf/empty.proto";
+
+package service;
+
+service RequestHandler
+{
+  rpc Add(Task) returns (Response) {}
+  rpc AddSubTask(TaskDTO) returns (Response) {}
+  rpc Edit(TaskDTO) returns (Response) {}
+  rpc EditSubTask(TaskDTO) returns (Response) {}
+  rpc Complete(TaskId) returns (Response) {}
+  rpc Delete(TaskId) returns (Response) {}
+
+  rpc Show(google.protobuf.Empty) returns (TaskDTOEnvelope) {}
+  rpc ShowParents(google.protobuf.Empty) returns (TaskDTOEnvelope) {}
+  rpc ShowChild(TaskId) returns (TaskDTOEnvelope) {}
+  rpc ShowTasksWithLabel(Label) returns (TaskDTOEnvelope) {}
+
+  rpc Load(TaskDTOEnvelope) returns (Response) {}
+}
+
+message Response
+{
+  enum Status
+  {
+    kSuccess = 0;
+    kError = 1;
+  }
+
+  enum ErrorType
+  {
+    INVALID_ID = 0;
+    EMPTY_TITLE = 1;
+    NON_EXISTING_PARENT_ID = 2;
+    NOT_COMPLETED_SUBTASKS = 3;
+    FAIL = 4;
+  }
+
+  Status status = 1;
+  ErrorType error_type = 2;
+}
+
+message TaskDTOEnvelope
+{
+  repeated TaskDTO tasks = 1;
+}
+
+message Label
+{
+  string value = 1;
+}
