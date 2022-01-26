@@ -31,6 +31,9 @@ public:
 
 public:
     virtual ModelResponse Load(const std::vector<TaskDTO>& tasks) = 0;
+
+public:
+    virtual ~Model() = default;
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_INCLUDE_MODEL_H_
