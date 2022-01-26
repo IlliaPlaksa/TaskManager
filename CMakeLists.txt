@@ -3,64 +3,143 @@ project(TaskManager)
 
 set(CMAKE_CXX_STANDARD 17)
 
+include_directories(src/)
+
 # _________Protobuf_________
-find_package(Protobuf REQUIRED)
-find_program(PROTOBUF_EXECUTABLE protoc)
+find_package(Protobuf CONFIG REQUIRED)
+message(STATUS "Using protobuf ${Protobuf_VERSION}")
+find_program(_PROTOBUF_PROTOC protoc PATHS ENV PATH)
+#
 
-set(PROTOBUF_DIR ${CMAKE_SOURCE_DIR}/protobuf)
-set(PROTOBUF_CPP_OUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/protobuf)
+find_package(gRPC CONFIG REQUIRED)
+message(STATUS "Using gRPC ${gRPC_VERSION}")
+find_program(_GRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
+#
 
-file(MAKE_DIRECTORY ${PROTOBUF_CPP_OUT_DIR})
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-function(compile_proto_file filename)
-    get_filename_component(dirname ${filename} DIRECTORY)
+file(GLOB_RECURSE PROTO_SOURCES CONFIGURE_DEPENDS ${TaskManager_SOURCE_DIR}/protobuf/*.proto)
+message("PROTO_SOURCES ${PROTO_SOURCES}")
+
+set(PROTO_DIR ${TaskManager_SOURCE_DIR}/protobuf)
+set(GENERATED_DIR ${CMAKE_CURRENT_BINARY_DIR})
+
+macro(compile_proto_file filename)
+    get_filename_component(dirname ${filename} PATH)
     get_filename_component(basename ${filename} NAME_WE)
 
+    message("macros ${filename}")
     add_custom_command(
-            OUTPUT ${PROTOBUF_CPP_OUT_DIR}/${basename}.pb.cc ${PROTOBUF_CPP_OUT_DIR}/${basename}.pb.h
-            DEPENDS ${PROTOBUF_DIR}/${basename}.proto
-            COMMAND ${PROTOBUF_EXECUTABLE} ${PROTOBUF_DIR}/${basename}.proto
-            --cpp_out=${PROTOBUF_CPP_OUT_DIR}
-            --proto_path=${PROTOBUF_DIR}
+            OUTPUT ${GENERATED_DIR}/${basename}.pb.cc ${GENERATED_DIR}/${basename}.grpc.pb.cc
+            DEPENDS ${_PROTOBUF_PROTOC} ${PROTO_DIR}/${basename}.proto
+            COMMAND ${_PROTOBUF_PROTOC} ${PROTO_DIR}/${basename}.proto
+            --proto_path=${GENERATED_DIR}
+            --cpp_out=${GENERATED_DIR}
+            --grpc_out=${GENERATED_DIR}
+            --plugin=protoc-gen-grpc=${_GRPC_CPP_PLUGIN_EXECUTABLE}
+            -I ${PROTO_DIR}
             VERBATIM
     )
-endfunction(compile_proto_file)
+endmacro(compile_proto_file)
 
-file(GLOB_RECURSE Proto_SRCS CONFIGURE_DEPENDS
-        "protobuf/*.proto"
-        )
-
-set_source_files_properties(${Proto_SRCS} PROPERTIES COMPILE_FLAGS -Wall -Wextra -Wpedantic -Werror -Wno-unused-variable)
-
-foreach (proto_file ${Proto_SRCS})
+foreach (proto_file ${PROTO_SOURCES})
+    message("compiling ${proto_file}")
     compile_proto_file(${proto_file})
     get_filename_component(basename ${proto_file} NAME_WE)
-    set(PROTOBUF_GENERATED_SRCS ${PROTOBUF_GENERATED_SRCS}
-            ${PROTOBUF_CPP_OUT_DIR}/${basename}.pb.h
-            ${PROTOBUF_CPP_OUT_DIR}/${basename}.pb.cc
-            )
+    set(PROTOBUF_GENERATED_SRCS ${PROTOBUF_GENERATED_SRCS} ${GENERATED_DIR}/${basename}.pb.cc ${GENERATED_DIR}/${basename}.grpc.pb.cc)
 endforeach (proto_file)
+
+include_directories(${GENERATED_DIR})
+
+SET_SOURCE_FILES_PROPERTIES(${PROTO_SRCS} ${PROTO_HDRS} PROPERTIES GENERATED TRUE)
+
+
+# _________gRPC-SERVER_________
+
+file(GLOB_RECURSE Server_SRC CONFIGURE_DEPENDS
+        "src/server/*.h"
+        "src/server/*.cpp"
+
+        "src/common/*.h"
+        "src/common/*.cpp"
+
+        "src/model/*.h"
+        "src/model/*.cpp"
+
+        "src/util/*.h"
+        "src/util/*.cpp"
+        )
+
+add_executable(server
+        ${Server_SRC}
+        ${PROTO_SRCS}
+        ${PROTO_HDRS}
+        ${PROTOBUF_GENERATED_SRCS}
+        )
+
+target_link_libraries(server protobuf::libprotobuf gRPC::grpc++ gRPC::grpc++_reflection)
+
+
+# _________gRPC-CLIENT_________
+
+file(GLOB_RECURSE Client_SRC CONFIGURE_DEPENDS
+        "src/client/*.h"
+        "src/client/*.cpp"
+
+        "src/common/*.h"
+        "src/common/*.cpp"
+
+        "src/cli/*.h"
+        "src/cli/*.cpp"
+
+        "src/persistence/*.h"
+        "src/persistence/*.cpp"
+
+        "src/controller/*.h"
+        "src/controller/*.cpp"
+
+        "src/util/*.h"
+        "src/util/*.cpp"
+        )
+
+add_executable(client
+        ${Client_SRC}
+        ${PROTO_SRCS}
+        ${PROTO_HDRS}
+        ${PROTOBUF_GENERATED_SRCS}
+        )
+
+target_link_libraries(client protobuf::libprotobuf gRPC::grpc++ gRPC::grpc++_reflection)
 
 # _________MAIN_________
 
 file(GLOB_RECURSE TaskManager_SRC CONFIGURE_DEPENDS
-        "src/*.h"
-        "src/*.cpp")
+        "src/main.cpp"
 
-add_library(TaskManager
-        STATIC ${TaskManager_SRC} ${PROTOBUF_GENERATED_SRCS}
-        )
+        "src/common/*.h"
+        "src/common/*.cpp"
+
+        "src/model/*.h"
+        "src/model/*.cpp"
+
+        "src/cli/*.h"
+        "src/cli/*.cpp"
+
+        "src/persistence/*.h"
+        "src/persistence/*.cpp"
+
+        "src/controller/*.h"
+        "src/controller/*.cpp"
+
+        "src/util/*.h"
+        "src/util/*.cpp")
+
 add_executable(main
         ${TaskManager_SRC}
+        ${PROTOBUF_GENERATED_SRCS}
         )
 
-target_link_libraries(main TaskManager protobuf::libprotobuf)
-
-target_include_directories(TaskManager
-        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
-        ${PROTOBUF_CPP_OUT_DIR}
-        ${PROTOBUF_INCLUDE_DIR}
-        )
+target_link_libraries(main protobuf::libprotobuf gRPC::grpc++ gRPC::grpc++_reflection)
 
 #_________GTEST_________
 include(GoogleTest)
@@ -73,6 +152,9 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 # _________GLOBAL TEST_________
 
 file(GLOB_RECURSE Tests_SRC
+        "tests/*.cpp"
+        "tests/*.h"
+
         "src/cli/*.cpp"
         "src/cli/*.h"
 
@@ -90,25 +172,21 @@ file(GLOB_RECURSE Tests_SRC
 
         "src/util/*.cpp"
         "src/util/*.h"
-
-        "tests/*.cpp"
-        "tests/*.h")
-
-add_library(Tests
-        STATIC ${Tests_SRC} ${PROTOBUF_GENERATED_SRCS}
-        )
-
-target_include_directories(Tests
-        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
-        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/tests
-        ${PROTOBUF_CPP_OUT_DIR}
-        ${PROTOBUF_INCLUDE_DIR}
         )
 
 add_executable(TaskManger_TEST
         ${Tests_SRC}
+        ${PROTO_SRCS}
+        ${PROTO_HDRS}
+        ${PROTOBUF_GENERATED_SRCS}
         )
 
-target_link_libraries(TaskManger_TEST Tests protobuf::libprotobuf)
+target_include_directories(TaskManger_TEST
+        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
+        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/tests
+        )
+
+
+target_link_libraries(TaskManger_TEST protobuf::libprotobuf gRPC::grpc++ gRPC::grpc++_reflection)
 target_link_libraries(TaskManger_TEST GTest::GTest GTest::Main)
 target_link_libraries(TaskManger_TEST GTest::gtest GTest::gmock GTest::gmock_main)
