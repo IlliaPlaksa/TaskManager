@@ -112,36 +112,6 @@ add_executable(client
 
 target_link_libraries(client protobuf::libprotobuf gRPC::grpc++ gRPC::grpc++_reflection)
 
-# _________MAIN_________
-
-file(GLOB_RECURSE TaskManager_SRC CONFIGURE_DEPENDS
-        "src/main.cpp"
-
-        "src/common/*.h"
-        "src/common/*.cpp"
-
-        "src/model/*.h"
-        "src/model/*.cpp"
-
-        "src/cli/*.h"
-        "src/cli/*.cpp"
-
-        "src/persistence/*.h"
-        "src/persistence/*.cpp"
-
-        "src/controller/*.h"
-        "src/controller/*.cpp"
-
-        "src/util/*.h"
-        "src/util/*.cpp")
-
-add_executable(main
-        ${TaskManager_SRC}
-        ${PROTOBUF_GENERATED_SRCS}
-        )
-
-target_link_libraries(main protobuf::libprotobuf gRPC::grpc++ gRPC::grpc++_reflection)
-
 #_________GTEST_________
 include(GoogleTest)
 
