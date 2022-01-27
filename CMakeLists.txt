@@ -85,8 +85,7 @@ target_link_libraries(server protobuf::libprotobuf gRPC::grpc++ gRPC::grpc++_ref
 # _________gRPC-CLIENT_________
 
 file(GLOB_RECURSE Client_SRC CONFIGURE_DEPENDS
-        "src/client/*.h"
-        "src/client/*.cpp"
+        "src/client.cpp"
 
         "src/common/*.h"
         "src/common/*.cpp"
