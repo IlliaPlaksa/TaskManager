@@ -50,7 +50,7 @@ grpc::Status RequestHandlerImpl::EditSubTask(::grpc::ServerContext* context,
 {
     const auto& id = request->id();
     const auto& task = request->task();
-    const auto& parent_id = request->id();
+    const auto& parent_id = request->parent_id();
 
     auto result = model_->EditSubTask(id, task, parent_id);
 
