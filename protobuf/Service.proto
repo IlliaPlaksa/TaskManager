@@ -15,12 +15,11 @@ service RequestHandler
   rpc Complete(TaskId) returns (Response) {}
   rpc Delete(TaskId) returns (Response) {}
 
-  rpc Show(BlankMessage) returns (stream TaskDTO) {}
-  rpc ShowParents(BlankMessage) returns (stream TaskDTO) {}
-  rpc ShowChild(TaskId) returns (stream TaskDTO) {}
-  rpc ShowTasksWithLabel(TaskId) returns (stream TaskDTO) {}
+  rpc Show(BlankMessage) returns (TaskDTOEnvelope) {}
+  rpc ShowParents(BlankMessage) returns (TaskDTOEnvelope) {}
+  rpc ShowChild(TaskId) returns (TaskDTOEnvelope) {}
 
-  rpc Load(stream TaskDTO) returns (Response) {}
+  rpc Load(TaskDTOEnvelope) returns (Response) {}
 }
 
 message BlankMessage
@@ -46,4 +45,9 @@ message Response
 
   Status status = 1;
   ErrorType error_type = 2;
+}
+
+message TaskDTOEnvelope
+{
+  repeated TaskDTO tasks = 1;
 }
