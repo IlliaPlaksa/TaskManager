@@ -46,7 +46,6 @@ ModelResponse RemoteController::Edit(const TaskId& task_id, const Task& task)
     stub_->Edit(&context, task_dto, &response);
 
     return ServiceResponseToModelResponse(response);
-
 }
 ModelResponse RemoteController::EditSubTask(const TaskId& task_id, const Task& task, const TaskId& parent_id)
 {
@@ -84,86 +83,59 @@ std::vector<TaskDTO> RemoteController::Show()
 {
     auto result = std::vector<TaskDTO>{};
     grpc::ClientContext context;
-
     service::BlankMessage message;
 
-    auto reader = stub_->Show(&context, message);
+    service::TaskDTOEnvelope response;
 
-    TaskDTO tmp_task;
+    stub_->Show(&context, message, &response);
 
-    while (reader->Read(&tmp_task))
-    {
-        result.emplace_back(tmp_task);
-    }
+    auto& tasks = response.tasks();
 
-    grpc::Status status = reader->Finish();
-    if (status.ok())
-        return result;
-    else
-        return std::vector<TaskDTO>{};
+    result.insert(result.end(), tasks.cbegin(), tasks.cend());
+
+    return result;
 }
 std::vector<TaskDTO> RemoteController::ShowParents()
 {
     auto result = std::vector<TaskDTO>{};
     grpc::ClientContext context;
-
     service::BlankMessage message;
 
-    auto reader = stub_->ShowParents(&context, message);
+    service::TaskDTOEnvelope response;
 
-    TaskDTO tmp_task;
+    stub_->ShowParents(&context, message, &response);
 
-    while (reader->Read(&tmp_task))
-    {
-        result.emplace_back(tmp_task);
-    }
+    auto& tasks = response.tasks();
 
-    grpc::Status status = reader->Finish();
-    if (status.ok())
-        return result;
-    else
-        return std::vector<TaskDTO>{};
+    result.insert(result.end(), tasks.cbegin(), tasks.cend());
+
+    return result;
 }
 std::vector<TaskDTO> RemoteController::ShowChild(const TaskId& parent_id)
 {
     auto result = std::vector<TaskDTO>{};
     grpc::ClientContext context;
+    service::TaskDTOEnvelope response;
 
-    auto reader = stub_->ShowChild(&context, parent_id);
+    stub_->ShowChild(&context, parent_id, &response);
 
-    TaskDTO tmp_task;
+    auto& tasks = response.tasks();
 
-    while (reader->Read(&tmp_task))
-    {
-        result.emplace_back(tmp_task);
-    }
+    result.insert(result.end(), tasks.cbegin(), tasks.cend());
 
-    grpc::Status status = reader->Finish();
-    if (status.ok())
-        return result;
-    else
-        return std::vector<TaskDTO>{};
+    return result;
 }
 ModelResponse RemoteController::Load(const std::vector<TaskDTO>& tasks)
 {
     grpc::ClientContext context;
-    auto response = service::Response();
+    auto response = service::Response{};
+    auto tasks_envelope = service::TaskDTOEnvelope{};
 
-    auto writer = stub_->Load(&context, &response);
+    tasks_envelope.mutable_tasks()->Add(tasks.cbegin(), tasks.cend());
 
-    for (const auto& task: tasks)
-    {
-        if (!writer->Write(task))
-            return ModelResponse::Error(ModelResponse::ErrorType::FAIL);
-    }
+    auto writer = stub_->Load(&context, tasks_envelope, &response);
 
-    writer->WritesDone();
-    grpc::Status status = writer->Finish();
-
-    if (status.ok())
-        return ModelResponse::Success();
-    else
-        return ModelResponse::Error(ModelResponse::ErrorType::FAIL);
+    return ServiceResponseToModelResponse(response);
 }
 ModelResponse RemoteController::LoadFromFile(const std::string& file_name)
 {
