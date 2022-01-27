@@ -157,7 +157,13 @@ ModelResponse RemoteController::Load(const std::vector<TaskDTO>& tasks)
             return ModelResponse::Error(ModelResponse::ErrorType::FAIL);
     }
 
-    return ServiceResponseToModelResponse(response);
+    writer->WritesDone();
+    grpc::Status status = writer->Finish();
+
+    if (status.ok())
+        return ModelResponse::Success();
+    else
+        return ModelResponse::Error(ModelResponse::ErrorType::FAIL);
 }
 ModelResponse RemoteController::LoadFromFile(const std::string& file_name)
 {
