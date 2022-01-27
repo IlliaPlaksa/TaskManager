@@ -81,61 +81,51 @@ grpc::Status RequestHandlerImpl::Delete(::grpc::ServerContext* context,
 }
 grpc::Status RequestHandlerImpl::Show(::grpc::ServerContext* context,
                                       const ::service::BlankMessage* request,
-                                      ::grpc::ServerWriter<::TaskDTO>* writer)
+                                      ::service::TaskDTOEnvelope* response)
 {
     auto tasks = model_->Show();
 
-    for (const auto& task: tasks)
-    {
-        writer->Write(task);
-    }
+    for(auto& task : tasks)
+        response->mutable_tasks()->Add(std::move(task));
 
     return ::grpc::Status::OK;
 }
 grpc::Status RequestHandlerImpl::ShowParents(::grpc::ServerContext* context,
                                              const ::service::BlankMessage* request,
-                                             ::grpc::ServerWriter<::TaskDTO>* writer)
+                                             ::service::TaskDTOEnvelope* response)
 {
     auto tasks = model_->ShowParents();
 
-    for (const auto& task: tasks)
-    {
-        writer->Write(task);
-    }
+    for(auto& task : tasks)
+        response->mutable_tasks()->Add(std::move(task));
 
     return ::grpc::Status::OK;
 }
 grpc::Status RequestHandlerImpl::ShowChild(::grpc::ServerContext* context,
                                            const ::TaskId* request,
-                                           ::grpc::ServerWriter<::TaskDTO>* writer)
+                                           ::service::TaskDTOEnvelope* response)
 {
-    auto parent_id = *request;
-    auto tasks = model_->ShowChild(parent_id);
+    auto task_id = *request;
 
-    for (const auto& task: tasks)
-    {
-        writer->Write(task);
-    }
+    auto tasks = model_->ShowChild(task_id);
+
+    for(auto& task : tasks)
+        response->mutable_tasks()->Add(std::move(task));
 
     return ::grpc::Status::OK;
 }
 
 grpc::Status RequestHandlerImpl::Load(::grpc::ServerContext* context,
-                                      ::grpc::ServerReader<::TaskDTO>* reader,
+                                      const ::service::TaskDTOEnvelope* request,
                                       ::service::Response* response)
 {
-    auto tasks = std::vector<TaskDTO>{};
+    auto& tasks = request->tasks();
 
-    auto tmp_task = TaskDTO();
+    auto task_vector = std::vector<TaskDTO>{};
 
-    while (reader->Read(&tmp_task))
-    {
-        tasks.emplace_back(tmp_task);
-    }
+    task_vector.insert(task_vector.end(), tasks.cbegin(), tasks.cend());
 
-    auto result = model_->Load(tasks);
-
-    *response = ModelResponseToServiceResponse(result);
+    model_->Load(task_vector);
 
     return ::grpc::Status::OK;
 }

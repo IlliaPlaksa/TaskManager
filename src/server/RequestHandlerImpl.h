@@ -32,15 +32,15 @@ public:
                         ::service::Response* response) override;
     grpc::Status Show(::grpc::ServerContext* context,
                       const ::service::BlankMessage* request,
-                      ::grpc::ServerWriter<::TaskDTO>* writer) override;
+                      ::service::TaskDTOEnvelope* response) override;
     grpc::Status ShowParents(::grpc::ServerContext* context,
                              const ::service::BlankMessage* request,
-                             ::grpc::ServerWriter<::TaskDTO>* writer) override;
+                             ::service::TaskDTOEnvelope* response) override;
     grpc::Status ShowChild(::grpc::ServerContext* context,
                            const ::TaskId* request,
-                           ::grpc::ServerWriter<::TaskDTO>* writer) override;
+                           ::service::TaskDTOEnvelope* response) override;
     grpc::Status Load(::grpc::ServerContext* context,
-                      ::grpc::ServerReader<::TaskDTO>* reader,
+                      const ::service::TaskDTOEnvelope* request,
                       ::service::Response* response) override;
 private:
     std::unique_ptr<Model> model_;
