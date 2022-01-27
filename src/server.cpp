@@ -9,7 +9,7 @@
 #include <grpcpp/server_context.h>
 
 #include "model/include/TaskManager.h"
-#include "RequestHandlerImpl.h"
+#include "server/RequestHandlerImpl.h"
 
 
 int main(int argc, char** argv)

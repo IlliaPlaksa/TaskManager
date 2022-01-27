@@ -57,6 +57,8 @@ SET_SOURCE_FILES_PROPERTIES(${PROTO_SRCS} ${PROTO_HDRS} PROPERTIES GENERATED TRU
 # _________gRPC-SERVER_________
 
 file(GLOB_RECURSE Server_SRC CONFIGURE_DEPENDS
+        "src/server.cpp"
+
         "src/server/*.h"
         "src/server/*.cpp"
 
