@@ -129,6 +129,9 @@ file(GLOB_RECURSE Tests_SRC
         "src/cli/*.cpp"
         "src/cli/*.h"
 
+        "src/server/*.cpp"
+        "src/server/*.h"
+
         "src/common/*.cpp"
         "src/common/*.h"
 
