@@ -17,9 +17,9 @@ ModelResponse RemoteController::Add(const Task& task)
     grpc::ClientContext context;
     auto response = service::Response();
 
-    stub_->Add(&context, task, &response);
+    auto status = stub_->Add(&context, task, &response);
 
-    return ServiceResponseToModelResponse(response);
+    return CreateModelResponse(status, response);
 }
 ModelResponse RemoteController::AddSubTask(const Task& task, const TaskId& parent_id)
 {
@@ -30,9 +30,9 @@ ModelResponse RemoteController::AddSubTask(const Task& task, const TaskId& paren
     task_dto.mutable_task()->CopyFrom(task);
     task_dto.mutable_parent_id()->CopyFrom(parent_id);
 
-    stub_->AddSubTask(&context, task_dto, &response);
+    auto status = stub_->AddSubTask(&context, task_dto, &response);
 
-    return ServiceResponseToModelResponse(response);
+    return CreateModelResponse(status, response);
 }
 ModelResponse RemoteController::Edit(const TaskId& task_id, const Task& task)
 {
@@ -43,9 +43,9 @@ ModelResponse RemoteController::Edit(const TaskId& task_id, const Task& task)
     task_dto.mutable_id()->CopyFrom(task_id);
     task_dto.mutable_task()->CopyFrom(task);
 
-    stub_->Edit(&context, task_dto, &response);
+    auto status = stub_->Edit(&context, task_dto, &response);
 
-    return ServiceResponseToModelResponse(response);
+    return CreateModelResponse(status, response);
 }
 ModelResponse RemoteController::EditSubTask(const TaskId& task_id, const Task& task, const TaskId& parent_id)
 {
@@ -57,27 +57,27 @@ ModelResponse RemoteController::EditSubTask(const TaskId& task_id, const Task& t
     task_dto.mutable_task()->CopyFrom(task);
     task_dto.mutable_parent_id()->CopyFrom(parent_id);
 
-    stub_->EditSubTask(&context, task_dto, &response);
+    auto status = stub_->EditSubTask(&context, task_dto, &response);
 
-    return ServiceResponseToModelResponse(response);
+    return CreateModelResponse(status, response);
 }
 ModelResponse RemoteController::Complete(const TaskId& task_id)
 {
     grpc::ClientContext context;
     auto response = service::Response();
 
-    stub_->Complete(&context, task_id, &response);
+    auto status = stub_->Complete(&context, task_id, &response);
 
-    return ServiceResponseToModelResponse(response);
+    return CreateModelResponse(status, response);
 }
 ModelResponse RemoteController::Delete(const TaskId& task_id)
 {
     grpc::ClientContext context;
     auto response = service::Response();
 
-    stub_->Delete(&context, task_id, &response);
+    auto status = stub_->Delete(&context, task_id, &response);
 
-    return ServiceResponseToModelResponse(response);
+    return CreateModelResponse(status, response);
 }
 std::vector<TaskDTO> RemoteController::Show()
 {
@@ -87,7 +87,7 @@ std::vector<TaskDTO> RemoteController::Show()
 
     service::TaskDTOEnvelope response;
 
-    stub_->Show(&context, message, &response);
+    auto status = stub_->Show(&context, message, &response);
 
     auto& tasks = response.tasks();
 
@@ -133,7 +133,7 @@ ModelResponse RemoteController::Load(const std::vector<TaskDTO>& tasks)
 
     tasks_envelope.mutable_tasks()->Add(tasks.cbegin(), tasks.cend());
 
-    auto writer = stub_->Load(&context, tasks_envelope, &response);
+    stub_->Load(&context, tasks_envelope, &response);
 
     return ServiceResponseToModelResponse(response);
 }
@@ -158,6 +158,14 @@ ModelResponse RemoteController::SaveToFile(const std::string& file_name)
     {
         return ModelResponse::Success();
     } else
+        return ModelResponse::Error(ModelResponse::ErrorType::FAIL);
+}
+
+ModelResponse RemoteController::CreateModelResponse(const grpc::Status& status, const service::Response& response)
+{
+    if (status.ok())
+        return ServiceResponseToModelResponse(response);
+    else
         return ModelResponse::Error(ModelResponse::ErrorType::FAIL);
 }
 

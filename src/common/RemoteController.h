@@ -38,6 +38,9 @@ public:
     ModelResponse SaveToFile(const std::string& file_name) override;
 
 private:
+    static ModelResponse CreateModelResponse(const grpc::Status& status, const service::Response& response);
+
+private:
     std::unique_ptr<service::RequestHandler::Stub> stub_;
 };
 
