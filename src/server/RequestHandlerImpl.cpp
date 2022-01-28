@@ -85,8 +85,10 @@ grpc::Status RequestHandlerImpl::Show(::grpc::ServerContext* context,
 {
     auto tasks = model_->Show();
 
-    for(auto& task : tasks)
+    for (auto& task: tasks)
+    {
         response->mutable_tasks()->Add(std::move(task));
+    }
 
     return ::grpc::Status::OK;
 }
@@ -96,8 +98,10 @@ grpc::Status RequestHandlerImpl::ShowParents(::grpc::ServerContext* context,
 {
     auto tasks = model_->ShowParents();
 
-    for(auto& task : tasks)
+    for (auto& task: tasks)
+    {
         response->mutable_tasks()->Add(std::move(task));
+    }
 
     return ::grpc::Status::OK;
 }
@@ -109,8 +113,10 @@ grpc::Status RequestHandlerImpl::ShowChild(::grpc::ServerContext* context,
 
     auto tasks = model_->ShowChild(task_id);
 
-    for(auto& task : tasks)
+    for (auto& task: tasks)
+    {
         response->mutable_tasks()->Add(std::move(task));
+    }
 
     return ::grpc::Status::OK;
 }
@@ -120,12 +126,12 @@ grpc::Status RequestHandlerImpl::Load(::grpc::ServerContext* context,
                                       ::service::Response* response)
 {
     auto& tasks = request->tasks();
-
     auto task_vector = std::vector<TaskDTO>{};
 
     task_vector.insert(task_vector.end(), tasks.cbegin(), tasks.cend());
 
-    model_->Load(task_vector);
+    auto result = model_->Load(task_vector);
+    *response = ModelResponseToServiceResponse(result);
 
     return ::grpc::Status::OK;
 }
