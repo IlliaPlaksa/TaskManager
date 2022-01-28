@@ -18,7 +18,7 @@
 class RemoteController : public ModelController
 {
 public:
-    RemoteController(std::unique_ptr<service::RequestHandler::Stub> stub);
+    RemoteController(std::unique_ptr<service::RequestHandler::StubInterface> stub);
 public:
     ModelResponse Add(const Task& task) override;
     ModelResponse AddSubTask(const Task& task, const TaskId& parent_id) override;
@@ -41,7 +41,7 @@ private:
     static ModelResponse CreateModelResponse(const grpc::Status& status, const service::Response& response);
 
 private:
-    std::unique_ptr<service::RequestHandler::Stub> stub_;
+    std::unique_ptr<service::RequestHandler::StubInterface> stub_;
 };
 
 #endif //TASKMANAGER_SRC_CONTROLLER_REMOTECONTROLLER_H_

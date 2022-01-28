@@ -6,7 +6,7 @@
 #include "util/Response/ResponseConverters.h"
 #include "util/TaskDTO/TaskDTOCreators.h"
 
-RemoteController::RemoteController(std::unique_ptr<service::RequestHandler::Stub> stub)
+RemoteController::RemoteController(std::unique_ptr<service::RequestHandler::StubInterface> stub)
     :
     stub_(std::move(stub))
 {
@@ -133,9 +133,9 @@ ModelResponse RemoteController::Load(const std::vector<TaskDTO>& tasks)
 
     tasks_envelope.mutable_tasks()->Add(tasks.cbegin(), tasks.cend());
 
-    stub_->Load(&context, tasks_envelope, &response);
+    auto status = stub_->Load(&context, tasks_envelope, &response);
 
-    return ServiceResponseToModelResponse(response);
+    return CreateModelResponse(status, response);
 }
 ModelResponse RemoteController::LoadFromFile(const std::string& file_name)
 {
