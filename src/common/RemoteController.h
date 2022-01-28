@@ -18,7 +18,7 @@
 class RemoteController : public ModelController
 {
 public:
-    RemoteController(const std::shared_ptr<grpc::ChannelInterface>& channel);
+    RemoteController(std::unique_ptr<service::RequestHandler::Stub> stub);
 public:
     ModelResponse Add(const Task& task) override;
     ModelResponse AddSubTask(const Task& task, const TaskId& parent_id) override;

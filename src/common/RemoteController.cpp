@@ -6,9 +6,9 @@
 #include "util/Response/ResponseConverters.h"
 #include "util/TaskDTO/TaskDTOCreators.h"
 
-RemoteController::RemoteController(const std::shared_ptr<grpc::ChannelInterface>& channel)
+RemoteController::RemoteController(std::unique_ptr<service::RequestHandler::Stub> stub)
     :
-    stub_(service::RequestHandler::NewStub(channel))
+    stub_(std::move(stub))
 {
 }
 
