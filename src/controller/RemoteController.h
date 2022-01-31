@@ -19,27 +19,28 @@ class RemoteController : public ModelController
 {
 public:
     RemoteController(std::unique_ptr<service::RequestHandler::StubInterface> stub);
+
 public:
-    ModelResponse Add(const Task& task) override;
-    ModelResponse AddSubTask(const Task& task, const TaskId& parent_id) override;
-    ModelResponse Edit(const TaskId& task_id, const Task& task) override;
-    ModelResponse EditSubTask(const TaskId& task_id, const Task& task, const TaskId& parent_id) override;
-    ModelResponse Complete(const TaskId& task_id) override;
-    ModelResponse Delete(const TaskId& task_id) override;
+    ModelResponse Add(const Task &task) override;
+    ModelResponse AddSubTask(const Task &task, const TaskId &parent_id) override;
+    ModelResponse Edit(const TaskId &task_id, const Task &task) override;
+    ModelResponse EditSubTask(const TaskId &task_id, const Task &task, const TaskId &parent_id) override;
+    ModelResponse Complete(const TaskId &task_id) override;
+    ModelResponse Delete(const TaskId &task_id) override;
 
 public:
     std::vector<TaskDTO> Show() override;
     std::vector<TaskDTO> ShowParents() override;
-    std::vector<TaskDTO> ShowChild(const TaskId& parent_id) override;
-    std::vector<TaskDTO> ShowTasksWithLabel(const std::string& label) override;
+    std::vector<TaskDTO> ShowChild(const TaskId &parent_id) override;
+    std::vector<TaskDTO> ShowTasksWithLabel(const std::string &label) override;
 
 public:
-    ModelResponse Load(const std::vector<TaskDTO>& tasks) override;
-    ModelResponse LoadFromFile(const std::string& file_name) override;
-    ModelResponse SaveToFile(const std::string& file_name) override;
+    ModelResponse Load(const std::vector<TaskDTO> &tasks) override;
+    ModelResponse LoadFromFile(const std::string &file_name) override;
+    ModelResponse SaveToFile(const std::string &file_name) override;
 
 private:
-    static ModelResponse CreateModelResponse(const grpc::Status& status, const service::Response& response);
+    static ModelResponse CreateModelResponse(const grpc::Status &status, const service::Response &response);
 
 private:
     std::unique_ptr<service::RequestHandler::StubInterface> stub_;

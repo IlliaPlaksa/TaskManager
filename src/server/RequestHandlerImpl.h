@@ -15,7 +15,6 @@ public:
     explicit RequestHandlerImpl(std::unique_ptr<Model> model);
 
 public:
-
     grpc::Status Add(::grpc::ServerContext* context, const ::Task* request, ::service::Response* response) override;
     grpc::Status AddSubTask(::grpc::ServerContext* context, const ::TaskDTO* request, ::service::Response* response) override;
     grpc::Status Edit(::grpc::ServerContext* context, const ::TaskDTO* request, ::service::Response* response) override;
@@ -27,6 +26,7 @@ public:
     grpc::Status ShowChild(::grpc::ServerContext* context, const ::TaskId* request, ::service::TaskDTOEnvelope* response) override;
     grpc::Status ShowTasksWithLabel(::grpc::ServerContext* context, const ::service::Label* request, ::service::TaskDTOEnvelope* response) override;
     grpc::Status Load(::grpc::ServerContext* context, const ::service::TaskDTOEnvelope* request, ::service::Response* response) override;
+
 private:
     std::unique_ptr<Model> model_;
 };
