@@ -44,6 +44,7 @@ std::optional<std::vector<TaskDTO>> FilePersister::Load()
         if (!clean_eof)
         {
             result.emplace_back(tmp);
+            tmp = TaskDTO{};
         } else
             return std::nullopt;
 
