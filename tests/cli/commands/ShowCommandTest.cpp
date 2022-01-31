@@ -11,15 +11,30 @@
 
 class ShowCommandTest : ::testing::Test {};
 
-TEST(ShowCommandTest, shouldExecuteCommonLogic)
+TEST(ShowCommandTest, shouldExecuteWithEmptyLabel)
 {
     auto model = std::make_shared<ModelControllerMock>();
 
-    auto command = ShowCommand{};
+    auto command = ShowCommand{std::nullopt};
 
     EXPECT_CALL(*model, Show())
     .Times(1)
     .WillOnce(testing::Return(std::vector<TaskDTO>{}));
+
+    command.Execute(model);
+}
+
+TEST(ShowCommandTest, shouldExecuteWithNonEmptyLabel)
+{
+    auto model = std::make_shared<ModelControllerMock>();
+
+    auto label = "Label";
+
+    auto command = ShowCommand{label};
+
+    EXPECT_CALL(*model, ShowTasksWithLabel(label))
+        .Times(1)
+        .WillOnce(testing::Return(std::vector<TaskDTO>{}));
 
     command.Execute(model);
 }

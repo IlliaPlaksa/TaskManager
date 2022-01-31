@@ -11,6 +11,7 @@
 #include "mocks/ConsoleManipulatorMock.h"
 #include "mocks/StepMock.h"
 #include "mocks/CommandMock.h"
+#include "util/TaskId/TaskIdComparators.h"
 
 class StepMachineTest : public ::testing::Test
 {
@@ -97,7 +98,15 @@ TEST_F(StepMachineTest, shouldProcessTasksResponse)
 {
     StepMachine machine{factory, model};
 
-    response.tasks = std::vector<TaskDTO>{};
+    auto step = std::make_shared<StepMock>();
+
+    auto step_result = StepResult{};
+    step_result.next_step = std::shared_ptr<Step>(nullptr);
+
+    auto command = std::make_shared<CommandMock>();
+    auto response = CommandResponse{};
+    response.tasks = TaskStorage();
+
     step_result.command = command;
 
     EXPECT_CALL(*factory, CreateStep(StepId::kRoot))

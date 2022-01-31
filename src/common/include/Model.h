@@ -28,6 +28,7 @@ public:
     virtual std::vector<TaskDTO> Show() = 0;
     virtual std::vector<TaskDTO> ShowParents() = 0;
     virtual std::vector<TaskDTO> ShowChild(const TaskId& parent_id) = 0;
+    virtual std::vector<TaskDTO> ShowTasksWithLabel(const std::string& label) = 0;
 
 public:
     virtual ModelResponse Load(const std::vector<TaskDTO>& tasks) = 0;

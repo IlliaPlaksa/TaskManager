@@ -23,6 +23,7 @@ public:
     MOCK_METHOD(std::vector<TaskDTO>, Show, (), (override));
     MOCK_METHOD(std::vector<TaskDTO>, ShowParents, (), (override));
     MOCK_METHOD(std::vector<TaskDTO>, ShowChild, (const TaskId& task_id), (override));
+    MOCK_METHOD(std::vector<TaskDTO>, ShowTasksWithLabel, (const std::string& label), (override));
 
     MOCK_METHOD(ModelResponse, Load, (const std::vector<TaskDTO>& tasks), (override));
 };

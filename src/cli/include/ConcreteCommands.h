@@ -60,10 +60,12 @@ private:
 class ShowCommand : public Command
 {
 public:
-    // TODO Add constructor with filter params
-    explicit ShowCommand() = default;
+    explicit ShowCommand(const std::optional<std::string>& label);
 public:
     CommandResponse Execute(const std::shared_ptr<ModelController>& model) override;
+
+private:
+    std::optional<std::string> label_;
 };
 
 class SaveCommand : public Command

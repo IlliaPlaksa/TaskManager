@@ -7,6 +7,7 @@
 
 #include "TaskDTO.pb.h"
 #include "ModelResponse.h"
+#include "cli/include/TaskStorage.h"
 
 class CommandResponse
 {
@@ -15,7 +16,7 @@ public:
 
 public:
     std::optional<ModelResponse> model_response;
-    std::optional<std::vector<TaskDTO>> tasks;
+    std::optional<TaskStorage> tasks;
 
 public:
     bool IsError() const;

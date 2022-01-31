@@ -346,3 +346,48 @@ TEST(TaskManagerTest, shouldRejectLoadingWrongTasks)
 
     EXPECT_TRUE(manager.Load(tasks).error() == ModelResponse::ErrorType::FAIL);
 }
+
+TEST(TaskManagerTest, shouldShowTasksWithReqiredLabel)
+{
+    auto manager = TaskManager{std::make_unique<IdGenerator>()};
+
+    auto expect_label = "label2";
+
+    auto task = *CreateTask("Parent",
+                            time(nullptr),
+                            Task::Priority::Task_Priority_kHigh);
+    manager.Add(task);
+
+    size_t size = 5;
+    for (int i = 0 ; i < size ; ++i)
+    {
+        task = *CreateTask("Child",
+                           time(nullptr),
+                           Task::Priority::Task_Priority_kLow,
+                           {expect_label});
+
+        manager.AddSubTask(task, *CreateTaskId(0));
+    }
+
+    manager.Add(
+        *CreateTask("Second Parent",
+                    time(nullptr),
+                    Task::Priority::Task_Priority_kHigh,
+                    {expect_label})
+    );
+
+    auto result = manager.ShowTasksWithLabel(expect_label);
+    EXPECT_EQ(result.size(), (size + 1));
+
+    for (const auto& task_dto: result)
+    {
+        auto labels = task_dto.task().labels();
+        auto has_label = std::any_of(labels.cbegin(), labels.cend(),
+                                      [&expect_label](const auto& label)
+                                      {
+                                          return label == expect_label;
+                                      });
+
+        EXPECT_TRUE(has_label);
+    }
+}
