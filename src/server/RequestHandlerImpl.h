@@ -21,8 +21,8 @@ public:
     grpc::Status EditSubTask(::grpc::ServerContext* context, const ::TaskDTO* request, ::service::Response* response) override;
     grpc::Status Complete(::grpc::ServerContext* context, const ::TaskId* request, ::service::Response* response) override;
     grpc::Status Delete(::grpc::ServerContext* context, const ::TaskId* request, ::service::Response* response) override;
-    grpc::Status Show(::grpc::ServerContext* context, const ::service::BlankMessage* request, ::service::TaskDTOEnvelope* response) override;
-    grpc::Status ShowParents(::grpc::ServerContext* context, const ::service::BlankMessage* request, ::service::TaskDTOEnvelope* response) override;
+    grpc::Status Show(::grpc::ServerContext* context, const google::protobuf::Empty* request, ::service::TaskDTOEnvelope* response) override;
+    grpc::Status ShowParents(::grpc::ServerContext* context, const google::protobuf::Empty* request, ::service::TaskDTOEnvelope* response) override;
     grpc::Status ShowChild(::grpc::ServerContext* context, const ::TaskId* request, ::service::TaskDTOEnvelope* response) override;
     grpc::Status Load(::grpc::ServerContext* context, const ::service::TaskDTOEnvelope* request, ::service::Response* response) override;
 private:

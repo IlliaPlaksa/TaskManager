@@ -83,7 +83,7 @@ std::vector<TaskDTO> RemoteController::Show()
 {
     auto result = std::vector<TaskDTO>{};
     grpc::ClientContext context;
-    service::BlankMessage message;
+    google::protobuf::Empty message;
 
     service::TaskDTOEnvelope response;
 
@@ -99,7 +99,7 @@ std::vector<TaskDTO> RemoteController::ShowParents()
 {
     auto result = std::vector<TaskDTO>{};
     grpc::ClientContext context;
-    service::BlankMessage message;
+    google::protobuf::Empty message;
 
     service::TaskDTOEnvelope response;
 

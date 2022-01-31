@@ -140,7 +140,7 @@ TEST_F(RequestHandlerImplTest, shouldCallDeleteMethod)
 TEST_F(RequestHandlerImplTest, shouldCallShowMethod)
 {
     ::grpc::ServerContext context{};
-    ::service::BlankMessage request{};
+    google::protobuf::Empty request{};
     ::service::TaskDTOEnvelope response{};
 
     auto model_response = std::vector<TaskDTO>{TaskDTO{}};
@@ -158,7 +158,7 @@ TEST_F(RequestHandlerImplTest, shouldCallShowMethod)
 TEST_F(RequestHandlerImplTest, shouldCallShowParentsMethod)
 {
     ::grpc::ServerContext context{};
-    ::service::BlankMessage request{};
+    google::protobuf::Empty request{};
     ::service::TaskDTOEnvelope response{};
 
     auto model_response = std::vector<TaskDTO>{TaskDTO{}};

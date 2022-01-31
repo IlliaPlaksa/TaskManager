@@ -3,6 +3,7 @@ syntax = "proto3";
 import "Task.proto";
 import "TaskId.proto";
 import "TaskDTO.proto";
+import "google/protobuf/empty.proto";
 
 package service;
 
@@ -15,15 +16,11 @@ service RequestHandler
   rpc Complete(TaskId) returns (Response) {}
   rpc Delete(TaskId) returns (Response) {}
 
-  rpc Show(BlankMessage) returns (TaskDTOEnvelope) {}
-  rpc ShowParents(BlankMessage) returns (TaskDTOEnvelope) {}
+  rpc Show(google.protobuf.Empty) returns (TaskDTOEnvelope) {}
+  rpc ShowParents(google.protobuf.Empty) returns (TaskDTOEnvelope) {}
   rpc ShowChild(TaskId) returns (TaskDTOEnvelope) {}
 
   rpc Load(TaskDTOEnvelope) returns (Response) {}
-}
-
-message BlankMessage
-{
 }
 
 message Response

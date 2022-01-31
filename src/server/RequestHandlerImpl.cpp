@@ -80,7 +80,7 @@ grpc::Status RequestHandlerImpl::Delete(::grpc::ServerContext* context,
     return ::grpc::Status::OK;
 }
 grpc::Status RequestHandlerImpl::Show(::grpc::ServerContext* context,
-                                      const ::service::BlankMessage* request,
+                                      const google::protobuf::Empty* request,
                                       ::service::TaskDTOEnvelope* response)
 {
     auto tasks = model_->Show();
@@ -93,7 +93,7 @@ grpc::Status RequestHandlerImpl::Show(::grpc::ServerContext* context,
     return ::grpc::Status::OK;
 }
 grpc::Status RequestHandlerImpl::ShowParents(::grpc::ServerContext* context,
-                                             const ::service::BlankMessage* request,
+                                             const google::protobuf::Empty* request,
                                              ::service::TaskDTOEnvelope* response)
 {
     auto tasks = model_->ShowParents();
