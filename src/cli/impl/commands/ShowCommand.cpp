@@ -10,7 +10,7 @@ ShowCommand::ShowCommand(const std::optional<std::string>& label)
 {
 }
 
-CommandResponse ShowCommand::Execute(const std::shared_ptr<Model>& model)
+CommandResponse ShowCommand::Execute(const std::shared_ptr<ModelController>& model)
 {
     auto result = CommandResponse{};
 

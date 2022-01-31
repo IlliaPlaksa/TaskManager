@@ -6,7 +6,7 @@
 #include "util/TaskId/TaskIdComparators.h"
 
 StepMachine::StepMachine(const std::shared_ptr<StepFactory>& step_factory,
-                         const std::shared_ptr<Model>& model)
+                         const std::shared_ptr<ModelController>& model)
     :
     step_factory_(step_factory),
     model_(model)

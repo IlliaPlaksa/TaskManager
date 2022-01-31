@@ -4,7 +4,7 @@
 
 #include "cli/include/ConcreteCommands.h"
 
-CommandResponse CompleteCommand::Execute(const std::shared_ptr<Model>& model)
+CommandResponse CompleteCommand::Execute(const std::shared_ptr<ModelController>& model)
 {
     auto result = CommandResponse{};
     result.model_response =  model->Complete(id_);

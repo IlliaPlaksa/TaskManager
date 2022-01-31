@@ -7,7 +7,7 @@
 
 #include <optional>
 #include "common/include/View.h"
-#include "controller/include/ModelController.h"
+#include "common/include/ModelController.h"
 #include "Context.h"
 #include "Step.h"
 #include "MachineSteps.h"
@@ -16,7 +16,7 @@ class StepMachine : public View
 {
 public:
     explicit StepMachine(const std::shared_ptr<StepFactory>& step_factory,
-                         const std::shared_ptr<Model>& model);
+                         const std::shared_ptr<ModelController>& model);
 public:
     void Run() override;
 
@@ -35,7 +35,7 @@ private:
     std::shared_ptr<Step> current_step_;
 
     std::shared_ptr<StepFactory> step_factory_;
-    std::shared_ptr<Model> model_;
+    std::shared_ptr<ModelController> model_;
 };
 
 #endif //TASKMANAGER_SRC_CLI_STEPMACHINE_H_

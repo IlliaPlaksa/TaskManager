@@ -7,33 +7,48 @@
 #include "cli/include/StepMachine.h"
 
 #include "mocks/StepFactoryMock.h"
-#include "mocks/ModelMock.h"
+#include "mocks/ModelControllerMock.h"
 #include "mocks/ConsoleManipulatorMock.h"
 #include "mocks/StepMock.h"
 #include "mocks/CommandMock.h"
 #include "util/TaskId/TaskIdComparators.h"
 
-class StepMachineTest : ::testing::Test
+class StepMachineTest : public ::testing::Test
 {
+protected:
+    std::stringstream ostream;
+    std::stringstream istream;
+    std::shared_ptr<ConsoleManipulator> console;
+    std::shared_ptr<StepFactoryMock> factory;
+    std::shared_ptr<ModelControllerMock> model;
+
+    std::shared_ptr<StepMock> step;
+    StepResult step_result;
+
+    std::shared_ptr<CommandMock> command;
+    CommandResponse response;
+
+    void SetUp() override
+    {
+        ostream = std::stringstream{};
+        istream = std::stringstream{};
+        console = std::make_shared<ConsoleManipulatorMock>(ostream, istream);
+        model = std::make_shared<ModelControllerMock>();
+        factory = std::make_shared<StepFactoryMock>(console);
+
+        step = std::make_shared<StepMock>();
+        step_result = StepResult{};
+        step_result.next_step = std::shared_ptr<Step>(nullptr);
+
+        command = std::make_shared<CommandMock>();
+        response = CommandResponse{};
+    }
 };
 
-TEST(StepMachineTest, shouldRunWithDefaultStep)
+TEST_F(StepMachineTest, shouldRunWithDefaultStep)
 {
-    auto ostream = std::stringstream{};
-    auto istream = std::stringstream{};
-    auto console = std::make_shared<ConsoleManipulatorMock>(ostream, istream);
-    auto factory = std::make_shared<StepFactoryMock>(console);
-    auto model = std::make_shared<ModelMock>();
+    StepMachine machine{factory, model};
 
-    auto machine = StepMachine(factory, model);
-
-    auto step = std::make_shared<StepMock>();
-
-    auto step_result = StepResult{};
-    step_result.next_step = std::shared_ptr<Step>(nullptr);
-
-    auto command = std::make_shared<CommandMock>();
-    auto response = CommandResponse{};
     response.model_response = ModelResponse::Success();
 
     step_result.command = command;
@@ -47,31 +62,17 @@ TEST(StepMachineTest, shouldRunWithDefaultStep)
         .WillOnce(::testing::Return(step_result));
 
     EXPECT_CALL(*command, Execute(::testing::_))
-    .Times(1)
-    .WillOnce(::testing::Return(response));
+        .Times(1)
+        .WillOnce(::testing::Return(response));
 
     machine.Run();
 }
 
-TEST(StepMachineTest, shouldProcessErrorResponse)
+TEST_F(StepMachineTest, shouldProcessErrorResponse)
 {
-    auto ostream = std::stringstream{};
-    auto istream = std::stringstream{};
-    auto console = std::make_shared<ConsoleManipulatorMock>(ostream, istream);
-    auto factory = std::make_shared<StepFactoryMock>(console);
-    auto model = std::make_shared<ModelMock>();
+    StepMachine machine{factory, model};
 
-    auto machine = StepMachine(factory, model);
-
-    auto step = std::make_shared<StepMock>();
-
-    auto step_result = StepResult{};
-    step_result.next_step = std::shared_ptr<Step>(nullptr);
-
-    auto command = std::make_shared<CommandMock>();
-    auto response = CommandResponse{};
     response.model_response = ModelResponse::Error(ModelResponse::ErrorType::FAIL);
-
     step_result.command = command;
 
     EXPECT_CALL(*factory, CreateStep(StepId::kRoot))
@@ -93,15 +94,9 @@ TEST(StepMachineTest, shouldProcessErrorResponse)
     machine.Run();
 }
 
-TEST(StepMachineTest, shouldProcessTasksResponse)
+TEST_F(StepMachineTest, shouldProcessTasksResponse)
 {
-    auto ostream = std::stringstream{};
-    auto istream = std::stringstream{};
-    auto console = std::make_shared<ConsoleManipulatorMock>(ostream, istream);
-    auto factory = std::make_shared<StepFactoryMock>(console);
-    auto model = std::make_shared<ModelMock>();
-
-    auto machine = StepMachine(factory, model);
+    StepMachine machine{factory, model};
 
     auto step = std::make_shared<StepMock>();
 

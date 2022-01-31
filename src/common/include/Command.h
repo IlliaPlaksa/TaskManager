@@ -6,13 +6,13 @@
 #define TASKMANAGER_SRC_CONTROLLER_COMMAND_H_
 
 #include <memory>
-#include "Model.h"
+#include "ModelController.h"
 #include "CommandResponse.h"
 
 class Command
 {
 public:
-    virtual CommandResponse Execute(const std::shared_ptr<Model>& model) = 0;
+    virtual CommandResponse Execute(const std::shared_ptr<ModelController>& model) = 0;
 public:
     virtual ~Command() = default;
 };

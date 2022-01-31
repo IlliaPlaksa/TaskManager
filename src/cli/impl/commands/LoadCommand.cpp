@@ -4,17 +4,11 @@
 
 #include "cli/include/ConcreteCommands.h"
 
-CommandResponse LoadCommand::Execute(const std::shared_ptr<Model>& model)
+CommandResponse LoadCommand::Execute(const std::shared_ptr<ModelController>& model)
 {
     auto result = CommandResponse{};
 
-    auto persister = FilePersister{file_name_};
-    auto tasks = persister.Load();
-
-    if (tasks.has_value())
-        result.model_response = model->Load(*tasks);
-    else
-        result.model_response = ModelResponse::Error(ModelResponse::ErrorType::FAIL);
+    result.model_response = model->LoadFromFile(file_name_);
 
     return result;
 }

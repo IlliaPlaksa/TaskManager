@@ -4,7 +4,7 @@
 
 #include "cli/include/ConcreteCommands.h"
 
-CommandResponse DeleteCommand::Execute(const std::shared_ptr<Model>& model)
+CommandResponse DeleteCommand::Execute(const std::shared_ptr<ModelController>& model)
 {
     auto result = CommandResponse{};
     result.model_response =  model->Delete(id_);
