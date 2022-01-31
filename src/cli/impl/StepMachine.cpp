@@ -59,7 +59,11 @@ void StepMachine::SetContextFromCommandResponse(const CommandResponse& response)
         context_.SetError(CreateErrorMessage(error));
     } else
     {
-        if (response.tasks.has_value())
-            *context_.GetStorage() = *response.tasks;
+        auto tasks = response.tasks;
+        if (tasks.has_value())
+        {
+            auto new_storage = std::make_shared<TaskStorage>(tasks.value());
+            context_.GetStorage().swap(new_storage);
+        }
     }
 }
