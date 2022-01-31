@@ -26,7 +26,7 @@ TEST(ShowCommandTest, shouldExecuteWithEmptyLabel)
 
 TEST(ShowCommandTest, shouldExecuteWithNonEmptyLabel)
 {
-    auto model = std::make_shared<ModelMock>();
+    auto model = std::make_shared<ModelControllerMock>();
 
     auto label = "Label";
 
