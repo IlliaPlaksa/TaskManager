@@ -14,6 +14,8 @@
 #include "TaskId.pb.h"
 #include "TaskDTO.pb.h"
 
+#include "Logging.h"
+
 class TaskManager : public Model
 {
 public:
