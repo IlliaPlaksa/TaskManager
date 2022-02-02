@@ -15,7 +15,7 @@
 
 int main(int argc, char** argv)
 {
-    logging::init(boost::log::trivial::severity_level::info);
+    logging::init("server.log",boost::log::trivial::severity_level::info);
 
     std::string server_address("0.0.0.0:50051");
     auto model = std::unique_ptr<Model>(new TaskManager{std::make_unique<IdGenerator>()});
