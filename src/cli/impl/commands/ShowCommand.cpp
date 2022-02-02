@@ -18,9 +18,24 @@ CommandResponse ShowCommand::Execute(const std::shared_ptr<ModelController>& mod
 
     if (label_.has_value())
     {
-        storage.LoadRootTasks(model->ShowTasksWithLabel(label_.value()));
-    } else
-        storage.LoadTasks(model->Show());
+        BOOST_LOG_TRIVIAL(info) << "Called Show by label command with label: " << label_.value() <<".";
+
+        auto tasks = model->ShowTasksWithLabel(label_.value());
+
+        BOOST_LOG_TRIVIAL(info) << "Show by label command received " << tasks.size() << " tasks.";
+
+        storage.LoadRootTasks(tasks);
+    }
+    else
+    {
+        BOOST_LOG_TRIVIAL(info) << "Called Show command.";
+
+        auto tasks = model->Show();
+
+        BOOST_LOG_TRIVIAL(info) << "Show command received " << tasks.size() << " tasks.";
+
+        storage.LoadTasks(tasks);
+    }
 
     result.tasks = storage;
 
