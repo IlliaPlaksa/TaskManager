@@ -137,7 +137,7 @@ std::vector<TaskDTO> TaskManager::Show()
             result.emplace_back(tmp.value());
     }
 
-    BOOST_LOG_TRIVIAL(info) << "Show method returned " << result.size() << " tasks.";
+    BOOST_LOG_TRIVIAL(debug) << "Show method returned " << result.size() << " tasks.";
     return result;
 }
 std::vector<TaskDTO> TaskManager::ShowParents()
