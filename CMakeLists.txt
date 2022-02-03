@@ -194,5 +194,5 @@ target_include_directories(TaskManger_TEST
 
 target_link_libraries(TaskManger_TEST protobuf::libprotobuf gRPC::grpc++ gRPC::grpc++_reflection)
 target_link_libraries(TaskManger_TEST Boost::log Boost::log_setup)
-target_link_libraries(TaskManger_TEST GTest::GTest GTest::Main)
-target_link_libraries(TaskManger_TEST GTest::gtest GTest::gmock GTest::gmock_main)
+target_link_libraries(TaskManger_TEST GTest::GTest)
+target_link_libraries(TaskManger_TEST GTest::gtest GTest::gmock)
