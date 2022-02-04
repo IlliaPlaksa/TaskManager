@@ -13,8 +13,7 @@ void logging::init(const std::string& file_name, const boost::log::trivial::seve
             boost::log::keywords::file_name = file_name,
             boost::log::keywords::auto_flush = true,
             boost::log::keywords::open_mode = std::ios_base::app,
-            boost::log::keywords::format =
-                "[%TimeStamp%] Thread:[%ThreadID%] Verbosity:[%Severity%] PID:[%ProcessID%] Message: %Message%"
+            boost::log::keywords::format = "[%TimeStamp%] Thread:[%ThreadID%] Verbosity:[%Severity%] PID:[%ProcessID%] Message: %Message%"
         );
 
     boost::log::core::get()->set_filter
