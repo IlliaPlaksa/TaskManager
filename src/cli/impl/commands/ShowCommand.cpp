@@ -28,7 +28,7 @@ CommandResponse ShowCommand::Execute(const std::shared_ptr<ModelController>& mod
     }
     else
     {
-        BOOST_LOG_TRIVIAL(debug) << "Called Show command.";
+        BOOST_LOG_TRIVIAL(debug) << "Called Show command with no parameters.";
 
         auto tasks = model->Show();
 

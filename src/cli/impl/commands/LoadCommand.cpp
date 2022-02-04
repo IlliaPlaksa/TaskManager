@@ -8,7 +8,7 @@ CommandResponse LoadCommand::Execute(const std::shared_ptr<ModelController>& mod
 {
     auto result = CommandResponse{};
 
-    BOOST_LOG_TRIVIAL(debug) << "Calling ModelController's LoadFromFile method in Load command.";
+    BOOST_LOG_TRIVIAL(debug) << "Calling LoadFromFile with file name: " << file_name_;
     result.model_response = model->LoadFromFile(file_name_);
 
     return result;
