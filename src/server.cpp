@@ -8,13 +8,14 @@
 #include <grpcpp/server_builder.h>
 #include <grpcpp/server_context.h>
 
-#include <boost/log/trivial.hpp>
-
 #include "model/include/TaskManager.h"
 #include "server/RequestHandlerImpl.h"
 
+#include "Logging.h"
+
 int main(int argc, char** argv)
 {
+    logging::init("server.log",boost::log::trivial::severity_level::info);
 
     std::string server_address("0.0.0.0:50051");
     auto model = std::unique_ptr<Model>(new TaskManager{std::make_unique<IdGenerator>()});
@@ -26,7 +27,11 @@ int main(int argc, char** argv)
     builder.RegisterService(&service);
     std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
 
-    BOOST_LOG_TRIVIAL(info) << "Server listening on " << server_address;
+    BOOST_LOG_TRIVIAL(info) << "Server started listening on " << server_address;
+
     server->Wait();
+
+    BOOST_LOG_TRIVIAL(info) << "Server shut down";
+
     return 0;
 }

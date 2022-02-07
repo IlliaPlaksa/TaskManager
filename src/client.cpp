@@ -5,11 +5,14 @@
 #include "controller/RemoteController.h"
 #include "cli/include/StepMachine.h"
 
-#include <boost/log/trivial.hpp>
+#include "Logging.h"
 
 int main(int argc, char** argv)
 {
-    auto channel = grpc::CreateChannel("localhost:50051", grpc::InsecureChannelCredentials());
+    logging::init("client.log",boost::log::trivial::severity_level::info);
+
+    std::string client_address{"localhost:50051"};
+    auto channel = grpc::CreateChannel(client_address, grpc::InsecureChannelCredentials());
     auto stub = service::RequestHandler::NewStub(channel);
 
     auto controller = std::make_shared<RemoteController>(std::move(stub));
@@ -19,7 +22,7 @@ int main(int argc, char** argv)
 
     auto view = std::shared_ptr<View>{new StepMachine{step_factory, controller}};
 
-    BOOST_LOG_TRIVIAL(info) << "Client started";
+    BOOST_LOG_TRIVIAL(info) << "Client started at " << client_address;
 
     view->Run();
 
