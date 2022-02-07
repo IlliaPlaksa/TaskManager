@@ -10,6 +10,8 @@
 #include "TaskDTO.pb.h"
 #include "TaskId.pb.h"
 
+#include "Logging.h"
+
 class AddCommand : public Command
 {
 public:

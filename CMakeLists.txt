@@ -7,7 +7,14 @@ include_directories(src/)
 
 # _________Boost_________
 set(Boost_USE_STATIC_LIBS ON)
-find_package(Boost COMPONENTS log REQUIRED)
+find_package(Boost COMPONENTS log log_setup REQUIRED)
+
+file(GLOB_RECURSE Logging_SRC CONFIGURE_DEPENDS
+        "logging/*.h"
+        "logging/*.cpp"
+        )
+
+configure_file(help.txt help.txt COPYONLY) # Adding help.txt to build output
 
 configure_file(help.txt help.txt COPYONLY) # Adding help.txt to build output
 
@@ -82,14 +89,19 @@ add_executable(server
         ${PROTO_SRCS}
         ${PROTO_HDRS}
         ${PROTOBUF_GENERATED_SRCS}
+        ${Logging_SRC}
         )
 
 target_link_libraries(server
         protobuf::libprotobuf
         gRPC::grpc++ gRPC::grpc++_reflection
         Boost::log
+        Boost::log_setup
         )
-target_include_directories(server PUBLIC ${Boost_INCLUDE_DIRS})
+target_include_directories(server
+        PUBLIC ${Boost_INCLUDE_DIRS}
+        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/logging
+        )
 
 
 # _________gRPC-CLIENT_________
@@ -118,14 +130,19 @@ add_executable(client
         ${PROTO_SRCS}
         ${PROTO_HDRS}
         ${PROTOBUF_GENERATED_SRCS}
+        ${Logging_SRC}
         )
 
 target_link_libraries(client
         protobuf::libprotobuf
         gRPC::grpc++ gRPC::grpc++_reflection
         Boost::log
+        Boost::log_setup
         )
-target_include_directories(client PUBLIC ${Boost_INCLUDE_DIRS})
+target_include_directories(client
+        PUBLIC ${Boost_INCLUDE_DIRS}
+        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/logging
+        )
 
 #_________GTEST_________
 include(GoogleTest)
@@ -168,16 +185,18 @@ add_executable(TaskManger_TEST
         ${PROTO_SRCS}
         ${PROTO_HDRS}
         ${PROTOBUF_GENERATED_SRCS}
+        ${Logging_SRC}
         )
 
 target_include_directories(TaskManger_TEST
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/tests
+        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/logging
         PUBLIC ${Boost_INCLUDE_DIRS}
         )
 
 
 target_link_libraries(TaskManger_TEST protobuf::libprotobuf gRPC::grpc++ gRPC::grpc++_reflection)
-target_link_libraries(TaskManger_TEST Boost::log)
-target_link_libraries(TaskManger_TEST GTest::GTest GTest::Main)
-target_link_libraries(TaskManger_TEST GTest::gtest GTest::gmock GTest::gmock_main)
+target_link_libraries(TaskManger_TEST Boost::log Boost::log_setup)
+target_link_libraries(TaskManger_TEST GTest::GTest)
+target_link_libraries(TaskManger_TEST GTest::gtest GTest::gmock)

@@ -138,6 +138,8 @@ std::vector<TaskDTO> TaskManager::Show()
         if (tmp)
             result.emplace_back(tmp.value());
     }
+
+    BOOST_LOG_TRIVIAL(debug) << "Show method returned " << result.size() << " tasks.";
     return result;
 }
 std::vector<TaskDTO> TaskManager::ShowParents()
@@ -205,6 +207,8 @@ std::optional<TaskDTO> TaskManager::ConstructTaskDTO(const TaskId& id, const Tas
 }
 ModelResponse TaskManager::Load(const std::vector<TaskDTO>& tasks)
 {
+    BOOST_LOG_TRIVIAL(debug) << "Invoked Load method with " << tasks.size() << " tasks.";
+
     auto tmp_storage = std::map<TaskId, TaskNode>{};
     for (const auto& elem: tasks)
     {
@@ -221,20 +225,30 @@ ModelResponse TaskManager::Load(const std::vector<TaskDTO>& tasks)
         if (parent_id.has_value())
         {
             if (tmp_storage.find(*parent_id) == tmp_storage.end()) // No task with such id found
-                return ModelResponse::Error(
-                    ModelResponse::ErrorType::FAIL
-                );
+            {
+                BOOST_LOG_TRIVIAL(info) << "Loading failed.";
+                BOOST_LOG_TRIVIAL(debug) << "Task has non-existing parent id.";
+
+                return ModelResponse::Error(ModelResponse::ErrorType::FAIL);
+            }
             else if (*parent_id == elem.first) // parent id equals to task id
-                return ModelResponse::Error(
-                    ModelResponse::ErrorType::FAIL
-                );
+            {
+                BOOST_LOG_TRIVIAL(info) << "Loading failed.";
+                BOOST_LOG_TRIVIAL(debug) << "Task's parent id equals to it's id";
+
+                return ModelResponse::Error(ModelResponse::ErrorType::FAIL);
+            }
         }
     }
 
     auto last_id = *CreateTaskId(tmp_storage.size());
-    gen_->SetLastId(last_id);
-    tasks_ = tmp_storage;
-    return ModelResponse::Success();
+    this->gen_->SetLastId(last_id);
+
+    this->tasks_ = tmp_storage;
+
+    BOOST_LOG_TRIVIAL(info) << "Loaded " << tasks.size() << " tasks.";
+
+   return ModelResponse::Success();
 }
 std::vector<std::map<TaskId, TaskNode>::iterator> TaskManager::FindSubTasks(const TaskId& parent_id)
 {

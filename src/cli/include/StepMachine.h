@@ -11,6 +11,7 @@
 #include "Context.h"
 #include "Step.h"
 #include "MachineSteps.h"
+#include "Logging.h"
 
 class StepMachine : public View
 {
