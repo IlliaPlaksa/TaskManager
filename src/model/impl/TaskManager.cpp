@@ -247,6 +247,7 @@ ModelResponse TaskManager::Load(const std::vector<TaskDTO>& tasks)
     this->tasks_ = tmp_storage;
 
     BOOST_LOG_TRIVIAL(info) << "Loaded " << tasks.size() << " tasks.";
+
     return ModelResponse::Success();
 }
 std::vector<std::map<TaskId, TaskNode>::iterator> TaskManager::FindSubTasks(const TaskId& parent_id)

@@ -17,7 +17,7 @@ file(GLOB_RECURSE Logging_SRC CONFIGURE_DEPENDS
         "logging/*.h"
         "logging/*.cpp"
         )
-
+        
 configure_file(help.txt help.txt COPYONLY) # Adding help.txt to build output
 
 # _________Protobuf_________
