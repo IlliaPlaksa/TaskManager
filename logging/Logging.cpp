@@ -22,3 +22,13 @@ void logging::init(const std::string& file_name, const boost::log::trivial::seve
 
     boost::log::add_common_attributes();
 }
+
+boost::log::trivial::severity_level logging::CreateSeverityLevelFrom(const std::string& level)
+{
+    auto result = boost::log::trivial::severity_level{};
+
+    if (!boost::log::trivial::from_string(level.c_str(), level.size(), result))
+        result = boost::log::trivial::severity_level::info;
+
+    return result;
+}

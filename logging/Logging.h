@@ -18,6 +18,9 @@ namespace logging
 {
     /// Initializes logging with specified file name and log level
     void init(const std::string& file_name, const boost::log::trivial::severity_level& level);
+
+    /// If input string doesn't match any severity level, returns "info" level as default
+    boost::log::trivial::severity_level CreateSeverityLevelFrom(const std::string& level);
 }
 
 #endif //TASKMANAGER_LOGGING_LOGGING_H_

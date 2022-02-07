@@ -15,16 +15,6 @@ std::string CreateAddress(const std::string& host, const std::string& port)
     return host + ":" + port;
 }
 
-boost::log::trivial::severity_level CreateSeverityLevelFromString(const std::string& level)
-{
-    auto result = boost::log::trivial::severity_level{};
-
-    if (!boost::log::trivial::from_string(level.c_str(), level.size(), result))
-        result = boost::log::trivial::severity_level::info;
-
-    return result;
-}
-
 int main(int argc, char** argv)
 {
     logging::init("client.log",boost::log::trivial::severity_level::info);
@@ -36,7 +26,7 @@ int main(int argc, char** argv)
     auto severity_level = boost::log::trivial::severity_level{};
     std::string verbosity_str;
 try
-    {
+   {
         po::options_description desc("Allowed options");
         desc.add_options()
             ("help", "produce help message")
@@ -44,7 +34,6 @@ try
             ("verbosity",
              po::value<std::string>(&verbosity_str)->default_value("info"),
            "sets log verbosity: debug, info, warn, error, fatal")
-
             ("host",
              po::value<std::string>(&host)->default_value("localhost"),
              "sets server address")
