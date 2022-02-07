@@ -17,8 +17,6 @@ std::string CreateAddress(const std::string& host, const std::string& port)
 
 int main(int argc, char** argv)
 {
-    logging::init("client.log",boost::log::trivial::severity_level::info);
-
     std::string host; // default address of server
     std::string port;
 
