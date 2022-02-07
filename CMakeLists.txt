@@ -9,6 +9,8 @@ include_directories(src/)
 set(Boost_USE_STATIC_LIBS ON)
 find_package(Boost COMPONENTS log REQUIRED)
 
+configure_file(help.txt help.txt COPYONLY) # Adding help.txt to build output
+
 # _________Protobuf_________
 find_package(Protobuf CONFIG REQUIRED)
 message(STATUS "Using protobuf ${Protobuf_VERSION}")

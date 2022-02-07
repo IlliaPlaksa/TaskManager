@@ -18,26 +18,24 @@ TaskManager::TaskManager(std::unique_ptr<IdGenerator> generator)
 
 ModelResponse TaskManager::Add(const Task& task)
 {
-    TaskId new_id = this->gen_->GetNextId();
+    TaskId new_id = gen_->GetNextId();
 
-    this->tasks_.insert(
-        std::make_pair(new_id,
-                       TaskNode::Create(task)));
+    tasks_.insert(
+        std::make_pair(new_id, TaskNode::Create(task))
+    );
     return ModelResponse::Success();
 }
 ModelResponse TaskManager::AddSubTask(const Task& task, const TaskId& parent_id)
 {
-    TaskId new_id = this->gen_->GetNextId();
+    TaskId new_id = gen_->GetNextId();
 
     if (tasks_.find(parent_id) != tasks_.end())
     {
-        this->tasks_.insert(
-            std::make_pair(
-                new_id,
-                TaskNode::Create(task, parent_id)
-            )
+        tasks_.insert(
+            std::make_pair(new_id, TaskNode::Create(task, parent_id))
         );
-    } else
+    }
+    else
         return ModelResponse::Error(ModelResponse::ErrorType::NON_EXISTING_PARENT_ID);
 
     return ModelResponse::Success();
@@ -45,28 +43,31 @@ ModelResponse TaskManager::AddSubTask(const Task& task, const TaskId& parent_id)
 
 ModelResponse TaskManager::Edit(const TaskId& id, const Task& task)
 {
-    if (this->tasks_.find(id) != this->tasks_.end())
+    if (tasks_.find(id) != tasks_.end())
     {
-        this->tasks_.at(id) = TaskNode::Create(task);
+        tasks_.at(id) = TaskNode::Create(task);
         return ModelResponse::Success();
-    } else
+    }
+    else
     {
         return ModelResponse::Error(ModelResponse::ErrorType::INVALID_ID);
     }
 }
 ModelResponse TaskManager::EditSubTask(const TaskId& id, const Task& task, const TaskId& parent_id)
 {
-    auto tmp = this->tasks_.find(id);
+    auto tmp = tasks_.find(id);
 
-    if (tmp != this->tasks_.end())
+    if (tmp != tasks_.end())
     {
-        if (this->tasks_.find(parent_id) != this->tasks_.end())
+        if (tasks_.find(parent_id) != tasks_.end())
         {
             tmp->second = TaskNode::Create(task, parent_id);
             return ModelResponse::Success();
-        } else
+        }
+        else
             return ModelResponse::Error(ModelResponse::ErrorType::NON_EXISTING_PARENT_ID);
-    } else
+    }
+    else
         return ModelResponse::Error(ModelResponse::ErrorType::INVALID_ID);
 }
 
@@ -85,31 +86,31 @@ ModelResponse TaskManager::Delete(const TaskId& id)
                 tasks_.erase(iter);
         }
         tasks_.erase(id);
-    } else
+    }
+    else
         return ModelResponse::Error(ModelResponse::ErrorType::INVALID_ID);
 
     return ModelResponse::Success();
 }
 ModelResponse TaskManager::Complete(const TaskId& id)
 {
-    if (this->tasks_.find(id) != this->tasks_.end())
-    {
-        auto& task = this->tasks_.at(id);
+    auto task_iter = tasks_.find(id);
 
-        auto is_uncompleted = [id](const std::pair<TaskId, TaskNode>& elem)
+    if (task_iter != tasks_.end())
+    {
+        auto& task = task_iter->second;
+        auto subtasks = FindSubTasks(id);
+
+        auto is_uncompleted = [](const std::map<TaskId, TaskNode>::iterator& elem)
         {
-            auto parent = elem.second.GetParentId();
-            if (parent)
-                return id == parent
-                    and elem.second.GetTask().status() != Task_Status_kCompleted;
-            else
-                return false;
+            auto task_status = elem->second.GetTask().status();
+            return task_status != Task_Status_kCompleted;
         };
 
-        // Count uncompleted subtasks
-        auto count = std::count_if(tasks_.begin(), tasks_.end(), is_uncompleted);
+        // Find uncompleted subtask
+        auto has_uncompleted = std::find_if(subtasks.begin(), subtasks.end(), is_uncompleted);
 
-        if (count) // Has uncompleted subtasks
+        if (has_uncompleted != subtasks.end()) // Has uncompleted subtasks
             return ModelResponse::Error(ModelResponse::ErrorType::NOT_COMPLETED_SUBTASKS);
 
         auto new_task = task.GetTask();
@@ -123,14 +124,15 @@ ModelResponse TaskManager::Complete(const TaskId& id)
             task = TaskNode::Create(new_task);
 
         return ModelResponse::Success();
-    } else
+    }
+    else
         return ModelResponse::Error(ModelResponse::ErrorType::INVALID_ID);
 }
 
 std::vector<TaskDTO> TaskManager::Show()
 {
     auto result = std::vector<TaskDTO>{};
-    for (const auto& elem: this->tasks_)
+    for (const auto& elem: tasks_)
     {
         auto tmp = ConstructTaskDTO(elem.first, elem.second);
         if (tmp)
@@ -141,7 +143,7 @@ std::vector<TaskDTO> TaskManager::Show()
 std::vector<TaskDTO> TaskManager::ShowParents()
 {
     auto result = std::vector<TaskDTO>{};
-    for (const auto& elem: this->tasks_)
+    for (const auto& elem: tasks_)
     {
         if (!elem.second.GetParentId())
         {
@@ -156,7 +158,7 @@ std::vector<TaskDTO> TaskManager::ShowParents()
 std::vector<TaskDTO> TaskManager::ShowChild(const TaskId& parent_id)
 {
     auto result = std::vector<TaskDTO>{};
-    for (const auto& elem: this->tasks_)
+    for (const auto& elem: tasks_)
     {
         if (elem.second.GetParentId() == parent_id)
         {
@@ -171,14 +173,14 @@ std::vector<TaskDTO> TaskManager::ShowTasksWithLabel(const std::string& label)
 {
     auto result = std::vector<TaskDTO>{};
 
-    for (const auto& elem: this->tasks_)
+    for (const auto& elem: tasks_)
     {
         auto task = elem.second.GetTask();
         auto has_label = std::any_of(task.labels().cbegin(), task.labels().cend(),
-                                       [&label](const auto& tmp_label)
-                                       {
-                                           return tmp_label == label;
-                                       });
+                                     [&label](const auto& tmp_label)
+                                     {
+                                         return tmp_label == label;
+                                     });
         if (has_label)
         {
             auto tmp = ConstructTaskDTO(elem.first, elem.second);
@@ -230,10 +232,8 @@ ModelResponse TaskManager::Load(const std::vector<TaskDTO>& tasks)
     }
 
     auto last_id = *CreateTaskId(tmp_storage.size());
-
-    this->gen_->SetLastId(last_id);
-
-    this->tasks_ = tmp_storage;
+    gen_->SetLastId(last_id);
+    tasks_ = tmp_storage;
     return ModelResponse::Success();
 }
 std::vector<std::map<TaskId, TaskNode>::iterator> TaskManager::FindSubTasks(const TaskId& parent_id)

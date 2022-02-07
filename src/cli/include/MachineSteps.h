@@ -117,6 +117,7 @@ public:
 
 class ErrorStep : public StepWithDependency
 {
+public:
     using StepWithDependency::StepWithDependency;
     StepResult Execute(Context& context) override;
 };
