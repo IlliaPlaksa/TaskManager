@@ -7,14 +7,19 @@ include_directories(src/)
 
 # _________Boost_________
 set(Boost_USE_STATIC_LIBS ON)
+
+find_package(Boost COMPONENTS
+        log
+        log_setup
+        program_options
+        REQUIRED)
+
 find_package(Boost COMPONENTS log log_setup REQUIRED)
 
 file(GLOB_RECURSE Logging_SRC CONFIGURE_DEPENDS
         "logging/*.h"
         "logging/*.cpp"
         )
-
-configure_file(help.txt help.txt COPYONLY) # Adding help.txt to build output
 
 configure_file(help.txt help.txt COPYONLY) # Adding help.txt to build output
 
@@ -95,9 +100,8 @@ add_executable(server
 target_link_libraries(server
         protobuf::libprotobuf
         gRPC::grpc++ gRPC::grpc++_reflection
-        Boost::log
-        Boost::log_setup
-        )
+        Boost::log Boost::log_setup Boost::program_options
+
 target_include_directories(server
         PUBLIC ${Boost_INCLUDE_DIRS}
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/logging
@@ -136,8 +140,7 @@ add_executable(client
 target_link_libraries(client
         protobuf::libprotobuf
         gRPC::grpc++ gRPC::grpc++_reflection
-        Boost::log
-        Boost::log_setup
+        Boost::log Boost::log_setup Boost::program_options
         )
 target_include_directories(client
         PUBLIC ${Boost_INCLUDE_DIRS}

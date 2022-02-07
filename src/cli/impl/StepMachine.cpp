@@ -62,15 +62,21 @@ void StepMachine::SetContextFromCommandResponse(const CommandResponse& response)
 
         auto error_message = CreateErrorMessage(*response.model_response->error());
         context_.SetError(error_message);
+
+        BOOST_LOG_TRIVIAL(debug) << "Command returned error message: " << error_message << ".";
     }
     else
     {
+        BOOST_LOG_TRIVIAL(debug) << "Command returned tasks";
+
         auto tasks = response.tasks;
         auto storage = context_.GetStorage();
         if (tasks.has_value() and storage)
         {
             *storage = tasks.value();
-            BOOST_LOG_TRIVIAL(debug) << "Loaded " << tasks->GetTasks().size() << " tasks to Context";
+            BOOST_LOG_TRIVIAL(debug) << "Loaded " << tasks->GetTasks().size() << "tasks to Context";
         }
+        else
+            BOOST_LOG_TRIVIAL(debug) << "Command was successfully executed.";
     }
 }
