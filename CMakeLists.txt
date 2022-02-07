@@ -16,6 +16,8 @@ file(GLOB_RECURSE Logging_SRC CONFIGURE_DEPENDS
 
 configure_file(help.txt help.txt COPYONLY) # Adding help.txt to build output
 
+configure_file(help.txt help.txt COPYONLY) # Adding help.txt to build output
+
 # _________Protobuf_________
 find_package(Protobuf CONFIG REQUIRED)
 message(STATUS "Using protobuf ${Protobuf_VERSION}")
