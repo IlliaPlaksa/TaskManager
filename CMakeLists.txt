@@ -5,6 +5,10 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories(src/)
 
+# _________Boost_________
+set(Boost_USE_STATIC_LIBS ON)
+find_package(Boost COMPONENTS log REQUIRED)
+
 configure_file(help.txt help.txt COPYONLY) # Adding help.txt to build output
 
 # _________Protobuf_________
@@ -55,7 +59,6 @@ include_directories(${GENERATED_DIR})
 
 SET_SOURCE_FILES_PROPERTIES(${PROTO_SRCS} ${PROTO_HDRS} PROPERTIES GENERATED TRUE)
 
-
 # _________gRPC-SERVER_________
 
 file(GLOB_RECURSE Server_SRC CONFIGURE_DEPENDS
@@ -81,7 +84,12 @@ add_executable(server
         ${PROTOBUF_GENERATED_SRCS}
         )
 
-target_link_libraries(server protobuf::libprotobuf gRPC::grpc++ gRPC::grpc++_reflection)
+target_link_libraries(server
+        protobuf::libprotobuf
+        gRPC::grpc++ gRPC::grpc++_reflection
+        Boost::log
+        )
+target_include_directories(server PUBLIC ${Boost_INCLUDE_DIRS})
 
 
 # _________gRPC-CLIENT_________
@@ -112,7 +120,12 @@ add_executable(client
         ${PROTOBUF_GENERATED_SRCS}
         )
 
-target_link_libraries(client protobuf::libprotobuf gRPC::grpc++ gRPC::grpc++_reflection)
+target_link_libraries(client
+        protobuf::libprotobuf
+        gRPC::grpc++ gRPC::grpc++_reflection
+        Boost::log
+        )
+target_include_directories(client PUBLIC ${Boost_INCLUDE_DIRS})
 
 #_________GTEST_________
 include(GoogleTest)
@@ -160,9 +173,11 @@ add_executable(TaskManger_TEST
 target_include_directories(TaskManger_TEST
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/tests
+        PUBLIC ${Boost_INCLUDE_DIRS}
         )
 
 
 target_link_libraries(TaskManger_TEST protobuf::libprotobuf gRPC::grpc++ gRPC::grpc++_reflection)
+target_link_libraries(TaskManger_TEST Boost::log)
 target_link_libraries(TaskManger_TEST GTest::GTest GTest::Main)
 target_link_libraries(TaskManger_TEST GTest::gtest GTest::gmock GTest::gmock_main)

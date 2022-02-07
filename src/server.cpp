@@ -8,9 +8,10 @@
 #include <grpcpp/server_builder.h>
 #include <grpcpp/server_context.h>
 
+#include <boost/log/trivial.hpp>
+
 #include "model/include/TaskManager.h"
 #include "server/RequestHandlerImpl.h"
-
 
 int main(int argc, char** argv)
 {
@@ -24,7 +25,8 @@ int main(int argc, char** argv)
     builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
     builder.RegisterService(&service);
     std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
-    std::cout << "Server listening on " << server_address << std::endl;
+
+    BOOST_LOG_TRIVIAL(info) << "Server listening on " << server_address;
     server->Wait();
     return 0;
 }
