@@ -100,7 +100,7 @@ add_executable(server
 target_link_libraries(server
         protobuf::libprotobuf
         gRPC::grpc++ gRPC::grpc++_reflection
-        Boost::log Boost::log_setup Boost::program_options
+        Boost::log Boost::log_setup Boost::program_options)
 
 target_include_directories(server
         PUBLIC ${Boost_INCLUDE_DIRS}
