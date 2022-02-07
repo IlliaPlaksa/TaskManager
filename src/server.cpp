@@ -13,9 +13,47 @@
 
 #include "Logging.h"
 
+#include <boost/program_options.hpp>
+namespace po = boost::program_options;
+
 int main(int argc, char** argv)
 {
-    logging::init("server.log",boost::log::trivial::severity_level::info);
+    auto log_file_name = std::string{"server.log"};
+    auto severity_level = boost::log::trivial::severity_level{};
+
+    std::string verbosity_str;
+
+    try
+    {
+        po::options_description desc("Allowed options");
+        desc.add_options()
+            ("help", "produce help message")
+
+            ("verbosity",
+             po::value<std::string>(&verbosity_str)->default_value("info"),
+             "sets log verbosity: debug, info, warn, error, fatal");
+
+        po::variables_map vm;
+        po::store(po::parse_command_line(argc, argv, desc), vm);
+        po::notify(vm);
+
+        if (vm.count("help"))
+        {
+            std::cout << desc << "\n";
+            return 1;
+        }
+
+        severity_level = logging::CreateSeverityLevelFrom(verbosity_str);
+
+        std::cout << "Log verbosity set to " << boost::log::trivial::to_string(severity_level) << ".\n";
+    }
+    catch (std::exception& e)
+    {
+        std::cerr << "error: " << e.what() << "\n";
+        return 1;
+    }
+
+    logging::init(log_file_name, severity_level);
 
     std::string server_address("0.0.0.0:50051");
     auto model = std::unique_ptr<Model>(new TaskManager{std::make_unique<IdGenerator>()});
