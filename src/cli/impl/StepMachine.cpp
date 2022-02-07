@@ -4,6 +4,7 @@
 
 #include "cli/include/StepMachine.h"
 #include "util/TaskId/TaskIdComparators.h"
+#include "util/Response/ModelResponseUtils.h"
 
 StepMachine::StepMachine(const std::shared_ptr<StepFactory>& step_factory,
                          const std::shared_ptr<ModelController>& model)
@@ -51,8 +52,12 @@ std::string StepMachine::CreateErrorMessage(const ModelResponse::ErrorType& erro
 }
 void StepMachine::SetContextFromCommandResponse(const CommandResponse& response)
 {
+    BOOST_LOG_TRIVIAL(debug) << "Command returned status: " << to_string(response.model_response->status());
+
     if (response.IsError())
     {
+        BOOST_LOG_TRIVIAL(debug) << "Command returned error: " << to_string(*response.model_response->error()) << ".";
+
         SetNextStep(step_factory_->CreateStep(StepId::kError));
 
         auto error_message = CreateErrorMessage(*response.model_response->error());

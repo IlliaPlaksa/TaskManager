@@ -72,6 +72,7 @@ try
     auto channel = grpc::CreateChannel(
         channel_address, grpc::InsecureChannelCredentials()
     );
+
     auto stub = service::RequestHandler::NewStub(channel);
 
     auto controller = std::make_shared<RemoteController>(std::move(stub));
