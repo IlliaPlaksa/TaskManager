@@ -40,7 +40,9 @@ file(GLOB_RECURSE PROTO_SOURCES CONFIGURE_DEPENDS ${TaskManager_SOURCE_DIR}/prot
 message("PROTO_SOURCES ${PROTO_SOURCES}")
 
 set(PROTO_DIR ${TaskManager_SOURCE_DIR}/protobuf)
-set(GENERATED_DIR ${CMAKE_CURRENT_BINARY_DIR})
+
+set(GENERATED_DIR ${CMAKE_CURRENT_BINARY_DIR}/protobuf)
+file(MAKE_DIRECTORY ${GENERATED_DIR})
 
 macro(compile_proto_file filename)
     get_filename_component(dirname ${filename} PATH)
@@ -201,5 +203,4 @@ target_include_directories(TaskManger_TEST
 
 target_link_libraries(TaskManger_TEST protobuf::libprotobuf gRPC::grpc++ gRPC::grpc++_reflection)
 target_link_libraries(TaskManger_TEST Boost::log Boost::log_setup)
-target_link_libraries(TaskManger_TEST GTest::GTest)
 target_link_libraries(TaskManger_TEST GTest::gtest GTest::gmock)
