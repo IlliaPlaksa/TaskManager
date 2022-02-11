@@ -152,7 +152,7 @@ target_include_directories(client
 #_________GTEST_________
 include(GoogleTest)
 
-find_package(GTest REQUIRED)
+find_package(GTest CONFIG REQUIRED)
 enable_testing()
 
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})

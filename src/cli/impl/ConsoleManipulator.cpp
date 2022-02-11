@@ -3,6 +3,7 @@
 //
 
 #include "cli/include/ConsoleManipulator.h"
+#include <algorithm>
 
 ConsoleManipulator::ConsoleManipulator(std::ostream& ostream, std::istream& istream)
     :
