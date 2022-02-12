@@ -24,12 +24,12 @@ file(GLOB_RECURSE Logging_SRC CONFIGURE_DEPENDS
 configure_file(help.txt help.txt COPYONLY) # Adding help.txt to build output
 
 # _________Protobuf_________
-find_package(Protobuf CONFIG REQUIRED)
+find_package(Protobuf REQUIRED)
 message(STATUS "Using protobuf ${Protobuf_VERSION}")
 find_program(_PROTOBUF_PROTOC protoc PATHS ENV PATH)
 #
 
-find_package(gRPC CONFIG REQUIRED)
+find_package(gRPC REQUIRED)
 message(STATUS "Using gRPC ${gRPC_VERSION}")
 find_program(_GRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
 #
