@@ -6,6 +6,7 @@
 #define TASKMANAGER_SRC_MODEL_INCLUDE_TASKTOSERIALIZE_H_
 
 #include "TaskDTO.pb.h"
+#include <optional>
 
 std::optional<TaskDTO> CreateTaskDTO(const TaskId& id,
                                      const Task& task);

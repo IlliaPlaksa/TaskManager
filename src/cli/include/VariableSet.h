@@ -5,6 +5,8 @@
 #ifndef TASKMANAGER_SRC_CLI_INCLUDE_VARIABELSET_H_
 #define TASKMANAGER_SRC_CLI_INCLUDE_VARIABELSET_H_
 
+#include <optional>
+
 #include "TaskId.pb.h"
 #include "Task.pb.h"
 #include "TaskDTO.pb.h"
