@@ -9,9 +9,9 @@ WORKDIR "/TaskManager"
 RUN git checkout linux_date_fix
 
 RUN mkdir build
-RUN cmake .
+RUN cmake -S /TaskManager/ -B /TaskManager/build
 
-RUN cmake --build . -- -j 3
+RUN cmake --build build/ -- -j 3
 
 EXPOSE 50051
 
