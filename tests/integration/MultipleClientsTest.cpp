@@ -50,7 +50,7 @@ void WorkerRoutine(std::shared_ptr<ModelController> controller, std::vector<std:
 TEST_F(MultipleClientsTest, shouldNotCorrupt)
 {
     auto thread_num = std::thread::hardware_concurrency();
-    auto tasks_num = 10000;
+    auto tasks_num = 1000;
 
     std::vector<std::future<void>> workers{};
 
