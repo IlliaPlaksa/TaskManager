@@ -19,7 +19,9 @@ StepResult ErrorStep::Execute(Context& context)
         console->WriteError("Error message has no value");
 
     StepResult result;
+
     result.next_step = step_factory->CreateStep(StepId::kRoot);
     result.command = std::shared_ptr<Command>(nullptr);
+
     return result;
 }

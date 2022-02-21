@@ -24,7 +24,9 @@ StepResult HelpStep::Execute(Context& context)
         console->WriteLine("File help.txt is not found");
 
     StepResult result;
+
     result.next_step = step_factory->CreateStep(StepId::kRoot);
     result.command = std::shared_ptr<Command>(nullptr);
+
     return result;
 }
