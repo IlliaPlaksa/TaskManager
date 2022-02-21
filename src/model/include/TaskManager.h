@@ -50,8 +50,7 @@ private:
     std::map<TaskId, TaskNode> tasks_;
     std::unique_ptr<IdGenerator> gen_;
 
-    std::mutex modification_mutex_;
-    std::mutex id_generation_mutex_;
+    std::mutex mutex_;
 };
 
 #endif //TASKMANAGER_SRC_MODEL_TASKMANAGER_H_

@@ -18,14 +18,9 @@ TaskManager::TaskManager(std::unique_ptr<IdGenerator> generator)
 
 ModelResponse TaskManager::Add(const Task& task)
 {
-    TaskId new_id;
-    {
-        std::lock_guard<std::mutex> lock{id_generation_mutex_};
+    TaskId new_id = gen_->GetNextId();
 
-        new_id = gen_->GetNextId();
-    }
-
-    std::lock_guard<std::mutex> lock{modification_mutex_};
+    std::lock_guard<std::mutex> lock{mutex_};
 
     tasks_.insert(
         std::make_pair(new_id, TaskNode::Create(task))
@@ -34,13 +29,9 @@ ModelResponse TaskManager::Add(const Task& task)
 }
 ModelResponse TaskManager::AddSubTask(const Task& task, const TaskId& parent_id)
 {
-    TaskId new_id;
-    {
-        std::lock_guard<std::mutex> lock{id_generation_mutex_};
-        new_id = gen_->GetNextId();
-    }
+    TaskId new_id = gen_->GetNextId();
 
-    std::lock_guard<std::mutex> lock{modification_mutex_};
+    std::lock_guard<std::mutex> lock{mutex_};
 
     if (tasks_.find(parent_id) != tasks_.end())
     {
@@ -56,7 +47,7 @@ ModelResponse TaskManager::AddSubTask(const Task& task, const TaskId& parent_id)
 
 ModelResponse TaskManager::Edit(const TaskId& id, const Task& task)
 {
-    std::lock_guard<std::mutex> lock{modification_mutex_};
+    std::lock_guard<std::mutex> lock{mutex_};
 
     if (tasks_.find(id) != tasks_.end())
     {
@@ -70,7 +61,7 @@ ModelResponse TaskManager::Edit(const TaskId& id, const Task& task)
 }
 ModelResponse TaskManager::EditSubTask(const TaskId& id, const Task& task, const TaskId& parent_id)
 {
-    std::lock_guard<std::mutex> lock{modification_mutex_};
+    std::lock_guard<std::mutex> lock{mutex_};
 
     auto tmp = tasks_.find(id);
 
@@ -90,7 +81,7 @@ ModelResponse TaskManager::EditSubTask(const TaskId& id, const Task& task, const
 
 ModelResponse TaskManager::Delete(const TaskId& id)
 {
-    std::lock_guard<std::mutex> lock{modification_mutex_};
+    std::lock_guard<std::mutex> lock{mutex_};
 
     auto elem_iter = tasks_.find(id);
 
@@ -113,7 +104,7 @@ ModelResponse TaskManager::Delete(const TaskId& id)
 }
 ModelResponse TaskManager::Complete(const TaskId& id)
 {
-    std::lock_guard<std::mutex> lock{modification_mutex_};
+    std::lock_guard<std::mutex> lock{mutex_};
 
     auto task_iter = tasks_.find(id);
 
@@ -155,7 +146,7 @@ std::vector<TaskDTO> TaskManager::Show()
     auto result = std::vector<TaskDTO>{};
 
     {
-        std::lock_guard<std::mutex> lock{modification_mutex_};
+        std::lock_guard<std::mutex> lock{mutex_};
 
         for (const auto& elem: tasks_)
         {
@@ -173,7 +164,7 @@ std::vector<TaskDTO> TaskManager::ShowParents()
     auto result = std::vector<TaskDTO>{};
 
     {
-        std::lock_guard<std::mutex> lock{modification_mutex_};
+        std::lock_guard<std::mutex> lock{mutex_};
 
         for (const auto& elem: tasks_)
         {
@@ -192,7 +183,7 @@ std::vector<TaskDTO> TaskManager::ShowChild(const TaskId& parent_id)
     auto result = std::vector<TaskDTO>{};
 
     {
-        std::lock_guard<std::mutex> lock{modification_mutex_};
+        std::lock_guard<std::mutex> lock{mutex_};
 
         for (const auto& elem: tasks_)
         {
@@ -212,7 +203,7 @@ std::vector<TaskDTO> TaskManager::ShowTasksWithLabel(const std::string& label)
     auto result = std::vector<TaskDTO>{};
 
     {
-        std::lock_guard<std::mutex> lock{modification_mutex_};
+        std::lock_guard<std::mutex> lock{mutex_};
 
         for (const auto& elem: tasks_)
         {
@@ -282,14 +273,10 @@ ModelResponse TaskManager::Load(const std::vector<TaskDTO>& tasks)
     }
 
     auto last_id = *CreateTaskId(tmp_storage.size());
+    this->gen_->SetLastId(last_id);
 
     {
-        std::lock_guard<std::mutex> lock{id_generation_mutex_};
-        this->gen_->SetLastId(last_id);
-    }
-
-    {
-        std::lock_guard<std::mutex> lock{modification_mutex_};
+        std::lock_guard<std::mutex> lock{mutex_};
         this->tasks_ = tmp_storage;
     }
 
@@ -308,5 +295,3 @@ std::vector<std::map<TaskId, TaskNode>::iterator> TaskManager::FindSubTasks(cons
     }
     return result;
 }
-
-
