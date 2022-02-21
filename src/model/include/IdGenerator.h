@@ -18,7 +18,7 @@ public:
     virtual ~IdGenerator() = default;
 
 private:
-    unsigned long long id_counter_;
+    std::atomic<unsigned long long> id_counter_;
 };
 
 #endif //TASKMANAGER_SRC_MODEL_IDGENERATOR_H_

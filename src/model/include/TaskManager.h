@@ -16,6 +16,8 @@
 
 #include "Logging.h"
 
+#include <thread>
+
 class TaskManager : public Model
 {
 public:
@@ -47,6 +49,8 @@ private:
 private:
     std::map<TaskId, TaskNode> tasks_;
     std::unique_ptr<IdGenerator> gen_;
+
+    std::mutex mutex_;
 };
 
 #endif //TASKMANAGER_SRC_MODEL_TASKMANAGER_H_

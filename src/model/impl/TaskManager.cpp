@@ -20,6 +20,8 @@ ModelResponse TaskManager::Add(const Task& task)
 {
     TaskId new_id = gen_->GetNextId();
 
+    std::lock_guard<std::mutex> lock{mutex_};
+
     tasks_.insert(
         std::make_pair(new_id, TaskNode::Create(task))
     );
@@ -28,6 +30,8 @@ ModelResponse TaskManager::Add(const Task& task)
 ModelResponse TaskManager::AddSubTask(const Task& task, const TaskId& parent_id)
 {
     TaskId new_id = gen_->GetNextId();
+
+    std::lock_guard<std::mutex> lock{mutex_};
 
     if (tasks_.find(parent_id) != tasks_.end())
     {
@@ -43,6 +47,8 @@ ModelResponse TaskManager::AddSubTask(const Task& task, const TaskId& parent_id)
 
 ModelResponse TaskManager::Edit(const TaskId& id, const Task& task)
 {
+    std::lock_guard<std::mutex> lock{mutex_};
+
     if (tasks_.find(id) != tasks_.end())
     {
         tasks_.at(id) = TaskNode::Create(task);
@@ -55,6 +61,8 @@ ModelResponse TaskManager::Edit(const TaskId& id, const Task& task)
 }
 ModelResponse TaskManager::EditSubTask(const TaskId& id, const Task& task, const TaskId& parent_id)
 {
+    std::lock_guard<std::mutex> lock{mutex_};
+
     auto tmp = tasks_.find(id);
 
     if (tmp != tasks_.end())
@@ -73,6 +81,8 @@ ModelResponse TaskManager::EditSubTask(const TaskId& id, const Task& task, const
 
 ModelResponse TaskManager::Delete(const TaskId& id)
 {
+    std::lock_guard<std::mutex> lock{mutex_};
+
     auto elem_iter = tasks_.find(id);
 
     if (elem_iter != tasks_.end())
@@ -94,6 +104,8 @@ ModelResponse TaskManager::Delete(const TaskId& id)
 }
 ModelResponse TaskManager::Complete(const TaskId& id)
 {
+    std::lock_guard<std::mutex> lock{mutex_};
+
     auto task_iter = tasks_.find(id);
 
     if (task_iter != tasks_.end())
@@ -132,11 +144,16 @@ ModelResponse TaskManager::Complete(const TaskId& id)
 std::vector<TaskDTO> TaskManager::Show()
 {
     auto result = std::vector<TaskDTO>{};
-    for (const auto& elem: tasks_)
+
     {
-        auto tmp = ConstructTaskDTO(elem.first, elem.second);
-        if (tmp)
-            result.emplace_back(tmp.value());
+        std::lock_guard<std::mutex> lock{mutex_};
+
+        for (const auto& elem: tasks_)
+        {
+            auto tmp = ConstructTaskDTO(elem.first, elem.second);
+            if (tmp)
+                result.emplace_back(tmp.value());
+        }
     }
 
     BOOST_LOG_TRIVIAL(debug) << "Show method returned " << result.size() << " tasks.";
@@ -145,49 +162,63 @@ std::vector<TaskDTO> TaskManager::Show()
 std::vector<TaskDTO> TaskManager::ShowParents()
 {
     auto result = std::vector<TaskDTO>{};
-    for (const auto& elem: tasks_)
-    {
-        if (!elem.second.GetParentId())
-        {
-            auto tmp = ConstructTaskDTO(elem.first, elem.second);
-            if (tmp)
-                result.emplace_back(tmp.value());
-        }
 
+    {
+        std::lock_guard<std::mutex> lock{mutex_};
+
+        for (const auto& elem: tasks_)
+        {
+            if (!elem.second.GetParentId())
+            {
+                auto tmp = ConstructTaskDTO(elem.first, elem.second);
+                if (tmp)
+                    result.emplace_back(tmp.value());
+            }
+        }
     }
     return result;
 }
 std::vector<TaskDTO> TaskManager::ShowChild(const TaskId& parent_id)
 {
     auto result = std::vector<TaskDTO>{};
-    for (const auto& elem: tasks_)
+
     {
-        if (elem.second.GetParentId() == parent_id)
+        std::lock_guard<std::mutex> lock{mutex_};
+
+        for (const auto& elem: tasks_)
         {
-            auto tmp = ConstructTaskDTO(elem.first, elem.second);
-            if (tmp)
-                result.emplace_back(tmp.value());
+            if (elem.second.GetParentId() == parent_id)
+            {
+                auto tmp = ConstructTaskDTO(elem.first, elem.second);
+                if (tmp)
+                    result.emplace_back(tmp.value());
+            }
         }
     }
     return result;
 }
 std::vector<TaskDTO> TaskManager::ShowTasksWithLabel(const std::string& label)
 {
+
     auto result = std::vector<TaskDTO>{};
 
-    for (const auto& elem: tasks_)
     {
-        auto task = elem.second.GetTask();
-        auto has_label = std::any_of(task.labels().cbegin(), task.labels().cend(),
-                                     [&label](const auto& tmp_label)
-                                     {
-                                         return tmp_label == label;
-                                     });
-        if (has_label)
+        std::lock_guard<std::mutex> lock{mutex_};
+
+        for (const auto& elem: tasks_)
         {
-            auto tmp = ConstructTaskDTO(elem.first, elem.second);
-            if (tmp)
-                result.emplace_back(tmp.value());
+            auto task = elem.second.GetTask();
+            auto has_label = std::any_of(task.labels().cbegin(), task.labels().cend(),
+                                         [&label](const auto& tmp_label)
+                                         {
+                                             return tmp_label == label;
+                                         });
+            if (has_label)
+            {
+                auto tmp = ConstructTaskDTO(elem.first, elem.second);
+                if (tmp)
+                    result.emplace_back(tmp.value());
+            }
         }
     }
 
@@ -244,7 +275,10 @@ ModelResponse TaskManager::Load(const std::vector<TaskDTO>& tasks)
     auto last_id = *CreateTaskId(tmp_storage.size());
     this->gen_->SetLastId(last_id);
 
-    this->tasks_ = tmp_storage;
+    {
+        std::lock_guard<std::mutex> lock{mutex_};
+        this->tasks_ = tmp_storage;
+    }
 
     BOOST_LOG_TRIVIAL(info) << "Loaded " << tasks.size() << " tasks.";
 
@@ -261,5 +295,3 @@ std::vector<std::map<TaskId, TaskNode>::iterator> TaskManager::FindSubTasks(cons
     }
     return result;
 }
-
-
