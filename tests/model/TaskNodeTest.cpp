@@ -30,7 +30,7 @@ TEST(TaskNodeTest, shouldCreate)
 
     auto actual_labels = task.GetTask().labels();
 
-    for (const auto& label: actual_labels)
+    for (const auto& label : actual_labels)
     {
         EXPECT_TRUE(std::find(labels.begin(), labels.end(), label) != labels.end());
     }

@@ -119,6 +119,7 @@ TEST_F(ReadersTest, shouldReadCorrectDate)
 TEST_F(ReadersTest, shouldRejectWrongAndBlankDate)
 {
     auto wrong_date_input = std::vector<std::string>{
+        "",
         "2.2.2",
         "0.13.2010",
         "32.13.2022",
@@ -324,7 +325,7 @@ TEST_F(ReadersTest, shouldReadLabels)
 
     auto input = std::stringstream{};
 
-    for (const auto& label: input_vect)
+    for (const auto& label : input_vect)
         input << label << " ";
 
     EXPECT_CALL(*console_, ReadLine(::testing::_))
@@ -335,7 +336,7 @@ TEST_F(ReadersTest, shouldReadLabels)
 
     ASSERT_FALSE(result.empty());
 
-    for (const auto& label: input_vect)
+    for (const auto& label : input_vect)
         EXPECT_TRUE(std::find(result.begin(), result.end(), label) != input_vect.end());
 }
 
@@ -374,4 +375,32 @@ TEST_F(ReadersTest, shoulRejectdBlankLabel)
     auto result = Read::Label(console_);
 
     EXPECT_FALSE(result.has_value());
+}
+
+TEST_F(ReadersTest, shouldReadCorrectTask)
+{
+    auto input = std::vector<std::string>{
+        "     ", // blank input
+        "title",
+        "00.00.0000",
+        "12.12.2020",
+        "     ",
+        "abcd",
+        "medium",
+        "label1 label2"
+    };
+
+    EXPECT_CALL(*console_, ReadLine(::testing::_))
+        .WillOnce(::testing::Return(input[0]))
+        .WillOnce(::testing::Return(input[1]))
+        .WillOnce(::testing::Return(input[2]))
+        .WillOnce(::testing::Return(input[3]))
+        .WillOnce(::testing::Return(input[4]))
+        .WillOnce(::testing::Return(input[5]))
+        .WillOnce(::testing::Return(input[6]))
+        .WillOnce(::testing::Return(input[7]));
+
+    auto result = Read::Task(console_);
+
+    ASSERT_TRUE(result.IsInitialized());
 }

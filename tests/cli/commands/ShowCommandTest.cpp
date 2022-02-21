@@ -18,8 +18,8 @@ TEST(ShowCommandTest, shouldExecuteWithEmptyLabel)
     auto command = ShowCommand{std::nullopt};
 
     EXPECT_CALL(*model, Show())
-    .Times(1)
-    .WillOnce(testing::Return(std::vector<TaskDTO>{}));
+        .Times(1)
+        .WillOnce(testing::Return(std::vector<TaskDTO>{}));
 
     command.Execute(model);
 }

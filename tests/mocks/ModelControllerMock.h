@@ -14,7 +14,10 @@ public:
     MOCK_METHOD(ModelResponse, Add, (const Task &task), (override));
     MOCK_METHOD(ModelResponse, AddSubTask, (const Task &task, const TaskId &parent_id), (override));
     MOCK_METHOD(ModelResponse, Edit, (const TaskId &task_id, const Task &task), (override));
-    MOCK_METHOD(ModelResponse,EditSubTask,(const TaskId &task_id, const Task &task, const TaskId &parent_id),(override));
+    MOCK_METHOD(ModelResponse,
+                EditSubTask,
+                (const TaskId &task_id, const Task &task, const TaskId &parent_id),
+                (override));
     MOCK_METHOD(ModelResponse, Complete, (const TaskId &task_id), (override));
     MOCK_METHOD(ModelResponse, Delete, (const TaskId &task_id), (override));
 

@@ -4,6 +4,8 @@
 
 #include "cli/include/Readers.h"
 
+#include "util/Task/TaskCreators.h"
+
 std::vector<std::string> Split(const std::string& str, const std::string& delimiter);
 
 StepId Read::Command(const std::shared_ptr<ConsoleManipulator>& console)
@@ -19,16 +21,17 @@ StepId Read::Command(const std::shared_ptr<ConsoleManipulator>& console)
 }
 std::string Read::Title(const std::shared_ptr<ConsoleManipulator>& console)
 {
+    const std::string message = "[Title]";
     std::optional<std::string> input;
     input = Validate::Title(
-        console->ReadLine("[Title]")
+        console->ReadLine(message)
     );
 
     while (!input)
     {
         console->WriteError("Wrong title entered");
         input = Validate::Title(
-            console->ReadLine("[Title]")
+            console->ReadLine(message)
         );
     }
     return input.value();
@@ -100,7 +103,7 @@ std::optional<std::string> Read::Label(const std::shared_ptr<ConsoleManipulator>
     std::string message = "[Label] press 'Enter' to skip";
     auto input = console->ReadLine(message);
 
-   return Validate::Label(input);
+    return Validate::Label(input);
 }
 std::vector<std::string> Read::Labels(const std::shared_ptr<ConsoleManipulator>& console)
 {
@@ -111,7 +114,7 @@ std::vector<std::string> Read::Labels(const std::shared_ptr<ConsoleManipulator>&
 
     auto labels = Split(input, " ");
 
-    for (const auto& label: labels)
+    for (const auto& label : labels)
     {
         if (Validate::Label(label))
             result.emplace_back(label);
@@ -150,7 +153,17 @@ std::string Read::FileName(const std::shared_ptr<ConsoleManipulator>& console)
     }
     return input.value();
 }
+Task Read::Task(const std::shared_ptr<ConsoleManipulator>& console)
+{
+    ::Task input;
 
+    auto title = Read::Title(console);
+    auto date = Read::Date(console);
+    auto priority = Read::Priority(console);
+    auto labels = Read::Labels(console);
+
+    return *CreateTask(title, date, priority, labels);
+}
 std::vector<std::string> Split(const std::string& str, const std::string& delimiter)
 {
     auto result = std::vector<std::string>{};

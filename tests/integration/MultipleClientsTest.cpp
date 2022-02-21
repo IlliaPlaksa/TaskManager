@@ -43,7 +43,7 @@ std::vector<std::shared_ptr<Command>> CreateRandomTasks(size_t tasks_num)
 
 void WorkerRoutine(std::shared_ptr<ModelController> controller, std::vector<std::shared_ptr<Command>> tasks)
 {
-    for (auto& task: tasks)
+    for (auto& task : tasks)
         task->Execute(controller);
 }
 
@@ -60,6 +60,6 @@ TEST_F(MultipleClientsTest, shouldNotCorrupt)
         workers.emplace_back(std::async(std::launch::async, &WorkerRoutine, controller_, random_tasks));
     }
 
-    for (auto& worker: workers)
+    for (auto& worker : workers)
         worker.wait();
 }

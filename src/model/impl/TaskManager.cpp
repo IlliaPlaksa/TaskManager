@@ -92,7 +92,7 @@ ModelResponse TaskManager::Delete(const TaskId& id)
 
         if (!subtasks.empty())
         {
-            for (auto iter: subtasks)
+            for (auto iter : subtasks)
                 tasks_.erase(iter);
         }
         tasks_.erase(id);
@@ -148,7 +148,7 @@ std::vector<TaskDTO> TaskManager::Show()
     {
         std::lock_guard<std::mutex> lock{mutex_};
 
-        for (const auto& elem: tasks_)
+        for (const auto& elem : tasks_)
         {
             auto tmp = ConstructTaskDTO(elem.first, elem.second);
             if (tmp)
@@ -166,7 +166,7 @@ std::vector<TaskDTO> TaskManager::ShowParents()
     {
         std::lock_guard<std::mutex> lock{mutex_};
 
-        for (const auto& elem: tasks_)
+        for (const auto& elem : tasks_)
         {
             if (!elem.second.GetParentId())
             {
@@ -185,7 +185,7 @@ std::vector<TaskDTO> TaskManager::ShowChild(const TaskId& parent_id)
     {
         std::lock_guard<std::mutex> lock{mutex_};
 
-        for (const auto& elem: tasks_)
+        for (const auto& elem : tasks_)
         {
             if (elem.second.GetParentId() == parent_id)
             {
@@ -205,7 +205,7 @@ std::vector<TaskDTO> TaskManager::ShowTasksWithLabel(const std::string& label)
     {
         std::lock_guard<std::mutex> lock{mutex_};
 
-        for (const auto& elem: tasks_)
+        for (const auto& elem : tasks_)
         {
             auto task = elem.second.GetTask();
             auto has_label = std::any_of(task.labels().cbegin(), task.labels().cend(),
@@ -241,7 +241,7 @@ ModelResponse TaskManager::Load(const std::vector<TaskDTO>& tasks)
     BOOST_LOG_TRIVIAL(debug) << "Invoked Load method with " << tasks.size() << " tasks.";
 
     auto tmp_storage = std::map<TaskId, TaskNode>{};
-    for (const auto& elem: tasks)
+    for (const auto& elem : tasks)
     {
         auto tmp_task = elem.has_parent_id()
                         ? TaskNode::Create(elem.task(), elem.parent_id())
@@ -249,7 +249,7 @@ ModelResponse TaskManager::Load(const std::vector<TaskDTO>& tasks)
         tmp_storage.insert({elem.id(), tmp_task});
     }
 
-    for (const auto& elem: tmp_storage)
+    for (const auto& elem : tmp_storage)
     {
         auto parent_id = elem.second.GetParentId();
 

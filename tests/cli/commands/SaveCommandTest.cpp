@@ -12,7 +12,6 @@
 
 class SaveCommandTest : ::testing::Test {};
 
-
 TEST(SaveCommandTest, shouldExecuteSave)
 {
     auto model = std::make_shared<ModelControllerMock>();

@@ -7,7 +7,7 @@
 CommandResponse DeleteCommand::Execute(const std::shared_ptr<ModelController>& model)
 {
     auto result = CommandResponse{};
-    result.model_response =  model->Delete(id_);
+    result.model_response = model->Delete(id_);
 
     return result;
 }

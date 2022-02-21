@@ -23,15 +23,16 @@ int main(int argc, char** argv)
     auto log_file_name = std::string{"client.log"};
     auto severity_level = boost::log::trivial::severity_level{};
     std::string verbosity_str;
-try
-   {
+    try
+    {
         po::options_description desc("Allowed options");
         desc.add_options()
             ("help", "produce help message")
 
             ("verbosity",
              po::value<std::string>(&verbosity_str)->default_value("info"),
-           "sets log verbosity: debug, info, warn, error, fatal")
+             "sets log verbosity: debug, info, warn, error, fatal")
+
             ("host",
              po::value<std::string>(&host)->default_value("localhost"),
              "sets server address")

@@ -11,7 +11,7 @@ RemoteController::RemoteController(std::unique_ptr<service::RequestHandler::Stub
 {
 }
 
-ModelResponse RemoteController::Add(const Task &task)
+ModelResponse RemoteController::Add(const Task& task)
 {
     grpc::ClientContext context;
     auto response = service::Response();
@@ -20,7 +20,7 @@ ModelResponse RemoteController::Add(const Task &task)
 
     return CreateModelResponse(status, response);
 }
-ModelResponse RemoteController::AddSubTask(const Task &task, const TaskId &parent_id)
+ModelResponse RemoteController::AddSubTask(const Task& task, const TaskId& parent_id)
 {
     grpc::ClientContext context;
     auto response = service::Response();
@@ -33,7 +33,7 @@ ModelResponse RemoteController::AddSubTask(const Task &task, const TaskId &paren
 
     return CreateModelResponse(status, response);
 }
-ModelResponse RemoteController::Edit(const TaskId &task_id, const Task &task)
+ModelResponse RemoteController::Edit(const TaskId& task_id, const Task& task)
 {
     grpc::ClientContext context;
     auto response = service::Response();
@@ -46,7 +46,7 @@ ModelResponse RemoteController::Edit(const TaskId &task_id, const Task &task)
 
     return CreateModelResponse(status, response);
 }
-ModelResponse RemoteController::EditSubTask(const TaskId &task_id, const Task &task, const TaskId &parent_id)
+ModelResponse RemoteController::EditSubTask(const TaskId& task_id, const Task& task, const TaskId& parent_id)
 {
     grpc::ClientContext context;
     auto response = service::Response();
@@ -60,7 +60,7 @@ ModelResponse RemoteController::EditSubTask(const TaskId &task_id, const Task &t
 
     return CreateModelResponse(status, response);
 }
-ModelResponse RemoteController::Complete(const TaskId &task_id)
+ModelResponse RemoteController::Complete(const TaskId& task_id)
 {
     grpc::ClientContext context;
     auto response = service::Response();
@@ -69,7 +69,7 @@ ModelResponse RemoteController::Complete(const TaskId &task_id)
 
     return CreateModelResponse(status, response);
 }
-ModelResponse RemoteController::Delete(const TaskId &task_id)
+ModelResponse RemoteController::Delete(const TaskId& task_id)
 {
     grpc::ClientContext context;
     auto response = service::Response();
@@ -88,7 +88,7 @@ std::vector<TaskDTO> RemoteController::Show()
 
     auto status = stub_->Show(&context, message, &response);
 
-    auto &tasks = response.tasks();
+    auto& tasks = response.tasks();
 
     result.insert(result.end(), tasks.cbegin(), tasks.cend());
 
@@ -104,13 +104,13 @@ std::vector<TaskDTO> RemoteController::ShowParents()
 
     stub_->ShowParents(&context, message, &response);
 
-    auto &tasks = response.tasks();
+    auto& tasks = response.tasks();
 
     result.insert(result.end(), tasks.cbegin(), tasks.cend());
 
     return result;
 }
-std::vector<TaskDTO> RemoteController::ShowChild(const TaskId &parent_id)
+std::vector<TaskDTO> RemoteController::ShowChild(const TaskId& parent_id)
 {
     auto result = std::vector<TaskDTO>{};
     grpc::ClientContext context;
@@ -118,13 +118,13 @@ std::vector<TaskDTO> RemoteController::ShowChild(const TaskId &parent_id)
 
     stub_->ShowChild(&context, parent_id, &response);
 
-    auto &tasks = response.tasks();
+    auto& tasks = response.tasks();
 
     result.insert(result.end(), tasks.cbegin(), tasks.cend());
 
     return result;
 }
-ModelResponse RemoteController::Load(const std::vector<TaskDTO> &tasks)
+ModelResponse RemoteController::Load(const std::vector<TaskDTO>& tasks)
 {
     grpc::ClientContext context;
     auto response = service::Response{};
@@ -136,7 +136,7 @@ ModelResponse RemoteController::Load(const std::vector<TaskDTO> &tasks)
 
     return CreateModelResponse(status, response);
 }
-ModelResponse RemoteController::LoadFromFile(const std::string &file_name)
+ModelResponse RemoteController::LoadFromFile(const std::string& file_name)
 {
     auto persister = FilePersister{file_name};
 
@@ -147,7 +147,7 @@ ModelResponse RemoteController::LoadFromFile(const std::string &file_name)
     else
         return ModelResponse::Error(ModelResponse::ErrorType::FAIL);
 }
-ModelResponse RemoteController::SaveToFile(const std::string &file_name)
+ModelResponse RemoteController::SaveToFile(const std::string& file_name)
 {
     auto persister = FilePersister{file_name};
 
@@ -161,7 +161,7 @@ ModelResponse RemoteController::SaveToFile(const std::string &file_name)
         return ModelResponse::Error(ModelResponse::ErrorType::FAIL);
 }
 
-ModelResponse RemoteController::CreateModelResponse(const grpc::Status &status, const service::Response &response)
+ModelResponse RemoteController::CreateModelResponse(const grpc::Status& status, const service::Response& response)
 {
     if (status.ok())
         return ServiceResponseToModelResponse(response);
@@ -169,7 +169,7 @@ ModelResponse RemoteController::CreateModelResponse(const grpc::Status &status, 
         return ModelResponse::Error(ModelResponse::ErrorType::FAIL);
 }
 
-std::vector<TaskDTO> RemoteController::ShowTasksWithLabel(const std::string &label)
+std::vector<TaskDTO> RemoteController::ShowTasksWithLabel(const std::string& label)
 {
     auto result = std::vector<TaskDTO>{};
     grpc::ClientContext context;
@@ -180,7 +180,7 @@ std::vector<TaskDTO> RemoteController::ShowTasksWithLabel(const std::string &lab
 
     stub_->ShowTasksWithLabel(&context, request, &response);
 
-    auto &tasks = response.tasks();
+    auto& tasks = response.tasks();
     result.insert(result.end(), tasks.cbegin(), tasks.cend());
 
     return result;

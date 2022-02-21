@@ -11,7 +11,7 @@
 class StepFactory : public std::enable_shared_from_this<StepFactory>
 {
 public:
-   virtual std::shared_ptr<Step> CreateStep(StepId step_id);
+    virtual std::shared_ptr<Step> CreateStep(StepId step_id);
 
 public:
     virtual std::shared_ptr<StepFactory> shared();

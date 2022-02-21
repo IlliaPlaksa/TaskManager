@@ -50,8 +50,7 @@ TEST(StepFactory, shouldCreateSteps)
             StepId::kLoad,
         };
 
-
-    for(auto elem : test_ids)
+    for (auto elem : test_ids)
     {
         EXPECT_TRUE(factory->CreateStep(elem));
     }

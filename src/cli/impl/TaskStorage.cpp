@@ -47,7 +47,7 @@ void TaskStorage::Clear()
 }
 void TaskStorage::LoadRootTasks(const std::vector<TaskDTO>& tasks)
 {
-    for(const auto& task : tasks)
+    for (const auto& task : tasks)
         this->root_storage_.emplace_back(task);
 }
 

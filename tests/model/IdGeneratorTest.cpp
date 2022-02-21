@@ -5,8 +5,7 @@
 #include "model/include/IdGenerator.h"
 #include "util/TaskId/TaskIdComparators.h"
 
-class IdGeneratorTest : public ::testing::Test
-{};
+class IdGeneratorTest : public ::testing::Test {};
 
 TEST(IdGeneratorTest, mustReturnNewId)
 {

@@ -14,7 +14,7 @@ FilePersister::FilePersister(const std::string& file_name)
 bool FilePersister::Save(const std::vector<TaskDTO>& tasks)
 {
     std::fstream ofs(file_name_,
-    std::ios::out | std::ios::trunc | std::ios::binary);
+                     std::ios::out | std::ios::trunc | std::ios::binary);
 
     if (!ofs.is_open())
         return false;
@@ -45,7 +45,8 @@ std::optional<std::vector<TaskDTO>> FilePersister::Load()
         {
             result.emplace_back(tmp);
             tmp = TaskDTO{};
-        } else
+        }
+        else
             return std::nullopt;
 
     google::protobuf::ShutdownProtobufLibrary();

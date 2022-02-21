@@ -23,11 +23,8 @@ class TaskManager : public Model
 public:
     ModelResponse Add(const Task& task) override;
     ModelResponse AddSubTask(const Task& task, const TaskId& parent_id) override;
-    ModelResponse Edit(const TaskId& id,
-                  const Task& task) override;
-    ModelResponse EditSubTask(const TaskId& id,
-                         const Task& task,
-                         const TaskId& parent_id) override;
+    ModelResponse Edit(const TaskId& id, const Task& task) override;
+    ModelResponse EditSubTask(const TaskId& id, const Task& task, const TaskId& parent_id) override;
     ModelResponse Delete(const TaskId& id) override;
     ModelResponse Complete(const TaskId& id) override;
 
@@ -44,7 +41,6 @@ public:
 private:
     std::optional<TaskDTO> ConstructTaskDTO(const TaskId& id, const TaskNode& task);
     std::vector<std::map<TaskId, TaskNode>::iterator> FindSubTasks(const TaskId& parent_id);
-
 
 private:
     std::map<TaskId, TaskNode> tasks_;
