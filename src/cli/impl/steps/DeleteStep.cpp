@@ -6,7 +6,6 @@
 
 StepResult DeleteStep::Execute(Context& context)
 {
-    auto variable_set_builder = VariableSetBuilder{};
 
     auto dependency = this->dependency();
 
@@ -14,14 +13,15 @@ StepResult DeleteStep::Execute(Context& context)
     auto step_factory = dependency->step_factory();
 
     console->ResetPrompt("delete Task");
-    variable_set_builder.SetId(Read::Id(console));
+
+    auto id = Read::Id(console);
+
     console->ResetPrompt();
 
-    // *context.GetVariableSet() = variable_set_builder.GetResult();
-    auto id = variable_set_builder.GetResult().id;
-
     StepResult result;
-    result.next_step = step_factory->CreateStep(StepId::kRoot);
+
     result.command = std::shared_ptr<Command>(new DeleteCommand(id));
+    result.next_step = step_factory->CreateStep(StepId::kRoot);
+
     return result;
 }

@@ -6,19 +6,17 @@
 
 StepResult SaveStep::Execute(Context& context)
 {
-    StepResult result;
-
     auto dependency = this->dependency();
 
     auto console = dependency->console_manipulator();
     auto step_factory = dependency->step_factory();
-    auto variable_set_builder = VariableSetBuilder{};
 
-    variable_set_builder.SetFileName(Read::FileName(console));
+    auto file_name = Read::FileName(console);
 
-    auto var_set = variable_set_builder.GetResult();
+    StepResult result;
 
-    result.command = result.command = std::shared_ptr<Command>(new SaveCommand(var_set.file_name));
+    result.command = result.command = std::shared_ptr<Command>(new SaveCommand(file_name));
     result.next_step = step_factory->CreateStep(StepId::kRoot);
+
     return result;
 }

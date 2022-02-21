@@ -8,8 +8,6 @@
 
 StepResult ShowStep::Execute(Context& context)
 {
-    StepResult result;
-
     auto dependency = this->dependency();
 
     auto console = dependency->console_manipulator();
@@ -31,8 +29,11 @@ StepResult ShowStep::Execute(Context& context)
         }
     }
 
+    StepResult result;
+
     result.next_step = step_factory->CreateStep(StepId::kRoot);
     result.command = std::shared_ptr<Command>(nullptr);
+
     return result;
 }
 std::string ShowStep::ToString(const Task::Priority& priority)

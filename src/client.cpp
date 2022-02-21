@@ -33,7 +33,7 @@ int main(int argc, char** argv)
              po::value<std::string>(&verbosity_str)->default_value("info"),
              "sets log verbosity: debug, info, warn, error, fatal")
 
-             ("host",
+            ("host",
              po::value<std::string>(&host)->default_value("localhost"),
              "sets server address")
 
