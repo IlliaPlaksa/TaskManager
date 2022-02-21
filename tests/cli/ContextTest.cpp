@@ -14,7 +14,6 @@ TEST(ContextTest, shouldCreate)
 {
     auto obj = Context{};
 
-    EXPECT_TRUE(obj.GetVariableSet());
     EXPECT_TRUE(obj.GetStorage());
     EXPECT_FALSE(obj.GetError());
 }

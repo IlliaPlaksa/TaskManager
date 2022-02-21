@@ -8,14 +8,11 @@
 #include <memory>
 #include "Step.h"
 #include "StepFactory.h"
-#include "VariableSetBuilder.h"
-#include "VariableSet.h"
 #include "TaskStorage.h"
 
 class Context
 {
 public:
-    std::shared_ptr<VariableSet> GetVariableSet() const;
     std::shared_ptr<TaskStorage> GetStorage() const;
     std::optional<std::string> GetError() const;
 
@@ -26,7 +23,6 @@ public:
     Context();
 
 private:
-    std::shared_ptr<VariableSet> variable_set_;
     std::shared_ptr<TaskStorage> task_storage_;
     std::optional<std::string> error_message_;
 };
