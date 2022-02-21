@@ -27,7 +27,7 @@ public:
 
 public:
     std::optional<TaskDTO> MakeTaskDTO() const;
-    std::optional<Task> MakeTask()const;
+    std::optional<Task> MakeTask() const;
 
     bool operator==(const VariableSet& other) const;
 

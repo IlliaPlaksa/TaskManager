@@ -4,7 +4,7 @@
 
 #include "cli/include/MachineSteps.h"
 
-StepResult UpdateStep::Execute(Context &context)
+StepResult UpdateStep::Execute(Context& context)
 {
     StepResult result;
 

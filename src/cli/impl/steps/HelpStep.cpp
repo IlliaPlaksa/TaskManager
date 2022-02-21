@@ -5,7 +5,7 @@
 #include "cli/include/MachineSteps.h"
 #include <fstream>
 
-StepResult HelpStep::Execute(Context &context)
+StepResult HelpStep::Execute(Context& context)
 {
     std::string output;
     std::ifstream file{"help.txt"};
@@ -17,9 +17,10 @@ StepResult HelpStep::Execute(Context &context)
 
     if (file.is_open())
     {
-        while(std::getline(file, output))
+        while (std::getline(file, output))
             console->WriteLine(output);
-    } else
+    }
+    else
         console->WriteLine("File help.txt is not found");
 
     StepResult result;

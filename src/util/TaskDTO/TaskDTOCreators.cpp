@@ -16,7 +16,8 @@ std::optional<TaskDTO> CreateTaskDTO(const TaskId& id,
         result.set_allocated_id(tmp_id.release());
         result.set_allocated_task(tmp_task.release());
 
-    } else
+    }
+    else
         return std::nullopt;
 
     return result;
@@ -31,7 +32,8 @@ std::optional<TaskDTO> CreateSubTaskDTO(const TaskId& id,
     {
         auto tmp_parent_id = std::make_unique<TaskId>(parent_id);
         result->set_allocated_parent_id(tmp_parent_id.release());
-    } else
+    }
+    else
         return std::nullopt;
 
     return result;

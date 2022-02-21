@@ -17,13 +17,14 @@ std::optional<Task> CreateTask(const std::string& title,
         result.set_status(status);
         result.set_priority(priority);
 
-        for(const auto& label: labels)
+        for (const auto& label: labels)
             result.add_labels(label);
 
         auto tmp_date = std::make_unique<google::protobuf::Timestamp>();
         tmp_date->set_seconds(due_to_date);
         result.set_allocated_due_date(tmp_date.release());
-    } else
+    }
+    else
         return std::nullopt;
 
     return result;

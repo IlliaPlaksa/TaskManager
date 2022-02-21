@@ -40,7 +40,8 @@ StepResult AddStep::Execute(Context& context)
 
         if (task.has_value())
             result.command = std::shared_ptr<Command>(new AddCommand(*task, parent_id));
-    } else
+    }
+    else
     {
         console->WriteLine("Operation was canceled");
         result.command = std::shared_ptr<Command>(nullptr);

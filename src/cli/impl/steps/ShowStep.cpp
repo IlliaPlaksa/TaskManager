@@ -90,7 +90,7 @@ std::string ShowStep::ToString(const time_t& date)
 std::string ShowStep::ToString(const google::protobuf::RepeatedPtrField<std::string>& labels)
 {
     std::stringstream stream;
-    for(const auto& label : labels)
+    for (const auto& label: labels)
         stream << label << ", ";
 
     return stream.str();

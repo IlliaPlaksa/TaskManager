@@ -21,7 +21,7 @@ std::vector<TaskDTO> TaskStorage::GetSubTasks(const TaskId& parent_id) const
 }
 void TaskStorage::LoadTasks(const std::vector<TaskDTO>& tasks)
 {
-    for (const auto& task : tasks)
+    for (const auto& task: tasks)
     {
         if (!task.has_parent_id())
             this->root_storage_.emplace_back(task);
@@ -33,7 +33,7 @@ std::vector<TaskDTO> TaskStorage::GetTasks() const
 {
     auto result = std::vector<TaskDTO>{root_storage_};
 
-    for (auto elem : subtask_storage_)
+    for (auto elem: subtask_storage_)
     {
         result.insert(result.end(), elem.second.begin(), elem.second.end());
     }
@@ -47,7 +47,7 @@ void TaskStorage::Clear()
 }
 void TaskStorage::LoadRootTasks(const std::vector<TaskDTO>& tasks)
 {
-    for(const auto& task : tasks)
+    for (const auto& task: tasks)
         this->root_storage_.emplace_back(task);
 }
 

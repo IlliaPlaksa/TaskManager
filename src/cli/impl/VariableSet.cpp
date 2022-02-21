@@ -27,10 +27,10 @@ void VariableSet::Clear()
 bool VariableSet::operator==(const VariableSet& other) const
 {
     return this->title == other.title
-    and this->id == other.id
-    and this->status == other.status
-    and this->date == other.date
-    and this->file_name == other.file_name
-    and this->priority == other.priority
-    and this->labels == other.labels;
+        and this->id == other.id
+        and this->status == other.status
+        and this->date == other.date
+        and this->file_name == other.file_name
+        and this->priority == other.priority
+        and this->labels == other.labels;
 }

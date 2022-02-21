@@ -16,7 +16,8 @@ service::Response ModelResponseToServiceResponse(const ModelResponse& response)
         result.set_status(service::Response_Status_kError);
         result.set_error_type(ModelErrorToServiceError(*response.error()));
 
-    } else
+    }
+    else
     {
         result.set_status(service::Response_Status_kSuccess);
     }
@@ -82,7 +83,6 @@ ModelResponse::ErrorType ServiceErrorToModelError(service::Response::ErrorType e
         {
             return ModelResponse::ErrorType::NOT_COMPLETED_SUBTASKS;
         }
-        default:
-            return ModelResponse::ErrorType::FAIL;
+        default:return ModelResponse::ErrorType::FAIL;
     }
 }

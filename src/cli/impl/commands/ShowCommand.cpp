@@ -18,7 +18,7 @@ CommandResponse ShowCommand::Execute(const std::shared_ptr<ModelController>& mod
 
     if (label_.has_value())
     {
-        BOOST_LOG_TRIVIAL(debug) << "Called Show by label command with label: " << label_.value() <<".";
+        BOOST_LOG_TRIVIAL(debug) << "Called Show by label command with label: " << label_.value() << ".";
 
         auto tasks = model->ShowTasksWithLabel(label_.value());
 

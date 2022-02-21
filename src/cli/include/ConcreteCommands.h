@@ -87,7 +87,7 @@ public:
     explicit LoadCommand(const std::string& file_name);
 public:
     CommandResponse Execute(const std::shared_ptr<ModelController>& model) override;
-    
+
 private:
     std::string file_name_;
 };

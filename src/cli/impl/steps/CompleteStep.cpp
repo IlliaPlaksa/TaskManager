@@ -4,7 +4,7 @@
 
 #include "cli/include/MachineSteps.h"
 
-StepResult CompleteStep::Execute(Context &context)
+StepResult CompleteStep::Execute(Context& context)
 {
     auto variable_set_builder = VariableSetBuilder{};
 

@@ -4,7 +4,7 @@
 
 #include "cli/include/MachineSteps.h"
 
-StepResult RootStep::Execute(Context &context)
+StepResult RootStep::Execute(Context& context)
 {
     auto dependency = this->dependency();
 
