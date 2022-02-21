@@ -26,6 +26,7 @@ namespace Read
     std::vector<std::string> Labels(const std::shared_ptr<ConsoleManipulator>& console);
     bool Confirm(const std::shared_ptr<ConsoleManipulator>& console);
     std::string FileName(const std::shared_ptr<ConsoleManipulator>& console);
+    Task Task(const std::shared_ptr<ConsoleManipulator>& console);
 }
 
 #endif //TASKMANAGER_SRC_CLI_INCLUDE_READERS_H_

@@ -4,6 +4,8 @@
 
 #include "cli/include/Readers.h"
 
+#include "util/Task/TaskCreators.h"
+
 std::vector<std::string> Split(const std::string& str, const std::string& delimiter);
 
 StepId Read::Command(const std::shared_ptr<ConsoleManipulator>& console)
@@ -150,7 +152,17 @@ std::string Read::FileName(const std::shared_ptr<ConsoleManipulator>& console)
     }
     return input.value();
 }
+Task Read::Task(const std::shared_ptr<ConsoleManipulator>& console)
+{
+    ::Task input;
 
+    auto title = Read::Title(console);
+    auto date = Read::Date(console);
+    auto priority = Read::Priority(console);
+    auto labels = Read::Labels(console);
+
+    return *CreateTask(title, date, priority, labels);
+}
 std::vector<std::string> Split(const std::string& str, const std::string& delimiter)
 {
     auto result = std::vector<std::string>{};
