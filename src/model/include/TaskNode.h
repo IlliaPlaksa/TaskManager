@@ -8,6 +8,8 @@
 #include "Task.pb.h"
 #include "TaskId.pb.h"
 
+#include <optional>
+
 class TaskNode
 {
 public:
