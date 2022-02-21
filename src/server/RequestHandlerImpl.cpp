@@ -83,7 +83,7 @@ grpc::Status RequestHandlerImpl::Show(::grpc::ServerContext* context,
 {
     auto tasks = model_->Show();
 
-    for (auto& task: tasks)
+    for (auto& task : tasks)
     {
         response->mutable_tasks()->Add(std::move(task));
     }
@@ -96,7 +96,7 @@ grpc::Status RequestHandlerImpl::ShowParents(::grpc::ServerContext* context,
 {
     auto tasks = model_->ShowParents();
 
-    for (auto& task: tasks)
+    for (auto& task : tasks)
     {
         response->mutable_tasks()->Add(std::move(task));
     }
@@ -111,7 +111,7 @@ grpc::Status RequestHandlerImpl::ShowChild(::grpc::ServerContext* context,
 
     auto tasks = model_->ShowChild(task_id);
 
-    for (auto& task: tasks)
+    for (auto& task : tasks)
     {
         response->mutable_tasks()->Add(std::move(task));
     }
@@ -127,7 +127,7 @@ grpc::Status RequestHandlerImpl::ShowTasksWithLabel(::grpc::ServerContext* conte
 
     auto tasks = model_->ShowTasksWithLabel(label);
 
-    for (auto& task: tasks)
+    for (auto& task : tasks)
     {
         response->mutable_tasks()->Add(std::move(task));
     }

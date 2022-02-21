@@ -90,7 +90,7 @@ TEST(ConsoleManipulatorTest, shouldResetPromps)
 
     console.ReadLine();
 
-    auto output  = std::string{};
+    auto output = std::string{};
     getline(ostream, output);
 
     EXPECT_EQ(output, message + " > ");

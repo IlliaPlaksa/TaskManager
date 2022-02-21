@@ -159,11 +159,10 @@ TEST(TaskManagerTest, shouldEditSubTask)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
     auto task = *CreateTask("Task name",
-                           time(nullptr),
-                           Task::Priority::Task_Priority_kHigh);
+                            time(nullptr),
+                            Task::Priority::Task_Priority_kHigh);
     manager.Add(task);
     manager.AddSubTask(task, *CreateTaskId(0));
-
 
     auto new_title = "New task name";
     auto new_date = time(nullptr);
@@ -230,8 +229,8 @@ TEST(TaskManagerTest, shouldCompleteTask)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
     auto task = *CreateTask("Task name",
-                           time(nullptr),
-                           Task::Priority::Task_Priority_kHigh);
+                            time(nullptr),
+                            Task::Priority::Task_Priority_kHigh);
 
     auto parent_id = *CreateTaskId(0);
 
@@ -243,7 +242,6 @@ TEST(TaskManagerTest, shouldCompleteTask)
 
     manager.Complete(parent_id);
     EXPECT_EQ(manager.Show()[0].task().status(), Task::Status::Task_Status_kCompleted);
-
 
 }
 
@@ -259,8 +257,8 @@ TEST(TaskManagerTest, shouldReturnNotcompletedSubtasksErrorInComplete)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
     auto task = *CreateTask("Task name",
-                           time(nullptr),
-                           Task::Priority::Task_Priority_kHigh);
+                            time(nullptr),
+                            Task::Priority::Task_Priority_kHigh);
 
     auto task_id = *CreateTaskId(0);
 
@@ -379,14 +377,14 @@ TEST(TaskManagerTest, shouldShowTasksWithReqiredLabel)
     auto result = manager.ShowTasksWithLabel(expect_label);
     EXPECT_EQ(result.size(), (size + 1));
 
-    for (const auto& task_dto: result)
+    for (const auto& task_dto : result)
     {
         auto labels = task_dto.task().labels();
         auto has_label = std::any_of(labels.cbegin(), labels.cend(),
-                                      [&expect_label](const auto& label)
-                                      {
-                                          return label == expect_label;
-                                      });
+                                     [&expect_label](const auto& label)
+                                     {
+                                         return label == expect_label;
+                                     });
 
         EXPECT_TRUE(has_label);
     }

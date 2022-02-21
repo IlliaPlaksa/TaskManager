@@ -15,7 +15,6 @@ TEST(ModelResponseTest, shouldIsErrorMethodWorks)
     EXPECT_EQ(response.IsError(), response.status() == ModelResponse::Status::kError);
 }
 
-
 TEST(ModelResponseTest, shouldCreateSuccessResponse)
 {
     auto response = ModelResponse::Success();

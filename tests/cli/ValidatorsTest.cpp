@@ -25,7 +25,7 @@ TEST(ValidatorsTest, shouldApproveCorrectCommand)
         "load",
     };
 
-    for (const auto& input: correct_input)
+    for (const auto& input : correct_input)
     {
         auto result = Validate::Command(input);
         EXPECT_TRUE(result.has_value());
@@ -41,7 +41,7 @@ TEST(ValidatorsTest, shouldRejectCommand)
         "12345"
     };
 
-    for (const auto& input: wrong_input)
+    for (const auto& input : wrong_input)
     {
         auto result = Validate::Command(input);
         EXPECT_FALSE(result.has_value());
@@ -56,7 +56,7 @@ TEST(ValidatorsTest, shouldApproveCorrectTitle)
         "Example title"
     };
 
-    for (const auto& input: correct_input)
+    for (const auto& input : correct_input)
     {
         auto result = Validate::Title(input);
         EXPECT_TRUE(result.has_value());
@@ -69,7 +69,7 @@ TEST(ValidatorsTest, shouldRejectBlankTitle)
         ""
     };
 
-    for (const auto& input: wrong_input)
+    for (const auto& input : wrong_input)
     {
         auto result = Validate::Title(input);
         EXPECT_FALSE(result.has_value());
@@ -84,7 +84,7 @@ TEST(ValidatorsTest, shouldApproveCorrectId)
         "1"
     };
 
-    for (const auto& input: correct_input)
+    for (const auto& input : correct_input)
     {
         auto result = Validate::Id(input);
         EXPECT_TRUE(result.has_value());
@@ -99,7 +99,7 @@ TEST(ValidatorsTest, shouldRejectWrongId)
         ""
     };
 
-    for (const auto& input: wrong_input)
+    for (const auto& input : wrong_input)
     {
         auto result = Validate::Id(input);
         EXPECT_FALSE(result.has_value());
@@ -114,7 +114,7 @@ TEST(ValidatorsTest, shouldApproveCorrectDate)
         "01.01.1999"
     };
 
-    for (const auto& input: correct_input)
+    for (const auto& input : correct_input)
     {
         auto result = Validate::Date(input);
         EXPECT_TRUE(result.has_value());
@@ -132,7 +132,7 @@ TEST(ValidatorsTest, shouldRejectWrongDate)
         ""
     };
 
-    for (const auto& input: wrong_input)
+    for (const auto& input : wrong_input)
     {
         auto result = Validate::Date(input);
         EXPECT_FALSE(result.has_value());
@@ -147,7 +147,7 @@ TEST(ValidatorsTest, shouldApproveCorrectPriority)
         "medium"
     };
 
-    for (const auto& input: correct_input)
+    for (const auto& input : correct_input)
     {
         auto result = Validate::Priority(input);
         EXPECT_TRUE(result.has_value());
@@ -165,7 +165,7 @@ TEST(ValidatorsTest, shouldRejectWrongPriority)
         ""
     };
 
-    for (const auto& input: wrong_input)
+    for (const auto& input : wrong_input)
     {
         auto result = Validate::Priority(input);
         EXPECT_FALSE(result.has_value());
@@ -180,7 +180,7 @@ TEST(ValidatorsTest, shouldApproveCorrectLabel)
         "sslsadf"
     };
 
-    for (const auto& input: correct_input)
+    for (const auto& input : correct_input)
     {
         auto result = Validate::Label(input);
         EXPECT_TRUE(result.has_value());
@@ -193,7 +193,7 @@ TEST(ValidatorsTest, shouldRejectWrongLabel)
         ""
     };
 
-    for (const auto& input: wrong_input)
+    for (const auto& input : wrong_input)
     {
         auto result = Validate::Priority(input);
         EXPECT_FALSE(result.has_value());
@@ -207,7 +207,7 @@ TEST(ValidatorsTest, shouldApproveCorrectConfirmation)
         "n",
     };
 
-    for (const auto& input: correct_input)
+    for (const auto& input : correct_input)
     {
         auto result = Validate::Confirm(input);
         EXPECT_TRUE(result.has_value());
@@ -222,7 +222,7 @@ TEST(ValidatorsTest, shouldRejectWrongConfirmation)
         "    "
     };
 
-    for (const auto& input: wrong_input)
+    for (const auto& input : wrong_input)
     {
         auto result = Validate::Confirm(input);
         EXPECT_FALSE(result.has_value());
@@ -236,7 +236,7 @@ TEST(ValidatorsTest, shouldApproveCorrectFileName)
         "example.bin",
     };
 
-    for (const auto& input: correct_input)
+    for (const auto& input : correct_input)
     {
         auto result = Validate::FileName(input);
         EXPECT_TRUE(result.has_value());
@@ -251,7 +251,7 @@ TEST(ValidatorsTest, shouldRejectWrongFileName)
         "    "
     };
 
-    for (const auto& input: wrong_input)
+    for (const auto& input : wrong_input)
     {
         auto result = Validate::FileName(input);
         EXPECT_FALSE(result.has_value());

@@ -325,7 +325,7 @@ TEST_F(ReadersTest, shouldReadLabels)
 
     auto input = std::stringstream{};
 
-    for (const auto& label: input_vect)
+    for (const auto& label : input_vect)
         input << label << " ";
 
     EXPECT_CALL(*console_, ReadLine(::testing::_))
@@ -336,7 +336,7 @@ TEST_F(ReadersTest, shouldReadLabels)
 
     ASSERT_FALSE(result.empty());
 
-    for (const auto& label: input_vect)
+    for (const auto& label : input_vect)
         EXPECT_TRUE(std::find(result.begin(), result.end(), label) != input_vect.end());
 }
 

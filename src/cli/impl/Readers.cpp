@@ -21,16 +21,17 @@ StepId Read::Command(const std::shared_ptr<ConsoleManipulator>& console)
 }
 std::string Read::Title(const std::shared_ptr<ConsoleManipulator>& console)
 {
+    const std::string message = "[Title]";
     std::optional<std::string> input;
     input = Validate::Title(
-        console->ReadLine("[Title]")
+        console->ReadLine(message)
     );
 
     while (!input)
     {
         console->WriteError("Wrong title entered");
         input = Validate::Title(
-            console->ReadLine("[Title]")
+            console->ReadLine(message)
         );
     }
     return input.value();
@@ -113,7 +114,7 @@ std::vector<std::string> Read::Labels(const std::shared_ptr<ConsoleManipulator>&
 
     auto labels = Split(input, " ");
 
-    for (const auto& label: labels)
+    for (const auto& label : labels)
     {
         if (Validate::Label(label))
             result.emplace_back(label);

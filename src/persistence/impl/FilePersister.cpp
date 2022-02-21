@@ -20,7 +20,7 @@ bool FilePersister::Save(const std::vector<TaskDTO>& tasks)
         return false;
     else
     {
-        for (const auto& elem: tasks)
+        for (const auto& elem : tasks)
         {
             google::protobuf::util::SerializeDelimitedToOstream(elem, &ofs);
         }

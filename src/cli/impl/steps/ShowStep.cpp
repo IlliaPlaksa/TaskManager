@@ -18,7 +18,7 @@ StepResult ShowStep::Execute(Context& context)
     if (task_storage)
     {
         auto offset = std::string("\t");
-        for (const auto& task: task_storage->GetRootTasks())
+        for (const auto& task : task_storage->GetRootTasks())
         {
             std::stringstream output;
             output << ToString(task);
@@ -75,7 +75,7 @@ std::string ShowStep::ToString(const TaskDTO& task_dto)
 void ShowStep::OutputSubTasks(std::ostream& output, const TaskId& parent_id,
                               const TaskStorage& storage, const std::string& offset)
 {
-    for (const auto& task: storage.GetSubTasks(parent_id))
+    for (const auto& task : storage.GetSubTasks(parent_id))
     {
         output << '\n' << offset << ToString(task);
         OutputSubTasks(output, task.id(), storage, offset + "\t");
@@ -91,7 +91,7 @@ std::string ShowStep::ToString(const time_t& date)
 std::string ShowStep::ToString(const google::protobuf::RepeatedPtrField<std::string>& labels)
 {
     std::stringstream stream;
-    for (const auto& label: labels)
+    for (const auto& label : labels)
         stream << label << ", ";
 
     return stream.str();
