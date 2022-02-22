@@ -36,7 +36,6 @@ cd build
 ```
 For starting `server` with custom options use
 ```bash
-cd build
 ./server --help
 ```
 to show available start options.
@@ -47,7 +46,6 @@ cd build
 ```
 For starting `client` with custom options use
 ```bash
-cd build
 ./client --help
 ```
 to show available start options.
