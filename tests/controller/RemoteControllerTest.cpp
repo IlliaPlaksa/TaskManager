@@ -43,8 +43,13 @@ TEST_F(RemoteControllerTest, shouldCallAddSubTaskMethod)
     TaskId parent_id{};
 
     TaskDTO request{};
-    request.mutable_task()->CopyFrom(task);
-    request.mutable_parent_id()->CopyFrom(parent_id);
+
+    request.set_allocated_task(
+        std::make_unique<Task>(task).release()
+    );
+    request.set_allocated_parent_id(
+        std::make_unique<TaskId>(parent_id).release()
+    );
 
     EXPECT_CALL(*stub_, AddSubTask(_, request, _))
         .WillOnce(::testing::Return(::grpc::Status::OK));
@@ -62,8 +67,12 @@ TEST_F(RemoteControllerTest, shouldCallEditMethod)
     TaskId task_id{};
 
     TaskDTO request{};
-    request.mutable_task()->CopyFrom(task);
-    request.mutable_id()->CopyFrom(task_id);
+    request.set_allocated_task(
+        std::make_unique<Task>(task).release()
+    );
+    request.set_allocated_id(
+        std::make_unique<TaskId>(task_id).release()
+    );
 
     EXPECT_CALL(*stub_, Edit(_, request, _))
         .WillOnce(::testing::Return(::grpc::Status::OK));
@@ -82,9 +91,16 @@ TEST_F(RemoteControllerTest, shouldCallEditSubTaskMethod)
     TaskId parent_id{};
 
     TaskDTO request{};
-    request.mutable_id()->CopyFrom(task_id);
-    request.mutable_task()->CopyFrom(task);
-    request.mutable_parent_id()->CopyFrom(parent_id);
+
+    request.set_allocated_id(
+        std::make_unique<TaskId>(task_id).release()
+    );
+    request.set_allocated_task(
+        std::make_unique<Task>(task).release()
+    );
+    request.set_allocated_parent_id(
+        std::make_unique<TaskId>(parent_id).release()
+    );
 
     EXPECT_CALL(*stub_, EditSubTask(_, request, _))
         .WillOnce(::testing::Return(::grpc::Status::OK));
