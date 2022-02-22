@@ -35,7 +35,7 @@ std::string to_string(const ModelResponse& model_response)
 
     auto error_message = model_response.error();
     if (error_message.has_value())
-        result += " Error:" + to_string(error_message.value());
+        result += " Error: " + to_string(error_message.value());
 
     return result;
 }
