@@ -3,7 +3,6 @@
 //
 
 #include "gtest/gtest.h"
-#include "gmock/gmock.h"
 
 #include "util/Response/ModelResponseUtils.h"
 
