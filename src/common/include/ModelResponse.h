@@ -7,9 +7,18 @@
 
 #include <optional>
 
+/**
+ * @brief \b Represents response to a request to the \b Model
+ * @details Provides a representation of all responses to requests to the \b Model
+ * @author Plaksa Illia
+ */
 class ModelResponse
 {
 public:
+
+    /**
+    * @brief \b Represents type of \b Errors that can be caused by request to \b Model
+    */
     enum class ErrorType
     {
         INVALID_ID,
@@ -20,6 +29,9 @@ public:
         // TODO add more error types
     };
 
+    /**
+    * @brief \b Represents status of \b Response of \b Model
+    */
     enum class Status
     {
         kSuccess,
