@@ -26,8 +26,12 @@ ModelResponse RemoteController::AddSubTask(const Task& task, const TaskId& paren
     auto response = service::Response();
 
     TaskDTO task_dto;
-    task_dto.mutable_task()->CopyFrom(task);
-    task_dto.mutable_parent_id()->CopyFrom(parent_id);
+
+    auto new_task = std::make_unique<Task>(task);
+    auto new_parent_id = std::make_unique<TaskId>(parent_id);
+
+    task_dto.set_allocated_task(new_task.release());
+    task_dto.set_allocated_parent_id(new_parent_id.release());
 
     auto status = stub_->AddSubTask(&context, task_dto, &response);
 
@@ -39,8 +43,12 @@ ModelResponse RemoteController::Edit(const TaskId& task_id, const Task& task)
     auto response = service::Response();
 
     TaskDTO task_dto;
-    task_dto.mutable_id()->CopyFrom(task_id);
-    task_dto.mutable_task()->CopyFrom(task);
+
+    auto new_id = std::make_unique<TaskId>(task_id);
+    auto new_task = std::make_unique<Task>(task);
+
+    task_dto.set_allocated_id(new_id.release());
+    task_dto.set_allocated_task(new_task.release());
 
     auto status = stub_->Edit(&context, task_dto, &response);
 
@@ -52,9 +60,14 @@ ModelResponse RemoteController::EditSubTask(const TaskId& task_id, const Task& t
     auto response = service::Response();
 
     TaskDTO task_dto;
-    task_dto.mutable_id()->CopyFrom(task_id);
-    task_dto.mutable_task()->CopyFrom(task);
-    task_dto.mutable_parent_id()->CopyFrom(parent_id);
+
+    auto new_id = std::make_unique<TaskId>(task_id);
+    auto new_task = std::make_unique<Task>(task);
+    auto new_parent_id = std::make_unique<TaskId>(parent_id);
+
+    task_dto.set_allocated_id(new_id.release());
+    task_dto.set_allocated_task(new_task.release());
+    task_dto.set_allocated_parent_id(new_parent_id.release());
 
     auto status = stub_->EditSubTask(&context, task_dto, &response);
 
