@@ -16,10 +16,13 @@ TEST(TaskPersisterTest, shouldSerializeAndDeserialize)
     for (size_t i = 0 ; i < 5 ; i++)
     {
         auto tmp = TaskDTO{};
-        auto task = tmp.mutable_task();
+        auto task = std::make_unique<Task>();
+
         task->set_title(std::to_string(i));
         task->set_priority(Task_Priority_kHigh);
         task->set_status(Task_Status_kInProgress);
+
+        tmp.set_allocated_task(task.release());
 
         tasks.emplace_back(tmp);
     }

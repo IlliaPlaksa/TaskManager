@@ -40,12 +40,18 @@ TEST_F(RequestHandlerImplTest, shouldCallAddMethod)
 TEST_F(RequestHandlerImplTest, shouldCallAddSubTaskMethod)
 {
     ::grpc::ServerContext context{};
+
     Task task{};
     TaskId parent_id{};
 
     TaskDTO request{};
-    request.mutable_task()->CopyFrom(task);
-    request.mutable_parent_id()->CopyFrom(parent_id);
+
+    request.set_allocated_task(
+        std::make_unique<Task>(task).release()
+    );
+    request.set_allocated_parent_id(
+        std::make_unique<TaskId>(parent_id).release()
+    );
 
     ::service::Response response{};
 
@@ -65,8 +71,12 @@ TEST_F(RequestHandlerImplTest, shouldCallEditMethod)
     TaskId task_id{};
 
     TaskDTO request{};
-    request.mutable_task()->CopyFrom(task);
-    request.mutable_id()->CopyFrom(task_id);
+    request.set_allocated_task(
+        std::make_unique<Task>(task).release()
+    );
+    request.set_allocated_id(
+        std::make_unique<TaskId>(task_id).release()
+    );
 
     ::grpc::ServerContext context{};
     ::service::Response response{};
@@ -91,9 +101,16 @@ TEST_F(RequestHandlerImplTest, shouldCallEditSubTaskMethod)
     TaskId parent_id{};
 
     TaskDTO request{};
-    request.mutable_id()->CopyFrom(task_id);
-    request.mutable_task()->CopyFrom(task);
-    request.mutable_parent_id()->CopyFrom(parent_id);
+
+    request.set_allocated_id(
+        std::make_unique<TaskId>(task_id).release()
+    );
+    request.set_allocated_task(
+        std::make_unique<Task>(task).release()
+    );
+    request.set_allocated_parent_id(
+        std::make_unique<TaskId>(parent_id).release()
+    );
 
     EXPECT_CALL(*model_, EditSubTask(task_id, task, parent_id))
         .WillOnce(::testing::Return(ModelResponse::Success()));
