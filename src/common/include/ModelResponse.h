@@ -7,6 +7,11 @@
 
 #include <optional>
 
+/**
+ * @brief \b Represents response to a request to the \b Model
+ * @details Provides a representation of all responses to requests to the \b Model
+ * @author Plaksa Illia
+ */
 class ModelResponse
 {
 public:
