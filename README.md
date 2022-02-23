@@ -38,7 +38,7 @@ For starting `server` with custom options use
 ```bash
 ./server --help
 ```
-to show available start options.
+to show available start options of server.
 #### 5. Start `client`:
 ```bash
 cd build
@@ -48,7 +48,7 @@ For starting `client` with custom options use
 ```bash
 ./client --help
 ```
-to show available start options.
+to show available start options of client.
 
 ### Server deployment in Docker
 Repository contains `Dockerfile` to compile `Docker image` for server deployment.
