@@ -10,12 +10,12 @@ std::vector<std::string> Split(const std::string& str, const std::string& delimi
 
 StepId Read::Command(const std::shared_ptr<ConsoleManipulator>& console)
 {
-    auto input = Validate::Command(console->ReadLine());
+    auto input = Validate::Command(console->ReadLine(""));
 
     while (!input)
     {
         console->WriteError("No such command\nUse [help] to determine command you needed");
-        input = Validate::Command(console->ReadLine());
+        input = Validate::Command(console->ReadLine(""));
     }
     return input.value();
 }

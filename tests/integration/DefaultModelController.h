@@ -6,6 +6,7 @@
 #define TASKMANAGER_TESTS_INTEGRATION_DEFAULTMODELCONTROLLER_H_
 
 #include "common/ModelController.h"
+#include "persistence/FilePersister.h"
 
 class DefaultModelController : public ModelController
 {

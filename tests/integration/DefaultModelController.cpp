@@ -55,9 +55,25 @@ ModelResponse DefaultModelController::Load(const std::vector<TaskDTO>& tasks)
 }
 ModelResponse DefaultModelController::LoadFromFile(const std::string& file_name)
 {
-    return ModelResponse::Success();
+    auto persister = FilePersister{file_name};
+
+    auto tasks = persister.Load();
+
+    if (tasks.has_value())
+        return this->Load(*tasks);
+    else
+        return ModelResponse::Error(ModelResponse::ErrorType::FAIL);
 }
 ModelResponse DefaultModelController::SaveToFile(const std::string& file_name)
 {
-    return ModelResponse::Success();
+    auto persister = FilePersister{file_name};
+
+    auto tasks = this->Show();
+
+    if (persister.Save(tasks))
+    {
+        return ModelResponse::Success();
+    }
+    else
+        return ModelResponse::Error(ModelResponse::ErrorType::FAIL);
 }

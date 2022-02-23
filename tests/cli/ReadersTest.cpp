@@ -148,7 +148,7 @@ TEST_F(ReadersTest, shouldReadCommand)
         "edit",
         "show"};
 
-    EXPECT_CALL(*console_, ReadLine())
+    EXPECT_CALL(*console_, ReadLine(::testing::_))
         .WillOnce(::testing::Return(correct_command[0]))
         .WillOnce(::testing::Return(correct_command[1]))
         .WillOnce(::testing::Return(correct_command[2]))
@@ -176,7 +176,7 @@ TEST_F(ReadersTest, shouldRejectWrongCommands)
 
     auto correct_command = "help";
 
-    EXPECT_CALL(*console_, ReadLine())
+    EXPECT_CALL(*console_, ReadLine(::testing::_))
         .WillOnce(::testing::Return(wrong_command_input[0]))
         .WillOnce(::testing::Return(wrong_command_input[1]))
         .WillOnce(::testing::Return(wrong_command_input[2]))

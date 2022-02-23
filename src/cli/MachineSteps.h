@@ -81,11 +81,10 @@ public:
     StepResult Execute(Context& context) override;
 
 private:
-    static void OutputSubTasks(std::ostream& output,
+    static void OutputSubTasks(const std::shared_ptr<ConsoleManipulator>& console,
                                const TaskId& task_id,
                                const TaskStorage& storage,
-                               const std::string& offset
-    );
+                               const std::string& offset);
 
     static std::string ToString(const TaskDTO& task);
     static std::string ToString(const Task::Priority& priority);
