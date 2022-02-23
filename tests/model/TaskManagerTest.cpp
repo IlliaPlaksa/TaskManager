@@ -180,7 +180,7 @@ TEST(TaskManagerTest, shouldEditSubTask)
     EXPECT_EQ(new_priority, edited_task.priority());
 }
 
-TEST(TaskManagerTest, shouldReturnWrongParentIdErrorInEdit)
+TEST(TaskManagerTest, shouldReturnWrongParentIdErrorInEditSubtask)
 {
     auto manager = TaskManager{std::make_unique<IdGenerator>()};
 
@@ -192,9 +192,14 @@ TEST(TaskManagerTest, shouldReturnWrongParentIdErrorInEdit)
     manager.Add(task);
     manager.AddSubTask(task, *CreateTaskId(0));
 
-    ASSERT_TRUE(
-        manager.EditSubTask(*CreateTaskId(1), task, *CreateTaskId(123)).error()
-            == ModelResponse::ErrorType::NON_EXISTING_PARENT_ID
+    ASSERT_EQ(
+        manager.EditSubTask(*CreateTaskId(1), task, *CreateTaskId(123)).error(),
+        ModelResponse::ErrorType::NON_EXISTING_PARENT_ID
+    );
+
+    ASSERT_EQ(
+        manager.EditSubTask(*CreateTaskId(1), task, *CreateTaskId(1)).error(),
+        ModelResponse::ErrorType::NON_EXISTING_PARENT_ID
     );
 }
 

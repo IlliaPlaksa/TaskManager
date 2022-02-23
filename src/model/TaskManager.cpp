@@ -61,6 +61,9 @@ ModelResponse TaskManager::Edit(const TaskId& id, const Task& task)
 }
 ModelResponse TaskManager::EditSubTask(const TaskId& id, const Task& task, const TaskId& parent_id)
 {
+    if (id == parent_id)
+        return ModelResponse::Error(ModelResponse::ErrorType::NON_EXISTING_PARENT_ID);
+
     std::lock_guard<std::mutex> lock{mutex_};
 
     auto tmp = tasks_.find(id);
