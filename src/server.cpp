@@ -22,6 +22,7 @@ int main(int argc, char** argv)
     auto severity_level = boost::log::trivial::severity_level{};
 
     std::string verbosity_str;
+    std::string port;
 
     try
     {
@@ -31,7 +32,10 @@ int main(int argc, char** argv)
 
             ("verbosity",
              po::value<std::string>(&verbosity_str)->default_value("info"),
-             "sets log verbosity: debug, info, warn, error, fatal");
+             "sets log verbosity: debug, info, warn, error, fatal")
+
+            ("port", po::value<std::string>(&port)->default_value("50051"),
+             "sets port on which server in listening to requests");
 
         po::variables_map vm;
         po::store(po::parse_command_line(argc, argv, desc), vm);
@@ -46,6 +50,7 @@ int main(int argc, char** argv)
         severity_level = logging::CreateSeverityLevelFrom(verbosity_str);
 
         std::cout << "Log verbosity set to " << boost::log::trivial::to_string(severity_level) << ".\n";
+        std::cout << "Server started listening on port: " << port << ".\n";
     }
     catch (std::exception& e)
     {
@@ -55,7 +60,8 @@ int main(int argc, char** argv)
 
     logging::init(log_file_name, severity_level);
 
-    std::string server_address("0.0.0.0:50051");
+    std::string server_address = std::string("0.0.0.0:") + port;
+
     auto model = std::unique_ptr<Model>(new TaskManager{std::make_unique<IdGenerator>()});
 
     auto service = RequestHandlerImpl{std::move(model)};
