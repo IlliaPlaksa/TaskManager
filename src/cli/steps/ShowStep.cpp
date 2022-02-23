@@ -20,12 +20,8 @@ StepResult ShowStep::Execute(Context& context)
         auto offset = std::string("\t");
         for (const auto& task : task_storage->GetRootTasks())
         {
-            std::stringstream output;
-            output << ToString(task);
-
-            OutputSubTasks(output, task.id(), *task_storage, offset);
-
-            console->WriteLine(output.str());
+            console->WriteLine(ToString(task));
+            OutputSubTasks(console, task.id(), *task_storage, offset);
         }
     }
 
@@ -72,13 +68,15 @@ std::string ShowStep::ToString(const TaskDTO& task_dto)
 
     return output.str();
 }
-void ShowStep::OutputSubTasks(std::ostream& output, const TaskId& parent_id,
-                              const TaskStorage& storage, const std::string& offset)
+void ShowStep::OutputSubTasks(const std::shared_ptr<ConsoleManipulator>& console,
+                              const TaskId& parent_id,
+                              const TaskStorage& storage,
+                              const std::string& offset)
 {
     for (const auto& task : storage.GetSubTasks(parent_id))
     {
-        output << '\n' << offset << ToString(task);
-        OutputSubTasks(output, task.id(), storage, offset + "\t");
+        console->WriteLine(offset + ToString(task));
+        OutputSubTasks(console, task.id(), storage, offset + "\t");
     }
 }
 std::string ShowStep::ToString(const time_t& date)
