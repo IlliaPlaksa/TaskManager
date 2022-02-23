@@ -15,10 +15,10 @@ Client-server application for managing your tasks that need to be completed.
 ### Linux and MacOS using CMake
 #### 1. Install [CMake](https://cmake.org) the latest version you can. 
 #### 2. Install libraries:
-    - [Protobuf](https://github.com/protocolbuffers/protobuf)
-    - [GRPC](https://github.com/grpc/grpc)
-    - [Boost](https://www.boost.org)
-    - [GoogleTest](https://github.com/google/googletest) with GMock (to run tests)
+- [Protobuf](https://github.com/protocolbuffers/protobuf)
+- [GRPC](https://github.com/grpc/grpc)
+- [Boost](https://www.boost.org)
+- [GoogleTest](https://github.com/google/googletest) with GMock (to run tests)
 
 #### 3. Building from source:
 ```bash
