@@ -4,8 +4,11 @@
 
 #include "TaskIdCreators.h"
 
-std::optional<TaskId> CreateTaskId(const google::protobuf::uint64& value)
+std::optional<TaskId> CreateTaskId(const long long& value)
 {
+    if (value < 0)
+        return std::nullopt;
+
     auto result = TaskId{};
     result.set_value(value);
 
