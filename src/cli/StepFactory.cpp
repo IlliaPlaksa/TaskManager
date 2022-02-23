@@ -17,8 +17,7 @@ std::shared_ptr<Step> StepFactory::CreateStep(StepId step_id)
     {
         case StepId::kRoot:
         {
-            result = std::shared_ptr<Step>{
-                new RootStep{dependency}};
+            result = std::shared_ptr<Step>{new RootStep{dependency}};
             break;
         }
         case StepId::kAdd:

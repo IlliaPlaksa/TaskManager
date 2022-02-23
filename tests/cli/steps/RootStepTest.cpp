@@ -39,7 +39,7 @@ TEST_F(RootStepTest, shouldExecute)
     EXPECT_CALL(*dependency_, step_factory())
         .WillRepeatedly(::testing::Return(step_factory_));
 
-    EXPECT_CALL(*console_, ReadLine())
+    EXPECT_CALL(*console_, ReadLine(::testing::_))
         .WillRepeatedly(::testing::Return("add"));
 
     auto result_step = std::shared_ptr<StepMock>();

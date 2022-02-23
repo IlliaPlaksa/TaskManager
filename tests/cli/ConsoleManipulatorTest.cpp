@@ -56,7 +56,7 @@ TEST(ConsoleManipulatorTest, shouldReadline)
 
     istream << input;
 
-    auto actual_input = console.ReadLine();
+    auto actual_input = console.ReadLine("");
 
     getline(ostream, output);
 
@@ -88,7 +88,7 @@ TEST(ConsoleManipulatorTest, shouldResetPromps)
 
     console.ResetPrompt(message);
 
-    console.ReadLine();
+    console.ReadLine("");
 
     auto output = std::string{};
     getline(ostream, output);
@@ -99,7 +99,7 @@ TEST(ConsoleManipulatorTest, shouldResetPromps)
     istream = std::stringstream{};
 
     console.ResetPrompt();
-    console.ReadLine();
+    console.ReadLine("");
     getline(ostream, output);
 
     EXPECT_EQ(output, " > ");
