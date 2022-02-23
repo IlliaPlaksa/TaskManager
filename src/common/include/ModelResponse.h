@@ -15,10 +15,6 @@
 class ModelResponse
 {
 public:
-
-    /**
-    * @brief \b Represents type of \b Errors that can be caused by request to \b Model
-    */
     enum class ErrorType
     {
         INVALID_ID,
@@ -29,9 +25,6 @@ public:
         // TODO add more error types
     };
 
-    /**
-    * @brief \b Represents status of \b Response of \b Model
-    */
     enum class Status
     {
         kSuccess,
