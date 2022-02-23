@@ -5,7 +5,7 @@
 #ifndef TASKMANAGER_TESTS_INTEGRATION_DEFAULTMODELCONTROLLER_H_
 #define TASKMANAGER_TESTS_INTEGRATION_DEFAULTMODELCONTROLLER_H_
 
-#include "common/include/ModelController.h"
+#include "common/ModelController.h"
 
 class DefaultModelController : public ModelController
 {

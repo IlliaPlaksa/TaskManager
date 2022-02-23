@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "cli/include/StepDependency.h"
+#include "cli/StepDependency.h"
 
 #include "mocks/ConsoleManipulatorMock.h"
 #include "mocks/StepFactoryMock.h"

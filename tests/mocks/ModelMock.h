@@ -8,7 +8,7 @@
 #endif //TASKMANAGER_TESTS_CONTROLLER_MOCK_INCLUDE_MODELMOCK_H_
 
 #include "gmock/gmock.h"
-#include "common/include/Model.h"
+#include "common/Model.h"
 
 class ModelMock : public Model
 {

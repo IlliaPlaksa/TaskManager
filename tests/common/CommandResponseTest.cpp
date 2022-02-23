@@ -2,7 +2,7 @@
 // Created by Illia Plaksa on 17.01.2022.
 //
 
-#include "common/include/CommandResponse.h"
+#include "common/CommandResponse.h"
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"

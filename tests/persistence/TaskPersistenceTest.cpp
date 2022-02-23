@@ -3,7 +3,7 @@
 //
 
 #include "gtest/gtest.h"
-#include "persistence/include/FilePersister.h"
+#include "persistence/FilePersister.h"
 #include "TaskDTO.pb.h"
 #include "util/TaskDTO/TaskDTOComparators.h"
 

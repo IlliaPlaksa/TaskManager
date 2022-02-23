@@ -5,9 +5,9 @@
 #ifndef TASKMANAGER_SRC_CONTROLLER_REMOTECONTROLLER_H_
 #define TASKMANAGER_SRC_CONTROLLER_REMOTECONTROLLER_H_
 
-#include "common/include/ModelController.h"
+#include "common/ModelController.h"
 #include "Service.grpc.pb.h"
-#include "persistence/include/FilePersister.h"
+#include "persistence/FilePersister.h"
 
 #include <grpc/grpc.h>
 #include <grpcpp/channel.h>

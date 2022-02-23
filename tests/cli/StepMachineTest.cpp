@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "cli/include/StepMachine.h"
+#include "cli/StepMachine.h"
 
 #include "mocks/StepFactoryMock.h"
 #include "mocks/ModelControllerMock.h"

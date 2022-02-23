@@ -3,7 +3,7 @@
 //
 
 #include "gtest/gtest.h"
-#include "model/include/TaskNode.h"
+#include "model/TaskNode.h"
 #include "util/Task/TaskCreators.h"
 #include "util/TaskId/TaskIdCreators.h"
 #include "util/TaskId/TaskIdComparators.h"

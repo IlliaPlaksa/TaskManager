@@ -6,7 +6,7 @@
 #define TASKMANAGER_TESTS_MOCKS_PERSISTERMOCK_H_
 
 #include "gmock/gmock.h"
-#include "common/include/Persister.h"
+#include "common/Persister.h"
 
 class TaskPersisterMock : public TaskPersister
 {

@@ -8,7 +8,7 @@
 #include <grpcpp/server_builder.h>
 #include <grpcpp/server_context.h>
 
-#include "model/include/TaskManager.h"
+#include "model/TaskManager.h"
 #include "server/RequestHandlerImpl.h"
 
 #include "Logging.h"

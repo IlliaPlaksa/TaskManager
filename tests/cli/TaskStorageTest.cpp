@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "cli/include/TaskStorage.h"
+#include "cli/TaskStorage.h"
 
 #include "util/TaskId/TaskIdCreators.h"
 #include "util/Task/TaskCreators.h"

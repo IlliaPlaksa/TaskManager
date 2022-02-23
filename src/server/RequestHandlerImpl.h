@@ -6,7 +6,7 @@
 #define TASKMANAGER_SRC_SERVER_REQUESTHANDLERIMPL_H_
 
 #include "Service.grpc.pb.h"
-#include "common/include/Model.h"
+#include "common/Model.h"
 #include "util/Response/ResponseConverters.h"
 
 class RequestHandlerImpl : public service::RequestHandler::Service

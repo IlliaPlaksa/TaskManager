@@ -6,7 +6,7 @@
 #define TASKMANAGER_SRC_UTIL_MODELRESPONSE_REPONSECONVERTERS_H_
 
 #include "Service.pb.h"
-#include "common/include/ModelResponse.h"
+#include "common/ModelResponse.h"
 
 service::Response ModelResponseToServiceResponse(const ModelResponse& response);
 ModelResponse ServiceResponseToModelResponse(const service::Response& response);
