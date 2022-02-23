@@ -77,9 +77,9 @@ int main(int argc, char** argv)
     auto controller = std::make_shared<RemoteController>(std::move(stub));
 
     auto console_manipulator = std::make_shared<ConsoleManipulator>(std::cout, std::cin);
-    auto step_factory = std::shared_ptr<StepFactory>{new StepFactory{console_manipulator}};
+    auto step_factory = std::make_shared<StepFactory>(console_manipulator);
 
-    auto view = std::shared_ptr<View>{new StepMachine{step_factory, controller}};
+    auto view = std::make_shared<StepMachine>(step_factory, controller);
 
     BOOST_LOG_TRIVIAL(info) << "Client started with channel at " << channel_address;
 
