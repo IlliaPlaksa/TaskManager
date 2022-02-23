@@ -6,7 +6,7 @@
 #define TASKMANAGER_TESTS_MOCKS_STEPMOCK_H_
 
 #include "gmock/gmock.h"
-#include "cli/include/Step.h"
+#include "cli/Step.h"
 
 class StepMock : public Step
 {

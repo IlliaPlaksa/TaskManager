@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "cli/include/Context.h"
+#include "cli/Context.h"
 
 class ContextTest : ::testing::Test
 {

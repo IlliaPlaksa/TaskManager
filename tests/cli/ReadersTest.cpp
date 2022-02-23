@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "cli/include/Readers.h"
+#include "cli/Readers.h"
 #include "mocks/ConsoleManipulatorMock.h"
 
 class ReadersTest : public ::testing::Test

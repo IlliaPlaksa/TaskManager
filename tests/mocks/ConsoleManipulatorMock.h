@@ -6,7 +6,7 @@
 #define TASKMANAGER_TESTS_MOCKS_CONSOLEMANIPULATORMOCK_H_
 
 #include "gmock/gmock.h"
-#include "cli/include/ConsoleManipulator.h"
+#include "cli/ConsoleManipulator.h"
 
 class ConsoleManipulatorMock : public ConsoleManipulator
 {

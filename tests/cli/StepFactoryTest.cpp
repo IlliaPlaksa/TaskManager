@@ -5,8 +5,8 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "cli/include/StepFactory.h"
-#include "cli/include/MachineSteps.h"
+#include "cli/StepFactory.h"
+#include "cli/MachineSteps.h"
 
 #include "mocks/ConsoleManipulatorMock.h"
 #include "mocks/StepFactoryMock.h"

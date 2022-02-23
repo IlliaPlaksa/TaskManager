@@ -6,7 +6,7 @@
 #define TASKMANAGER_TESTS_CONTROLLER_MOCK_INCLUDE_COMMANDMOCK_H_
 
 #include "gmock/gmock.h"
-#include "common/include/Command.h"
+#include "common/Command.h"
 
 class CommandMock : public Command
 {

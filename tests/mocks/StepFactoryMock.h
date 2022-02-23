@@ -6,7 +6,7 @@
 #define TASKMANAGER_TESTS_MOCKS_STEPFACTORYMOCK_H_
 
 #include "gmock/gmock.h"
-#include "cli/include/StepFactory.h"
+#include "cli/StepFactory.h"
 
 class StepFactoryMock : public StepFactory
 {

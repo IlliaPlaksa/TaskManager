@@ -5,7 +5,7 @@
 #ifndef TASKMANAGER_TESTS_INTEGRATION_RANDOMCOMMANDGENERATOR_H_
 #define TASKMANAGER_TESTS_INTEGRATION_RANDOMCOMMANDGENERATOR_H_
 
-#include "cli/include/ConcreteCommands.h"
+#include "cli/ConcreteCommands.h"
 #include <time.h>
 
 class RandomCommandGenerator

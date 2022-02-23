@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "cli/include/ConsoleManipulator.h"
+#include "cli/ConsoleManipulator.h"
 
 class ConsoleManipulatorTest : ::testing::Test
 {

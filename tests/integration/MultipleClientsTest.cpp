@@ -9,7 +9,7 @@
 #include "controller/RemoteController.h"
 #include "DefaultModelController.h"
 #include "RandomCommandGenerator.h"
-#include "model/include/TaskManager.h"
+#include "model/TaskManager.h"
 
 class MultipleClientsTest : public ::testing::Test
 {

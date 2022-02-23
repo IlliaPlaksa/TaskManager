@@ -3,7 +3,7 @@
 //
 
 #include "controller/RemoteController.h"
-#include "cli/include/StepMachine.h"
+#include "cli/StepMachine.h"
 
 #include "Logging.h"
 

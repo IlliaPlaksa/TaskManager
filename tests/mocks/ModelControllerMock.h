@@ -6,7 +6,7 @@
 #define TASKMANAGER_TESTS_MOCKS_MODELCONTROLLERMOCK_H_
 
 #include "gmock/gmock.h"
-#include "common/include/ModelController.h"
+#include "common/ModelController.h"
 
 class ModelControllerMock : public ModelController
 {

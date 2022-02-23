@@ -6,7 +6,7 @@
 #define TASKMANAGER_TESTS_CONTROLLER_MOCK_INCLUDE_VIEWMOCK_H_
 
 #include "gmock/gmock.h"
-#include "common/include/View.h"
+#include "common/View.h"
 
 class ViewMock : public View
 {
