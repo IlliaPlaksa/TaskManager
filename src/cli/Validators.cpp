@@ -109,7 +109,7 @@ std::optional<bool> Validate::Confirm(const std::string& symbol)
 }
 std::optional<std::string> Validate::FileName(const std::string& file_name)
 {
-    const std::string pattern = R"(^[\w / \.]{0,}\.[A-Za-z]{0,}$)";
+    const std::string pattern = R"(^[\w / \. -]{0,}\.[A-Za-z]{0,}$)";
     if (!std::regex_match(file_name, std::regex(pattern)))
         return std::nullopt;
     else
