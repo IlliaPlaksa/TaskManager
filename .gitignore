@@ -32,6 +32,7 @@
 *.app
 
 # Directories
+_cmake_build/*
 cmake-build-debug/*
 cmake-build-debug-coverage/*
 tests/cmake-build-debug/*
