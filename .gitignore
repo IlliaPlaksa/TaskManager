@@ -33,6 +33,7 @@
 
 # Directories
 _cmake_build/*
+_cmake*/
 cmake-build-debug/*
 cmake-build-debug-coverage/*
 tests/cmake-build-debug/*
